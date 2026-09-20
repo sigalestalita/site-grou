@@ -687,3 +687,119 @@ body.gaveta-aberta{overflow:hidden}
   .marquise-trilha{animation:none}
   .veu{display:none}
 }
+
+/* ==========================================================================
+   Imagens — fotos reais da Grou e prints dos relatórios PDA
+   ========================================================================== */
+
+/* ---------- Foto do hero ------------------------------------------------- */
+.palco-foto{
+  position:absolute;z-index:2;right:-4%;bottom:-4%;left:auto;
+  width:118%;max-width:none;height:auto;display:block;pointer-events:none;
+}
+@media(max-width:959px){
+  .palco-foto{right:50%;transform:translateX(50%);width:100%;bottom:0}
+}
+/* quando há foto, o palco não precisa do núcleo escuro */
+.palco.com-foto .palco-nucleo{display:none}
+.palco.com-foto{aspect-ratio:1/.92}
+
+/* ---------- Faixa de logos de clientes ----------------------------------- */
+.logos{background:var(--azul-noite);padding:clamp(26px,3.4vw,40px) 0;border-top:none}
+.logos-rot{
+  text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.42);margin-bottom:22px;padding:0 var(--gutter);
+}
+.logos .marquise-trilha{align-items:center;gap:clamp(30px,4.4vw,56px);animation-duration:56s}
+.logos .marquise-trilha img{
+  width:auto;flex:none;opacity:.8;transition:opacity .3s ease,transform .3s var(--mola);
+}
+.logos .marquise-trilha img:hover{opacity:1;transform:scale(1.06)}
+
+/* ---------- Figura genérica ---------------------------------------------- */
+.figura{
+  position:relative;border-radius:var(--raio-g);overflow:hidden;
+  box-shadow:var(--sombra-g);background:var(--nevoa);
+}
+.figura img{width:100%;height:auto;display:block}
+.figura.solta{box-shadow:none;background:none;border-radius:0}
+.figura.moldura{border:1px solid var(--linha);box-shadow:var(--sombra-m);background:var(--branco)}
+.figura-legenda{
+  margin-top:12px;font-size:12px;color:var(--tinta-tenue);line-height:1.55;text-align:center;
+}
+
+/* ---------- Cartões de relatório ----------------------------------------- */
+/* seis relatórios fecham melhor em 3+3 do que em 4+2 */
+@media(min-width:1000px){.grade.rel-grade{grid-template-columns:repeat(3,1fr)}}
+
+.rel-card{
+  display:flex;flex-direction:column;background:var(--branco);
+  border:1px solid var(--linha);border-radius:var(--raio);overflow:hidden;
+  transition:transform .45s var(--mola),box-shadow .45s ease,border-color .35s ease;
+}
+.rel-card:hover{transform:translateY(-6px);box-shadow:var(--sombra-m);border-color:rgba(108,216,207,.55)}
+.rel-shot{
+  position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--nevoa);
+  display:flex;align-items:center;justify-content:center;padding:14px;
+}
+.rel-shot img{
+  width:100%;height:100%;object-fit:contain;
+  transition:transform .6s var(--mola);
+}
+.rel-card:hover .rel-shot img{transform:scale(1.05)}
+.rel-tag{
+  position:absolute;top:12px;left:12px;z-index:2;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
+  color:var(--ciano-texto);border:1px solid rgba(108,216,207,.45);
+  border-radius:20px;padding:5px 11px;
+}
+.rel-corpo{padding:20px 22px 24px}
+.rel-corpo h3{font-size:17px;font-weight:500;letter-spacing:-.02em;margin-bottom:8px}
+.rel-corpo p{font-size:13.5px;line-height:1.6}
+
+/* ---------- Cartões de turma (prova social) ------------------------------ */
+/* oito turmas fecham em 4+4 */
+@media(min-width:1000px){.grade.turmas-grade{grid-template-columns:repeat(4,1fr)}}
+
+.turma{
+  position:relative;border-radius:var(--raio);overflow:hidden;
+  aspect-ratio:4/3;background:var(--azul-noite);
+  transition:transform .5s var(--mola),box-shadow .45s ease;
+}
+.turma:hover{transform:translateY(-6px);box-shadow:var(--sombra-g)}
+.turma img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .8s var(--mola);
+}
+.turma:hover img{transform:scale(1.07)}
+.turma-legenda{
+  position:absolute;inset:auto 0 0 0;z-index:2;
+  padding:34px 18px 16px;
+  background:linear-gradient(transparent,rgba(7,3,58,.86));
+  color:#fff;font-size:13px;line-height:1.45;font-weight:400;
+}
+.turma-legenda b{display:block;font-weight:500;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ciano);margin-bottom:5px}
+
+/* ---------- Comparativo DISC × PDA com marcas ---------------------------- */
+.vs-marca{height:34px;width:auto;display:block;margin-bottom:16px}
+.vs-col.destaque .vs-marca{filter:brightness(0) invert(1)}
+.marston{
+  display:flex;align-items:center;gap:18px;margin-top:clamp(30px,4vw,44px);
+  padding:18px;border:1px solid var(--linha);border-radius:var(--raio);
+  background:var(--branco);max-width:520px;
+}
+.marston img{width:78px;height:104px;object-fit:cover;border-radius:12px;flex:none;filter:grayscale(1)}
+.marston p{font-size:13px;line-height:1.6;color:var(--tinta-suave)}
+.marston p b{display:block;color:var(--tinta);font-weight:600;margin-bottom:3px;font-size:14px}
+
+/* ---------- Marcas parceiras (PDA / Talogy) ------------------------------ */
+.parceiras{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(24px,4vw,44px)}
+.parceiras img{height:30px;width:auto;opacity:.75;transition:opacity .3s}
+.parceiras img:hover{opacity:1}
+.parceiras-rot{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-tenue)}
+
+/* ---------- Foto dentro do painel escuro --------------------------------- */
+.painel .figura{margin-top:22px;box-shadow:0 18px 44px rgba(7,3,58,.3)}
+.duo .figura img{border-radius:inherit}

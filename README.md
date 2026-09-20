@@ -94,6 +94,37 @@ Definida em variáveis CSS no topo de `assets/css/grou.css`:
 Tipografia: **Poppins** (200–600) com **Montserrat** de apoio, via Google Fonts.
 Títulos usam peso 200 com `<b>` em 600 — é esse contraste que dá o tom premium.
 
+## Imagens
+
+Todas em `assets/img/`, otimizadas (redimensionadas e recomprimidas), ~1,6 MB no total.
+
+```
+hero-time-rh.webp        Foto do hero (com transparência)
+clientes/                18 logos de clientes, brancos, para fundo escuro
+relatorios/              6 prints reais de relatórios do PDA Assessment
+turmas/                  8 fotos de turmas e devolutivas que já aconteceram
+certificado.jpg          Certificado de Analista PDA
+marston.jpg              William Moulton Marston
+disc.png  pda.png        Marcas usadas no comparativo DISC × PDA
+logo-pda.svg             PDA International
+logo-talogy.svg          Talogy
+mulher-notebook.webp     Foto de apoio
+skills-retrato.webp      Foto de apoio (Grou Skills)
+resiliencia-componentes.webp / dilemas-tela.webp / f360-*.webp
+```
+
+Os **logos de clientes são brancos sobre transparência**, feitos para a faixa
+`.logos`, que tem fundo `--azul-noite`. Não os use sobre fundo claro sem
+inverter. A lista e a altura de cada marca ficam em `CLIENTES`, no topo do
+bloco de logos de cada página — cada marca tem altura própria para que todas
+pareçam do mesmo tamanho óptico.
+
+As fotos de turmas têm legenda real (quem, onde, qual formação). Ao trocar uma
+foto, troque a legenda junto: elas documentam entregas que de fato aconteceram.
+
+Toda `<img>` tem `alt` descritivo e `loading="lazy"` (menos a do hero, que usa
+`fetchpriority="high"` por ser a maior imagem acima da dobra).
+
 ## Movimento
 
 Tudo em `assets/js/grou.js`, sem bibliotecas. Um único `requestAnimationFrame`

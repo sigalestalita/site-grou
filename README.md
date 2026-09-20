@@ -146,6 +146,33 @@ escopo no mesmo modelo.
 A página é gerada por `p_master.py`, à parte do gerador dos outros 13 serviços,
 porque tem seções que só ela tem (5 pilares, trilha de 16 módulos, bloco NR-1).
 
+### Formas de apresentar conteúdo
+
+Grade de cards não é a única forma — e repetida demais cansa. Os componentes
+disponíveis, e quando usar cada um:
+
+| Componente | Quando | Onde já está |
+|---|---|---|
+| `.horiz` | sequência ou catálogo com 5+ itens | Master Líder (pilares), PDA (relatórios e turmas), R&S (5 etapas), categorias do Consulting |
+| `.linha-tempo` | jornada com ordem cronológica | Master Líder (16 módulos) |
+| `.lista-exp` | lista longa em que o título já informa | Master Líder (benefícios), diferenciais dos serviços |
+| `.lista-num` | conteúdo programático | páginas de serviço (escopo) |
+| `.passos` | narrativa passo a passo com visual | home e PDA (como funciona) |
+| `.grade` + `.cartao` | itens paralelos, sem ordem, até 4 | o resto |
+
+**`.horiz`** é a horizontalização: a seção fica presa na tela e o trilho anda
+para o lado conforme a página desce, com barra de progresso e contador. O JS
+calcula a altura da seção a partir da largura do trilho, então acrescentar itens
+não exige ajuste. No mobile vira carrossel nativo com `scroll-snap`; sob
+`prefers-reduced-motion` vira uma faixa rolável comum — nos dois casos sem
+sticky e sem altura forçada.
+
+**`.linha-tempo`** preenche a linha e acende os marcadores conforme os blocos
+entram na viewport.
+
+Cards também têm **inclinação 3D** acompanhando o cursor (`.inclina`, aplicada
+pelo JS), desligada em telas sem hover e sob movimento reduzido.
+
 ## Cache e versionamento
 
 Os links de CSS e JS levam a **hash do conteúdo** (`grou.css?v=ebb388a8`),

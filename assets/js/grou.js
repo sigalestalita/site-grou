@@ -342,6 +342,102 @@
   })();
 
   /* ====================================================================== */
+  /* 8b. Horizontalização — o trilho anda para o lado enquanto a página desce */
+  /* ====================================================================== */
+  (function () {
+    var secoes = $$('.horiz');
+    if (!secoes.length) return;
+    var desktop = window.matchMedia('(min-width:901px)');
+
+    secoes.forEach(function (sec) {
+      var trilho = $('.horiz-trilho', sec);
+      var fixo = $('.horiz-fixo', sec);
+      var prog = $('.horiz-prog .barra i', sec);
+      var cont = $('.horiz-prog .cont', sec);
+      var itens = $$('.horiz-item', sec);
+      if (!trilho || !fixo) return;
+      var curso = 0;
+
+      function medir() {
+        if (reduzido || !desktop.matches) { sec.style.height = ''; trilho.style.transform = ''; return; }
+        /* quanto o trilho precisa andar para revelar o último item */
+        curso = Math.max(0, trilho.scrollWidth - window.innerWidth + 24);
+        sec.style.height = (window.innerHeight + curso) + 'px';
+      }
+
+      function anda() {
+        if (reduzido || !desktop.matches || !curso) return;
+        var r = sec.getBoundingClientRect();
+        var percorrivel = sec.offsetHeight - window.innerHeight;
+        var p = Math.min(1, Math.max(0, -r.top / percorrivel));
+        trilho.style.transform = 'translate3d(' + (-p * curso).toFixed(1) + 'px,0,0)';
+        if (prog) prog.style.width = (p * 100).toFixed(1) + '%';
+        if (cont && itens.length) {
+          var i = Math.min(itens.length, Math.floor(p * itens.length) + 1);
+          cont.textContent = String(i).padStart(2, '0') + ' / ' + String(itens.length).padStart(2, '0');
+        }
+      }
+
+      medir();
+      window.addEventListener('resize', function () { medir(); anda(); }, { passive: true });
+      window.addEventListener('load', function () { medir(); anda(); });
+      desktop.addEventListener('change', function () { medir(); anda(); });
+      aoRolar(anda);
+      anda();
+    });
+    disparar();
+  })();
+
+  /* ====================================================================== */
+  /* 8c. Linha do tempo — a linha se preenche conforme os itens entram      */
+  /* ====================================================================== */
+  (function () {
+    var linhas = $$('.linha-tempo');
+    if (!linhas.length) return;
+    linhas.forEach(function (linha) {
+      var itens = $$('.lt-item', linha);
+      function pinta() {
+        var r = linha.getBoundingClientRect();
+        var alvo = window.innerHeight * 0.62;
+        var p = Math.min(1, Math.max(0, (alvo - r.top) / r.height));
+        linha.style.setProperty('--lt-p', (p * 100).toFixed(1) + '%');
+        itens.forEach(function (it) {
+          var ir = it.getBoundingClientRect();
+          it.classList.toggle('dentro', ir.top < alvo);
+        });
+      }
+      aoRolar(pinta);
+      pinta();
+    });
+    /* a altura da linha preenchida vem da custom property */
+    var st = document.createElement('style');
+    st.textContent = '.linha-tempo::after{height:var(--lt-p,0)}';
+    document.head.appendChild(st);
+    disparar();
+  })();
+
+  /* ====================================================================== */
+  /* 8d. Inclinação 3D dos cards acompanhando o cursor                      */
+  /* ====================================================================== */
+  (function () {
+    if (reduzido || !window.matchMedia('(hover:hover)').matches) return;
+    $$('.cartao, .svc, .pilar, .horiz-item').forEach(function (c) {
+      c.addEventListener('pointerenter', function () { c.classList.add('inclina'); });
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        c.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg');
+        c.style.setProperty('--rx', (-y * 7).toFixed(2) + 'deg');
+      });
+      c.addEventListener('pointerleave', function () {
+        c.classList.remove('inclina');
+        c.style.removeProperty('--rx'); c.style.removeProperty('--ry');
+      });
+    });
+  })();
+
+  /* ====================================================================== */
   /* 9. FAQ                                                                 */
   /* ====================================================================== */
   (function () {

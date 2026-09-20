@@ -1138,3 +1138,169 @@ body.gaveta-aberta{overflow:hidden}
 .outra-cat p{font-size:14px;line-height:1.6;margin-top:7px;max-width:56ch}
 .outra-cat .go{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:500;color:var(--azul-royal);flex:none;transition:gap .25s var(--mola)}
 .outra-cat:hover .go{gap:14px}
+
+/* ==========================================================================
+   Horizontalização — o conteúdo anda para o lado conforme a página desce
+   ========================================================================== */
+.horiz{position:relative;background:var(--branco);border-top:1px solid var(--linha)}
+.horiz.alt{background:var(--nevoa)}
+.horiz.escura{background:linear-gradient(160deg,var(--azul-noite),var(--azul-profundo));border-top-color:transparent}
+.horiz-fixo{
+  position:sticky;top:0;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden;padding:calc(var(--nav-h) + 24px) 0 44px;
+}
+.horiz-cab{max-width:var(--maxw);margin:0 auto clamp(26px,4vw,44px);padding:0 var(--gutter);width:100%}
+.horiz-cab h2{max-width:22ch}
+.horiz-cab .lead{margin-top:14px}
+.horiz.escura .horiz-cab h2{color:#fff}
+.horiz.escura .horiz-cab .lead{color:rgba(255,255,255,.7)}
+.horiz-trilho{
+  display:flex;gap:clamp(16px,2vw,24px);padding:6px var(--gutter);width:max-content;
+  will-change:transform;
+}
+.horiz-item{
+  flex:0 0 clamp(268px,30vw,360px);
+  display:flex;flex-direction:column;gap:11px;
+  padding:clamp(24px,3vw,32px);border-radius:var(--raio-g);
+  border:1px solid var(--linha);background:var(--branco);
+  transition:border-color .35s,transform .4s var(--mola),box-shadow .4s;
+}
+.horiz-item:hover{border-color:rgba(108,216,207,.6);transform:translateY(-5px);box-shadow:var(--sombra-m)}
+.horiz.escura .horiz-item{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14)}
+.horiz.escura .horiz-item:hover{background:rgba(255,255,255,.09);border-color:rgba(108,216,207,.5)}
+.horiz-item .hn{
+  font-size:clamp(34px,4vw,54px);font-weight:200;letter-spacing:-.05em;line-height:1;
+  color:var(--nevoa-2);margin-bottom:2px;
+}
+.horiz.escura .horiz-item .hn{color:rgba(255,255,255,.14)}
+.horiz-item h3{font-size:clamp(18px,2.1vw,22px);font-weight:500;letter-spacing:-.02em;line-height:1.28}
+.horiz.escura .horiz-item h3{color:#fff}
+.horiz-item p{font-size:14px;line-height:1.65;flex:1}
+.horiz.escura .horiz-item p{color:rgba(255,255,255,.66)}
+.horiz-item .htag{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ciano-texto);font-weight:500}
+.horiz.escura .horiz-item .htag{color:var(--ciano)}
+/* barra de progresso do trilho */
+.horiz-prog{
+  max-width:var(--maxw);margin:clamp(22px,3vw,32px) auto 0;padding:0 var(--gutter);width:100%;
+  display:flex;align-items:center;gap:16px;
+}
+.horiz-prog .barra{flex:1;height:2px;background:var(--linha);border-radius:2px;overflow:hidden}
+.horiz.escura .horiz-prog .barra{background:rgba(255,255,255,.16)}
+.horiz-prog .barra i{display:block;height:100%;width:0;border-radius:2px;
+  background:linear-gradient(90deg,var(--ciano),var(--ciano-forte));transition:width .12s linear}
+.horiz-prog .cont{font-size:11.5px;letter-spacing:.14em;color:var(--tinta-tenue);font-variant-numeric:tabular-nums;white-space:nowrap}
+.horiz.escura .horiz-prog .cont{color:rgba(255,255,255,.5)}
+
+/* sem sticky no mobile: vira carrossel nativo com snap */
+@media(max-width:900px){
+  .horiz{height:auto!important}
+  .horiz-fixo{position:relative;min-height:0;padding:clamp(56px,8vw,72px) 0}
+  .horiz-trilho{
+    width:auto;transform:none!important;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:16px;scrollbar-width:none;
+  }
+  .horiz-trilho::-webkit-scrollbar{display:none}
+  .horiz-item{scroll-snap-align:start;flex-basis:min(78vw,320px)}
+  .horiz-prog{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .horiz{height:auto!important}
+  .horiz-fixo{position:relative;min-height:0}
+  .horiz-trilho{transform:none!important;overflow-x:auto;width:auto}
+}
+
+/* ==========================================================================
+   Linha do tempo — substitui grade de cards quando há sequência
+   ========================================================================== */
+.linha-tempo{position:relative;max-width:900px;margin:0 auto;padding-left:clamp(26px,4vw,44px)}
+.linha-tempo::before{
+  content:"";position:absolute;left:clamp(7px,1.1vw,13px);top:10px;bottom:10px;width:2px;
+  background:var(--linha);border-radius:2px;
+}
+.linha-tempo::after{
+  content:"";position:absolute;left:clamp(7px,1.1vw,13px);top:10px;width:2px;height:0;
+  background:linear-gradient(180deg,var(--ciano),var(--ciano-forte));border-radius:2px;
+  transition:height .18s linear;
+}
+.lt-item{position:relative;padding:clamp(18px,2.4vw,26px) 0}
+.lt-item::before{
+  content:"";position:absolute;left:calc(clamp(26px,4vw,44px) * -1 + clamp(3px,.75vw,9px));top:calc(clamp(18px,2.4vw,26px) + 6px);
+  width:11px;height:11px;border-radius:50%;background:var(--branco);
+  border:2px solid var(--linha);transition:border-color .4s,transform .4s var(--mola),background .4s;
+}
+.lt-item.dentro::before{border-color:var(--ciano-forte);background:var(--ciano-fundo);transform:scale(1.2)}
+.lt-mes{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ciano-texto);font-weight:500}
+.lt-item h3{font-size:clamp(17px,2vw,21px);font-weight:500;letter-spacing:-.02em;margin:8px 0 10px}
+.lt-lista{display:grid;gap:8px}
+.lt-lista li{font-size:14.5px;line-height:1.6;color:var(--tinta-suave);padding-left:16px;position:relative}
+.lt-lista li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--ciano)}
+[data-tema="master"] .linha-tempo::before{background:rgba(255,255,255,.14)}
+[data-tema="master"] .lt-item::before{background:#0b0d18;border-color:rgba(255,255,255,.2)}
+[data-tema="master"] .lt-item.dentro::before{border-color:#00d4ff;background:rgba(0,150,255,.2)}
+[data-tema="master"] .linha-tempo::after{background:linear-gradient(180deg,#0055ff,#00d4ff)}
+[data-tema="master"] .lt-item h3{color:#fff}
+[data-tema="master"] .lt-lista li::before{background:#00d4ff}
+
+/* ==========================================================================
+   Lista expansível — alternativa a cards para listas longas
+   ========================================================================== */
+.lista-exp{border-top:1px solid var(--linha)}
+.le-item{border-bottom:1px solid var(--linha);transition:padding-left .35s var(--mola)}
+.le-item:hover{padding-left:10px}
+.le-topo{display:grid;grid-template-columns:auto 1fr auto;gap:8px 18px;align-items:baseline;padding:clamp(18px,2.3vw,24px) 0}
+.le-n{font-size:12px;font-weight:500;color:var(--ciano-forte);letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.le-t{font-size:clamp(17px,2.2vw,23px);font-weight:300;letter-spacing:-.025em;color:var(--tinta);line-height:1.25}
+.le-meta{font-size:12px;color:var(--tinta-tenue);white-space:nowrap}
+.le-d{grid-column:2;font-size:14.5px;line-height:1.65;color:var(--tinta-suave);max-width:62ch;
+  max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--suave),opacity .4s,margin .4s}
+.le-item:hover .le-d,.le-item.dentro .le-d{max-height:120px;opacity:1;margin-top:8px}
+.sec.escura .le-item,.faixa .le-item{border-bottom-color:rgba(255,255,255,.14)}
+.sec.escura .le-t,.faixa .le-t{color:#fff}
+.sec.escura .le-d,.faixa .le-d{color:rgba(255,255,255,.68)}
+
+/* ==========================================================================
+   Motion nos cards — inclinação 3D acompanhando o cursor
+   ========================================================================== */
+@media(hover:hover){
+  .cartao,.svc,.pilar,.horiz-item{transform-style:preserve-3d}
+  .cartao.inclina,.svc.inclina,.pilar.inclina,.horiz-item.inclina{
+    transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-5px);
+    transition:transform .14s ease-out,box-shadow .4s,border-color .35s;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cartao.inclina,.svc.inclina,.pilar.inclina,.horiz-item.inclina{transform:none!important}
+}
+
+/* logo do programa no hero */
+.hero-logo{display:flex;justify-content:center;margin-bottom:clamp(20px,3vw,30px)}
+.hero-logo img{width:clamp(150px,20vw,230px);height:auto;
+  filter:drop-shadow(0 18px 46px rgba(0,110,255,.45))}
+.palco-logo{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+  width:min(62%,330px);height:auto;
+  filter:drop-shadow(0 26px 60px rgba(0,110,255,.55));
+  animation:boiar 6.5s ease-in-out infinite;
+}
+@keyframes boiar-logo{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 14px))}}
+.palco-logo{animation-name:boiar-logo}
+
+/* item de trilho com imagem — relatórios, turmas */
+.horiz-item.com-img{padding:0;overflow:hidden}
+.horiz-item.com-img .hshot{
+  aspect-ratio:4/3;overflow:hidden;background:var(--nevoa);
+  display:flex;align-items:center;justify-content:center;padding:14px;position:relative;
+}
+.horiz-item.com-img .hshot img{width:100%;height:100%;object-fit:contain;transition:transform .6s var(--mola)}
+.horiz-item.com-img.capa .hshot{padding:0}
+.horiz-item.com-img.capa .hshot img{object-fit:cover}
+.horiz-item.com-img:hover .hshot img{transform:scale(1.05)}
+.horiz-item.com-img .hbody{padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.horiz-item.com-img .hbody h3{font-size:17px}
+.horiz-item.com-img .hbody p{font-size:13.5px}
+.horiz-item.com-img .hshot .hbadge{
+  position:absolute;top:12px;left:12px;z-index:2;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:500;background:rgba(255,255,255,.92);color:var(--ciano-texto);
+  border:1px solid rgba(108,216,207,.45);border-radius:20px;padding:5px 11px;
+}
+.horiz.escura .horiz-item.com-img .hshot{background:rgba(255,255,255,.04)}

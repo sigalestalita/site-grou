@@ -84,35 +84,6 @@
       }
     });
 
-    /* Menu do Consulting: trilho de categorias troca o painel ao lado */
-    $$('.submenu-mega').forEach(function (mega) {
-      var abas = $$('.cat-aba', mega);
-      var paineis = $$('.cat-painel', mega);
-      function mostra(cat) {
-        abas.forEach(function (a) {
-          var on = a.getAttribute('data-cat') === cat;
-          a.classList.toggle('ativa', on);
-          a.setAttribute('aria-expanded', on ? 'true' : 'false');
-        });
-        paineis.forEach(function (p) {
-          p.classList.toggle('ativa', p.getAttribute('data-cat') === cat);
-        });
-      }
-      abas.forEach(function (a) {
-        var cat = a.getAttribute('data-cat');
-        a.addEventListener('mouseenter', function () { mostra(cat); });
-        a.addEventListener('focus', function () { mostra(cat); });
-        a.addEventListener('click', function (e) { e.preventDefault(); mostra(cat); });
-      });
-      /* ao fechar o menu, volta para a primeira categoria */
-      var item = mega.closest('.menu-item');
-      if (item) item.addEventListener('mouseleave', function () {
-        setTimeout(function () {
-          if (!item.classList.contains('aberto') && abas[0]) mostra(abas[0].getAttribute('data-cat'));
-        }, 260);
-      });
-    });
-
     /* Gaveta mobile */
     var botao = $('.hamburguer');
     function alternarGaveta(estado) {

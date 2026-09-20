@@ -120,15 +120,17 @@ Títulos usam peso 200 com `<b>` em 600 — é esse contraste que dá o tom prem
 
 ### O menu do Consulting
 
-Catorze itens numa lista só era inviável. O menu tem **dois níveis**: um trilho
-com as duas categorias (`CATEGORIAS`, em `shared.py`) e, ao lado, o painel da
-categoria ativa, em duas colunas. Trocar de categoria é no hover, no foco ou no
-clique — o JS cuida disso no bloco de navegação. Altura do painel: ~330px, em
-vez dos ~1200px da versão anterior.
+Catorze itens num dropdown não cabem de jeito nenhum. O menu mostra **só as
+duas categorias** (`CATEGORIAS`, em `shared.py`) mais "ver todos" — três itens,
+o mesmo formato do dropdown de Tecnologias. Cada categoria tem página própria
+listando os seus serviços.
 
-Para mover um serviço de categoria, basta trocá-lo de lista em `CATEGORIAS`:
-o menu, a gaveta mobile, o hub e a seção "mesma categoria" de cada página
-acompanham sozinhos.
+Isso foi escolhido também por robustez: se o CSS não carregar, o menu degrada
+para uma lista de 3 links em vez de uma parede de 15.
+
+Para mover um serviço de categoria, troque-o de lista em `CATEGORIAS` — o menu,
+a gaveta mobile, o hub, as páginas de categoria e a seção "mesma categoria" de
+cada serviço acompanham sozinhos.
 
 ### Tema visual do Master Líder
 
@@ -143,6 +145,22 @@ escopo no mesmo modelo.
 
 A página é gerada por `p_master.py`, à parte do gerador dos outros 13 serviços,
 porque tem seções que só ela tem (5 pilares, trilha de 16 módulos, bloco NR-1).
+
+## Cache e versionamento
+
+Os links de CSS e JS levam a **hash do conteúdo** (`grou.css?v=ebb388a8`),
+gerada em `shared.py`. Quando o arquivo muda, o link muda, e navegador e CDN
+buscam a versão nova na hora.
+
+Isso existe porque o contrário já quebrou o site em produção: um
+`stale-while-revalidate=86400` no `vercel.json` autorizava o navegador a servir
+CSS de até **24 horas atrás**, então um deploy podia chegar com o HTML novo e o
+CSS velho — e o layout quebrava. O header agora é
+`public, max-age=3600, must-revalidate`, sem servir cópia velha, e o hash cobre
+o resto.
+
+**Ao editar `grou.css` ou `grou.js` à mão**, regenere as páginas para atualizar
+o hash. Sem isso, o link continua apontando para a versão anterior.
 
 ## Imagens
 

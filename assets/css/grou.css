@@ -124,7 +124,7 @@ p b{font-weight:600;color:var(--tinta)}
 
 .submenu{
   position:absolute;top:calc(100% + 10px);left:50%;
-  width:max-content;min-width:270px;max-width:340px;
+  width:max-content;min-width:280px;max-width:380px;
   background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);
   box-shadow:0 24px 60px rgba(12,10,46,.16);
   padding:10px;
@@ -1111,3 +1111,30 @@ body.gaveta-aberta{overflow:hidden}
 .trilha-b li{font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.72);padding-left:14px;position:relative}
 .trilha-b li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;
   background:linear-gradient(140deg,#0055ff,#00d4ff)}
+
+/* rótulo de categoria na gaveta mobile */
+.gav-fam{
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  color:var(--ciano-texto);padding:16px 2px 6px 16px;
+}
+@media(max-width:1180px){.menu-link{padding:10px 11px;font-size:14px}}
+
+/* ==========================================================================
+   Página de categoria do Consulting
+   ========================================================================== */
+.cat-hero-num{
+  font-size:clamp(54px,8vw,92px);font-weight:200;letter-spacing:-.05em;line-height:1;
+  color:var(--nevoa-2);display:block;margin-bottom:-.18em;
+}
+.outra-cat{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+  padding:clamp(24px,3vw,34px);border:1px solid var(--linha);border-radius:var(--raio);
+  background:var(--branco);transition:border-color .35s,transform .4s var(--mola),box-shadow .4s;
+}
+.outra-cat:hover{border-color:rgba(108,216,207,.6);transform:translateY(-4px);box-shadow:var(--sombra-m)}
+.outra-cat div{min-width:0}
+.outra-cat .r{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-tenue);font-weight:500}
+.outra-cat h3{font-size:clamp(19px,2.4vw,25px);font-weight:500;letter-spacing:-.02em;margin-top:8px}
+.outra-cat p{font-size:14px;line-height:1.6;margin-top:7px;max-width:56ch}
+.outra-cat .go{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:500;color:var(--azul-royal);flex:none;transition:gap .25s var(--mola)}
+.outra-cat:hover .go{gap:14px}

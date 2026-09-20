@@ -14,11 +14,39 @@ funciona: os links e os assets usam caminhos absolutos a partir da raiz.)
 
 ## Publicar
 
-Qualquer hospedagem estática serve a pasta raiz do repositório:
+Hospedado na **Vercel**, a partir da raiz do repositório. Não há build: a Vercel
+serve os arquivos como estão.
 
-- **Cloudflare Pages** (recomendado): conectar este repo, *build command* vazio,
-  *output directory* `/`. O `404.html` é servido automaticamente.
-- Netlify / Vercel: mesmo esquema, sem build.
+Ao importar o projeto:
+
+- **Framework Preset:** Other
+- **Build Command:** vazio
+- **Output Directory:** vazio (a raiz)
+- **Install Command:** vazio
+
+O `vercel.json` já cuida do resto:
+
+- `trailingSlash: true` — alinha as URLs com as `<link rel="canonical">` das
+  páginas, que usam barra no final (`/avaliacoes/pda-assessment/`).
+- Cabeçalhos de segurança em todas as rotas.
+- Cache de 10 minutos com `stale-while-revalidate` em `/assets/`.
+
+> O cache é curto de propósito: `grou.css` e `grou.js` têm nome fixo, sem hash.
+> Um cache longo faria uma edição demorar a aparecer. Se um dia quiser cache
+> longo, renomeie os arquivos a cada release (`grou.abc123.css`) e só então use
+> `max-age=31536000, immutable`.
+
+O `404.html` na raiz é servido automaticamente nas rotas inexistentes.
+
+Qualquer outra hospedagem estática também serve (Netlify, Cloudflare Pages,
+GitHub Pages) — sem build, apontando para a raiz.
+
+### Domínio próprio
+
+O site usa **caminhos absolutos** (`/assets/...`, `/avaliacoes/...`), então
+precisa ser servido na **raiz de um domínio**. Funciona no domínio próprio e no
+`*.vercel.app`; não funciona num subcaminho (`exemplo.com/site/`). Para servir
+num subcaminho seria preciso converter os caminhos para relativos.
 
 ## Estrutura
 

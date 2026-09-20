@@ -53,11 +53,12 @@ num subcaminho seria preciso converter os caminhos para relativos.
 ```
 index.html                                   Home — o ecossistema
 404.html                                     Página de erro
-consulting/                                  Hub dos 14 serviços, em 4 famílias
-  master-lider/ lider-360/ nr1-liderancas/ assessment-40/
-  lideranca-assertiva/ pda-para-lideres/ team-building/ entrevista-competencias/
-  vendas-comportamental/ mentoria-comportamental/ pdi-com-pda/
-  capacitacao-pda/ sensibilizacao-pda/ devolutiva-pda/
+consulting/                                  Hub dos 14 serviços, em 2 categorias
+  master-lider/                              Tema visual próprio (ver abaixo)
+  lider-360/ nr1-liderancas/ lideranca-assertiva/ pda-para-lideres/
+  assessment-40/ capacitacao-pda/ entrevista-competencias/
+  vendas-comportamental/ team-building/ pdi-com-pda/
+  mentoria-comportamental/ sensibilizacao-pda/ devolutiva-pda/
 tecnologias/                                 Hub de assessment
   pda-assessment/                            PDA
   questionario-de-resiliencia/               QR
@@ -116,6 +117,32 @@ Definida em variáveis CSS no topo de `assets/css/grou.css`:
 
 Tipografia: **Poppins** (200–600) com **Montserrat** de apoio, via Google Fonts.
 Títulos usam peso 200 com `<b>` em 600 — é esse contraste que dá o tom premium.
+
+### O menu do Consulting
+
+Catorze itens numa lista só era inviável. O menu tem **dois níveis**: um trilho
+com as duas categorias (`CATEGORIAS`, em `shared.py`) e, ao lado, o painel da
+categoria ativa, em duas colunas. Trocar de categoria é no hover, no foco ou no
+clique — o JS cuida disso no bloco de navegação. Altura do painel: ~330px, em
+vez dos ~1200px da versão anterior.
+
+Para mover um serviço de categoria, basta trocá-lo de lista em `CATEGORIAS`:
+o menu, a gaveta mobile, o hub e a seção "mesma categoria" de cada página
+acompanham sozinhos.
+
+### Tema visual do Master Líder
+
+O Master Líder é o programa principal e tem **identidade própria**, herdada de
+`masterlider.grougp.com.br`: fundo quase preto com azul elétrico (`#0055ff`)
+para ciano (`#00d4ff`).
+
+Isso vive num escopo `[data-tema="master"]` no fim do CSS, que só redefine os
+tokens da paleta — o resto do site segue com as cores da Grou. Para dar tema a
+outra página, passe `tema="master"` para `pagina()`, ou crie um novo bloco de
+escopo no mesmo modelo.
+
+A página é gerada por `p_master.py`, à parte do gerador dos outros 13 serviços,
+porque tem seções que só ela tem (5 pilares, trilha de 16 módulos, bloco NR-1).
 
 ## Imagens
 

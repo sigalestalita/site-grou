@@ -814,34 +814,6 @@ body.gaveta-aberta{overflow:hidden}
 .duo .figura img{border-radius:inherit}
 
 /* ==========================================================================
-   Mega menu — Consulting tem 14 serviços em 4 famílias
-   ========================================================================== */
-.menu-item.mega{position:static}
-.submenu-mega{
-  left:50%;width:min(940px,calc(100vw - 48px));max-width:none;
-  padding:26px 26px 18px;
-}
-.mega-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 18px}
-.mega-col h4{
-  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
-  color:var(--ciano-texto);padding:0 12px 10px;margin-bottom:4px;border-bottom:1px solid var(--linha);
-}
-.mega-col a{padding:9px 12px;font-size:13.5px;line-height:1.35}
-.mega-col a small{font-size:11px;margin-top:2px}
-.mega-todos{
-  display:inline-flex;align-items:center;gap:8px;margin:16px 0 0 12px;
-  font-size:13.5px;font-weight:500;color:var(--azul-royal);transition:gap .25s var(--mola);
-}
-.mega-todos:hover{gap:13px}
-.gav-fam{
-  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
-  color:var(--ciano-texto);padding:16px 2px 6px 16px;
-}
-@media(max-width:1180px){
-  .menu-link{padding:10px 11px;font-size:14px}
-}
-
-/* ==========================================================================
    Página de serviço — ficha, escopo, dores, diferenciais
    ========================================================================== */
 .ficha{
@@ -918,3 +890,224 @@ body.gaveta-aberta{overflow:hidden}
 .pilar p{font-size:14px;line-height:1.62;flex:1}
 .pilar .go{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:13.5px;font-weight:500;color:var(--azul-royal);transition:gap .25s var(--mola)}
 .pilar:hover .go{gap:13px}
+
+/* ==========================================================================
+   Menu do Consulting — trilho de categorias + painel de serviços
+   Catorze itens numa lista só é inviável: aqui só duas categorias ficam
+   visíveis, e o painel da categoria ativa abre ao lado.
+   ========================================================================== */
+.menu-item.mega{position:static}
+.submenu-mega{
+  left:50%;width:min(920px,calc(100vw - 48px));max-width:none;
+  padding:0;overflow:hidden;
+  display:grid;grid-template-columns:286px 1fr;align-items:start;
+}
+.cat-trilho{
+  display:flex;flex-direction:column;gap:2px;padding:16px 12px;
+  background:var(--nevoa);border-right:1px solid var(--linha);
+}
+.cat-aba{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 12px;
+  padding:15px 15px;border-radius:13px;text-align:left;
+  transition:background .25s ease,transform .3s var(--mola);
+}
+.cat-aba:hover{background:rgba(255,255,255,.7)}
+.cat-aba.ativa{background:var(--branco);box-shadow:var(--sombra-s)}
+.cat-t{font-size:13.5px;font-weight:500;color:var(--tinta);line-height:1.38;letter-spacing:-.01em;text-wrap:balance}
+.cat-n{grid-column:1;font-size:11px;color:var(--tinta-tenue);font-weight:300;white-space:nowrap}
+.cat-seta{
+  grid-row:1 / span 2;width:8px;height:8px;
+  border-right:1.6px solid var(--tinta-tenue);border-bottom:1.6px solid var(--tinta-tenue);
+  transform:rotate(-45deg);opacity:0;transition:opacity .25s,transform .3s var(--mola);
+}
+.cat-aba.ativa .cat-seta{opacity:1;border-color:var(--ciano-forte);transform:rotate(-45deg) translate(2px,2px)}
+
+.cat-paineis{position:relative;padding:20px 24px 18px;min-height:250px}
+.cat-painel{
+  position:absolute;inset:20px 22px 18px;
+  opacity:0;visibility:hidden;transform:translateX(10px);
+  transition:opacity .3s var(--mola),transform .35s var(--mola),visibility .3s;
+  display:flex;flex-direction:column;
+}
+.cat-painel.ativa{opacity:1;visibility:visible;transform:none;position:relative;inset:auto}
+.cat-desc{font-size:12.5px;color:var(--tinta-tenue);line-height:1.5;margin-bottom:14px;max-width:52ch}
+.cat-lista{display:grid;grid-template-columns:1fr 1fr;gap:1px 10px;flex:1;align-content:start}
+.cat-lista li{min-width:0}
+.cat-lista a{
+  display:block;padding:9px 12px;border-radius:11px;
+  font-size:13.5px;font-weight:400;color:var(--tinta);line-height:1.32;
+  transition:background .22s,transform .22s var(--mola),color .22s;
+}
+.cat-lista a small{display:block;margin-top:3px;font-size:11px;color:var(--tinta-tenue);font-weight:300}
+.cat-lista a:hover{background:var(--ciano-fundo);transform:translateX(3px)}
+.cat-lista a:hover small{color:var(--ciano-texto)}
+/* o programa principal ganha marcador */
+.cat-lista a.destaque{position:relative;padding-left:22px}
+.cat-lista a.destaque::before{
+  content:"";position:absolute;left:10px;top:14px;width:5px;height:5px;border-radius:50%;
+  background:linear-gradient(140deg,#0055ff,#00d4ff);box-shadow:0 0 7px rgba(0,110,255,.6);
+}
+.cat-todos{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding-top:13px;
+  border-top:1px solid var(--linha);font-size:13px;font-weight:500;color:var(--azul-royal);
+  transition:gap .25s var(--mola);
+}
+.cat-todos:hover{gap:13px}
+
+@media(max-width:1180px){
+  .menu-link{padding:10px 11px;font-size:14px}
+  .submenu-mega{width:min(800px,calc(100vw - 32px));grid-template-columns:224px 1fr}
+  .cat-lista a{font-size:13px;padding:8px 10px}
+}
+.gav-fam{
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  color:var(--ciano-texto);padding:16px 2px 6px 16px;
+}
+
+/* ==========================================================================
+   Master Líder — identidade própria (masterlider.grougp.com.br)
+   Fundo quase preto com azul elétrico → ciano. Escopo em [data-tema="master"],
+   então o resto do site segue com a paleta da Grou.
+   ========================================================================== */
+.ml-chamada{
+  position:relative;display:block;overflow:hidden;
+  border-radius:var(--raio-g);padding:clamp(28px,4vw,44px);
+  background:linear-gradient(135deg,#05060f 0%,#0a1230 55%,#05060f 100%);
+  border:1px solid rgba(0,110,255,.34);
+  transition:transform .45s var(--mola),box-shadow .45s ease,border-color .35s;
+  box-shadow:0 28px 64px -30px rgba(0,85,255,.5);
+}
+.ml-chamada::before{
+  content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,110,255,.4),transparent 68%);
+  filter:blur(60px);top:-190px;right:-120px;pointer-events:none;
+}
+.ml-chamada:hover{transform:translateY(-6px);border-color:rgba(0,212,255,.6);
+  box-shadow:0 36px 80px -30px rgba(0,110,255,.62)}
+.ml-chamada-txt{position:relative;z-index:2;max-width:56ch}
+.ml-kick{
+  display:inline-block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  padding:5px 12px;border-radius:20px;margin-bottom:14px;
+  background:rgba(0,110,255,.16);border:1px solid rgba(0,150,255,.45);
+  color:#5fb4ff;
+}
+.ml-chamada h3{
+  font-size:clamp(26px,3.6vw,40px);font-weight:200;letter-spacing:-.035em;color:#fff;margin-bottom:12px;
+}
+.ml-chamada p{font-size:14.5px;line-height:1.68;color:rgba(255,255,255,.66);max-width:52ch}
+.ml-go{
+  display:inline-flex;align-items:center;gap:9px;margin-top:20px;
+  font-size:14px;font-weight:500;
+  background:linear-gradient(100deg,#0055ff,#00d4ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  transition:gap .25s var(--mola);
+}
+.ml-chamada:hover .ml-go{gap:14px}
+.ml-go svg{stroke:#00d4ff}
+
+/* --- a página inteira, com tema próprio --- */
+[data-tema="master"]{
+  --branco:#070810;
+  --nevoa:#0b0d18;
+  --nevoa-2:#101426;
+  --tinta:#f2f6ff;
+  --tinta-suave:#9aa6c4;
+  --tinta-tenue:#6c7796;
+  --linha:rgba(255,255,255,.12);
+  --ciano:#00d4ff;
+  --ciano-forte:#33ddff;
+  --ciano-texto:#5fe3ff;
+  --ciano-fundo:rgba(0,150,255,.12);
+  --acao:#0055ff;
+  --acao-clara:#0a7bff;
+  --azul-noite:#05060f;
+  --azul-royal:#0a1230;
+  --azul-profundo:#071028;
+  background:#070810;
+}
+[data-tema="master"] body{background:#070810;color:var(--tinta-suave)}
+[data-tema="master"] .topo.fixa{background:rgba(7,8,16,.86);border-bottom-color:rgba(255,255,255,.1)}
+[data-tema="master"] .marca{color:#fff}
+[data-tema="master"] .menu-link{color:rgba(255,255,255,.82)}
+[data-tema="master"] .menu-link:hover,
+[data-tema="master"] .menu-item.aberto > .menu-link{color:#fff;background:rgba(255,255,255,.08)}
+[data-tema="master"] .hamburguer{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
+[data-tema="master"] .hamburguer i{background:#fff}
+[data-tema="master"] .hero{
+  background:
+    radial-gradient(900px 620px at 82% 4%, rgba(0,110,255,.26), transparent 62%),
+    radial-gradient(760px 540px at 4% 92%, rgba(0,212,255,.12), transparent 58%),
+    linear-gradient(170deg,#070810 0%, #0a1024 58%, #070810 100%);
+}
+[data-tema="master"] .hero-grade{opacity:.22;
+  background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)}
+[data-tema="master"] .eyebrow{
+  color:#5fb4ff;background:rgba(0,110,255,.14);border-color:rgba(0,150,255,.42)}
+[data-tema="master"] .eyebrow .ponto{background:#00d4ff;box-shadow:0 0 9px #00d4ff}
+[data-tema="master"] .btn-primario,[data-tema="master"] .btn-solido{
+  background:linear-gradient(100deg,#0055ff,#00a2ff);color:#fff;
+  box-shadow:0 14px 34px -12px rgba(0,110,255,.75)}
+[data-tema="master"] .btn-primario:hover,[data-tema="master"] .btn-solido:hover{
+  box-shadow:0 20px 48px -12px rgba(0,150,255,.85)}
+[data-tema="master"] .btn-contorno{
+  background:rgba(255,255,255,.05);color:#fff;border-color:rgba(255,255,255,.22)}
+[data-tema="master"] .btn-contorno:hover{border-color:#00d4ff;background:rgba(0,150,255,.14)}
+[data-tema="master"] .sec{background:#070810;border-top-color:rgba(255,255,255,.1)}
+[data-tema="master"] .sec.alt{background:#0b0d18}
+[data-tema="master"] .cartao{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+[data-tema="master"] .cartao:hover{background:rgba(255,255,255,.07);border-color:rgba(0,150,255,.5);
+  box-shadow:0 24px 54px -28px rgba(0,110,255,.6)}
+[data-tema="master"] .cartao h3{color:#fff}
+[data-tema="master"] .icone{background:rgba(0,110,255,.14);color:#5fb4ff}
+[data-tema="master"] .ficha{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.12)}
+[data-tema="master"] .ficha-i{background:#0b0d18}
+[data-tema="master"] .ficha-i.destaque{background:rgba(0,110,255,.14)}
+[data-tema="master"] .ficha-i.destaque .v{color:#5fe3ff}
+[data-tema="master"] .faixa{background:linear-gradient(140deg,#05060f 0%,#0a1230 52%,#05060f 100%)}
+[data-tema="master"] .faixa-o1{background:rgba(0,110,255,.34)}
+[data-tema="master"] .faixa-o2{background:rgba(0,212,255,.2)}
+[data-tema="master"] .faixa .btn-primario{background:linear-gradient(100deg,#0055ff,#00a2ff);color:#fff}
+[data-tema="master"] .rodape{background:#05060f}
+[data-tema="master"] .rodape::before{background:rgba(0,110,255,.28)}
+[data-tema="master"] .rodape-sociais a:hover{background:#00a2ff;border-color:#00a2ff;color:#fff}
+[data-tema="master"] .rodape-col a:hover,[data-tema="master"] .rodape-base a:hover{color:#5fe3ff}
+[data-tema="master"] .rodape .btn-primario{background:linear-gradient(100deg,#0055ff,#00a2ff);color:#fff}
+[data-tema="master"] .lista-num li{color:var(--tinta-suave);border-top-color:rgba(255,255,255,.12)}
+[data-tema="master"] .lista-num li:last-child{border-bottom-color:rgba(255,255,255,.12)}
+[data-tema="master"] .lista-num li::before{color:#5fe3ff}
+[data-tema="master"] .check .mk{background:rgba(0,110,255,.16);color:#5fb4ff}
+[data-tema="master"] .faq-item{border-bottom-color:rgba(255,255,255,.12)}
+[data-tema="master"] .faq-q{color:#fff}
+[data-tema="master"] .faq-q .pm{color:#00d4ff}
+[data-tema="master"] .metrica .mv{color:#fff}
+[data-tema="master"] .metrica .mv .suf{color:#00d4ff}
+[data-tema="master"] .progresso{background:linear-gradient(90deg,#00d4ff,#0055ff)}
+[data-tema="master"] .veu{background:linear-gradient(135deg,#05060f,#0a1230)}
+[data-tema="master"] .migalhas a:hover{color:#5fe3ff}
+[data-tema="master"] .tese{background:#070810}
+[data-tema="master"] .tese-h{color:#4d5878}
+[data-tema="master"] .tese-h .t2{color:#fff}
+
+/* pilares do programa */
+.pilares5{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.pilar5{
+  padding:24px 20px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);display:grid;gap:8px;align-content:start;
+  transition:transform .4s var(--mola),border-color .35s,background .35s;
+}
+.pilar5:hover{transform:translateY(-5px);border-color:rgba(0,150,255,.5);background:rgba(0,110,255,.08)}
+.pilar5 b{font-size:17px;font-weight:500;color:#fff;letter-spacing:-.02em}
+.pilar5 span{font-size:13px;line-height:1.55;color:rgba(255,255,255,.58)}
+.pilar5 i{display:block;width:22px;height:2px;border-radius:2px;background:linear-gradient(90deg,#0055ff,#00d4ff);margin-bottom:4px}
+
+/* trilha de módulos */
+.trilha{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.trilha-b{
+  padding:24px 22px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);display:grid;gap:10px;align-content:start;
+}
+.trilha-b .mes{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#5fb4ff;font-weight:600}
+.trilha-b ul{display:grid;gap:9px}
+.trilha-b li{font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.72);padding-left:14px;position:relative}
+.trilha-b li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;
+  background:linear-gradient(140deg,#0055ff,#00d4ff)}

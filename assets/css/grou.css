@@ -812,3 +812,109 @@ body.gaveta-aberta{overflow:hidden}
 /* ---------- Foto dentro do painel escuro --------------------------------- */
 .painel .figura{margin-top:22px;box-shadow:0 18px 44px rgba(7,3,58,.3)}
 .duo .figura img{border-radius:inherit}
+
+/* ==========================================================================
+   Mega menu — Consulting tem 14 serviços em 4 famílias
+   ========================================================================== */
+.menu-item.mega{position:static}
+.submenu-mega{
+  left:50%;width:min(940px,calc(100vw - 48px));max-width:none;
+  padding:26px 26px 18px;
+}
+.mega-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 18px}
+.mega-col h4{
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  color:var(--ciano-texto);padding:0 12px 10px;margin-bottom:4px;border-bottom:1px solid var(--linha);
+}
+.mega-col a{padding:9px 12px;font-size:13.5px;line-height:1.35}
+.mega-col a small{font-size:11px;margin-top:2px}
+.mega-todos{
+  display:inline-flex;align-items:center;gap:8px;margin:16px 0 0 12px;
+  font-size:13.5px;font-weight:500;color:var(--azul-royal);transition:gap .25s var(--mola);
+}
+.mega-todos:hover{gap:13px}
+.gav-fam{
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  color:var(--ciano-texto);padding:16px 2px 6px 16px;
+}
+@media(max-width:1180px){
+  .menu-link{padding:10px 11px;font-size:14px}
+}
+
+/* ==========================================================================
+   Página de serviço — ficha, escopo, dores, diferenciais
+   ========================================================================== */
+.ficha{
+  display:grid;gap:1px;background:var(--linha);border:1px solid var(--linha);
+  border-radius:var(--raio);overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+}
+.ficha-i{background:var(--branco);padding:20px 22px;display:grid;gap:6px;align-content:start}
+.ficha-i .r{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-tenue);font-weight:500}
+.ficha-i .v{font-family:var(--fonte);font-size:18px;font-weight:500;color:var(--tinta);letter-spacing:-.02em;line-height:1.3}
+.ficha-i.destaque{background:var(--ciano-fundo)}
+.ficha-i.destaque .v{color:var(--ciano-texto)}
+
+.lista-num{display:grid;gap:0;counter-reset:ln}
+.lista-num li{
+  counter-increment:ln;display:grid;grid-template-columns:auto 1fr;gap:16px;
+  padding:17px 0;border-top:1px solid var(--linha);align-items:baseline;
+  font-size:15px;line-height:1.6;color:var(--tinta-suave);transition:padding-left .3s var(--mola);
+}
+.lista-num li:last-child{border-bottom:1px solid var(--linha)}
+.lista-num li:hover{padding-left:8px}
+.lista-num li::before{
+  content:counter(ln,decimal-leading-zero);
+  font-size:12px;font-weight:500;color:var(--ciano-forte);letter-spacing:.1em;font-variant-numeric:tabular-nums;
+}
+.sec.escura .lista-num li,.faixa .lista-num li{color:rgba(255,255,255,.72);border-top-color:rgba(255,255,255,.14)}
+.sec.escura .lista-num li:last-child,.faixa .lista-num li:last-child{border-bottom-color:rgba(255,255,255,.14)}
+.sec.escura .lista-num li::before,.faixa .lista-num li::before{color:var(--ciano)}
+
+.dores{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.dor{
+  display:flex;gap:13px;align-items:flex-start;padding:17px 19px;
+  border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(255,255,255,.04);
+  font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.76);
+}
+.dor .x{flex:none;width:19px;height:19px;border-radius:50%;background:rgba(108,216,207,.16);color:var(--ciano);
+  display:flex;align-items:center;justify-content:center;margin-top:1px}
+.dor .x svg{width:10px;height:10px;stroke-width:2.6}
+
+/* cartão de serviço no hub */
+.svc{
+  position:relative;display:flex;flex-direction:column;gap:9px;
+  padding:24px 22px 22px;border:1px solid var(--linha);border-radius:var(--raio);
+  background:var(--branco);overflow:hidden;
+  transition:transform .4s var(--mola),box-shadow .4s ease,border-color .35s ease;
+}
+.svc::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(108,216,207,.12),transparent 66%)}
+.svc:hover{transform:translateY(-5px);box-shadow:var(--sombra-m);border-color:rgba(108,216,207,.55)}
+.svc:hover::after{opacity:1}
+.svc .kick{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ciano-texto);font-weight:500}
+.svc h3{font-size:17.5px;font-weight:500;letter-spacing:-.02em;line-height:1.3}
+.svc p{font-size:13.5px;line-height:1.6;flex:1}
+.svc .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.svc .meta span{font-size:11.5px;color:var(--tinta-tenue);border:1px solid var(--linha);border-radius:20px;padding:4px 10px}
+.svc .go{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:13px;font-weight:500;color:var(--azul-royal);transition:gap .25s var(--mola)}
+.svc:hover .go{gap:12px}
+
+.familia-rot{
+  display:flex;align-items:center;gap:14px;margin:clamp(40px,5vw,56px) 0 20px;
+  font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-tenue);font-weight:500;
+}
+.familia-rot::after{content:"";flex:1;height:1px;background:var(--linha)}
+
+/* cartão de pilar (home e rodapés de navegação) */
+.pilar{
+  position:relative;display:flex;flex-direction:column;gap:10px;overflow:hidden;
+  padding:28px 26px 24px;border:1px solid var(--linha);border-top:3px solid var(--ciano);
+  border-radius:var(--raio);background:var(--branco);
+  transition:transform .4s var(--mola),box-shadow .4s,border-color .35s;
+}
+.pilar:hover{transform:translateY(-6px);box-shadow:var(--sombra-m)}
+.pilar .num{font-size:11px;letter-spacing:.2em;color:var(--ciano-texto);font-weight:500}
+.pilar h3{font-size:21px;font-weight:500;letter-spacing:-.025em}
+.pilar p{font-size:14px;line-height:1.62;flex:1}
+.pilar .go{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:13.5px;font-weight:500;color:var(--azul-royal);transition:gap .25s var(--mola)}
+.pilar:hover .go{gap:13px}

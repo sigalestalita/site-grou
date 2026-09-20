@@ -1,6 +1,6 @@
 # Grou — site institucional
 
-Site estático da Grou, a HR Tech especialista em gestão comportamental.
+Site estático da Grou — um ecossistema de soluções para gestão de pessoas.
 HTML + CSS + JS puros, **sem build e sem dependências**.
 
 ## Rodar localmente
@@ -51,26 +51,49 @@ num subcaminho seria preciso converter os caminhos para relativos.
 ## Estrutura
 
 ```
-index.html                                   Home
+index.html                                   Home — o ecossistema
 404.html                                     Página de erro
-avaliacoes/                                  Hub de soluções
-  pda-assessment/                            PDA Assessment
-  feedback-360/                              Feedback 360º
-  dilemas-de-gestao/                         Dilemas de Gestão
-  questionario-de-resiliencia/               Questionário de Resiliência
-grou-skills/                                 Hub da Grou Skills
-  certificacoes-e-capacitacoes/              Certificação de Analista PDA
-  programa-de-desenvolvimento/               Liderança assertiva
-  workshops/                                 PDA para líderes, autogestão, team building
-  mentorias-e-assessment/                    Assessment 4.0 e mentoria
-  devolutivas/                               Devolutivas individuais e em grupo
+consulting/                                  Hub dos 14 serviços, em 4 famílias
+  master-lider/ lider-360/ nr1-liderancas/ assessment-40/
+  lideranca-assertiva/ pda-para-lideres/ team-building/ entrevista-competencias/
+  vendas-comportamental/ mentoria-comportamental/ pdi-com-pda/
+  capacitacao-pda/ sensibilizacao-pda/ devolutiva-pda/
+tecnologias/                                 Hub de assessment
+  pda-assessment/                            PDA
+  questionario-de-resiliencia/               QR
+  dilemas-de-gestao/                         DG
+  feedback-360/                              Fora do menu (ver nota)
+recrutamento-e-selecao/                      GrouTalent
 conteudo/                                    Podcast, vídeo e blog
-contato/                                     Formulário e canais de contato
+contato/                                     Formulário e canais
 assets/css/grou.css                          Sistema de design inteiro
 assets/js/grou.js                            Camada de movimento e interação
-assets/img/                                  Logo e favicon (SVG)
-sitemap.xml  robots.txt
+assets/img/                                  Fotos, logos e prints
+sitemap.xml  robots.txt  vercel.json
 ```
+
+## Os cinco pilares
+
+A navegação segue os pilares da apresentação comercial:
+
+| # | Pilar | Onde |
+|---|---|---|
+| 01 | A Grou | home |
+| 02 | Consulting | `/consulting/` — 14 serviços |
+| 03 | Tecnologias de Assessment | `/tecnologias/` — PDA, QR, DG |
+| 04 | Coaching | link externo para a Self Guru |
+| 05 | Recrutamento e Seleção | `/recrutamento-e-selecao/` — GrouTalent |
+
+**Coaching** é um link externo, não uma página do site: aponta para o material
+da Self Guru. Trocar a URL em `COACHING_URL`, no topo do bloco de navegação.
+
+**Feedback 360º** existe como página e está linkado no hub de Tecnologias, mas
+fica **fora do menu** — o pilar de Tecnologias define três produtos (PDA, QR e
+DG). Para promovê-lo, basta adicioná-lo a `TECNOLOGIAS`.
+
+O conteúdo das 14 páginas de serviço (objetivo, conteúdo programático, dores
+que resolve, diferenciais, carga horária, formato e investimento) veio da
+apresentação comercial da Grou.
 
 Cada página é um HTML completo e independente: o menu e o rodapé estão escritos
 em cada arquivo. Ao mexer na navegação ou no rodapé, replique a mudança em todas

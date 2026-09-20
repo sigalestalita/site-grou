@@ -395,7 +395,7 @@
         var dm = Math.hypot(p.x - mouse.x, p.y - mouse.y);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = dm < 150 ? 'rgba(255,87,0,.62)' : 'rgba(108,216,207,.78)';
+        ctx.fillStyle = dm < 150 ? 'rgba(18,5,115,.55)' : 'rgba(108,216,207,.78)';
         ctx.fill();
 
         for (var j = i + 1; j < pts.length; j++) {

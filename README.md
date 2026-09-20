@@ -86,8 +86,8 @@ Definida em variáveis CSS no topo de `assets/css/grou.css`:
 | Azul royal | `--azul-royal` | `#120573` |
 | Ciano (destaque) | `--ciano` | `#6cd8cf` |
 | Ciano (texto/ícone) | `--ciano-forte` | `#12a594` |
-| Laranja (ação) | `--laranja-energia` | `#ff5700` |
-| Laranja claro | `--laranja-claro` | `#ff9431` |
+| Ação (fundo claro) | `--acao` | `#120573` |
+| Ação (hover/gradiente) | `--acao-clara` | `#1d0f9e` |
 | Tinta (títulos) | `--tinta` | `#0c0a2e` |
 | Névoa (fundo alt.) | `--nevoa` | `#f4f6fb` |
 
@@ -124,6 +124,21 @@ foto, troque a legenda junto: elas documentam entregas que de fato aconteceram.
 
 Toda `<img>` tem `alt` descritivo e `loading="lazy"` (menos a do hero, que usa
 `fetchpriority="high"` por ser a maior imagem acima da dobra).
+
+### Nada de laranja
+
+A paleta **não tem laranja**. A cor de ação é o azul royal sobre fundo claro e o
+**ciano sobre fundo escuro** — `.faixa`, `.rodape` e `.sec.escura` trocam o
+`.btn-primario` para ciano com texto azul-noite automaticamente, porque um botão
+azul desapareceria ali. Contraste: 16,2:1 no claro e 11,4:1 no escuro.
+
+### Camadas do hero
+
+O palco do hero tem `z-index` **explícito** em cada camada (anel 0, disco 1,
+núcleo 2, foto 3, cartões 4). Sem isso, navegadores divergem no empilhamento
+quando `transform`/`animation` promovem camadas, e o disco branco chega a ser
+pintado por cima da foto. Quando há foto (`.palco.com-foto`), o disco e o núcleo
+são escondidos: a foto já traz o próprio halo.
 
 ## Movimento
 

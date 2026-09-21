@@ -492,53 +492,6 @@
   })();
 
   /* ====================================================================== */
-  /* 8f. Slider de programas — trilho com setas, pontos e arrasto           */
-  /* ====================================================================== */
-  (function () {
-    $$('[data-prog]').forEach(function (prog) {
-      var trilho = $('.prog-trilho', prog);
-      var slides = $$('.prog-slide', prog);
-      var pontos = $$('.prog-ponto', prog);
-      var setas = $$('.prog-seta', prog);
-      if (!trilho || slides.length < 2) return;
-      var i = 0;
-
-      function pintar() {
-        slides.forEach(function (s, k) { s.classList.toggle('ativo', k === i); });
-        pontos.forEach(function (p, k) { p.classList.toggle('ativo', k === i); });
-        setas.forEach(function (b) {
-          var passo = parseInt(b.dataset.passo, 10);
-          b.disabled = (passo < 0 && i === 0) || (passo > 0 && i === slides.length - 1);
-        });
-      }
-      function ir(k) {
-        i = Math.max(0, Math.min(slides.length - 1, k));
-        trilho.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft,
-                          behavior: reduzido ? 'auto' : 'smooth' });
-        pintar();
-      }
-
-      setas.forEach(function (b) {
-        b.addEventListener('click', function () { ir(i + parseInt(b.dataset.passo, 10)); });
-      });
-      pontos.forEach(function (p, k) { p.addEventListener('click', function () { ir(k); }); });
-
-      /* arrasto e teclado mexem no scroll: o índice acompanha o que está à vista */
-      var t;
-      trilho.addEventListener('scroll', function () {
-        clearTimeout(t);
-        t = setTimeout(function () {
-          var largura = slides[0].offsetWidth || 1;
-          var k = Math.round(trilho.scrollLeft / largura);
-          if (k !== i) { i = Math.max(0, Math.min(slides.length - 1, k)); pintar(); }
-        }, 90);
-      }, { passive: true });
-
-      pintar();
-    });
-  })();
-
-  /* ====================================================================== */
   /* 9. FAQ                                                                 */
   /* ====================================================================== */
   (function () {

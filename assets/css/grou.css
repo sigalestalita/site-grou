@@ -199,9 +199,9 @@ body.gaveta-aberta{overflow:hidden}
 .btn-primario{padding:16px 30px;font-size:15px;color:var(--branco);background:linear-gradient(100deg,var(--acao-clara),var(--acao));box-shadow:0 12px 30px rgb(var(--acao-rgb) / .28)}
 .btn-primario:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgb(var(--acao-rgb) / .42)}
 /* sobre fundo escuro o azul some: ali a ação é o ciano, com texto azul-noite */
-.faixa .btn-primario,.rodape .btn-primario,.sec.escura .btn-primario{
+.faixa .btn-primario,.rodape .btn-primario,.cta-faixa .btn-primario,.sec.escura .btn-primario{
   background:var(--ciano);color:var(--azul-noite);box-shadow:0 12px 30px rgb(var(--ciano-rgb) / .28)}
-.faixa .btn-primario:hover,.rodape .btn-primario:hover,.sec.escura .btn-primario:hover{
+.faixa .btn-primario:hover,.rodape .btn-primario:hover,.cta-faixa .btn-primario:hover,.sec.escura .btn-primario:hover{
   background:var(--ciano-hover);box-shadow:0 18px 44px rgb(var(--ciano-rgb) / .42)}
 
 .btn-contorno{padding:15px 28px;font-size:15px;color:var(--azul-noite);background:var(--branco);border:1px solid var(--linha)}
@@ -661,6 +661,28 @@ body.gaveta-aberta{overflow:hidden}
 .rodape-cta{text-align:center;padding-bottom:clamp(44px,6vw,64px);border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:clamp(40px,5vw,54px)}
 .rodape-cta h3{font-size:clamp(25px,3.7vw,40px);font-weight:200;letter-spacing:-.032em;line-height:1.12;color:#fff;max-width:19ch;margin:0 auto 24px}
 .rodape-cta h3 b{font-weight:600}
+
+/* ---------- Mesmo chamado, solto como seção (na home vem antes do FAQ) --- */
+.cta-faixa{
+  position:relative;overflow:hidden;text-align:center;
+  background:var(--azul-noite);color:rgba(255,255,255,.62);
+  padding:clamp(74px,9vw,120px) var(--gutter);
+}
+.cf-orbe{
+  content:"";position:absolute;width:620px;height:620px;border-radius:50%;
+  background:rgb(var(--acao-rgb) / .5);filter:blur(90px);
+  top:-330px;left:50%;transform:translateX(-50%);pointer-events:none;
+}
+.cta-faixa .wrap{position:relative;z-index:2}
+.cta-faixa h2{
+  font-size:clamp(25px,3.7vw,40px);font-weight:200;letter-spacing:-.032em;line-height:1.12;
+  color:#fff;max-width:19ch;margin:0 auto;
+}
+.cta-faixa h2 b{font-weight:600}
+.cta-faixa .lead{margin:20px auto 28px;max-width:52ch;color:rgba(255,255,255,.62)}
+[data-tema="master"] .cta-faixa{background:#05060f}
+[data-tema="master"] .cf-orbe{background:rgba(0,110,255,.28)}
+[data-tema="master"] .cta-faixa .btn-primario{background:linear-gradient(100deg,#0055ff,#00a2ff);color:#fff}
 
 /* ---------- Botão flutuante WhatsApp ------------------------------------- */
 .zap{

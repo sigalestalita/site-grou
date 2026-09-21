@@ -2113,3 +2113,134 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
   .grade.aca-2col{grid-template-columns:1fr 1fr}
   .grade.aca-3col{grid-template-columns:repeat(3,1fr)}
 }
+
+/* =========================================================================
+   O QUE A GROU RESOLVE — três blocos editoriais no escuro
+   Era uma grade de três cartões iguais seguida de uma faixa que repetia os
+   mesmos números. Virou uma seção só: retrato num disco, o número grande e
+   o texto, alternando de lado a cada bloco.
+   ========================================================================= */
+.custo{
+  position:relative;overflow:hidden;
+  padding:clamp(80px,11vw,140px) var(--gutter) clamp(70px,9vw,120px);
+  background:
+    radial-gradient(900px 640px at 82% 4%, rgb(var(--ciano-rgb) / .14), transparent 60%),
+    linear-gradient(162deg,var(--azul-noite) 0%,var(--azul-royal) 54%,var(--azul-profundo) 100%);
+  color:rgba(255,255,255,.74);
+}
+.custo-orbe{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);opacity:.5}
+.custo-o1{width:520px;height:520px;background:rgb(var(--ciano-rgb) / .3);top:-200px;right:-140px}
+.custo-o2{width:460px;height:460px;background:rgb(var(--ciano-rgb) / .16);bottom:-200px;left:-150px}
+.custo .wrap{position:relative;z-index:2}
+.custo-head h2{color:#fff}
+.custo-head .lead{color:rgba(255,255,255,.66)}
+
+.custo-item{
+  display:grid;gap:clamp(26px,5vw,64px);align-items:center;
+  grid-template-columns:1fr;
+  padding:clamp(40px,6vw,64px) 0;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.custo-item:first-of-type{margin-top:clamp(26px,4vw,44px)}
+@media(min-width:880px){
+  .custo-item{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr)}
+  /* alterna o lado: o retrato troca de coluna nos blocos pares */
+  .custo-item:nth-of-type(even) .custo-foto{order:2}
+  .custo-item:nth-of-type(even) .custo-txt{order:1}
+}
+.custo-foto{
+  position:relative;margin:0;width:min(100%,332px);aspect-ratio:1/1;
+  justify-self:center;
+}
+.custo-foto img{
+  position:relative;z-index:2;width:100%;height:100%;object-fit:cover;border-radius:50%;
+  box-shadow:0 30px 70px rgba(0,0,0,.42);
+}
+.custo-anel{
+  position:absolute;z-index:1;inset:-7%;border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);
+}
+.custo-anel::after{
+  content:"";position:absolute;inset:-9%;border-radius:50%;
+  background:radial-gradient(circle,rgb(var(--ciano-rgb) / .3),transparent 66%);
+  filter:blur(16px);
+}
+.custo-n{
+  display:block;font-size:13px;letter-spacing:.24em;font-weight:500;
+  color:var(--ciano);margin-bottom:14px;
+}
+.custo-item h3{
+  color:#fff;font-size:clamp(23px,3.1vw,38px);font-weight:200;
+  letter-spacing:-.03em;line-height:1.12;margin-bottom:16px;max-width:16ch;
+}
+.custo-p{font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.72;color:rgba(255,255,255,.66);max-width:46ch}
+.custo-r{
+  font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.72;color:#fff;font-weight:400;
+  max-width:46ch;margin-top:14px;padding-left:16px;border-left:2px solid var(--ciano);
+}
+.custo-num{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:clamp(22px,3vw,32px)}
+.custo-num .cn{
+  font-size:clamp(42px,6.4vw,78px);font-weight:200;letter-spacing:-.05em;line-height:.9;
+  color:#fff;display:inline-flex;align-items:baseline;
+}
+.custo-num .cn i{font-style:normal;color:var(--ciano)}
+.custo-num .cn i.su{font-size:.5em;margin-left:.04em}
+.custo-num .cl{font-size:13.5px;color:rgba(255,255,255,.58);line-height:1.5;max-width:26ch}
+.custo-fecho{
+  margin-top:clamp(34px,5vw,54px);padding-top:clamp(26px,4vw,38px);
+  border-top:1px solid rgba(255,255,255,.1);
+  text-align:center;font-size:clamp(15px,1.7vw,19px);color:rgba(255,255,255,.6);font-weight:300;
+}
+.custo-fecho b{color:#fff;font-weight:400}
+
+/* ---- Telas do scrollytelling: conteúdo de verdade no lugar do número ---- */
+.pt-mapa,.pt-graf{
+  width:min(100%,340px);text-align:left;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:16px;backdrop-filter:blur(6px);
+}
+.pt-mapa .ml1,.pt-graf .ml1{
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:11px;
+}
+.pt-mapa ul{display:grid;gap:9px}
+.pt-mapa li{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-size:12.5px;color:rgba(255,255,255,.8);
+}
+.pt-mapa .rz{
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  border-radius:20px;padding:3px 9px;white-space:nowrap;
+}
+.pt-mapa .rz.alto{background:rgba(255,255,255,.14);color:#fff}
+.pt-mapa .rz.media{background:rgb(var(--ciano-rgb) / .16);color:var(--ciano)}
+.pt-mapa .rz.ok{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5)}
+
+.pt-dupla{display:flex;align-items:center;gap:18px;width:min(100%,340px)}
+.pt-retrato{margin:0;flex:none;width:104px;aspect-ratio:1/1;border-radius:50%;overflow:hidden;
+  border:1px solid rgba(255,255,255,.2);box-shadow:0 14px 34px rgba(0,0,0,.36)}
+.pt-retrato img{width:100%;height:100%;object-fit:cover}
+.pt-roteiro{display:grid;gap:9px;text-align:left}
+.pt-roteiro li{
+  position:relative;padding-left:17px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.8);
+}
+.pt-roteiro li::before{
+  content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;border-radius:50%;
+  background:var(--ciano);
+}
+.pt-barras{display:flex;align-items:flex-end;gap:10px;height:84px;margin-bottom:26px}
+.pt-barras i{
+  flex:1;height:var(--h);border-radius:6px 6px 0 0;position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.08));
+  transition:height .9s var(--mola);
+}
+.pt-barras i.fim{background:linear-gradient(180deg,var(--ciano),rgb(var(--ciano-rgb) / .3))}
+.pt-barras i span{
+  position:absolute;left:0;right:0;bottom:-17px;text-align:center;
+  font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.4);
+}
+.pt-selo{
+  margin-top:6px;font-size:11px;letter-spacing:.06em;color:var(--ciano);
+  background:rgb(var(--ciano-rgb) / .12);border-radius:20px;padding:7px 12px;text-align:center;
+}
+@media(prefers-reduced-motion:reduce){.pt-barras i{transition:none}}

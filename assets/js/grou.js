@@ -77,6 +77,34 @@
         if (!item.contains(e.relatedTarget)) fecha(0);
       });
     });
+    /* Consulting: a coluna da esquerda troca a lista da direita */
+    $$('[data-cons]').forEach(function (painel) {
+      var cats = $$('.sc-cat', painel);
+      var listas = $$('.sc-painel', painel);
+      if (!cats.length) return;
+      function mostrar(k) {
+        cats.forEach(function (c, i) {
+          c.classList.toggle('ativo', i === k);
+          c.setAttribute('aria-expanded', i === k ? 'true' : 'false');
+        });
+        listas.forEach(function (l, i) { l.classList.toggle('ativo', i === k); });
+      }
+      cats.forEach(function (c, k) {
+        c.addEventListener('pointerenter', function () { mostrar(k); });
+        c.addEventListener('focus', function () { mostrar(k); });
+        c.addEventListener('click', function (e) { e.preventDefault(); mostrar(k); });
+        c.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
+          if (d) { e.preventDefault(); var n = (k + d + cats.length) % cats.length; cats[n].focus(); }
+          if (e.key === 'ArrowRight') {
+            var primeiro = $('a', listas[k]);
+            if (primeiro) { e.preventDefault(); primeiro.focus(); }
+          }
+        });
+      });
+      mostrar(0);
+    });
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         $$('.menu-item.aberto').forEach(function (o) { o.classList.remove('aberto'); });

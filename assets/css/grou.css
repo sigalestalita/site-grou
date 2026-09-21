@@ -142,6 +142,52 @@ p b{font-weight:600;color:var(--tinta)}
 .submenu a:hover small{color:var(--ciano-texto)}
 .submenu .divisor{height:1px;background:var(--linha);margin:8px 12px}
 
+/* Consulting em duas colunas: categorias à esquerda, os serviços à direita.
+   A categoria é um botão, não um link — o menu leva direto ao serviço, sem
+   passar por uma página de listagem no caminho. */
+.submenu-cons{
+  left:0;right:auto;transform:translate(0,-8px) scale(.98);
+  width:min(700px,calc(100vw - 32px));min-width:0;max-width:none;
+  display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:10px;
+}
+.menu-item.aberto .submenu-cons{transform:translate(0,0) scale(1)}
+.sc-cats{display:flex;flex-direction:column;gap:2px;padding-right:10px;border-right:1px solid var(--linha)}
+.sc-cats li{display:flex}
+.sc-cat{
+  flex:1;display:flex;align-items:center;gap:10px;text-align:left;
+  padding:11px 14px;border-radius:12px;font-size:14px;color:var(--tinta);
+  transition:background .22s,color .22s;
+}
+.sc-cat .sc-rot{flex:1;min-width:0}
+.sc-cat .sc-chev{
+  width:7px;height:7px;flex:none;opacity:.4;
+  border-right:1.5px solid currentColor;border-top:1.5px solid currentColor;
+  transform:rotate(45deg);transition:opacity .22s,transform .22s var(--mola);
+}
+.sc-cat:hover{background:var(--nevoa)}
+.sc-cat.ativo{background:var(--ciano-fundo);color:var(--azul-noite)}
+.sc-cat.ativo .sc-chev{opacity:1;transform:rotate(45deg) translate(2px,-2px)}
+.sc-todos{
+  display:flex !important;align-items:center;gap:7px;
+  font-size:13px;color:var(--ciano-texto) !important;font-weight:500;
+}
+.sc-todos::after{
+  content:"";width:6px;height:6px;border-right:1.5px solid currentColor;
+  border-top:1.5px solid currentColor;transform:rotate(45deg);opacity:.7;
+}
+.sc-paineis{display:grid;min-height:0}
+.sc-painel{
+  grid-area:1/1;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transform:translateX(-7px);
+  transition:opacity .24s ease,transform .3s var(--mola),visibility .24s;
+}
+.sc-painel.ativo{opacity:1;visibility:visible;transform:none}
+.sc-painel a{padding:9px 13px}
+@media(prefers-reduced-motion:reduce){
+  .sc-painel{transition:opacity .15s ease,visibility .15s;transform:none}
+  .sc-cat .sc-chev{transition:none}
+}
+
 .nav-acoes{display:flex;align-items:center;gap:10px}
 .nav-acoes .btn{display:none}
 @media(min-width:760px){.nav-acoes .btn{display:inline-flex}}

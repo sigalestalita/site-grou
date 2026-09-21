@@ -269,7 +269,7 @@ body.gaveta-aberta{overflow:hidden}
 
 /* ---------- Eyebrow ------------------------------------------------------- */
 .eyebrow{
-  display:inline-flex;align-items:center;gap:9px;
+  display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
   font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;
   color:var(--ciano-texto);background:var(--ciano-fundo);
   border:1px solid rgb(var(--ciano-rgb) / .5);border-radius:30px;padding:7px 15px;
@@ -569,14 +569,33 @@ body.gaveta-aberta{overflow:hidden}
 /* ---------- Lista de checagem -------------------------------------------- */
 .checks{display:grid;gap:14px}
 .check{display:flex;gap:13px;align-items:flex-start;font-size:15px;line-height:1.62;color:var(--tinta-suave)}
+.check > span:not(.mk){flex:1;min-width:0}
 .check .mk{flex:none;width:21px;height:21px;border-radius:50%;background:var(--ciano-fundo);color:var(--ciano-forte);display:flex;align-items:center;justify-content:center;margin-top:1px}
 .check .mk svg{width:11px;height:11px;stroke-width:3}
 .sec.escura .check,.faixa .check{color:rgba(255,255,255,.72)}
 .sec.escura .check .mk,.faixa .check .mk{background:rgb(var(--ciano-rgb) / .14);color:var(--ciano)}
+/* destaque dentro do item de lista, claro ou escuro */
+.check b{font-weight:500;color:var(--tinta)}
+.painel .check{color:rgba(255,255,255,.72)}
+.painel .check .mk{background:rgb(var(--ciano-rgb) / .14);color:var(--ciano)}
+.sec.escura .check b,.faixa .check b,.painel .check b{color:#fff}
+.painel.claro .check{color:var(--tinta-suave)}
+.painel.claro .check b{color:var(--tinta)}
+.painel.claro .check .mk{background:var(--ciano-fundo);color:var(--ciano-forte)}
+/* marcador de lista negativa — o mesmo desenho, sem o verde do "ok" */
+.check .mk.neg{background:var(--nevoa-2);color:var(--tinta-tenue)}
+.sec.escura .check .mk.neg,.faixa .check .mk.neg{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
 
 /* ---------- Duas colunas ------------------------------------------------- */
 .duo{display:grid;gap:clamp(30px,5vw,64px);align-items:center;grid-template-columns:1fr}
 @media(min-width:900px){.duo{grid-template-columns:1fr 1fr}.duo.a55{grid-template-columns:1.1fr .9fr}.duo.a45{grid-template-columns:.9fr 1.1fr}}
+/* colunas iguais que crescem juntas — dois painéis lado a lado */
+.duo.a50{align-items:stretch}
+@media(min-width:900px){
+  .duo.a50{grid-template-columns:1fr 1fr}
+  .duo.a50 > div{display:flex;flex-direction:column}
+  .duo.a50 > div > .painel{flex:1}
+}
 .duo h2{max-width:18ch}
 
 /* Painel decorativo */

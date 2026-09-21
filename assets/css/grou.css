@@ -1558,10 +1558,10 @@ body.gaveta-aberta{overflow:hidden}
 .eco{
   position:relative;
   width:min(100%,556px);
-  aspect-ratio:556 / 420;
+  aspect-ratio:556 / 500;
   margin:0 auto;
   --tw:26.98%;          /* 150 / 556 */
-  --th:15.71%;          /* 66 / 420  */
+  --th:13.2%;           /* 66 / 500  */
 }
 .eco-fios{
   position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;
@@ -1579,7 +1579,7 @@ body.gaveta-aberta{overflow:hidden}
 
 /* ---- Núcleo: a foto num disco, com anéis ---- */
 .eco-nucleo{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  position:absolute;left:50%;top:58.4%;transform:translate(-50%,-50%);
   width:37.41%;                    /* 208 / 556 */
   aspect-ratio:1/1;z-index:3;
 }
@@ -1616,6 +1616,17 @@ body.gaveta-aberta{overflow:hidden}
 
 /* ---- Ladrilhos das soluções ---- */
 .eco-slot{position:absolute;width:var(--tw);height:var(--th);z-index:2}
+/* O balão do ladrilho do topo abre para cima, e os das colunas encostam na
+   borda de fora: centrado, um rótulo longo transbordaria a caixa. */
+.eco-slot-topo .eco-nome{top:auto;bottom:calc(100% + 6px);transform:translate(-50%,-4px)}
+.eco-slot-topo .eco-tile:hover .eco-nome,
+.eco-slot-topo .eco-tile:focus-visible .eco-nome{transform:translate(-50%,0)}
+.eco-slot-esq .eco-nome{left:0;transform:translate(0,4px)}
+.eco-slot-dir .eco-nome{left:auto;right:0;transform:translate(0,4px)}
+.eco-slot-esq .eco-tile:hover .eco-nome,.eco-slot-esq .eco-tile:focus-visible .eco-nome,
+.eco-slot-dir .eco-tile:hover .eco-nome,.eco-slot-dir .eco-tile:focus-visible .eco-nome{
+  transform:translate(0,0);
+}
 .eco-tile{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
@@ -1654,7 +1665,8 @@ body.gaveta-aberta{overflow:hidden}
 /* Nome da solução, revelado no destaque */
 .eco-nome{
   position:absolute;left:50%;top:calc(100% + 6px);transform:translate(-50%,4px);
-  white-space:nowrap;font-size:11px;font-weight:500;letter-spacing:.02em;
+  width:max-content;max-width:min(190px,150%);text-align:center;line-height:1.3;
+  font-size:11px;font-weight:500;letter-spacing:.02em;
   color:var(--tinta);background:var(--branco);
   border:1px solid var(--linha);border-radius:20px;padding:4px 10px;
   box-shadow:var(--sombra-s);
@@ -1695,6 +1707,8 @@ body.gaveta-aberta{overflow:hidden}
     width:min(58%,220px);justify-self:center;margin:4px auto 48px;
   }
   .eco-slot{position:static;width:auto;height:76px;animation:none}
+  /* o carro-chefe ocupa a linha inteira e os outros oito fecham em pares */
+  .eco-slot-topo{grid-column:1 / -1}
   /* altura definida, senão o max-height em % das marcas não tem contra o quê
      resolver e os logos saem grandes demais */
   .eco-tile{position:relative;inset:auto;height:76px}
@@ -1741,7 +1755,10 @@ body.gaveta-aberta{overflow:hidden}
 .eco:has(.eco-slot[data-k="8"] .eco-tile:focus-visible) .eco-fio path[data-k="8"]{stroke:var(--ciano);stroke-width:2.4}
 .eco:has(.eco-slot[data-k="8"] .eco-tile:hover) .eco-pulso[data-k="8"],
 .eco:has(.eco-slot[data-k="8"] .eco-tile:focus-visible) .eco-pulso[data-k="8"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
-
+.eco:has(.eco-slot[data-k="9"] .eco-tile:hover) .eco-fio path[data-k="9"],
+.eco:has(.eco-slot[data-k="9"] .eco-tile:focus-visible) .eco-fio path[data-k="9"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="9"] .eco-tile:hover) .eco-pulso[data-k="9"],
+.eco:has(.eco-slot[data-k="9"] .eco-tile:focus-visible) .eco-pulso[data-k="9"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
 /* =========================================================================
    PDAZ — composição da hero do PDA Assessment
    Celular ao centro e cartões da plataforma em volta, no desenho da hero da

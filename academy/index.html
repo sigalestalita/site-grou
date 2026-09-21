@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/grou.css?v=2f88d04e">
+<link rel="stylesheet" href="/assets/css/grou.css?v=b17ee840">
 </head>
 <body>
 <div class="veu" aria-hidden="true"></div>
@@ -27,7 +27,7 @@
 <div class="progresso" aria-hidden="true"></div>
 <header class="topo">
   <nav class="nav" aria-label="Principal">
-    <a class="marca aca-marca" href="/academy/" aria-label="Grou Academy · página inicial"><img src="/assets/img/eco-grou-academy.webp" width="560" height="265" alt="Grou Academy" fetchpriority="high"></a>
+    <a class="marca aca-marca" href="/academy/" aria-label="Grou Academy · página inicial"><img src="/assets/img/academy/marca-branca.webp" width="560" height="265" alt="Grou Academy" fetchpriority="high"></a>
     <ul class="menu">
       <li class="menu-item"><a class="menu-link" href="#cursos">Cursos</a></li>
       <li class="menu-item"><a class="menu-link" href="#mentores">Mentores</a></li>
@@ -57,8 +57,10 @@
 <main id="conteudo-principal">
 
 <!-- ================= HERO ================= -->
-<section class="hero hero-alto">
-  <div class="hero-grade" aria-hidden="true"></div>
+<section class="hero hero-alto aca-hero">
+  <img class="aca-arte" src="/assets/img/academy/hero.webp" width="1364" height="607"
+       alt="Dois profissionais com tablets e painéis de indicadores de RH"
+       fetchpriority="high" decoding="async">
   <div class="hero-interno">
     <div class="hero-cols">
       <div class="hero-copy">
@@ -76,17 +78,12 @@
           <a class="btn btn-primario" href="#cursos">Ver cursos <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></a>
           <a class="btn btn-contorno" href="https://grouacademy.memberkit.com.br/" target="_blank" rel="noopener">Sou aluno</a>
         </div>
+        <div class="hero-selos" data-reveal="up" style="--d:380ms">
+          <span class="hero-selo"><b data-contar="5000" data-pre="+">+5.000</b> alunos já formados</span>
+          <span class="hero-selo"><b data-contar="17">17</b> masterclasses gratuitas</span>
+          <span class="hero-selo"><b>Certificado</b> digital em todas</span>
+        </div>
       </div>
-
-      <div class="hero-visual" data-reveal="right" style="--d:240ms" data-parallax="0.05">
-        <figure class="aca-hero-fig">
-          <img src="/assets/img/academy/hero.webp" width="1160" height="516"
-               alt="Dois profissionais com tablets e painéis de indicadores de RH"
-               fetchpriority="high" decoding="async">
-          <figcaption><b><span data-contar="5000" data-pre="+">+5.000</span></b> alunos já formados</figcaption>
-        </figure>
-      </div>
-
     </div>
   </div>
 </section>

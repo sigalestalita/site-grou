@@ -1985,45 +1985,131 @@ body.gaveta-aberta{overflow:hidden}
   .grade.aca-2col{grid-template-columns:1fr 1fr}
   .grade.aca-3col{grid-template-columns:repeat(3,1fr)}
 }
-/* Números do painel do hero */
-.aca-num{display:grid;grid-template-columns:1fr 1fr;gap:20px 18px}
-.aca-num div{display:flex;flex-direction:column;gap:4px}
-.aca-num b{font-size:clamp(24px,2.8vw,32px);font-weight:200;letter-spacing:-.03em;color:#fff;line-height:1}
-.aca-num span{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.4}
 /* Bio das mentoras: nome centrado, texto alinhado à esquerda para poder ler */
 .aca-mentora h3{text-align:center}
 .aca-mentora p{text-align:left}
-/* Selo do hero com a fileira de avatares do próprio Grou Academy */
+
+/* =========================================================================
+   GROU ACADEMY — hero escura
+   A ilustração da Academy é uma faixa larga cuja metade esquerda é degradê
+   para transparente, feita para dissolver num fundo escuro. Fechada num
+   cartão claro sobrava vazio; aqui ela sangra pela direita e some no navio,
+   que é como foi desenhada — e é a hero escura que o site deles já tem.
+   ========================================================================= */
+.aca-hero{
+  background:
+    radial-gradient(820px 560px at 88% 20%, rgba(96,58,180,.34), transparent 62%),
+    radial-gradient(700px 520px at 6% 92%, rgb(var(--ciano-rgb) / .12), transparent 58%),
+    linear-gradient(155deg,#0a0733 0%,#130b52 46%,#07033a 100%);
+  color:rgba(255,255,255,.76);
+}
+.aca-hero .hero-grade{display:none}
+.aca-arte{
+  position:absolute;right:-3%;top:50%;transform:translateY(-46%);
+  z-index:1;pointer-events:none;
+  width:min(60%,880px);height:auto;
+  /* a arte corta na cintura: sem isso fica uma linha reta no fim da imagem */
+  -webkit-mask-image:linear-gradient(to bottom,#000 76%,transparent 99%);
+  mask-image:linear-gradient(to bottom,#000 76%,transparent 99%);
+}
+/* No empilhamento a arte não pode entrar no fluxo: ela vem antes do texto no
+   HTML e empurraria tudo para fora da dobra. Fica no rodapé da hero. */
+@media(max-width:959px){
+  .aca-arte{
+    right:-18%;top:auto;bottom:0;transform:none;
+    width:min(150%,700px);
+    -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 98%);
+    mask-image:linear-gradient(to bottom,#000 72%,transparent 98%);
+  }
+  .aca-hero{padding-bottom:clamp(180px,42vw,280px)}
+  .aca-hero .hero-cols{align-items:center}
+}
+/* Topo transparente sobre a hero escura: enquanto não há rolagem, o menu
+   inverte para claro; ao ganhar .fixa o fundo claro volta. */
+body:has(.aca-hero) .topo:not(.fixa) .marca{color:#fff}
+body:has(.aca-hero) .topo:not(.fixa) .menu-link{color:rgba(255,255,255,.84)}
+body:has(.aca-hero) .topo:not(.fixa) .menu-link:hover{color:#fff;background:rgba(255,255,255,.12)}
+body:has(.aca-hero) .topo:not(.fixa) .hamburguer{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.24)}
+body:has(.aca-hero) .topo:not(.fixa) .hamburguer i{background:#fff}
+body:has(.aca-hero) .topo:not(.fixa) .btn-solido{
+  background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none}
+body:has(.aca-hero) .topo:not(.fixa) .btn-solido:hover{background:rgba(255,255,255,.2)}
+body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%) invert(9%) sepia(72%) saturate(3800%) hue-rotate(245deg)}
+.aca-hero .hero-cols{align-items:flex-start}
+@media(min-width:960px){.aca-hero .hero-copy{max-width:600px;flex:none}}
+.aca-hero h1{color:#fff}
+.aca-hero .lead{color:rgba(255,255,255,.74)}
+.aca-hero .lead b{color:#fff}
+.aca-hero .hero-selo{color:rgba(255,255,255,.55)}
+.aca-hero .hero-selo b{color:#fff}
+.aca-hero .btn-primario{
+  background:var(--ciano);color:var(--azul-noite);
+  box-shadow:0 12px 30px rgb(var(--ciano-rgb) / .3);
+}
+.aca-hero .btn-primario:hover{background:var(--ciano-hover);box-shadow:0 18px 44px rgb(var(--ciano-rgb) / .44)}
+.aca-hero .btn-contorno{color:#fff;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.26)}
+.aca-hero .btn-contorno:hover{border-color:var(--ciano);background:rgb(var(--ciano-rgb) / .14)}
+
+/* Selo com a fileira de avatares do próprio Grou Academy */
 .aca-selo{
   display:inline-flex;align-items:center;gap:12px;
-  padding:6px 18px 6px 6px;border-radius:40px;
-  background:var(--branco);border:1px solid var(--linha);box-shadow:var(--sombra-s);
-  font-size:14px;color:var(--tinta-suave);
-  margin-bottom:24px;
+  padding:6px 18px 6px 6px;border-radius:40px;margin-bottom:24px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-size:14px;color:rgba(255,255,255,.8);
 }
 .aca-selo img{height:34px;width:auto}
-.aca-selo b{color:var(--ciano-texto);font-weight:600}
-@media(max-width:959px){.aca-selo{margin:0 auto}}
-
-/* Ilustração da hero, com o selo de alunos por cima */
-.aca-hero-fig{
-  position:relative;margin:0;border-radius:var(--raio-g);overflow:hidden;
-  box-shadow:var(--sombra-g);
-}
-.aca-hero-fig img{width:100%;height:auto;display:block}
-/* o tom da ilustração puxa para o roxo: o contorno amarra com o resto */
-.aca-hero-fig{border:1px solid rgba(255,255,255,.5)}
-.aca-hero-fig figcaption{
-  position:absolute;left:clamp(14px,3%,24px);bottom:clamp(14px,4%,22px);
-  display:flex;align-items:baseline;gap:8px;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
-  border-radius:30px;padding:9px 18px;box-shadow:0 10px 30px rgba(12,10,46,.22);
-  font-size:13px;color:var(--tinta-suave);
-}
-.aca-hero-fig figcaption b{font-size:19px;font-weight:300;letter-spacing:-.02em;color:var(--tinta)}
+.aca-selo b{color:var(--ciano);font-weight:600}
+@media(max-width:959px){.aca-selo{margin-left:auto;margin-right:auto}}
 @media(max-width:620px){
-  .aca-hero-fig figcaption{padding:7px 13px;font-size:11.5px;gap:6px}
-  .aca-hero-fig figcaption b{font-size:16px}
   .aca-selo{font-size:12.5px;gap:9px;padding:5px 14px 5px 5px}
   .aca-selo img{height:28px}
+}
+
+/* Marca do Academy no topo e no rodapé (versão branca) */
+.aca-marca img{height:30px;width:auto}
+@media(min-width:760px){.aca-marca img{height:34px}}
+.aca-rod-marca{height:38px;width:auto;margin-bottom:18px}
+
+/* Cartão de curso: etiqueta, título e a ação no rodapé do cartão */
+.aca-curso{display:flex;flex-direction:column;gap:12px}
+.aca-curso h3{font-size:clamp(17px,1.9vw,20px);font-weight:400;letter-spacing:-.02em;line-height:1.25}
+.aca-curso p{flex:1}
+.aca-curso .link-seta{margin-top:4px;align-self:flex-start}
+.aca-tag{
+  align-self:flex-start;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  color:var(--ciano-texto);background:var(--ciano-fundo);
+  border:1px solid rgb(var(--ciano-rgb) / .45);border-radius:20px;padding:5px 12px;
+}
+/* Sem destino no site atual: fica visível, mas não finge ser clicável */
+.link-seta.inerte{color:var(--tinta-tenue);cursor:default}
+
+/* Mentoras: retrato recortado sobre um disco claro */
+.aca-mentora{text-align:center;padding-top:clamp(20px,3vw,28px)}
+.aca-mentora img{
+  width:clamp(130px,17vw,168px);height:auto;margin:0 auto 18px;
+  border-radius:50% 50% 24px 24px;
+  background:radial-gradient(circle at 50% 38%,var(--ciano-fundo),var(--nevoa) 72%);
+}
+.aca-mentora h3{margin-bottom:12px;text-align:center}
+.aca-mentora p{font-size:14px;line-height:1.7;margin-bottom:10px;text-align:left}
+.aca-mentora p:last-child{margin-bottom:0}
+
+/* Depoimentos */
+.aca-dep{display:flex;flex-direction:column;gap:16px}
+.aca-aspas{font-size:54px;line-height:.6;font-weight:600;color:var(--ciano);display:block;height:26px}
+.aca-dep p{flex:1;font-size:15px;line-height:1.72}
+.aca-dep footer{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--linha);padding-top:14px}
+.aca-dep footer b{font-weight:500;color:var(--tinta);font-size:15px}
+.aca-dep footer span{font-size:12.5px;color:var(--tinta-tenue)}
+
+/* Marca da Grou dentro do painel escuro do "Sobre a Grou" */
+.aca-marca-painel{margin-bottom:18px}
+.aca-logo-grou{height:34px;width:auto;color:#fff}
+
+/* Grades fixas: as formações pedem cartões largos e os depoimentos, 3 colunas */
+@media(min-width:900px){
+  .grade.aca-2col{grid-template-columns:1fr 1fr}
+  .grade.aca-3col{grid-template-columns:repeat(3,1fr)}
 }

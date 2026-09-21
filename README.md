@@ -146,6 +146,15 @@ escopo no mesmo modelo.
 A página é gerada por `p_master.py`, à parte do gerador dos outros 13 serviços,
 porque tem seções que só ela tem (5 pilares, trilha de 16 módulos, bloco NR-1).
 
+**O lockup do hero** (`.ml-marca`) não é uma imagem recortada: o monograma é
+`assets/img/master-lider-marca.svg`, vetorizado a partir do logo oficial, e a
+assinatura é texto real numa pílula de CSS. Por isso o conjunto é transparente,
+nítido em qualquer tamanho e herda a cor do tema. Recortar o material de origem
+deixaria franja do gradiente e texto rasterizado.
+
+Cores da assinatura, medidas na arte original: texto `#275df6` (usamos `#3b6dff`,
+um pouco mais claro, para legibilidade) e pílula sobre fundo `#0c1330`.
+
 ### Formas de apresentar conteúdo
 
 Grade de cards não é a única forma — e repetida demais cansa. Os componentes

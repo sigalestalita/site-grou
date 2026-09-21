@@ -1549,54 +1549,77 @@ body.gaveta-aberta{overflow:hidden}
 [data-tema="talent"] .tese h2 b{color:var(--ciano-texto)}
 
 /* =========================================================================
-   ECOSSISTEMA — anel de marcas da hero da home
-   A foto do time ocupa o centro da grade e as oito soluções ficam em volta,
-   ligadas a ela por fios finos. Célula deitada (4:3) porque as marcas são
-   lockups, não símbolos: num quadrado o nome do produto some.
+   ECOSSISTEMA — a foto do time no centro, as soluções em volta
+   A caixa tem proporção fixa (556×420) porque o SVG dos fios usa essas
+   mesmas unidades: assim as curvas acompanham os ladrilhos em qualquer
+   largura sem distorcer. Abaixo de 620px a roda vira lista, que é o que
+   cabe — e onde não há hover de qualquer jeito.
    ========================================================================= */
-.eco-grade{
-  --celw:clamp(78px,10.2vw,134px);
-  --celh:calc(var(--celw) * .76);
+.eco{
   position:relative;
-  width:calc(var(--celw) * 4);
-  height:calc(var(--celh) * 4);
+  width:min(100%,556px);
+  aspect-ratio:556 / 420;
   margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(4,var(--celw));
-  grid-template-rows:repeat(4,var(--celh));
+  --tw:26.98%;          /* 150 / 556 */
+  --th:15.71%;          /* 66 / 420  */
 }
-/* Malha de fundo: as linhas de todas as células, esmaecendo nas bordas */
-.eco-malha{
-  position:absolute;inset:calc(var(--celh) * -0.6) calc(var(--celw) * -0.5);
-  z-index:0;pointer-events:none;
-  background-image:
-    linear-gradient(to right,var(--linha) 1px,transparent 1px),
-    linear-gradient(to bottom,var(--linha) 1px,transparent 1px);
-  background-size:var(--celw) var(--celh);
-  -webkit-mask-image:radial-gradient(ellipse 58% 58% at 50% 50%,#000,transparent 84%);
-  mask-image:radial-gradient(ellipse 58% 58% at 50% 50%,#000,transparent 84%);
-}
-/* Fios do centro até cada ladrilho. O viewBox está em unidades de célula e
-   estica junto com a grade; a espessura fica fora dessa escala. */
 .eco-fios{
   position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;
-  overflow:visible;
+  fill:none;overflow:visible;
 }
-.eco-fios line{
-  stroke:var(--linha);stroke-width:1.4;stroke-linecap:round;
+.eco-fio path{
+  stroke:var(--linha);stroke-width:1.8;stroke-linecap:round;
   transition:stroke .35s ease,stroke-width .35s ease;
 }
-.eco-cel{
-  grid-area:var(--r) / var(--c) / span var(--rs,1) / span var(--cs,1);
-  position:relative;z-index:2;
+.eco-pulso{
+  stroke:var(--ciano);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:13 87;stroke-dashoffset:0;
+  opacity:0;transition:opacity .25s ease;
 }
-.eco-cel-foto{z-index:3}
 
-/* Ladrilho de solução */
+/* ---- Núcleo: a foto num disco, com anéis ---- */
+.eco-nucleo{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:37.41%;                    /* 208 / 556 */
+  aspect-ratio:1/1;z-index:3;
+}
+.eco-nucleo::before{                /* halo */
+  content:"";position:absolute;inset:-46%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgb(var(--ciano-rgb) / .3),transparent 64%);
+  filter:blur(14px);
+}
+.eco-anel{
+  position:absolute;inset:-9%;border-radius:50%;pointer-events:none;
+  border:1px solid var(--linha);
+  transition:border-color .35s ease;
+}
+.eco-anel-2{
+  inset:-19%;border:1.5px dashed rgb(var(--ciano-rgb) / .42);
+  animation:eco-gira 54s linear infinite;
+}
+@keyframes eco-gira{to{transform:rotate(360deg)}}
+.eco-foto{
+  position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  border:1px solid var(--linha);
+  box-shadow:0 24px 54px rgba(12,10,46,.22);
+}
+/* a origem é 1:1 e o disco também, então object-position não recorta nada:
+   o enquadramento vem do zoom, centrado no grupo */
+.eco-foto img{width:100%;height:100%;object-fit:cover;transform:scale(1.28);transform-origin:51% 44%}
+.eco-selo{
+  position:absolute;left:50%;top:calc(100% + 15%);transform:translateX(-50%);
+  white-space:nowrap;background:var(--branco);border:1px solid var(--linha);
+  border-radius:20px;padding:5px 13px;box-shadow:var(--sombra-s);
+  font-size:clamp(10px,1.05vw,12.5px);color:var(--tinta-suave);z-index:4;
+}
+.eco-selo b{color:var(--tinta);font-weight:600}
+
+/* ---- Ladrilhos das soluções ---- */
+.eco-slot{position:absolute;width:var(--tw);height:var(--th);z-index:2}
 .eco-tile{
-  position:absolute;inset:5px;
+  position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
-  background:var(--branco);border:1px solid var(--linha);border-radius:15px;
+  background:var(--branco);border:1px solid var(--linha);border-radius:14px;
   box-shadow:0 2px 10px rgba(12,10,46,.05);
   transition:transform .45s var(--mola),box-shadow .4s ease,border-color .3s ease,opacity .3s ease;
   will-change:transform;
@@ -1605,7 +1628,7 @@ body.gaveta-aberta{overflow:hidden}
 /* Marca solta: teto pela altura, não pela largura — as marcas vão de 1,8:1 a
    4:1 e sem isso as mais quadradas apareceriam muito maiores que as compridas */
 .eco-tile > img,.eco-tile > .eco-svg{
-  max-width:78%;max-height:40%;width:auto;height:auto;object-fit:contain;
+  max-width:78%;max-height:48%;width:auto;height:auto;object-fit:contain;
   filter:saturate(.78);
 }
 /* O SVG precisa de uma medida: o max-width sozinho não resolve num inline svg */
@@ -1613,22 +1636,22 @@ body.gaveta-aberta{overflow:hidden}
 /* Marca em cima, nome do produto embaixo */
 .eco-pilha{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:calc(var(--celh) * .085);
-  width:84%;color:inherit;text-align:center;
+  gap:5px;width:86%;color:inherit;text-align:center;
 }
-.eco-pilha .eco-svg{width:64%;height:auto;flex:none}
+.eco-pilha .eco-svg{width:60%;height:auto;flex:none}
 .eco-pilha b{
-  font-size:max(9.5px,calc(var(--celh) * .118));font-weight:500;line-height:1.2;
-  letter-spacing:.005em;color:var(--tinta-suave);
+  font-size:clamp(9.5px,1.05vw,12px);font-weight:500;line-height:1.2;color:var(--tinta-suave);
 }
-/* Lockup montado (monograma + nome), para a marca que só tem símbolo */
-.eco-lock{display:flex;align-items:center;gap:8px;filter:none !important;color:inherit}
-.eco-lock .eco-ml-mono{width:auto;height:calc(var(--celh) * .3);flex:none}
-.eco-lock b{
-  font-size:calc(var(--celh) * .165);font-weight:600;letter-spacing:-.02em;
-  line-height:1.05;text-align:left;max-width:7ch;
+/* Ladrilho sem marca: o número das capacitações */
+.eco-num{display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;width:88%}
+.eco-num b{
+  font-size:clamp(19px,2.4vw,29px);font-weight:200;letter-spacing:-.04em;
+  line-height:1;color:var(--azul-royal);
 }
-/* Nome da solução, revelado no hover */
+.eco-num span{
+  font-size:clamp(9px,1vw,11.5px);line-height:1.25;color:var(--tinta-tenue);max-width:15ch;
+}
+/* Nome da solução, revelado no destaque */
 .eco-nome{
   position:absolute;left:50%;top:calc(100% + 6px);transform:translate(-50%,4px);
   white-space:nowrap;font-size:11px;font-weight:500;letter-spacing:.02em;
@@ -1639,71 +1662,82 @@ body.gaveta-aberta{overflow:hidden}
   transition:opacity .3s ease,transform .35s var(--mola);
 }
 .eco-tile:hover,.eco-tile:focus-visible{
-  transform:translateY(-6px) scale(1.06);
+  transform:translateY(-4px) scale(1.06);
   border-color:rgb(var(--ciano-rgb) / .7);
   box-shadow:0 18px 38px rgba(12,10,46,.16);
   outline:none;z-index:5;
 }
 .eco-tile:hover > img,.eco-tile:focus-visible > img,
-.eco-tile:hover > .eco-svg,.eco-tile:focus-visible > .eco-svg{filter:saturate(1);transform:scale(1.06)}
-.eco-tile:hover > .eco-lock,.eco-tile:focus-visible > .eco-lock,
-.eco-tile:hover > .eco-pilha,.eco-tile:focus-visible > .eco-pilha{transform:scale(1.06)}
+.eco-tile:hover > .eco-svg,.eco-tile:focus-visible > .eco-svg{filter:saturate(1);transform:scale(1.05)}
+.eco-tile:hover > .eco-pilha,.eco-tile:focus-visible > .eco-pilha,
+.eco-tile:hover > .eco-num,.eco-tile:focus-visible > .eco-num{transform:scale(1.05)}
 .eco-tile:hover > .eco-pilha b,.eco-tile:focus-visible > .eco-pilha b{color:var(--tinta)}
 .eco-tile:hover .eco-nome,.eco-tile:focus-visible .eco-nome{opacity:1;transform:translate(-50%,0)}
-/* Ao destacar um ladrilho, os vizinhos recuam — a foto no centro não */
-.eco-grade:has(.eco-tile:hover) .eco-cel:not(:hover) .eco-tile,
-.eco-grade:has(.eco-tile:focus-visible) .eco-cel:not(:focus-within) .eco-tile{opacity:.4}
+/* Ao destacar uma solução os vizinhos recuam — as pessoas no centro, nunca */
+.eco:has(.eco-tile:hover) .eco-slot:not(:hover) .eco-tile,
+.eco:has(.eco-tile:focus-visible) .eco-slot:not(:focus-within) .eco-tile{opacity:.4}
+.eco:has(.eco-tile:hover) .eco-anel,
+.eco:has(.eco-tile:focus-visible) .eco-anel{border-color:rgb(var(--ciano-rgb) / .8)}
 
-/* Bloco central: a foto do time, com o mesmo tratamento dos ladrilhos */
-.eco-foto{
-  position:absolute;inset:5px;border-radius:19px;overflow:hidden;
-  border:1px solid var(--linha);
-  box-shadow:0 22px 52px rgba(12,10,46,.20);
-  transition:transform .5s var(--mola);
-}
-.eco-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
-.eco-foto figcaption{
-  position:absolute;left:0;right:0;bottom:0;
-  padding:calc(var(--celh) * .26) 10px calc(var(--celh) * .1);
-  font-size:max(9px,calc(var(--celh) * .118));line-height:1.3;
-  color:rgba(255,255,255,.88);text-wrap:balance;
-  background:linear-gradient(to top,rgba(7,3,58,.82),transparent);
-}
-.eco-foto figcaption b{color:#fff;font-weight:600}
-/* Halo quente atrás da foto, para o centro puxar o olho */
-.eco-cel-foto::before{
-  content:"";position:absolute;z-index:-1;
-  inset:calc(var(--celh) * -0.55) calc(var(--celw) * -0.4);
-  border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,rgb(var(--ciano-rgb) / .22),transparent 66%);
-  filter:blur(18px);
-}
-
-/* Flutuação suave, escalonada por célula. Fica na célula e não no ladrilho:
-   numa mesma caixa a animação venceria a transform do hover. */
+/* Flutuação suave, escalonada. Fica no slot e não no ladrilho: numa mesma
+   caixa a animação venceria a transform do hover. */
 @keyframes eco-flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.eco-cel:not(.eco-cel-foto){animation:eco-flutua 7s ease-in-out infinite;animation-delay:var(--at,0s)}
-.eco-cel:hover,.eco-cel:focus-within{animation-play-state:paused}
+.eco-slot{animation:eco-flutua 7s ease-in-out infinite;animation-delay:var(--at,0s)}
+.eco-slot:hover,.eco-slot:focus-within{animation-play-state:paused}
+@keyframes eco-percorre{from{stroke-dashoffset:0}to{stroke-dashoffset:100}}
+
+/* ---- Abaixo de 620px a roda não cabe: vira foto + lista ---- */
+@media(max-width:619px){
+  .eco{aspect-ratio:auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .eco-fios{display:none}
+  .eco-nucleo{
+    grid-column:1 / -1;position:relative;left:auto;top:auto;transform:none;
+    width:min(58%,220px);justify-self:center;margin:4px auto 48px;
+  }
+  .eco-slot{position:static;width:auto;height:76px;animation:none}
+  /* altura definida, senão o max-height em % das marcas não tem contra o quê
+     resolver e os logos saem grandes demais */
+  .eco-tile{position:relative;inset:auto;height:76px}
+  .eco-nome{display:none}
+}
 @media(prefers-reduced-motion:reduce){
-  .eco-cel{animation:none}
+  .eco-slot{animation:none}
+  .eco-anel-2{animation:none}
+  .eco-pulso{display:none}
   .eco-tile:hover,.eco-tile:focus-visible{transform:none;border-color:rgb(var(--ciano-rgb) / .7)}
-  .eco-tile > img,.eco-tile > .eco-svg,.eco-tile > .eco-lock,.eco-tile > .eco-pilha{filter:none;transform:none}
+  .eco-tile > *{filter:none;transform:none}
 }
 
-/* Cada ladrilho em destaque acende o seu fio até o centro */
-.eco-grade:has(.eco-cel[data-k="1"] .eco-tile:hover) .eco-fios line[data-k="1"],
-.eco-grade:has(.eco-cel[data-k="1"] .eco-tile:focus-visible) .eco-fios line[data-k="1"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="2"] .eco-tile:hover) .eco-fios line[data-k="2"],
-.eco-grade:has(.eco-cel[data-k="2"] .eco-tile:focus-visible) .eco-fios line[data-k="2"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="3"] .eco-tile:hover) .eco-fios line[data-k="3"],
-.eco-grade:has(.eco-cel[data-k="3"] .eco-tile:focus-visible) .eco-fios line[data-k="3"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="4"] .eco-tile:hover) .eco-fios line[data-k="4"],
-.eco-grade:has(.eco-cel[data-k="4"] .eco-tile:focus-visible) .eco-fios line[data-k="4"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="5"] .eco-tile:hover) .eco-fios line[data-k="5"],
-.eco-grade:has(.eco-cel[data-k="5"] .eco-tile:focus-visible) .eco-fios line[data-k="5"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="6"] .eco-tile:hover) .eco-fios line[data-k="6"],
-.eco-grade:has(.eco-cel[data-k="6"] .eco-tile:focus-visible) .eco-fios line[data-k="6"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="7"] .eco-tile:hover) .eco-fios line[data-k="7"],
-.eco-grade:has(.eco-cel[data-k="7"] .eco-tile:focus-visible) .eco-fios line[data-k="7"]{stroke:var(--ciano);stroke-width:2.4}
-.eco-grade:has(.eco-cel[data-k="8"] .eco-tile:hover) .eco-fios line[data-k="8"],
-.eco-grade:has(.eco-cel[data-k="8"] .eco-tile:focus-visible) .eco-fios line[data-k="8"]{stroke:var(--ciano);stroke-width:2.4}
+/* A solução em destaque acende o seu fio e manda um pulso até as pessoas */
+.eco:has(.eco-slot[data-k="1"] .eco-tile:hover) .eco-fio path[data-k="1"],
+.eco:has(.eco-slot[data-k="1"] .eco-tile:focus-visible) .eco-fio path[data-k="1"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="1"] .eco-tile:hover) .eco-pulso[data-k="1"],
+.eco:has(.eco-slot[data-k="1"] .eco-tile:focus-visible) .eco-pulso[data-k="1"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="2"] .eco-tile:hover) .eco-fio path[data-k="2"],
+.eco:has(.eco-slot[data-k="2"] .eco-tile:focus-visible) .eco-fio path[data-k="2"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="2"] .eco-tile:hover) .eco-pulso[data-k="2"],
+.eco:has(.eco-slot[data-k="2"] .eco-tile:focus-visible) .eco-pulso[data-k="2"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="3"] .eco-tile:hover) .eco-fio path[data-k="3"],
+.eco:has(.eco-slot[data-k="3"] .eco-tile:focus-visible) .eco-fio path[data-k="3"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="3"] .eco-tile:hover) .eco-pulso[data-k="3"],
+.eco:has(.eco-slot[data-k="3"] .eco-tile:focus-visible) .eco-pulso[data-k="3"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="4"] .eco-tile:hover) .eco-fio path[data-k="4"],
+.eco:has(.eco-slot[data-k="4"] .eco-tile:focus-visible) .eco-fio path[data-k="4"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="4"] .eco-tile:hover) .eco-pulso[data-k="4"],
+.eco:has(.eco-slot[data-k="4"] .eco-tile:focus-visible) .eco-pulso[data-k="4"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="5"] .eco-tile:hover) .eco-fio path[data-k="5"],
+.eco:has(.eco-slot[data-k="5"] .eco-tile:focus-visible) .eco-fio path[data-k="5"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="5"] .eco-tile:hover) .eco-pulso[data-k="5"],
+.eco:has(.eco-slot[data-k="5"] .eco-tile:focus-visible) .eco-pulso[data-k="5"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="6"] .eco-tile:hover) .eco-fio path[data-k="6"],
+.eco:has(.eco-slot[data-k="6"] .eco-tile:focus-visible) .eco-fio path[data-k="6"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="6"] .eco-tile:hover) .eco-pulso[data-k="6"],
+.eco:has(.eco-slot[data-k="6"] .eco-tile:focus-visible) .eco-pulso[data-k="6"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="7"] .eco-tile:hover) .eco-fio path[data-k="7"],
+.eco:has(.eco-slot[data-k="7"] .eco-tile:focus-visible) .eco-fio path[data-k="7"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="7"] .eco-tile:hover) .eco-pulso[data-k="7"],
+.eco:has(.eco-slot[data-k="7"] .eco-tile:focus-visible) .eco-pulso[data-k="7"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+.eco:has(.eco-slot[data-k="8"] .eco-tile:hover) .eco-fio path[data-k="8"],
+.eco:has(.eco-slot[data-k="8"] .eco-tile:focus-visible) .eco-fio path[data-k="8"]{stroke:var(--ciano);stroke-width:2.4}
+.eco:has(.eco-slot[data-k="8"] .eco-tile:hover) .eco-pulso[data-k="8"],
+.eco:has(.eco-slot[data-k="8"] .eco-tile:focus-visible) .eco-pulso[data-k="8"]{opacity:1;animation:eco-percorre 1.15s linear infinite}

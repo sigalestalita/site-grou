@@ -295,6 +295,19 @@
       }
       if (ant) ant.disabled = i === 0;
       if (prox) prox.disabled = i === total - 1;
+
+      /* toca só o vídeo da etapa visível */
+      telas.forEach(function (t, k) {
+        var v = $('video', t);
+        if (!v) return;
+        if (k === i) {
+          if (v.preload === 'none') v.preload = 'auto';
+          var pr = v.play();
+          if (pr && pr.catch) pr.catch(function () {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
     }
 
     /* desktop: posição da rolagem dentro do bloco fixo decide a etapa */

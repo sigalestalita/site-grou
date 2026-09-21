@@ -182,6 +182,25 @@ entram na viewport.
 Cards também têm **inclinação 3D** acompanhando o cursor (`.inclina`, aplicada
 pelo JS), desligada em telas sem hover e sob movimento reduzido.
 
+### Vídeos das etapas do PDA
+
+As etapas 01 a 03 do "Como funciona", em `/tecnologias/pda-assessment/`, são
+screencasts reais da plataforma (`assets/video/etapa{1,2,3}.mp4`, H.264, ~2,1 MB
+no total). A etapa 04 continua sendo um mockup, porque mostra um e-mail.
+
+Carregamento: **só o vídeo da etapa visível baixa**. O primeiro tem `autoplay`
+e `preload="metadata"`; os outros dois não têm `autoplay` e ficam em
+`preload="none"` até o JS trocar de etapa — aí ele sobe o preload e dá play,
+pausando o anterior.
+
+> O `autoplay` sobrepõe o `preload="none"`: deixar autoplay nos três fazia o
+> navegador baixar os 2,1 MB de uma vez, no primeiro acesso. Por isso só o
+> primeiro tem autoplay.
+
+Todos são `muted`, `loop` e `playsinline` — sem áudio e sem abrir em tela cheia
+no iOS. O efeito Ken Burns é desligado sob `prefers-reduced-motion`; o loop em
+si continua, por ser o conteúdo que explica o produto.
+
 ## Cache e versionamento
 
 Os links de CSS e JS levam a **hash do conteúdo** (`grou.css?v=ebb388a8`),

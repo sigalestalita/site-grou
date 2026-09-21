@@ -1336,3 +1336,15 @@ body.gaveta-aberta{overflow:hidden}
   .ml-marca{position:relative;left:auto;top:auto;transform:none;animation:none;margin:0 auto;width:100%}
 }
 @media(prefers-reduced-motion:reduce){.ml-marca{animation:none}}
+
+/* vídeo dentro do slide de etapa (scrollytelling) */
+.passo-tela.midia{padding:0}
+.passo-video{
+  width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;
+  background:var(--azul-noite);
+}
+.passo-tela.midia.ativo .passo-video{animation:kenburns 16s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.07)}}
+@media(prefers-reduced-motion:reduce){
+  .passo-tela.midia.ativo .passo-video{animation:none}
+}

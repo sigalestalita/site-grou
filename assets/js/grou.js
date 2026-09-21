@@ -492,6 +492,24 @@
   })();
 
   /* ====================================================================== */
+  /* 8f. História — a linha desce junto com a leitura                       */
+  /* ====================================================================== */
+  (function () {
+    var linha = $('.hist-linha');
+    if (!linha) return;
+    var caps = $$('.hist-cap', linha);
+    function pinta() {
+      var r = linha.getBoundingClientRect();
+      var alvo = window.innerHeight * 0.58;
+      var p = Math.min(1, Math.max(0, (alvo - r.top) / r.height));
+      linha.style.setProperty('--hist-p', (p * 100).toFixed(1) + '%');
+      caps.forEach(function (c) { c.classList.toggle('hc-on', c.getBoundingClientRect().top < alvo); });
+    }
+    aoRolar(pinta);
+    pinta();
+  })();
+
+  /* ====================================================================== */
   /* 9. FAQ                                                                 */
   /* ====================================================================== */
   (function () {

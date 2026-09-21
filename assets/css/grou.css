@@ -2400,6 +2400,11 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
   .rc-painel{align-items:flex-start;text-align:left}
 }
 .rc-marca{height:clamp(22px,2.8vw,30px);width:auto;object-fit:contain}
+/* as marcas por trás da frente: PDA e Talogy lado a lado, com um filete */
+.rc-marcas{display:flex;align-items:center;gap:clamp(11px,1.5vw,16px)}
+.rc-marcas .rc-marca{flex:none}
+.rc-risco{width:1px;height:clamp(16px,2vw,22px);background:var(--linha);flex:none}
+.rc-marca-svg{height:clamp(17px,2.2vw,24px);width:auto;color:var(--tinta);flex:none}
 .rc-num{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ciano-texto);font-weight:500}
 .rc-painel h3{font-size:clamp(21px,2.8vw,32px);font-weight:400;letter-spacing:-.025em;line-height:1.22;max-width:19ch}
 .rc-painel p{font-size:clamp(14px,1.6vw,16.5px);line-height:1.7;color:var(--tinta-suave);max-width:44ch}

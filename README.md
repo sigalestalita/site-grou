@@ -201,6 +201,17 @@ Todos são `muted`, `loop` e `playsinline` — sem áudio e sem abrir em tela ch
 no iOS. O efeito Ken Burns é desligado sob `prefers-reduced-motion`; o loop em
 si continua, por ser o conteúdo que explica o produto.
 
+**A etapa 03 tem tratamento próprio.** O arquivo é 760×468, bem menor que os
+outros dois (1280×782). Com `object-fit:cover` mais Ken Burns, ele era ampliado
+**2,03×** numa tela Retina — daí o borrão. Agora ele vai dentro de uma moldura
+de janela (`.passo-janela`), com `object-fit:contain`, largura máxima de 600px
+e sem Ken Burns: a ampliação cai para **1,58×**. Ao trocar o vídeo por um de
+resolução maior, dá para voltar ao tratamento dos outros dois.
+
+**A etapa 04** mostra o relatório chegando por e-mail (`.mk-email`), com o logo
+da Grou, o anexo nomeado e a **capa real do laudo** vinda de
+`assets/img/relatorios/perfil.png` — não é um ícone genérico.
+
 ## Cache e versionamento
 
 Os links de CSS e JS levam a **hash do conteúdo** (`grou.css?v=ebb388a8`),

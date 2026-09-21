@@ -1547,3 +1547,103 @@ body.gaveta-aberta{overflow:hidden}
 [data-tema="talent"] .hero h1 b{color:var(--ciano-hover);font-weight:400}
 [data-tema="talent"] .sec h2 b,
 [data-tema="talent"] .tese h2 b{color:var(--ciano-texto)}
+
+/* =========================================================================
+   ECOSSISTEMA — grade de ladrilhos da hero da home
+   Xadrez de células de --cel px: as ferramentas do ecossistema em ladrilhos
+   com logo e a foto do time ocupando um bloco de 3x2. Cada ladrilho é um
+   link; ao passar o mouse ele sobe e os vizinhos recuam.
+   ========================================================================= */
+.eco-grade{
+  --cel:clamp(60px,9vw,108px);
+  position:relative;
+  width:calc(var(--cel) * 5);
+  height:calc(var(--cel) * 4);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(5,var(--cel));
+  grid-template-rows:repeat(4,var(--cel));
+}
+/* Malha de fundo: as linhas de todas as células, esmaecendo nas bordas */
+.eco-malha{
+  position:absolute;inset:calc(var(--cel) * -0.5);z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(to right,var(--linha) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--linha) 1px,transparent 1px);
+  background-size:var(--cel) var(--cel);
+  -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000,transparent 82%);
+  mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000,transparent 82%);
+  opacity:1;
+}
+.eco-cel{grid-area:var(--r) / var(--c) / span var(--rs,1) / span var(--cs,1);position:relative;z-index:1}
+
+/* Ladrilho de ferramenta */
+.eco-tile{
+  position:absolute;inset:4px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--branco);border:1px solid var(--linha);border-radius:14px;
+  box-shadow:0 2px 10px rgba(12,10,46,.05);
+  transition:transform .45s var(--mola),box-shadow .4s ease,border-color .3s ease,opacity .3s ease;
+  will-change:transform;
+}
+.eco-tile img,.eco-tile svg{
+  width:68%;height:62%;object-fit:contain;
+  transition:transform .45s var(--mola),filter .35s ease;
+  filter:saturate(.72);
+}
+.eco-tile .eco-mono{
+  font-size:calc(var(--cel) * .26);font-weight:600;letter-spacing:-.04em;
+  color:var(--ciano-forte);transition:transform .45s var(--mola),color .3s ease;
+}
+/* Ladrilho vazio, só para dar ritmo à grade */
+.eco-vazio{
+  position:absolute;inset:4px;border-radius:14px;
+  background:var(--nevoa);border:1px solid var(--linha);opacity:.7;
+}
+/* Nome da ferramenta, revelado no hover */
+.eco-nome{
+  position:absolute;left:50%;top:calc(100% + 7px);transform:translate(-50%,4px);
+  white-space:nowrap;font-size:11px;font-weight:500;letter-spacing:.02em;
+  color:var(--tinta);background:var(--branco);
+  border:1px solid var(--linha);border-radius:20px;padding:4px 10px;
+  box-shadow:var(--sombra-s);
+  opacity:0;pointer-events:none;z-index:6;
+  transition:opacity .3s ease,transform .35s var(--mola);
+}
+.eco-tile:hover,.eco-tile:focus-visible{
+  transform:translateY(-7px) scale(1.07);
+  border-color:rgb(var(--ciano-rgb) / .7);
+  box-shadow:0 18px 38px rgba(12,10,46,.16);
+  outline:none;z-index:5;
+}
+.eco-tile:hover img,.eco-tile:focus-visible img,
+.eco-tile:hover svg,.eco-tile:focus-visible svg{filter:saturate(1);transform:scale(1.08)}
+.eco-tile:hover .eco-mono,.eco-tile:focus-visible .eco-mono{color:var(--azul-royal);transform:scale(1.08)}
+.eco-tile:hover .eco-nome,.eco-tile:focus-visible .eco-nome{opacity:1;transform:translate(-50%,0)}
+/* Ao focar um ladrilho, os vizinhos recuam */
+.eco-grade:has(.eco-tile:hover) .eco-cel:not(:hover) .eco-tile,
+.eco-grade:has(.eco-tile:hover) .eco-foto{opacity:.48}
+
+/* Bloco da foto do time */
+.eco-foto{
+  position:absolute;inset:4px;border-radius:18px;overflow:hidden;
+  box-shadow:0 20px 48px rgba(12,10,46,.18);
+  transition:opacity .3s ease,transform .5s var(--mola);
+}
+.eco-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 34%}
+.eco-foto::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(200deg,rgba(18,5,115,.06),rgb(var(--ciano-rgb) / .16));
+}
+
+/* Flutuação suave, escalonada por ladrilho */
+/* A flutuação fica na célula e o hover no ladrilho: numa mesma caixa a
+   animação venceria a transform do hover. */
+@keyframes eco-flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.eco-cel{animation:eco-flutua 7s ease-in-out infinite;animation-delay:var(--at,0s)}
+.eco-cel:hover,.eco-cel:focus-within{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){
+  .eco-cel{animation:none}
+  .eco-tile:hover,.eco-tile:focus-visible{transform:none;border-color:rgb(var(--ciano-rgb) / .7)}
+  .eco-tile img,.eco-tile svg{filter:none}
+}

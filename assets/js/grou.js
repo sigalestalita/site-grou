@@ -451,6 +451,47 @@
   })();
 
   /* ====================================================================== */
+  /* 8e. Roleta do ecossistema — o aro gira e o miolo troca de frente       */
+  /* ====================================================================== */
+  (function () {
+    $$('[data-roleta]').forEach(function (roleta) {
+      var nos = $$('.roleta-no', roleta);
+      var paineis = $$('.rc-painel', roleta);
+      if (nos.length < 2) return;
+      var passo = 360 / nos.length;
+      var i = 0, timer = null, parado = false;
+
+      function mostrar(novo) {
+        i = (novo + nos.length) % nos.length;
+        roleta.style.setProperty('--giro', (-i * passo) + 'deg');
+        nos.forEach(function (n, k) { n.classList.toggle('ativo', k === i); });
+        paineis.forEach(function (p, k) { p.classList.toggle('ativo', k === i); });
+      }
+      function agendar() {
+        clearTimeout(timer);
+        if (reduzido || parado) return;
+        timer = setTimeout(function () { mostrar(i + 1); agendar(); }, 4800);
+      }
+
+      nos.forEach(function (n, k) {
+        n.addEventListener('click', function () { mostrar(k); agendar(); });
+        n.addEventListener('focus', function () { mostrar(k); });
+      });
+      /* enquanto o ponteiro estiver em cima, a roleta espera */
+      roleta.addEventListener('pointerenter', function () { parado = true; clearTimeout(timer); });
+      roleta.addEventListener('pointerleave', function () { parado = false; agendar(); });
+      /* só gira sozinha enquanto estiver na tela */
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { parado = !e.isIntersecting; e.isIntersecting ? agendar() : clearTimeout(timer); });
+        }, { threshold: 0.25 }).observe(roleta);
+      } else { agendar(); }
+
+      mostrar(0);
+    });
+  })();
+
+  /* ====================================================================== */
   /* 9. FAQ                                                                 */
   /* ====================================================================== */
   (function () {

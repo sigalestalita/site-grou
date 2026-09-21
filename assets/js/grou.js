@@ -458,82 +458,7 @@
   })();
 
   /* ====================================================================== */
-  /* 10. Teia de partículas do hero                                         */
-  /* ====================================================================== */
-  (function () {
-    var tela = $('.hero-teia');
-    if (!tela || reduzido) return;
-    var ctx = tela.getContext('2d');
-    var pts = [], l = 0, a = 0, raf = null, visivel = true;
-    var mouse = { x: -9999, y: -9999 };
-
-    function dimensionar() {
-      var r = tela.getBoundingClientRect();
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      l = r.width; a = r.height;
-      tela.width = l * dpr; tela.height = a * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.min(110, Math.round(l * a / 11000));
-      pts = [];
-      for (var i = 0; i < n; i++) {
-        pts.push({ x: Math.random() * l, y: Math.random() * a, vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22, r: Math.random() * 1.6 + .9 });
-      }
-    }
-
-    function quadro() {
-      ctx.clearRect(0, 0, l, a);
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i];
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > l) p.vx *= -1;
-        if (p.y < 0 || p.y > a) p.vy *= -1;
-
-        var dm = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = dm < 150 ? 'rgba(18,5,115,.55)' : 'rgba(108,216,207,.78)';
-        ctx.fill();
-
-        for (var j = i + 1; j < pts.length; j++) {
-          var q = pts[j];
-          var d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 168) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = 'rgba(108,216,207,' + (0.42 * (1 - d / 168)).toFixed(3) + ')';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-      raf = requestAnimationFrame(quadro);
-    }
-
-    function liga() { if (!raf && visivel) quadro(); }
-    function desliga() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
-
-    dimensionar();
-    window.addEventListener('resize', function () { dimensionar(); }, { passive: true });
-    tela.parentElement.addEventListener('pointermove', function (e) {
-      var r = tela.getBoundingClientRect();
-      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-    });
-    tela.parentElement.addEventListener('pointerleave', function () { mouse.x = mouse.y = -9999; });
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        visivel = es[0].isIntersecting;
-        visivel ? liga() : desliga();
-      }, { threshold: 0 }).observe(tela);
-    }
-    document.addEventListener('visibilitychange', function () {
-      document.hidden ? desliga() : liga();
-    });
-    liga();
-  })();
-
-  /* ====================================================================== */
-  /* 11. Transição de saída entre páginas                                   */
+  /* 10. Transição de saída entre páginas                                   */
   /* ====================================================================== */
   (function () {
     var veu = $('.veu');
@@ -559,7 +484,7 @@
   })();
 
   /* ====================================================================== */
-  /* 12. Botão flutuante do WhatsApp                                        */
+  /* 11. Botão flutuante do WhatsApp                                        */
   /* ====================================================================== */
   (function () {
     var zap = $('.zap');
@@ -568,7 +493,7 @@
   })();
 
   /* ====================================================================== */
-  /* 13. Formulários — abre o e-mail já preenchido                          */
+  /* 12. Formulários — abre o e-mail já preenchido                          */
   /* ====================================================================== */
   (function () {
     $$('form[data-email]').forEach(function (f) {
@@ -590,7 +515,7 @@
   })();
 
   /* ====================================================================== */
-  /* 14. Filtros de conteúdo                                                */
+  /* 13. Filtros de conteúdo                                                */
   /* ====================================================================== */
   (function () {
     var chips = $$('.chip[data-filtro]');
@@ -610,7 +535,7 @@
   })();
 
   /* ====================================================================== */
-  /* 15. Ano corrente no rodapé                                             */
+  /* 14. Ano corrente no rodapé                                             */
   /* ====================================================================== */
   $$('[data-ano]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 

@@ -281,7 +281,6 @@ body.gaveta-aberta{overflow:hidden}
     linear-gradient(170deg,#fff 0%, var(--nevoa) 58%, var(--nevoa-2) 100%);
 }
 .hero-alto{min-height:100svh;display:flex;align-items:center}
-.hero-teia{position:absolute;inset:0;z-index:1;opacity:.85;pointer-events:none}
 .hero-grade{
   position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
   background-image:linear-gradient(rgba(12,10,46,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(12,10,46,.04) 1px,transparent 1px);
@@ -688,7 +687,7 @@ body.gaveta-aberta{overflow:hidden}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   [data-reveal],.palavras .pw{opacity:1!important;transform:none!important;filter:none!important}
-  .hero-teia,.palco-anel.tracejado{display:none}
+  .palco-anel.tracejado{display:none}
   .marquise-trilha{animation:none}
   .veu{display:none}
 }

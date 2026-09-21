@@ -2248,3 +2248,68 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
   .roleta-nos,.roleta-no{transition:none}
   .rc-painel{transition:opacity .2s ease}
 }
+
+/* =========================================================================
+   SLIDER DE PROGRAMAS — painel do Consulting na home
+   Era um cartão só, com um programa, e parecia que a Grou tinha um. Agora
+   são sete, num trilho que desliza: setas, pontos e arrasto no toque.
+   ========================================================================= */
+.prog-painel{display:flex;flex-direction:column}
+/* faixa, não retrato: o recorte alto empurrava o slider para fora do painel.
+   Fundo no tom do painel, porque a foto é recorte em transparente. */
+.prog-capa{
+  margin:0 0 22px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(150deg,rgba(255,255,255,.1),rgba(255,255,255,.02));
+  box-shadow:none;
+}
+.prog-capa img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;object-position:50% 16%}
+.prog-painel > h3{margin-bottom:18px}
+
+.prog{position:relative}
+.prog-trilho{
+  display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.prog-trilho::-webkit-scrollbar{display:none}
+.prog-slide{
+  flex:0 0 100%;scroll-snap-align:start;min-width:0;
+  display:flex;flex-direction:column;gap:6px;
+  transition:opacity .35s ease;
+}
+.prog-slide:not(.ativo){opacity:.35}
+.prog-nome{
+  font-size:clamp(15px,1.7vw,17.5px);font-weight:500;color:#fff;letter-spacing:-.01em;
+  line-height:1.3;transition:color .25s;
+}
+.prog-nome:hover{color:var(--ciano)}
+.prog-fmt{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:16px}
+/* as barras só correm no painel visível */
+.prog-slide .barra-t i{width:0}
+.prog-slide.ativo .barra-t i{width:var(--w,70%)}
+
+.prog-ctrl{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);
+}
+.prog-pontos{display:flex;gap:7px;flex-wrap:wrap}
+.prog-ponto{
+  width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.26);
+  padding:0;transition:background .3s,width .3s var(--mola);
+}
+.prog-ponto.ativo{background:var(--ciano);width:22px;border-radius:7px}
+.prog-ponto:focus-visible{outline:2px solid var(--ciano);outline-offset:3px}
+.prog-setas{display:flex;gap:8px;flex:none}
+.prog-seta{
+  width:36px;height:36px;border-radius:50%;flex:none;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);
+  color:#fff;font-size:19px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s,border-color .25s,opacity .25s;
+}
+.prog-seta:hover{background:rgb(var(--ciano-rgb) / .16);border-color:rgb(var(--ciano-rgb) / .5)}
+.prog-seta[disabled]{opacity:.32;cursor:default}
+.prog-seta:focus-visible{outline:2px solid var(--ciano);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+  .prog-trilho{scroll-behavior:auto}
+  .prog-ponto,.prog-slide{transition:none}
+}

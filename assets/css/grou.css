@@ -2166,24 +2166,73 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
 
 /* =========================================================================
    ROLETA DO ECOSSISTEMA
-   Cinco frentes num aro que gira: o nó ativo sobe para o topo e o miolo
-   troca de conteúdo. Gira sozinha, e o clique leva a frente escolhida.
+   A seção prende na tela e o aro gira conforme o scroll: cada trecho de
+   rolagem traz uma frente para a agulha e troca o conteúdo ao lado.
+   O texto vive fora do aro — assim nada disputa espaço com os nós.
+   O clique num nó rola até a posição dele, então scroll e estado nunca
+   brigam. Sem sticky (mobile ou movimento reduzido) volta a ser abas.
    ========================================================================= */
+.roleta-sec{position:relative;background:var(--branco);border-top:1px solid var(--linha)}
+.roleta-sec.alt{background:var(--nevoa)}
+.roleta-fixa{
+  --reserva:352px;
+  position:sticky;top:0;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--nav-h) + 10px) var(--gutter) 24px;
+}
+.roleta-cab{max-width:var(--maxw);margin:0 auto;width:100%}
+.roleta-cab h2{font-size:clamp(25px,3.1vw,38px);max-width:18ch}
+.roleta-cab .lead{margin-top:10px;max-width:52ch}
+/* tela baixa: o texto de apoio sai para o aro não encolher demais */
+@media(min-width:901px) and (max-height:820px){
+  .roleta-fixa{--reserva:292px}
+  .roleta-cab .lead{display:none}
+}
+
+.roleta-palco{
+  max-width:var(--maxw);width:100%;margin:clamp(16px,2.4vw,32px) auto 0;
+  display:grid;gap:clamp(26px,4vw,60px);grid-template-columns:1fr;align-items:center;
+}
+@media(min-width:901px){
+  .roleta-palco{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr)}
+}
+
+/* ---- o aro ---- */
 .roleta{
-  --raio:clamp(132px,22vw,238px);
-  --no:clamp(84px,10.4vw,112px);
-  position:relative;width:min(100%,640px);aspect-ratio:1/1;margin:clamp(34px,5vw,56px) auto 0;
-  display:grid;place-items:center;
+  container-type:inline-size;
+  --raio:37cqw;--no:18cqw;
+  position:relative;width:min(100%,560px,calc(100svh - var(--reserva)));aspect-ratio:1/1;
+  margin:0 auto;display:grid;place-items:center;
 }
 .roleta-aro{
-  position:absolute;inset:calc(50% - var(--raio) - var(--no)/2);
+  position:absolute;inset:calc(50% - var(--raio) - var(--no) / 2);
   border-radius:50%;border:1px dashed var(--linha);
   animation:eco-gira 70s linear infinite;
 }
 .roleta-aro::after{
   content:"";position:absolute;inset:8%;border-radius:50%;
-  background:radial-gradient(circle,rgb(var(--ciano-rgb) / .12),transparent 64%);
+  background:radial-gradient(circle,rgb(var(--ciano-rgb) / .14),transparent 64%);
 }
+/* arco de progresso: quanto do ecossistema já passou pela agulha */
+.roleta-arco{
+  position:absolute;inset:calc(50% - var(--raio) - var(--no) / 2);
+  transform:rotate(-90deg);overflow:visible;pointer-events:none;
+}
+.roleta-arco circle{fill:none;stroke-width:2;stroke-linecap:round}
+.roleta-arco .ra-trilho{stroke:transparent}
+.roleta-arco .ra-corrida{
+  stroke:var(--ciano-forte);stroke-dasharray:100;stroke-dashoffset:100;
+  transition:stroke-dashoffset .12s linear;
+}
+/* agulha fixa no topo: é ela quem lê a frente da vez */
+.roleta-agulha{
+  position:absolute;left:50%;top:calc(50% - var(--raio) - var(--no) / 2 - 15px);
+  width:0;height:0;transform:translateX(-50%);
+  border-left:7px solid transparent;border-right:7px solid transparent;
+  border-top:9px solid var(--ciano-forte);
+  filter:drop-shadow(0 2px 6px rgb(var(--ciano-rgb) / .5));
+}
+
 .roleta-nos{position:absolute;inset:0;transform:rotate(var(--giro,0deg));transition:transform .85s var(--mola)}
 .roleta-no{
   position:absolute;left:50%;top:50%;width:var(--no);height:var(--no);
@@ -2192,19 +2241,21 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
   border-radius:50%;background:var(--branco);border:1px solid var(--linha);
   box-shadow:var(--sombra-s);cursor:pointer;
-  transition:transform .85s var(--mola),border-color .3s,box-shadow .35s,background .3s;
+  transition:transform .85s var(--mola),border-color .3s,box-shadow .35s,background .3s,opacity .3s;
 }
 .roleta-no .rn-ico{display:flex;color:var(--ciano-forte);transition:color .3s}
 /* icone() traz o chip de 46px do sistema; aqui o nó já é o chip */
 .roleta-no .rn-ico .icone{
   width:auto;height:auto;margin:0;padding:0;background:none;border-radius:0;color:inherit;
 }
-.roleta-no .rn-ico svg{width:clamp(17px,2.2vw,21px);height:clamp(17px,2.2vw,21px);stroke-width:1.6}
+.roleta-no .rn-ico svg{width:clamp(15px,3.4cqw,21px);height:clamp(15px,3.4cqw,21px);stroke-width:1.6}
 .roleta-no .rn-rot{
-  font-size:clamp(9.5px,1.1vw,11.5px);font-weight:500;letter-spacing:.02em;color:var(--tinta-suave);
+  font-size:clamp(9px,2cqw,11.5px);font-weight:500;letter-spacing:.02em;color:var(--tinta-suave);
   text-align:center;line-height:1.15;padding:0 6px;
 }
-.roleta-no:hover{border-color:rgb(var(--ciano-rgb) / .6);box-shadow:var(--sombra-m)}
+.roleta-no:hover{border-color:rgb(var(--ciano-rgb) / .6);box-shadow:var(--sombra-m),0 0 0 6px rgb(var(--ciano-rgb) / .13)}
+/* o mouse em cima de um nó apaga os outros — a escolha fica evidente */
+.roleta-nos:has(.roleta-no:hover) .roleta-no:not(:hover){opacity:.46}
 .roleta-no.ativo{
   background:linear-gradient(150deg,var(--azul-noite),var(--azul-profundo));
   border-color:transparent;box-shadow:0 18px 40px rgba(7,3,58,.34);
@@ -2212,41 +2263,88 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
 .roleta-no.ativo .rn-ico{color:var(--ciano)}
 .roleta-no.ativo .rn-rot{color:#fff}
 .roleta-no:focus-visible{outline:2px solid var(--ciano-forte);outline-offset:3px}
+/* enquanto o scroll comanda, o aro acompanha o dedo: nada de transição */
+.roleta.rolando .roleta-nos{transition:none}
+.roleta.rolando .roleta-no{transition:border-color .3s,box-shadow .35s,background .3s,opacity .3s}
 
-.roleta-centro{
-  position:relative;z-index:2;
-  width:min(100%,calc(var(--raio) * 2 - var(--no) * 0.95));
-  display:grid;place-items:center;text-align:center;
+/* ---- miolo do aro: o mostrador ---- */
+.roleta-miolo{
+  position:relative;z-index:2;display:grid;place-items:center;gap:2px;text-align:center;
+  width:min(100%,calc(var(--raio) * 2 - var(--no) * 1.2));pointer-events:none;
 }
+.roleta-miolo .rm-n{
+  font-size:clamp(40px,13cqw,68px);font-weight:200;letter-spacing:-.05em;line-height:1;
+  background:linear-gradient(150deg,var(--azul-royal),var(--ciano-forte));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.roleta-miolo .rm-r{
+  font-size:clamp(10px,2.1cqw,12px);letter-spacing:.2em;text-transform:uppercase;
+  font-weight:500;color:var(--tinta-tenue);
+}
+
+/* ---- coluna de texto ---- */
+.roleta-texto{position:relative;display:grid}
 .rc-painel{
-  grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:9px;
-  opacity:0;transform:translateY(10px) scale(.97);pointer-events:none;
-  transition:opacity .45s ease,transform .5s var(--mola);
+  grid-area:1/1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;
+  opacity:0;transform:translateY(12px);pointer-events:none;
+  /* o texto que sai some antes de o novo entrar — sem fantasma sobreposto */
+  transition:opacity .16s ease,transform .16s ease;
 }
-.rc-painel.ativo{opacity:1;transform:none;pointer-events:auto}
-.rc-marca{height:clamp(20px,2.6vw,28px);width:auto;object-fit:contain;margin-bottom:2px}
+.rc-painel.ativo{
+  opacity:1;transform:none;pointer-events:auto;
+  transition:opacity .38s ease .14s,transform .5s var(--mola) .14s;
+}
+@media(min-width:901px){
+  .rc-painel{align-items:flex-start;text-align:left}
+}
+.rc-marca{height:clamp(22px,2.8vw,30px);width:auto;object-fit:contain}
 .rc-num{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ciano-texto);font-weight:500}
-.rc-painel h3{font-size:clamp(16px,2vw,21px);font-weight:500;letter-spacing:-.02em;line-height:1.3;max-width:17ch}
-.rc-painel p{font-size:clamp(12.5px,1.3vw,14px);line-height:1.6;color:var(--tinta-suave);max-width:33ch}
-.rc-painel .link-seta{margin-top:2px}
+.rc-painel h3{font-size:clamp(21px,2.8vw,32px);font-weight:400;letter-spacing:-.025em;line-height:1.22;max-width:19ch}
+.rc-painel p{font-size:clamp(14px,1.6vw,16.5px);line-height:1.7;color:var(--tinta-suave);max-width:44ch}
+.rc-painel .link-seta{margin-top:4px}
 
+/* ---- régua embaixo ---- */
+.roleta-prog{
+  max-width:var(--maxw);margin:clamp(14px,2vw,22px) auto 0;width:100%;
+  display:flex;align-items:center;gap:16px;
+}
+.roleta-prog .barra{flex:1;height:2px;background:var(--linha);border-radius:2px;overflow:hidden}
+.roleta-prog .barra i{
+  display:block;height:100%;width:0;border-radius:2px;
+  background:linear-gradient(90deg,var(--ciano),var(--ciano-forte));transition:width .12s linear;
+}
+.roleta-prog .cont{font-size:11.5px;letter-spacing:.14em;color:var(--tinta-tenue);font-variant-numeric:tabular-nums;white-space:nowrap}
+.roleta-prog .dica{font-size:11.5px;letter-spacing:.04em;color:var(--tinta-tenue);white-space:nowrap}
+
+@media(max-width:900px){
+  /* sem prender a tela: a seção volta a ter altura própria */
+  .roleta-sec{height:auto !important}
+  .roleta-fixa{position:relative;min-height:0;padding:clamp(70px,9vw,120px) var(--gutter)}
+  .roleta-cab{text-align:center}
+  .roleta-cab h2,.roleta-cab .lead{margin-left:auto;margin-right:auto}
+  .roleta-prog{display:none}
+}
 @media(max-width:559px){
   /* no celular o aro fica apertado: vira lista de abas com o miolo embaixo */
-  .roleta{aspect-ratio:auto;display:block;width:100%}
-  .roleta-aro{display:none}
+  .roleta{aspect-ratio:auto;display:block;width:100%;container-type:normal}
+  .roleta-aro,.roleta-arco,.roleta-agulha,.roleta-miolo{display:none}
   .roleta-nos{position:static;transform:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
   .roleta-no{
     position:static;margin:0;width:auto;height:auto;border-radius:30px;
     flex-direction:row;gap:8px;padding:10px 16px;transform:none;box-shadow:none;
   }
   .roleta-no .rn-ico svg{width:16px;height:16px}
-  .roleta-no .rn-rot{padding:0}
-  .roleta-centro{width:100%;margin-top:26px}
+  .roleta-no .rn-rot{font-size:12px;padding:0}
+  .roleta-nos:has(.roleta-no:hover) .roleta-no:not(:hover){opacity:1}
 }
 @media(prefers-reduced-motion:reduce){
+  .roleta-sec{height:auto !important}
+  .roleta-fixa{position:relative;min-height:0;padding:clamp(70px,9vw,120px) var(--gutter)}
+  .roleta-prog{display:none}
   .roleta-aro{animation:none}
   .roleta-nos,.roleta-no{transition:none}
-  .rc-painel{transition:opacity .2s ease}
+  .rc-painel,.rc-painel.ativo{transition:opacity .2s ease}
+  .roleta-arco .ra-corrida{transition:none}
 }
 
 /* =========================================================================

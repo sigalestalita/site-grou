@@ -451,44 +451,124 @@
   })();
 
   /* ====================================================================== */
-  /* 8e. Roleta do ecossistema — o aro gira e o miolo troca de frente       */
+  /* 8e. Roleta do ecossistema — o scroll gira o aro, frente por frente     */
   /* ====================================================================== */
   (function () {
-    $$('[data-roleta]').forEach(function (roleta) {
-      var nos = $$('.roleta-no', roleta);
-      var paineis = $$('.rc-painel', roleta);
-      if (nos.length < 2) return;
-      var passo = 360 / nos.length;
-      var i = 0, timer = null, parado = false;
+    var sec = $('[data-roleta-sec]');
+    var roleta = sec && $('[data-roleta]', sec);
+    if (!sec || !roleta) return;
 
-      function mostrar(novo) {
-        i = (novo + nos.length) % nos.length;
-        roleta.style.setProperty('--giro', (-i * passo) + 'deg');
-        nos.forEach(function (n, k) { n.classList.toggle('ativo', k === i); });
-        paineis.forEach(function (p, k) { p.classList.toggle('ativo', k === i); });
-      }
-      function agendar() {
-        clearTimeout(timer);
-        if (reduzido || parado) return;
-        timer = setTimeout(function () { mostrar(i + 1); agendar(); }, 4800);
-      }
+    var nos = $$('.roleta-no', roleta);
+    var paineis = $$('.rc-painel', sec);
+    var arco = $('.roleta-arco .ra-corrida', roleta);
+    var mioloN = $('.roleta-miolo .rm-n', roleta);
+    var mioloR = $('.roleta-miolo .rm-r', roleta);
+    var barra = $('.roleta-prog .barra i', sec);
+    var cont = $('.roleta-prog .cont', sec);
+    if (nos.length < 2) return;
 
-      nos.forEach(function (n, k) {
-        n.addEventListener('click', function () { mostrar(k); agendar(); });
-        n.addEventListener('focus', function () { mostrar(k); });
+    var n = nos.length, passo = 360 / n;
+    var i = -1, timer = null, parado = false, curso = 0;
+    var desktop = window.matchMedia('(min-width:901px)');
+    function preso() { return !reduzido && desktop.matches; }
+
+    /* --- estado visual ---------------------------------------------- */
+    function selecionar(novo) {
+      if (novo === i) return;
+      i = (novo + n) % n;
+      nos.forEach(function (x, k) {
+        var on = k === i;
+        x.classList.toggle('ativo', on);
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+        x.tabIndex = on ? 0 : -1;
       });
-      /* enquanto o ponteiro estiver em cima, a roleta espera */
-      roleta.addEventListener('pointerenter', function () { parado = true; clearTimeout(timer); });
-      roleta.addEventListener('pointerleave', function () { parado = false; agendar(); });
-      /* só gira sozinha enquanto estiver na tela */
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (es) {
-          es.forEach(function (e) { parado = !e.isIntersecting; e.isIntersecting ? agendar() : clearTimeout(timer); });
-        }, { threshold: 0.25 }).observe(roleta);
-      } else { agendar(); }
+      paineis.forEach(function (x, k) {
+        var on = k === i;
+        x.classList.toggle('ativo', on);
+        x.hidden = false;
+        x.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+      if (mioloN) mioloN.textContent = pad(i + 1);
+      if (mioloR) mioloR.textContent = (nos[i].querySelector('.rn-rot') || {}).textContent || '';
+      if (cont) cont.textContent = pad(i + 1) + ' / ' + pad(n);
+      /* solta (mobile/tablet) o arco marca a frente da vez, não o scroll */
+      if (!preso()) pintar(i / (n - 1));
+    }
+    function pad(v) { return String(v).padStart(2, '0'); }
+    function girar(f) { roleta.style.setProperty('--giro', (-f * passo).toFixed(2) + 'deg'); }
+    function pintar(p) {
+      if (arco) arco.style.strokeDashoffset = (100 - p * 100).toFixed(1);
+      if (barra) barra.style.width = (p * 100).toFixed(1) + '%';
+    }
 
-      mostrar(0);
+    /* --- modo preso: o scroll é o botão ------------------------------ */
+    function medir() {
+      if (!preso()) { sec.style.height = ''; sec.classList.remove('preso'); roleta.classList.remove('rolando'); curso = 0; return; }
+      /* uma tela para entrar, mais um trecho por frente restante */
+      curso = Math.round(window.innerHeight * 0.66) * (n - 1);
+      sec.style.height = (window.innerHeight + curso) + 'px';
+      sec.classList.add('preso');
+      roleta.classList.add('rolando');
+    }
+    function anda() {
+      if (!preso() || !curso) return;
+      var r = sec.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, -r.top / curso));
+      var f = p * (n - 1);
+      girar(f);
+      selecionar(Math.round(f));
+      pintar(p);
+    }
+    /* onde a página precisa estar para a frente k ficar na agulha */
+    function alvoDe(k) {
+      var topo = sec.getBoundingClientRect().top + window.pageYOffset;
+      return Math.round(topo + (k / (n - 1)) * curso);
+    }
+    function irPara(k) {
+      if (!preso() || !curso) { girar(k); selecionar(k); return; }
+      window.scrollTo({ top: alvoDe(k), behavior: reduzido ? 'auto' : 'smooth' });
+    }
+
+    /* --- modo solto: volta a ser abas que giram sozinhas -------------- */
+    function agendar() {
+      clearTimeout(timer);
+      if (preso() || reduzido || parado) return;
+      timer = setTimeout(function () { girar(i + 1); selecionar(i + 1); agendar(); }, 4800);
+    }
+
+    nos.forEach(function (x, k) {
+      x.addEventListener('click', function () {
+        if (preso()) { irPara(k); return; }
+        girar(k); selecionar(k); agendar();
+      });
+      x.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1
+              : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var alvo = (k + d + n) % n;
+        nos[alvo].focus();
+        if (preso()) irPara(alvo); else { girar(alvo); selecionar(alvo); agendar(); }
+      });
+      x.addEventListener('focus', function () { if (!preso()) { girar(k); selecionar(k); } });
     });
+
+    roleta.addEventListener('pointerenter', function () { parado = true; clearTimeout(timer); });
+    roleta.addEventListener('pointerleave', function () { parado = false; agendar(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { parado = !e.isIntersecting; e.isIntersecting ? agendar() : clearTimeout(timer); });
+      }, { threshold: 0.25 }).observe(roleta);
+    } else { agendar(); }
+
+    medir();
+    window.addEventListener('resize', function () { medir(); anda(); }, { passive: true });
+    window.addEventListener('load', function () { medir(); anda(); });
+    desktop.addEventListener('change', function () { medir(); anda(); agendar(); });
+    aoRolar(anda);
+    selecionar(0); girar(0); pintar(0);
+    anda();
+    disparar();
   })();
 
   /* ====================================================================== */

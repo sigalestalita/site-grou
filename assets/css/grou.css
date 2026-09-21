@@ -1930,3 +1930,66 @@ body.gaveta-aberta{overflow:hidden}
   .pz-card,.pz-radar-pts{animation:none}
   .pz-anel-v{transition:none}
 }
+
+/* =========================================================================
+   GROU ACADEMY — peças próprias da página /academy/
+   O resto vem do sistema: cartão, faixa, métricas, FAQ, botões.
+   ========================================================================= */
+.aca-marca img{height:30px;width:auto}
+@media(min-width:760px){.aca-marca img{height:34px}}
+
+/* Cartão de curso: etiqueta, título e a ação no rodapé do cartão */
+.aca-curso{display:flex;flex-direction:column;gap:12px}
+.aca-curso h3{font-size:clamp(17px,1.9vw,20px);font-weight:400;letter-spacing:-.02em;line-height:1.25}
+.aca-curso p{flex:1}
+.aca-curso .link-seta{margin-top:4px;align-self:flex-start}
+.aca-tag{
+  align-self:flex-start;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  color:var(--ciano-texto);background:var(--ciano-fundo);
+  border:1px solid rgb(var(--ciano-rgb) / .45);border-radius:20px;padding:5px 12px;
+}
+/* Sem destino no site atual: fica visível, mas não finge ser clicável */
+.link-seta.inerte{color:var(--tinta-tenue);cursor:default}
+
+/* Mentoras: retrato recortado sobre um disco claro */
+.aca-mentora{text-align:center;padding-top:clamp(20px,3vw,28px)}
+.aca-mentora img{
+  width:clamp(130px,17vw,168px);height:auto;margin:0 auto 18px;
+  border-radius:50% 50% 24px 24px;
+  background:radial-gradient(circle at 50% 38%,var(--ciano-fundo),var(--nevoa) 72%);
+}
+.aca-mentora h3{margin-bottom:12px}
+.aca-mentora p{font-size:14px;line-height:1.7;margin-bottom:10px}
+.aca-mentora p:last-child{margin-bottom:0}
+
+/* Depoimentos */
+.aca-dep{display:flex;flex-direction:column;gap:16px}
+.aca-aspas{
+  font-size:54px;line-height:.6;font-weight:600;color:var(--ciano);
+  display:block;height:26px;
+}
+.aca-dep p{flex:1;font-size:15px;line-height:1.72}
+.aca-dep footer{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--linha);padding-top:14px}
+.aca-dep footer b{font-weight:500;color:var(--tinta);font-size:15px}
+.aca-dep footer span{font-size:12.5px;color:var(--tinta-tenue)}
+
+/* Marca da Grou dentro do painel escuro do "Sobre a Grou" */
+.aca-marca-painel{margin-bottom:18px}
+.aca-logo-grou{height:34px;width:auto;color:#fff}
+
+/* Marca do Academy no rodapé */
+.aca-rod-marca{height:38px;width:auto;margin-bottom:18px;filter:brightness(0) invert(1)}
+/* Grades fixas: as formações pedem cartões largos e os depoimentos, 3 colunas */
+@media(min-width:900px){
+  .grade.aca-2col{grid-template-columns:1fr 1fr}
+  .grade.aca-3col{grid-template-columns:repeat(3,1fr)}
+}
+/* Números do painel do hero */
+.aca-num{display:grid;grid-template-columns:1fr 1fr;gap:20px 18px}
+.aca-num div{display:flex;flex-direction:column;gap:4px}
+.aca-num b{font-size:clamp(24px,2.8vw,32px);font-weight:200;letter-spacing:-.03em;color:#fff;line-height:1}
+.aca-num span{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.4}
+/* Bio das mentoras: nome centrado, texto alinhado à esquerda para poder ler */
+.aca-mentora h3{text-align:center}
+.aca-mentora p{text-align:left}

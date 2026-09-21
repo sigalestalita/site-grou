@@ -208,9 +208,9 @@ de janela (`.passo-janela`), com `object-fit:contain`, largura máxima de 600px
 e sem Ken Burns: a ampliação cai para **1,58×**. Ao trocar o vídeo por um de
 resolução maior, dá para voltar ao tratamento dos outros dois.
 
-**A etapa 04** mostra o relatório chegando por e-mail (`.mk-email`), com o logo
-da Grou, o anexo nomeado e a **capa real do laudo** vinda de
-`assets/img/relatorios/perfil.png` — não é um ícone genérico.
+**A etapa 04** mostra os relatórios disponíveis na plataforma (`.mk-plat`) —
+não chegando por e-mail: é ali que o RH acessa. A linguagem da seção é para o
+RH, não para quem responde a avaliação.
 
 ## Cache e versionamento
 
@@ -247,7 +247,7 @@ skills-retrato.webp      Foto de apoio (Grou Skills)
 resiliencia-componentes.webp / dilemas-tela.webp / f360-*.webp
 ```
 
-Os **logos de clientes são brancos sobre transparência**, feitos para a faixa
+São 13 marcas. Os **logos de clientes são brancos sobre transparência**, feitos para a faixa
 `.logos`, que tem fundo `--azul-noite`. Não os use sobre fundo claro sem
 inverter. A lista e a altura de cada marca ficam em `CLIENTES`, no topo do
 bloco de logos de cada página — cada marca tem altura própria para que todas

@@ -1993,3 +1993,37 @@ body.gaveta-aberta{overflow:hidden}
 /* Bio das mentoras: nome centrado, texto alinhado à esquerda para poder ler */
 .aca-mentora h3{text-align:center}
 .aca-mentora p{text-align:left}
+/* Selo do hero com a fileira de avatares do próprio Grou Academy */
+.aca-selo{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:6px 18px 6px 6px;border-radius:40px;
+  background:var(--branco);border:1px solid var(--linha);box-shadow:var(--sombra-s);
+  font-size:14px;color:var(--tinta-suave);
+  margin-bottom:24px;
+}
+.aca-selo img{height:34px;width:auto}
+.aca-selo b{color:var(--ciano-texto);font-weight:600}
+@media(max-width:959px){.aca-selo{margin:0 auto}}
+
+/* Ilustração da hero, com o selo de alunos por cima */
+.aca-hero-fig{
+  position:relative;margin:0;border-radius:var(--raio-g);overflow:hidden;
+  box-shadow:var(--sombra-g);
+}
+.aca-hero-fig img{width:100%;height:auto;display:block}
+/* o tom da ilustração puxa para o roxo: o contorno amarra com o resto */
+.aca-hero-fig{border:1px solid rgba(255,255,255,.5)}
+.aca-hero-fig figcaption{
+  position:absolute;left:clamp(14px,3%,24px);bottom:clamp(14px,4%,22px);
+  display:flex;align-items:baseline;gap:8px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+  border-radius:30px;padding:9px 18px;box-shadow:0 10px 30px rgba(12,10,46,.22);
+  font-size:13px;color:var(--tinta-suave);
+}
+.aca-hero-fig figcaption b{font-size:19px;font-weight:300;letter-spacing:-.02em;color:var(--tinta)}
+@media(max-width:620px){
+  .aca-hero-fig figcaption{padding:7px 13px;font-size:11.5px;gap:6px}
+  .aca-hero-fig figcaption b{font-size:16px}
+  .aca-selo{font-size:12.5px;gap:9px;padding:5px 14px 5px 5px}
+  .aca-selo img{height:28px}
+}

@@ -1120,6 +1120,21 @@ body.gaveta-aberta{overflow:hidden}
 [data-tema="master"] .menu-link{color:rgba(255,255,255,.82)}
 [data-tema="master"] .menu-link:hover,
 [data-tema="master"] .menu-item.aberto > .menu-link{color:#fff;background:rgba(255,255,255,.08)}
+/* o tema escuro trocava --branco e --azul-noite: sem estas regras o menu
+   fica preto sobre preto na página do Master Líder */
+[data-tema="master"] .menu-link[aria-current="page"]{color:#fff;background:rgba(255,255,255,.08)}
+[data-tema="master"] .submenu{background:#0b0d18;border-color:rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.55)}
+[data-tema="master"] .submenu a{color:var(--tinta)}
+[data-tema="master"] .submenu a small{color:var(--tinta-tenue)}
+[data-tema="master"] .submenu a:hover{background:rgba(0,150,255,.14)}
+[data-tema="master"] .submenu a:hover small{color:#5fe3ff}
+[data-tema="master"] .submenu .divisor{background:rgba(255,255,255,.12)}
+[data-tema="master"] .sc-cats{border-right-color:rgba(255,255,255,.12)}
+[data-tema="master"] .sc-cat{color:var(--tinta)}
+[data-tema="master"] .sc-cat:hover{background:rgba(255,255,255,.07)}
+[data-tema="master"] .sc-cat.ativo{color:#fff;background:rgba(0,150,255,.18)}
+[data-tema="master"] .gaveta{background:#0b0d18}
+[data-tema="master"] .gaveta-titulo,[data-tema="master"] .gaveta-sub a{color:var(--tinta)}
 [data-tema="master"] .hamburguer{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
 [data-tema="master"] .hamburguer i{background:#fff}
 [data-tema="master"] .hero{

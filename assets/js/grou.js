@@ -55,28 +55,43 @@
       ultimo = y;
     });
 
-    /* Dropdowns do menu (hover no desktop, clique no teclado/toque) */
+    /* Dropdowns do menu — só abrem no clique. Passar o mouse não abre nada. */
+    function fecharMenus(exceto) {
+      $$('.menu-item.aberto').forEach(function (o) {
+        if (o === exceto) return;
+        o.classList.remove('aberto');
+        var g = $('.menu-link', o);
+        if (g) g.setAttribute('aria-expanded', 'false');
+      });
+    }
     $$('.menu-item').forEach(function (item) {
       var sub = $('.submenu', item);
       if (!sub) return;
       var gatilho = $('.menu-link', item);
-      var fechar;
 
-      function abrir() { clearTimeout(fechar); $$('.menu-item.aberto').forEach(function (o) { if (o !== item) o.classList.remove('aberto'); }); item.classList.add('aberto'); gatilho.setAttribute('aria-expanded', 'true'); }
-      function fecha(atraso) { clearTimeout(fechar); fechar = setTimeout(function () { item.classList.remove('aberto'); gatilho.setAttribute('aria-expanded', 'false'); }, atraso || 0); }
+      function abrir() { fecharMenus(item); item.classList.add('aberto'); gatilho.setAttribute('aria-expanded', 'true'); }
+      function fecha() { item.classList.remove('aberto'); gatilho.setAttribute('aria-expanded', 'false'); }
 
-      item.addEventListener('mouseenter', abrir);
-      item.addEventListener('mouseleave', function () { fecha(120); });
       gatilho.addEventListener('click', function (e) {
-        if (gatilho.getAttribute('href') && gatilho.getAttribute('href') !== '#') return;
         e.preventDefault();
-        item.classList.contains('aberto') ? fecha(0) : abrir();
+        item.classList.contains('aberto') ? fecha() : abrir();
       });
-      item.addEventListener('focusin', abrir);
+      /* o foco saindo do bloco fecha — teclado e leitor de tela seguem funcionando */
       item.addEventListener('focusout', function (e) {
-        if (!item.contains(e.relatedTarget)) fecha(0);
+        if (!item.contains(e.relatedTarget)) fecha();
       });
     });
+    /* clique fora fecha */
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.menu-item')) fecharMenus(null);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        fecharMenus(null);
+        if (document.body.classList.contains('gaveta-aberta')) alternarGaveta(false);
+      }
+    });
+
     /* Consulting: a coluna da esquerda troca a lista da direita */
     $$('[data-cons]').forEach(function (painel) {
       var cats = $$('.sc-cat', painel);
@@ -103,13 +118,6 @@
         });
       });
       mostrar(0);
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        $$('.menu-item.aberto').forEach(function (o) { o.classList.remove('aberto'); });
-        if (document.body.classList.contains('gaveta-aberta')) alternarGaveta(false);
-      }
     });
 
     /* Gaveta mobile */

@@ -1741,3 +1741,175 @@ body.gaveta-aberta{overflow:hidden}
 .eco:has(.eco-slot[data-k="8"] .eco-tile:focus-visible) .eco-fio path[data-k="8"]{stroke:var(--ciano);stroke-width:2.4}
 .eco:has(.eco-slot[data-k="8"] .eco-tile:hover) .eco-pulso[data-k="8"],
 .eco:has(.eco-slot[data-k="8"] .eco-tile:focus-visible) .eco-pulso[data-k="8"]{opacity:1;animation:eco-percorre 1.15s linear infinite}
+
+/* =========================================================================
+   PDAZ — composição da hero do PDA Assessment
+   Celular ao centro e cartões da plataforma em volta, no desenho da hero da
+   pdainternational.net. Refeito em HTML/SVG porque os originais são imagens
+   com o texto em espanhol dentro. Tudo dimensionado em cqw sobre a caixa,
+   para o conjunto escalar junto sem quebrar.
+   ========================================================================= */
+.pdaz{
+  position:relative;container-type:inline-size;
+  width:min(100%,520px);aspect-ratio:520 / 440;margin:0 auto;
+  font-family:var(--fonte);
+}
+.pz-card{
+  position:absolute;border-radius:3.1cqw;
+  box-shadow:0 3cqw 6cqw rgba(12,10,46,.14);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.pz-seta{
+  position:absolute;top:6%;right:6%;width:3.4cqw;height:3.4cqw;opacity:.9;
+}
+.pz-chip{
+  align-self:flex-start;position:relative;z-index:2;
+  font-size:1.5cqw;letter-spacing:.12em;font-weight:500;
+  border:1px solid rgba(255,255,255,.34);border-radius:3cqw;padding:.7cqw 1.7cqw;
+}
+.pz-chip.claro{border-color:var(--linha);color:var(--tinta-suave)}
+
+/* --- cartão RADAR (escuro) --- */
+.pz-radar-card{
+  left:12%;top:12.7%;width:18.46%;height:21.8%;
+  background:#1b1b1f;color:#fff;padding:4.5% 5%;
+}
+.pz-radar{position:absolute;left:17%;top:34%;width:66%;height:60%}
+.pz-radar-pts{animation:pz-gira 38s linear infinite;transform-origin:50% 50%}
+@keyframes pz-gira{to{transform:rotate(360deg)}}
+
+/* --- cartão REPNA (claro) --- */
+.pz-repna-card{
+  left:10.4%;top:60%;width:20.38%;height:23.2%;
+  background:var(--branco);color:var(--tinta);padding:5% 5.5%;
+}
+.pz-repna-card .pz-seta{color:var(--tinta-tenue)}
+.pz-linha{position:absolute;left:6%;top:34%;width:88%;height:60%}
+
+/* --- faixas de números --- */
+.pz-kpi{
+  flex-direction:row;align-items:center;justify-content:space-around;
+  border-radius:2.4cqw;padding:0 1.6%;
+}
+.pz-kpi span{display:flex;flex-direction:column;align-items:center;gap:.2cqw;line-height:1}
+.pz-kpi b{font-size:3.5cqw;font-weight:300;letter-spacing:-.03em}
+.pz-kpi i{font-size:1.28cqw;letter-spacing:.05em;text-transform:uppercase;font-style:normal;white-space:nowrap}
+.pz-kpi-azul{
+  left:2.3%;top:41%;width:30%;height:10.5%;
+  background:linear-gradient(120deg,#4b3bff,#3f6dff);color:#fff;
+}
+.pz-kpi-azul i{color:rgba(255,255,255,.72)}
+.pz-kpi-claro{
+  left:66.9%;top:36.4%;width:30%;height:10.9%;
+  background:var(--branco);color:var(--tinta);
+}
+.pz-kpi-claro i{color:var(--tinta-tenue)}
+
+/* --- cartões de relatório --- */
+.pz-comp{
+  left:66.5%;top:5.5%;width:25%;height:29%;
+  background:linear-gradient(150deg,#4b3bff,#4260ff);color:#fff;padding:5.5% 6%;
+  justify-content:space-between;
+}
+.pz-cargo{
+  left:66.5%;top:52%;width:26.15%;height:30%;
+  background:#1b1b1f;color:#fff;padding:5% 5.5% 8.5%;
+  justify-content:space-between;
+}
+.pz-avs{display:flex;margin-bottom:1.5cqw}
+.pz-avs img{
+  width:4cqw;height:4cqw;border-radius:50%;border:.34cqw solid rgba(255,255,255,.9);
+  object-fit:cover;margin-right:-1.3cqw;
+}
+.pz-tit{font-size:1.72cqw;font-weight:600;line-height:1.24;letter-spacing:-.01em;margin-bottom:1cqw}
+.pz-mini{
+  display:flex;align-items:center;gap:.8cqw;
+  font-size:1.2cqw;color:rgba(255,255,255,.72);margin-bottom:.7cqw;white-space:nowrap;
+}
+.pz-mini-2{justify-content:space-between;font-size:1cqw;letter-spacing:.03em;margin:0;gap:1cqw;
+  color:rgba(255,255,255,.58)}
+.pz-pt{width:1.3cqw;height:1.3cqw;border-radius:50%;background:#00d1ff;flex:none}
+.pz-seg{display:flex;gap:.5cqw;margin-bottom:.9cqw}
+.pz-seg i{flex:1;height:.95cqw;border-radius:1cqw;background:rgba(255,255,255,.34)}
+.pz-seg i:nth-child(-n+4){background:#8fe9ff}
+.pz-tr{position:relative;display:block;height:1.1cqw;border-radius:1cqw;background:rgba(255,255,255,.18)}
+.pz-tr i{position:absolute;inset:0 auto 0 0;width:var(--w);border-radius:1cqw;
+  background:linear-gradient(90deg,#00d1ff,#4b8cff)}
+.pz-tr u{position:absolute;top:50%;left:var(--x);width:2cqw;height:2cqw;border-radius:50%;
+  background:#fff;transform:translate(-50%,-50%)}
+
+/* --- celular --- */
+.pz-fone{
+  position:absolute;left:33.65%;top:10.9%;width:32.69%;height:78.2%;
+  border-radius:5.4cqw;background:#1d1d1f;padding:.75cqw;
+  box-shadow:0 5cqw 9cqw rgba(12,10,46,.26);
+}
+.pz-tela{
+  position:relative;width:100%;height:100%;overflow:hidden;
+  border-radius:4.8cqw;background:#fff;color:var(--tinta);
+}
+.pz-ilha{
+  position:absolute;left:50%;top:1.8cqw;transform:translateX(-50%);
+  width:9.6cqw;height:2.8cqw;border-radius:2cqw;background:#1d1d1f;z-index:3;
+}
+.pz-status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.9cqw 2.4cqw 0;font-size:1.5cqw;font-weight:600;color:var(--tinta);
+}
+.pz-ic{letter-spacing:.06em;font-size:1.3cqw}
+.pz-topo{
+  display:flex;align-items:center;gap:1.4cqw;justify-content:center;position:relative;
+  padding:1.9cqw 2.4cqw;font-size:1.75cqw;font-weight:500;
+  border-bottom:1px solid var(--linha);
+}
+.pz-volta{position:absolute;left:2.4cqw;font-size:2.2cqw;color:var(--tinta)}
+.pz-corpo{padding:2.2cqw 3cqw;display:flex;flex-direction:column;text-align:left}
+.pz-nome{font-size:2.25cqw;font-weight:700;letter-spacing:-.02em;margin-bottom:1cqw}
+.pz-lin{display:flex;align-items:center;gap:1.2cqw;font-size:1.75cqw;color:var(--tinta);margin-bottom:.7cqw}
+.pz-bolha{width:2.2cqw;height:2.2cqw;border-radius:50%;background:#1668ff;flex:none}
+.pz-bolha.env{border-radius:.5cqw}
+.pz-h{display:block;text-align:center;font-size:2.15cqw;font-weight:700;margin:1.9cqw 0 .8cqw}
+.pz-p{text-align:center;font-size:1.5cqw;line-height:1.45;color:var(--tinta-tenue)}
+.pz-p-2{margin-top:1.2cqw;font-size:1.35cqw}
+.pz-passos{display:flex;gap:.9cqw;justify-content:center;margin:1.5cqw 0 1.7cqw}
+.pz-passos i{width:4.6cqw;height:1.1cqw;border-radius:1cqw;background:var(--nevoa-2)}
+.pz-passos i.on{background:#1668ff}
+.pz-medidor{position:relative;display:block;width:62%;aspect-ratio:1/1;margin:0 auto}
+.pz-anel{width:100%;height:100%}
+.pz-anel-v{transition:stroke-dashoffset 1.4s var(--mola)}
+.pz-medidor-txt{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:.4cqw;text-align:center;
+}
+.pz-medidor-txt b{font-size:3.1cqw;font-weight:700}
+.pz-medidor-txt i{font-size:1.55cqw;font-style:normal;font-weight:600;line-height:1.25}
+.pz-sel{
+  display:flex;align-items:center;justify-content:center;gap:1cqw;
+  margin:1.2cqw auto 0;padding:1.3cqw 2.6cqw;border-radius:2cqw;
+  background:var(--branco);box-shadow:0 1cqw 2.4cqw rgba(12,10,46,.14);
+  font-size:1.75cqw;font-weight:500;
+}
+
+/* Realce da palavra-chave no H1, como na hero de referência */
+.h-xl b.realce,.h-lg b.realce{color:var(--acao-clara)}
+
+/* Flutuação escalonada dos cartões */
+@keyframes pz-flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-.9cqw)}}
+.pz-radar-card{animation:pz-flutua 6.5s ease-in-out infinite}
+.pz-kpi-azul{animation:pz-flutua 7.5s ease-in-out .5s infinite}
+.pz-repna-card{animation:pz-flutua 7s ease-in-out 1.1s infinite}
+.pz-comp{animation:pz-flutua 7.2s ease-in-out .8s infinite}
+.pz-kpi-claro{animation:pz-flutua 6.8s ease-in-out 1.4s infinite}
+.pz-cargo{animation:pz-flutua 7.8s ease-in-out .2s infinite}
+
+@media(max-width:559px){
+  /* nesse tamanho o texto dos cartões some: fica o celular e as duas faixas */
+  .pdaz{aspect-ratio:330 / 400;width:min(100%,330px)}
+  .pz-fone{left:19%;top:6%;width:62%;height:88%;border-radius:9cqw;padding:1.4cqw}
+  .pz-tela{border-radius:7.8cqw}
+  .pz-radar-card,.pz-repna-card,.pz-comp,.pz-cargo,.pz-kpi{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .pz-card,.pz-radar-pts{animation:none}
+  .pz-anel-v{transition:none}
+}

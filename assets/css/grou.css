@@ -2624,3 +2624,122 @@ a.tri-i:hover{transform:translateY(-3px)}
 .faixa .tri h3,.sec.escura .tri h3{color:#fff}
 .faixa .tri p,.sec.escura .tri p{color:rgba(255,255,255,.66)}
 .faixa .tri-rot,.sec.escura .tri-rot{color:var(--ciano)}
+
+/* =========================================================================
+   VITRINE DO CONSULTING — carrossel conectado
+   O cartão do meio abre a prévia do serviço (texto + imagem) e os vizinhos
+   ficam como lâminas que se encaixam nele por uma mossa. Geometria vem do
+   JS (transform/width/height), a transição é toda daqui.
+   ========================================================================= */
+.cc{position:relative;width:100%;max-width:1280px;margin:clamp(10px,1.6vw,22px) auto 0;
+  display:flex;flex-direction:column;align-items:center;outline:none;
+  /* as lâminas que saem de cena ficam presas aqui; o respiro guarda a sombra */
+  overflow:hidden;padding:30px 0 6px}
+.cc-palco{position:relative;width:100%;display:flex;align-items:center;justify-content:center}
+
+.cc-card{
+  position:absolute;left:50%;top:50%;
+  background:var(--branco);border-radius:clamp(18px,2.2vw,26px);
+  box-shadow:0 18px 50px rgba(12,10,46,.10),0 4px 14px rgba(12,10,46,.05);
+  transition:transform .62s var(--mola),width .62s var(--mola),height .62s var(--mola),
+             opacity .38s ease,box-shadow .4s ease;
+  will-change:transform,width,height;
+}
+.cc-card.cc-lado{cursor:pointer}
+.cc-card.cc-lado:hover{box-shadow:0 22px 56px rgba(12,10,46,.18)}
+.cc-in{position:relative;width:100%;height:100%;border-radius:inherit;overflow:hidden}
+
+/* lâmina: só a imagem, com uma moldura interna como no cartão aberto */
+.cc-capa{
+  position:absolute;inset:7px;border-radius:calc(clamp(18px,2.2vw,26px) - 7px);
+  overflow:hidden;background:var(--nevoa);transition:opacity .3s ease;
+}
+.cc-capa img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.88)}
+/* a lâmina é textura, não conteúdo: escurece um pouco e clareia no hover */
+.cc-capa::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(7,3,58,.14),rgba(7,3,58,.34));
+  transition:opacity .35s ease;
+}
+.cc-card.cc-lado:hover .cc-capa::after{opacity:.4}
+.cc-card.cc-ativo .cc-capa{opacity:0;pointer-events:none}
+
+/* cartão aberto: texto à esquerda, prévia à direita */
+.cc-corpo{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;gap:clamp(16px,2vw,30px);padding:clamp(18px,2.1vw,28px);
+  opacity:0;transition:opacity .42s ease;pointer-events:none;
+}
+.cc-card.cc-ativo .cc-corpo{opacity:1;pointer-events:auto}
+.cc-txt{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(9px,1.1vw,14px)}
+.cc-cat{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--ciano-texto);line-height:1.4}
+.cc-txt h3{font-size:clamp(20px,2.5vw,32px);font-weight:400;letter-spacing:-.028em;line-height:1.16;max-width:16ch}
+.cc-txt p{font-size:clamp(13.5px,1.45vw,16px);line-height:1.68;color:var(--tinta-suave);max-width:40ch}
+.cc-meta{display:flex;flex-wrap:wrap;gap:7px}
+.cc-meta span{
+  font-size:12px;line-height:1.35;color:var(--tinta-suave);
+  border:1px solid var(--linha);border-radius:30px;padding:5px 12px;
+}
+.cc-txt .link-seta{margin-top:2px}
+.cc-foto{
+  flex:none;width:clamp(180px,40%,320px);border-radius:clamp(14px,1.6vw,20px);
+  overflow:hidden;background:var(--nevoa);
+}
+.cc-foto img{width:100%;height:100%;object-fit:cover;display:block}
+/* print de relatório não pode ser cortado: entra inteiro, emoldurado */
+.cc-foto.cc-rel{
+  background:var(--branco);border:1px solid var(--linha);padding:clamp(10px,1.3vw,18px);
+  align-self:center;height:auto;max-height:100%;
+}
+.cc-foto.cc-rel img{height:auto;max-height:100%;object-fit:contain}
+
+/* mossa: o recorte que costura a lâmina ao cartão aberto */
+.cc-mossa{
+  position:absolute;top:0;bottom:0;margin:auto 0;color:var(--branco);
+  width:20px;height:40px;opacity:0;pointer-events:none;z-index:4;transition:opacity .3s ease;
+}
+.cc-mossa.cc-mossa-p{width:16px;height:28px}
+.cc-mossa svg{width:100%;height:100%;display:block;fill:currentColor;overflow:visible}
+.cc-mossa-d{left:calc(100% - 1px)}
+.cc-mossa-e{right:calc(100% - 1px)}
+.cc-card.cc-o-1 > .cc-mossa-d:not(.cc-mossa-p),
+.cc-card.cc-o1  > .cc-mossa-e:not(.cc-mossa-p),
+.cc-card.cc-o-2 > .cc-mossa-d.cc-mossa-p,
+.cc-card.cc-o2  > .cc-mossa-e.cc-mossa-p{opacity:1}
+
+/* régua de navegação */
+.cc-barra{display:flex;align-items:center;gap:clamp(10px,1.4vw,18px);margin-top:clamp(14px,2vw,24px);
+  padding:0 var(--gutter);max-width:100%}
+.cc-seta{
+  flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--linha);
+  background:var(--branco);color:var(--tinta-suave);display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s,color .3s,transform .3s var(--mola);
+}
+.cc-seta svg{width:15px;height:15px}
+.cc-seta:hover{border-color:rgb(var(--ciano-rgb) / .6);color:var(--ciano-texto);transform:scale(1.06)}
+.cc-tabs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;min-width:0}
+.cc-tab{
+  width:9px;height:9px;flex:none;border-radius:5px;background:var(--nevoa-2);
+  padding:0;overflow:hidden;transition:width .45s var(--mola),background .3s;
+}
+.cc-tab:hover{background:var(--linha)}
+.cc-tab[aria-selected="true"]{width:clamp(56px,7vw,88px)}
+.cc-tab i{
+  display:block;width:100%;height:100%;border-radius:5px;
+  background:linear-gradient(90deg,var(--ciano),var(--ciano-forte));
+  transform:scaleX(0);transform-origin:0 50%;
+}
+.cc-tab:focus-visible{outline:2px solid var(--ciano-forte);outline-offset:3px}
+
+/* fundo escuro herda os tons certos */
+.sec.alt .cc-card{background:var(--branco)}
+@media(prefers-reduced-motion:reduce){
+  .cc-card,.cc-corpo,.cc-capa,.cc-tab,.cc-mossa{transition:none}
+}
+@media(max-width:767px){
+  .cc-corpo{flex-direction:column;gap:14px}
+  .cc-foto{width:100%;flex:1;min-height:0}
+  .cc-txt{flex:none;justify-content:flex-start}
+  .cc-txt h3{max-width:none}
+  .cc-txt p{max-width:none}
+}

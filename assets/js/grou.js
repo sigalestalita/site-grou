@@ -626,6 +626,121 @@
   })();
 
   /* ====================================================================== */
+  /* 8g. Vitrine do Consulting — carrossel conectado                         */
+  /* ====================================================================== */
+  (function () {
+    $$('[data-cc]').forEach(function (cc) {
+      var palco = $('.cc-palco', cc);
+      var cards = $$('.cc-card', cc);
+      var abas = $$('.cc-tab', cc);
+      var n = cards.length;
+      if (n < 3) return;
+
+      var i = 0, faixa = null, timer = null, t0 = 0, pausado = false, naTela = false;
+      var intervalo = parseInt(cc.getAttribute('data-intervalo'), 10) || 6000;
+
+      /* geometria por faixa de tela — o JS posiciona, o CSS anima */
+      function medir() {
+        var L = window.innerWidth;
+        if (L >= 1120) return {t:'g', w:744, h:462, s1:[104,326], s2:[72,202], v1:16, v2:14};
+        if (L >= 780)  return {t:'m', w:Math.min(568, L - 240), h:430, s1:[92,306], s2:null, v1:15, v2:0};
+        return {t:'p', w:Math.min(338, L - 88), h:462, s1:[40,392], s2:null, v1:10, v2:0};
+      }
+
+      function dist(k) {                 /* menor distância circular até o ativo */
+        var d = k - i;
+        if (d >  n / 2) d -= n;
+        if (d < -n / 2) d += n;
+        return d;
+      }
+
+      function posicionar() {
+        var g = faixa, meia = g.w / 2;
+        palco.style.height = g.h + 'px';
+        cards.forEach(function (c, k) {
+          var d = dist(k), x, l, a, z;
+          if (d === 0)                       { l = [g.w, g.h];  x = -meia; z = 1; a = 1; }
+          else if (d === -1)                 { l = g.s1; x = -meia - g.v1 - g.s1[0]; z = 3; a = 1; }
+          else if (d === 1)                  { l = g.s1; x =  meia + g.v1;           z = 3; a = 1; }
+          else if (d === -2 && g.s2)         { l = g.s2; x = -meia - g.v1 - g.s1[0] - g.v2 - g.s2[0]; z = 2; a = 1; }
+          else if (d === 2 && g.s2)          { l = g.s2; x =  meia + g.v1 + g.s1[0] + g.v2;           z = 2; a = 1; }
+          else                               { l = g.s2 || g.s1; x = (d < 0 ? -1 : 1) * (meia + 340); z = 0; a = 0; }
+
+          c.style.width = l[0] + 'px';
+          c.style.height = l[1] + 'px';
+          c.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(-l[1] / 2) + 'px)';
+          c.style.opacity = a;
+          c.style.zIndex = z;
+          c.classList.toggle('cc-ativo', d === 0);
+          c.classList.toggle('cc-lado', d !== 0 && a === 1);
+          ['cc-o-2','cc-o-1','cc-o1','cc-o2'].forEach(function (cl) { c.classList.remove(cl); });
+          if (d >= -2 && d <= 2 && d !== 0) c.classList.add('cc-o' + (d < 0 ? '-' + (-d) : d));
+          /* o miolo mantém o tamanho do cartão aberto: o texto não reflui na animação */
+          var corpo = $('.cc-corpo', c);
+          if (corpo) { corpo.style.width = g.w + 'px'; corpo.style.height = g.h + 'px'; }
+          c.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
+        });
+        abas.forEach(function (b, k) {
+          var on = k === i;
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          b.tabIndex = on ? 0 : -1;
+          var barra = $('i', b);
+          if (barra && !on) barra.style.transform = 'scaleX(0)';
+        });
+      }
+
+      function ir(k) { i = ((k % n) + n) % n; t0 = 0; posicionar(); }
+
+      /* autoplay com barra de progresso na aba ativa */
+      function pulso(ts) {
+        timer = requestAnimationFrame(pulso);
+        if (reduzido || pausado || !naTela) { t0 = ts; return; }
+        if (!t0) t0 = ts;
+        var p = Math.min(1, (ts - t0) / intervalo);
+        var barra = $('i', abas[i]);
+        if (barra) barra.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+        if (p >= 1) ir(i + 1);
+      }
+
+      cards.forEach(function (c, k) {
+        c.addEventListener('click', function () { if (dist(k) !== 0) ir(k); });
+      });
+      abas.forEach(function (b, k) {
+        b.addEventListener('click', function () { ir(k); });
+        b.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!d) return;
+          e.preventDefault(); ir(i + d); abas[i].focus();
+        });
+      });
+      $$('[data-cc-ir]', cc).forEach(function (b) {
+        b.addEventListener('click', function () { ir(i + parseInt(b.getAttribute('data-cc-ir'), 10)); });
+      });
+      cc.addEventListener('pointerenter', function () { pausado = true; });
+      cc.addEventListener('pointerleave', function () { pausado = false; t0 = 0; });
+      cc.addEventListener('focusin', function () { pausado = true; });
+      cc.addEventListener('focusout', function (e) { if (!cc.contains(e.relatedTarget)) pausado = false; });
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { naTela = e.isIntersecting; if (!naTela) t0 = 0; });
+        }, { threshold: .3 }).observe(cc);
+      } else { naTela = true; }
+
+      function remedir() {
+        var nova = medir();
+        var mudou = !faixa || nova.t !== faixa.t || nova.w !== faixa.w;
+        faixa = nova;
+        if (mudou) posicionar();
+      }
+      faixa = medir(); posicionar();
+      window.addEventListener('resize', remedir, { passive: true });
+      window.addEventListener('load', function () { faixa = medir(); posicionar(); });
+      timer = requestAnimationFrame(pulso);
+    });
+  })();
+
+  /* ====================================================================== */
   /* 9. FAQ                                                                 */
   /* ====================================================================== */
   (function () {

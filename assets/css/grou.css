@@ -2658,10 +2658,10 @@ a.tri-i:hover{transform:translateY(-3px)}
 /* a lâmina é textura, não conteúdo: recua um pouco e acende no hover */
 .cc-capa::after{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(7,3,58,.30),rgba(7,3,58,.52));
+  background:linear-gradient(180deg,rgba(7,3,58,.20),rgba(7,3,58,.46));
   transition:opacity .35s ease;
 }
-.cc-card.cc-lado:hover .cc-capa::after{opacity:.25}
+.cc-card.cc-lado:hover .cc-capa::after{opacity:.35}
 .cc-card.cc-ativo .cc-capa{opacity:0;pointer-events:none}
 
 /* cartão aberto: texto à esquerda, prévia à direita */

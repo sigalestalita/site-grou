@@ -392,13 +392,42 @@ html[data-tema="webinar"]{overflow-x:hidden}
   background:var(--cartao);font-size:13.5px;font-weight:500;color:var(--t2)}
 .w-final-chips b{color:var(--t1);font-weight:600}
 
-/* --- perguntas rápidas --------------------------------------------------- */
-.w-faq{margin-top:clamp(34px,4.4vw,52px);display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;list-style:none;padding:0}
-.w-faq li{padding:22px 24px;border-radius:16px;border:1px solid var(--ln);background:var(--cartao)}
-.w-faq b{display:block;font-family:var(--fonte);font-size:15.5px;font-weight:600;color:var(--t1);
-  margin-bottom:9px;line-height:1.35}
-.w-faq span{font-size:14.5px;line-height:1.62;color:var(--t2)}
+/* --- FAQ: sanfona nativa, sem JavaScript --------------------------------- */
+.w-faq{margin-top:clamp(30px,4vw,44px);max-width:820px;margin-inline:auto;
+  border-radius:20px;border:1px solid var(--ln);background:var(--cartao);
+  box-shadow:var(--sombra);overflow:hidden}
+.w-faq details + details{border-top:1px solid var(--ln)}
+.w-faq summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:18px;
+  padding:20px clamp(20px,2.4vw,28px);font-family:var(--fonte);font-size:clamp(15.5px,1.6vw,17px);
+  font-weight:600;line-height:1.4;color:var(--t1);
+  transition:color .2s var(--suave),background .2s var(--suave)}
+.w-faq summary::-webkit-details-marker{display:none}
+.w-faq summary:hover{color:var(--w-ciano-forte);background:rgba(var(--w-ciano-rgb)/.07)}
+.escura .w-faq summary:hover{color:var(--w-ciano);background:rgba(255,255,255,.04)}
+.w-faq summary:focus-visible{outline:2px solid var(--w-ciano-forte);outline-offset:-3px}
+.w-faq summary .pm{flex:none;margin-left:auto;position:relative;width:18px;height:18px;
+  margin-top:2px}
+.w-faq summary .pm::before,.w-faq summary .pm::after{content:'';position:absolute;
+  background:var(--w-ciano-forte);border-radius:2px;transition:transform .35s var(--mola),
+  opacity .25s var(--suave)}
+.escura .w-faq summary .pm::before,.escura .w-faq summary .pm::after{background:var(--w-ciano)}
+.w-faq summary .pm::before{left:0;right:0;top:8px;height:2px}
+.w-faq summary .pm::after{top:0;bottom:0;left:8px;width:2px}
+.w-faq details[open] summary .pm::after{transform:rotate(90deg);opacity:0}
+.w-faq details[open] summary{color:var(--w-ciano-forte);padding-bottom:6px}
+.escura .w-faq details[open] summary{color:var(--w-ciano)}
+.w-faq .resp{padding:0 clamp(20px,2.4vw,28px) 22px}
+.w-faq .resp p{font-size:15px;line-height:1.72;color:var(--t2);max-width:68ch}
+.w-faq .resp p + p{margin-top:10px}
+.w-faq .resp b{color:var(--t1);font-weight:600}
+@media (prefers-reduced-motion:no-preference){
+  .w-faq details[open] .resp{animation:w-abre .4s var(--suave)}
+}
+@keyframes w-abre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+.w-faq-fim{margin-top:22px;text-align:center;font-size:14.5px;line-height:1.6;color:var(--t3)}
+[data-tema="webinar"] .w-faq-fim a{color:var(--w-ciano-forte);font-weight:600;
+  text-decoration:underline;text-underline-offset:3px}
 
 /* --- rodapé -------------------------------------------------------------- */
 .w-rodape{background:#fff;border-top:1px solid var(--ln);padding:36px 0 44px}

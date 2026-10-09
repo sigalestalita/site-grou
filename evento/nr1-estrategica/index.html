@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://www.grougp.com/assets/evento/nr1-estrategica/og.jpg">
 <meta name="theme-color" content="#07033a">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml"><link rel="icon" href="/assets/img/icone-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/assets/img/icone-180.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Event", "name": "NR-1 Estratégica", "description": "Uma tarde da Grou sobre comportamento, risco psicossocial e conformidade com a NR-1. 12 de novembro de 2026, a partir das 14h, no Instituto Caldeira, em Porto Alegre. Com o soft launch do Lumi.", "startDate": "2026-11-12T14:00:00-03:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "image": ["https://www.grougp.com/assets/evento/nr1-estrategica/og.jpg"], "location": {"@type": "Place", "name": "Instituto Caldeira", "address": {"@type": "PostalAddress", "streetAddress": "Av. Farrapos, 1055", "addressLocality": "Porto Alegre", "addressRegion": "RS", "addressCountry": "BR"}}, "organizer": {"@type": "Organization", "name": "Grou", "url": "https://www.grougp.com/"}, "offers": {"@type": "Offer", "url": "https://www.grougp.com/evento/nr1-estrategica/", "price": "249", "priceCurrency": "BRL", "availability": "https://schema.org/InStock"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Event", "name": "NR-1 Estratégica", "description": "Uma tarde da Grou sobre comportamento, risco psicossocial e conformidade com a NR-1. 12 de novembro de 2026, a partir das 14h, no Instituto Caldeira, em Porto Alegre. Com o soft launch do Lumi.", "startDate": "2026-11-12T14:00:00-03:00", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "image": ["https://www.grougp.com/assets/evento/nr1-estrategica/og.jpg"], "location": {"@type": "Place", "name": "Instituto Caldeira", "address": {"@type": "PostalAddress", "streetAddress": "Av. Farrapos, 1055", "addressLocality": "Porto Alegre", "addressRegion": "RS", "addressCountry": "BR"}}, "organizer": {"@type": "Organization", "name": "Grou", "url": "https://www.grougp.com/"}, "sponsor": [{"@type": "Organization", "name": "Raiô Benefícios", "url": "https://raiobeneficios.com.br/"}, {"@type": "Organization", "name": "Junior Achievement Brasil", "url": "https://jabrasil.org.br"}, {"@type": "Organization", "name": "Reali"}, {"@type": "Organization", "name": "Café do Mercado", "url": "https://cafedomercado.com.br/"}, {"@type": "Organization", "name": "DU99", "url": "https://du99.com.br"}, {"@type": "Organization", "name": "ILoveMyJob", "url": "https://ilovemyjob.com.br"}, {"@type": "Organization", "name": "VT Soluções", "url": "https://www.vtsolucoes.com.br"}], "offers": {"@type": "Offer", "url": "https://www.grougp.com/evento/nr1-estrategica/", "price": "249", "priceCurrency": "BRL", "availability": "https://schema.org/InStock"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -582,6 +582,46 @@ html.js .an.viva{opacity:1;transform:none;transition:opacity .75s var(--ease),tr
   html.js .an{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+/* ---------- apoiadores: slider ---------- */
+.apoio__cab{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,44px)}
+.apoio__ctl{display:flex;align-items:center;gap:10px}
+.apoio__cont{font-family:var(--ft);font-size:13px;color:var(--tinta-3);margin-right:6px;font-variant-numeric:tabular-nums}
+.apoio__cont b{color:var(--tinta);font-weight:600}
+.apoio__ctl button{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--linha);background:#fff;color:var(--noite);
+  display:grid;place-items:center;cursor:pointer;transition:transform .25s var(--ease),background .25s,color .25s,border-color .25s,opacity .25s}
+.apoio__ctl button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.apoio__ctl button:hover:not(:disabled){background:var(--noite);color:#fff;border-color:var(--noite);transform:translateY(-2px)}
+.apoio__ctl button:disabled{opacity:.35;cursor:default}
+.apoio__pista{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  padding:6px 2px 22px;margin-inline:-2px;overscroll-behavior-x:contain}
+.apoio__pista::-webkit-scrollbar{display:none}
+.ap{flex:0 0 calc((100% - 40px) / 3);scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;
+  box-shadow:0 1px 0 var(--linha),0 18px 40px -26px rgba(12,10,46,.35);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.ap:hover{transform:translateY(-4px);box-shadow:0 1px 0 var(--linha),0 28px 50px -26px rgba(12,10,46,.45)}
+.ap__logo{position:relative;display:grid;place-items:center;height:170px;padding:36px 28px 26px;text-decoration:none;overflow:hidden;
+  background:radial-gradient(260px 160px at 85% 0%,rgba(27,63,214,.55),transparent 70%),radial-gradient(240px 140px at 0% 100%,rgba(108,216,207,.22),transparent 70%),
+             linear-gradient(160deg,var(--noite),var(--royal) 120%)}
+.ap__logo::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.1) 1.2px,transparent 1.3px);background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 70% at 80% 10%,#000,transparent 75%);mask-image:radial-gradient(ellipse 70% 70% at 80% 10%,#000,transparent 75%)}
+.ap__logo img{position:relative;width:auto;height:auto;max-width:72%;max-height:var(--mh,56px);object-fit:contain;transition:transform .45s var(--ease)}
+a.ap__logo:hover img{transform:scale(1.06)}
+.ap__tag{position:absolute;left:18px;top:16px;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);
+  font-family:var(--ft);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff}
+.ap__ir{position:absolute;right:16px;bottom:14px;display:inline-flex;align-items:center;gap:6px;font-family:var(--ft);font-size:11.5px;font-weight:500;color:var(--ciano);
+  opacity:0;transform:translateY(4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.ap__ir svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+a.ap__logo:hover .ap__ir,a.ap__logo:focus-visible .ap__ir{opacity:1;transform:none}
+.ap__corpo{display:flex;flex-direction:column;gap:10px;padding:22px 24px 26px;flex:1}
+.ap__fato{font-family:var(--ft);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ciano-t)}
+.ap h3{font-size:clamp(20px,1.8vw,24px);font-weight:600;letter-spacing:-.02em}
+.ap__desc{font-size:14.5px;line-height:1.62;color:var(--tinta-2)}
+.ap__imp{margin-top:auto;padding-top:16px;border-top:1px solid var(--linha);font-family:var(--ft);font-size:14px;line-height:1.5;font-weight:500;color:var(--tinta)}
+.ap__imp span{display:block;margin-bottom:5px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-3)}
+.apoio__prog{height:3px;border-radius:3px;background:var(--linha);overflow:hidden;margin-top:4px}
+.apoio__prog i{display:block;height:100%;width:40%;border-radius:3px;background:linear-gradient(90deg,var(--royal),var(--ciano-f));transition:width .4s var(--ease)}
+@media (max-width:1020px){.ap{flex-basis:calc((100% - 20px) / 2)}}
+@media (max-width:640px){.ap{flex-basis:84%}.apoio__ctl{display:none}.apoio__pista{padding-bottom:18px}.ap__ir{display:none}}
+@media (prefers-reduced-motion:reduce){.ap,.ap__logo img,.apoio__prog i{transition:none}.ap:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -667,6 +707,92 @@ html.js .an.viva{opacity:1;transform:none;transition:opacity .75s var(--ease),tr
       <div class="num an" style="--d:.24s"><b data-conta="23" data-suf=" anos">23 anos</b>
         <p>transformando dado comportamental em decisão de gestão.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- ===================== APOIADORES ===================== -->
+<section class="pad apoio" id="apoio" style="background:var(--nevoa)">
+  <div class="brilhos" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="apoio__cab an">
+      <div>
+        <span class="olho">Apoiadores</span>
+        <h2>Quem <b>apoia</b> essa tarde.</h2>
+        <p class="lede" style="margin-top:20px">Sete organizações que estão com a Grou no NR-1 Estratégica e que têm algo em comum com o tema:
+          gente, trabalho e futuro.</p>
+      </div>
+      <div class="apoio__ctl" role="group" aria-label="Navegar pelos apoiadores">
+        <span class="apoio__cont" aria-live="polite"><b id="apN">1</b> de 7</span>
+        <button type="button" id="apAnt" aria-label="Apoiador anterior"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button type="button" id="apProx" aria-label="Próximo apoiador"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="apoio__pista an" id="apPista" tabindex="0" role="region" aria-label="Apoiadores do evento" style="--d:.1s">
+      <article class="ap" data-nome="Raiô Benefícios">
+        <a class="ap__logo" href="https://raiobeneficios.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Raiô Benefícios: visitar o site (abre em outra aba)"><img src="/assets/evento/nr1-estrategica/apoio/raio.svg" alt="Raiô Benefícios" width="71" height="30" loading="lazy" decoding="async" style="--mh:34px"><span class="ap__tag">Benefícios corporativos</span><span class="ap__ir" aria-hidden="true">Visitar site <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+        <div class="ap__corpo">
+          <p class="ap__fato">Todas as categorias em um cartão Visa</p>
+          <h3>Raiô Benefícios</h3>
+          <p class="ap__desc">Nasceu em 2023 para descomplicar o mercado de benefícios: reúne as categorias num só cartão Visa, com transparência e conformidade com a lei do PAT.</p>
+          <p class="ap__imp"><span>Por que importa</span>Cuidar de quem trabalha começa pelo benefício que chega certo.</p>
+        </div>
+      </article>
+      <article class="ap" data-nome="Junior Achievement Brasil">
+        <a class="ap__logo" href="https://jabrasil.org.br" target="_blank" rel="noopener noreferrer" aria-label="Junior Achievement Brasil: visitar o site (abre em outra aba)"><img src="/assets/evento/nr1-estrategica/apoio/ja.png" alt="Junior Achievement Brasil" width="640" height="152" loading="lazy" decoding="async" style="--mh:58px"><span class="ap__tag">Educação e juventude</span><span class="ap__ir" aria-hidden="true">Visitar site <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+        <div class="ap__corpo">
+          <p class="ap__fato">No Brasil desde 1983</p>
+          <h3>Junior Achievement Brasil</h3>
+          <p class="ap__desc">Organização social sem fins lucrativos que prepara jovens para a vida e a carreira pelo “aprender fazendo”: empreendedorismo, educação financeira e mercado de trabalho.</p>
+          <p class="ap__imp"><span>Por que importa</span>O futuro do trabalho se constrói antes do primeiro emprego, e a JA está nessa ponta.</p>
+        </div>
+      </article>
+      <article class="ap" data-nome="Reali">
+        <div class="ap__logo"><img src="/assets/evento/nr1-estrategica/apoio/reali.png" alt="Reali" width="560" height="501" loading="lazy" decoding="async" style="--mh:100px"><span class="ap__tag">Inovação e estratégia</span></div>
+        <div class="ap__corpo">
+          <p class="ap__fato">Estratégia, workshops e design</p>
+          <h3>Reali</h3>
+          <p class="ap__desc">Hub de inovação que facilita a transformação do negócio e das pessoas, por meio de estratégias, workshops, design e mais.</p>
+          <p class="ap__imp"><span>Por que importa</span>Transformar o negócio passa por transformar o jeito como as pessoas trabalham.</p>
+        </div>
+      </article>
+      <article class="ap" data-nome="Café do Mercado">
+        <a class="ap__logo" href="https://cafedomercado.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Café do Mercado: visitar o site (abre em outra aba)"><img src="/assets/evento/nr1-estrategica/apoio/cafe.png" alt="Café do Mercado" width="640" height="65" loading="lazy" decoding="async" style="--mh:30px"><span class="ap__tag">Cafés especiais</span><span class="ap__ir" aria-hidden="true">Visitar site <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+        <div class="ap__corpo">
+          <p class="ap__fato">Cursos de barista SCA</p>
+          <h3>Café do Mercado</h3>
+          <p class="ap__desc">Especialista em cafeterias: cafés em grãos de produtores 85+, máquinas profissionais e formação de baristas. Café bom é ofício, e ofício se aprende.</p>
+          <p class="ap__imp"><span>Por que importa</span>Boa conversa pede boa mesa, e é no café que o networking costuma começar.</p>
+        </div>
+      </article>
+      <article class="ap" data-nome="DU99">
+        <a class="ap__logo" href="https://du99.com.br" target="_blank" rel="noopener noreferrer" aria-label="DU99: visitar o site (abre em outra aba)"><img src="/assets/evento/nr1-estrategica/apoio/du99.png" alt="DU99" width="411" height="484" loading="lazy" decoding="async" style="--mh:84px"><span class="ap__tag">Impacto social</span><span class="ap__ir" aria-hidden="true">Visitar site <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+        <div class="ap__corpo">
+          <p class="ap__fato">Reformas sociais em 1 dia</p>
+          <h3>DU99</h3>
+          <p class="ap__desc">Reforma instituições sociais em um dia, com voluntários e colaboradores das empresas patrocinadoras. O propósito: levar arquitetura para os 99% que não têm acesso a um profissional.</p>
+          <p class="ap__imp"><span>Por que importa</span>Mostra que equipe de empresa muda espaço de verdade quando trabalha por um propósito.</p>
+        </div>
+      </article>
+      <article class="ap" data-nome="ILoveMyJob">
+        <a class="ap__logo" href="https://ilovemyjob.com.br" target="_blank" rel="noopener noreferrer" aria-label="ILoveMyJob: visitar o site (abre em outra aba)"><img src="/assets/evento/nr1-estrategica/apoio/ilmj.png" alt="ILoveMyJob" width="420" height="667" loading="lazy" decoding="async" style="--mh:92px"><span class="ap__tag">Employer branding</span><span class="ap__ir" aria-hidden="true">Visitar site <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+        <div class="ap__corpo">
+          <p class="ap__fato">Consultoria e agência de marca empregadora</p>
+          <h3>ILoveMyJob</h3>
+          <p class="ap__desc">Ajuda empresas a atrair, engajar e fidelizar talentos, com a People University e análises da marca empregadora em tempo real.</p>
+          <p class="ap__imp"><span>Por que importa</span>A reputação de uma empresa começa em como ela trata quem trabalha nela.</p>
+        </div>
+      </article>
+      <article class="ap" data-nome="VT Soluções">
+        <a class="ap__logo" href="https://www.vtsolucoes.com.br" target="_blank" rel="noopener noreferrer" aria-label="VT Soluções: visitar o site (abre em outra aba)"><img src="/assets/evento/nr1-estrategica/apoio/vt.png" alt="VT Soluções" width="300" height="67" loading="lazy" decoding="async" style="--mh:36px"><span class="ap__tag">Vale-transporte</span><span class="ap__ir" aria-hidden="true">Visitar site <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>
+        <div class="ap__corpo">
+          <p class="ap__fato">+10 anos focados em vale-transporte</p>
+          <h3>VT Soluções</h3>
+          <p class="ap__desc">Operadora que se apresenta como a única do país totalmente especializada em gestão de vale-transporte: assume compra, coleta, personalização e entrega dos vales.</p>
+          <p class="ap__imp"><span>Por que importa</span>Menos tarefa operacional no RH é mais tempo para cuidar de gente.</p>
+        </div>
+      </article>
+    </div>
+    <div class="apoio__prog" aria-hidden="true"><i id="apProg"></i></div>
   </div>
 </section>
 
@@ -1252,6 +1378,45 @@ document.documentElement.classList.add('js');
   }
   rolagem();
   addEventListener('scroll', function () { if (!pendente) { pendente = true; requestAnimationFrame(rolagem); } }, { passive: true });
+})();
+
+/* ===== Apoiadores: slider ===== */
+(function () {
+  var pista = document.getElementById('apPista'); if (!pista) return;
+  var cards = [].slice.call(pista.querySelectorAll('.ap'));
+  var ant = document.getElementById('apAnt'), prox = document.getElementById('apProx');
+  var num = document.getElementById('apN'), prog = document.getElementById('apProg');
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var parou = false, pausado = false, visivel = false, pendente = false;
+  function passo() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : cards[0].offsetWidth; }
+  function fim() { return pista.scrollLeft + pista.clientWidth >= pista.scrollWidth - 4; }
+  function mover(d) { pista.scrollBy({ left: d * passo(), behavior: reduz ? 'auto' : 'smooth' }); }
+  function atualiza() {
+    pendente = false;
+    var p = passo(), a = Math.min(cards.length, Math.round(pista.scrollLeft / p) + 1);
+    var vis = Math.max(1, Math.round(pista.clientWidth / p)), b = Math.min(cards.length, a + vis - 1);
+    if (fim()) { b = cards.length; a = Math.max(1, b - vis + 1); }
+    num.textContent = a === b ? a : a + '–' + b;
+    ant.disabled = pista.scrollLeft < 4; prox.disabled = fim();
+    prog.style.width = Math.min(100, (pista.scrollLeft + pista.clientWidth) / pista.scrollWidth * 100) + '%';
+  }
+  pista.addEventListener('scroll', function () { if (!pendente) { pendente = true; requestAnimationFrame(atualiza); } }, { passive: true });
+  addEventListener('resize', atualiza);
+  function parar() { parou = true; }
+  ant.addEventListener('click', function () { parar(); mover(-1); });
+  prox.addEventListener('click', function () { parar(); mover(1); });
+  ['pointerdown', 'touchstart', 'wheel', 'keydown', 'focusin'].forEach(function (e) { pista.addEventListener(e, parar, { passive: true }); });
+  pista.addEventListener('mouseenter', function () { pausado = true; });
+  pista.addEventListener('mouseleave', function () { pausado = false; });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { visivel = es[0].isIntersecting; }, { threshold: .35 }).observe(pista);
+  }
+  /* avanço suave até a pessoa mexer; nunca com movimento reduzido */
+  if (!reduz) setInterval(function () {
+    if (parou || pausado || !visivel || document.hidden) return;
+    if (fim()) pista.scrollTo({ left: 0, behavior: 'smooth' }); else mover(1);
+  }, 5200);
+  atualiza();
 })();
 </script>
 </body>

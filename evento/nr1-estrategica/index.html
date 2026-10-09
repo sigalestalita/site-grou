@@ -1419,6 +1419,24 @@ document.documentElement.classList.add('js');
     } else ir('convidado');
   });
 
+  /* ===== Link exclusivo de convite =====
+     grougp.com/convite/maicon      → cupom MAICONCONVITE (100%)
+     grougp.com/convite/maicon50    → cupom MAICONCONVITE50 (50%)
+     Também vale ?cupom=MAICONCONVITE. Aplica o cupom e já abre a etapa certa. */
+  (function () {
+    var q = new URLSearchParams(location.search).get('cupom');
+    if (!q) return;
+    var c = normal(q), tenta = [c, c + 'CONVITE'];
+    if (/50$/.test(c) && c.indexOf('CONVITE') < 0) tenta.push(c.slice(0, -2) + 'CONVITE50');
+    var achado = '';
+    tenta.forEach(function (t) { if (!achado && (CUPONS.indexOf(t) >= 0 || CUPONS_50.indexOf(t) >= 0)) achado = t; });
+    if (!achado) return;
+    ir('cupom', false);
+    inCupom.value = achado;
+    document.getElementById('formCupom').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    setTimeout(function () { document.getElementById('ingresso').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 400);
+  })();
+
   function cookie(nome) {
     var m = document.cookie.match('(^|;)\\s*' + nome + '\\s*=\\s*([^;]+)');
     return m ? decodeURIComponent(m.pop()) : '';

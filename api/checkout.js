@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const c = require('./_comum');
+const db = require('./_db');
 
 const EVENTO = {
   name: 'NR-1 Estratégica',
@@ -73,6 +74,20 @@ module.exports = async (req, res) => {
     const t = r.json || {};
     if (!t.id) {
       return c.responde(res, r.http >= 500 ? 502 : 400, { erro: 'Não foi possível criar o pedido. ' + (t.msg ? String(t.msg).slice(0, 160) : 'Tente novamente.') });
+    }
+    /* registra no painel de inscritos; uma falha aqui nunca derruba o pagamento */
+    if (db.ativo()) {
+      const u = b.utm || {};
+      try {
+        await db.grava({
+          chave: 'p:' + t.id, evento: 'nr1-estrategica', tipo: 'pagante', cupom: preco.cupom || null, desconto: preco.cupom ? 50 : 0,
+          nome, email, celular, empresa: limpa(cli.empresa, 80), cargo: limpa(cli.cargo, 80), aceite: true,
+          status: db.statusInterno(t.status), metodo: b.metodo, parcelas: metodo === 'credit_card' ? carga.payment.credit_card.installments : 1,
+          valor: preco.total, dom_id: t.id, cod_external: carga.cod_external,
+          utm_source: limpa(u.utm_source, 60) || null, utm_medium: limpa(u.utm_medium, 60) || null, utm_campaign: limpa(u.utm_campaign, 80) || null,
+          pago_em: db.statusInterno(t.status) === 'pago' ? new Date().toISOString() : null
+        }, false);
+      } catch (e) { console.error('registro do pedido ' + t.id + ':', e.message); }
     }
     const saida = { id: t.id, situacao: c.situacao(t.status), status: t.status, msg: t.msg || '', total: preco.total, ambiente: c.ambiente() };
     if (metodo === 'pix') {

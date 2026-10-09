@@ -90,4 +90,4 @@ function situacao(status) {
   return 'recusado';
 }
 
-module.exports = { PRECO_CHEIO, PRECO_METADE, precoDoCupom, normaliza, ambiente, urls, ativo, dom, cpfValido, origemPermitida, corpoJson, responde, situacao };
+module.exports = { CUPONS_100, CUPONS_50, PRECO_CHEIO, PRECO_METADE, precoDoCupom, normaliza, ambiente, urls, ativo, dom, cpfValido, origemPermitida, corpoJson, responde, situacao };

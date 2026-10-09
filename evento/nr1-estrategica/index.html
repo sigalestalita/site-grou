@@ -1372,10 +1372,19 @@ document.documentElement.classList.add('js');
       ir('ok');
       if (window.dataLayer) window.dataLayer.push({ event: 'inscricao_convidado', cupom: d.cupom });
     }
-    if (!RD_CHAVE) { feito(); return; }
+    if (!window.__INSC && !RD_CHAVE) { feito(); return; }
     var bt = formC.querySelector('[type=submit]');
     bt.disabled = true; erroEnvio.hidden = true;
-    paraRd(d).then(feito, function () { erroEnvio.hidden = false; }).then(function () { bt.disabled = false; });
+    var q = new URLSearchParams(location.search), utm = {};
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+    /* 1) registra a vaga no painel de inscritos (quando ligado); 2) avisa o RD Station (quando houver chave) */
+    var registro = window.__INSC ? fetch('/api/inscricao/', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cupom: d.cupom, nome: d.nome, email: d.email, celular: d.celular, empresa: d.empresa, cargo: d.cargo, utm: utm })
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); }) : Promise.resolve();
+    registro.then(function () { return RD_CHAVE ? paraRd(d) : null; })
+      .then(feito, function () { erroEnvio.hidden = false; })
+      .then(function () { bt.disabled = false; });
   });
 
   /* ===== Checkout embutido (DOM Pagamentos) =====
@@ -1584,6 +1593,7 @@ document.documentElement.classList.add('js');
   }
 
   fetch('/api/config/', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
+    if (c) window.__INSC = !!c.inscricoes;
     if (!c || !c.ativo) return;
     PG = c;
     iniciaPg(fluxo.querySelector('[data-p="pagar"]'), false);

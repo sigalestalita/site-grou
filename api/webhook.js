@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const c = require('./_comum');
+const db = require('./_db');
 
 const b64 = (s) => Buffer.from(s.replace(/-/g, '+').replace(/_/g, '/'), 'base64');
 
@@ -19,7 +20,7 @@ function assinaturaValida(jwt, idEsperado) {
   } catch (e) { return false; }
 }
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   if (req.method !== 'POST') return c.responde(res, 405, { erro: 'Método não permitido.' });
   const b = c.corpoJson(req);
   const id = b.data && b.data.id;
@@ -29,5 +30,15 @@ module.exports = (req, res) => {
     evento: b.event, id, cod_external: b.data.cod_external, status: b.data.status,
     metodo: b.data.payment_method, valor: b.data.amount
   }));
+  /* confirma o estado direto na DOM e atualiza o painel de inscritos; erro aqui devolve 500 para a DOM tentar de novo */
+  if (db.ativo() && id) {
+    try {
+      const r = await c.dom('/transactions/' + encodeURIComponent(id));
+      if (r.json && r.json.status && r.json.status !== 'error') await db.sincroniza(id, r.json.status);
+    } catch (e) {
+      console.error('webhook ' + id + ':', e.message);
+      return c.responde(res, 500, { erro: 'Falha ao atualizar.' });
+    }
+  }
   c.responde(res, 200, { ok: true });
 };

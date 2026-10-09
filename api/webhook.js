@@ -7,11 +7,11 @@ const b64 = (s) => Buffer.from(s.replace(/-/g, '+').replace(/_/g, '/'), 'base64'
 /* Confere o JWT (HS256) que a DOM manda em "signature", assinado com a chave privada. */
 function assinaturaValida(jwt, idEsperado) {
   const p = String(jwt || '').split('.');
-  if (p.length !== 3 || !process.env.DOM_API_KEY) return false;
+  if (p.length !== 3 || !c.env('DOM_API_KEY')) return false;
   try {
     const cab = JSON.parse(b64(p[0]).toString());
     if (cab.alg !== 'HS256') return false;
-    const esperado = crypto.createHmac('sha256', process.env.DOM_API_KEY).update(p[0] + '.' + p[1]).digest();
+    const esperado = crypto.createHmac('sha256', c.env('DOM_API_KEY')).update(p[0] + '.' + p[1]).digest();
     const recebido = b64(p[2]);
     if (esperado.length !== recebido.length || !crypto.timingSafeEqual(esperado, recebido)) return false;
     const corpo = JSON.parse(b64(p[1]).toString());

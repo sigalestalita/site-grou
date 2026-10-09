@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     ativo: c.ativo(),
     inscricoes: db.ativo(),
     ambiente: c.ambiente(),
-    chavePublica: process.env.DOM_PUBLIC_KEY || '',
+    chavePublica: c.env('DOM_PUBLIC_KEY'),
     sdk: c.urls().sdk,
     preco: c.PRECO_CHEIO,
     precoMetade: c.PRECO_METADE

@@ -7,7 +7,7 @@ const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* Painel interno de inscritos. A senha vem no cabeçalho x-gestao-senha e é conferida contra GESTAO_SENHA. */
 module.exports = async (req, res) => {
-  const senha = process.env.GESTAO_SENHA;
+  const senha = c.env('GESTAO_SENHA');
   if (!senha || !db.ativo()) return c.responde(res, 503, { erro: 'Painel ainda não configurado.' });
   const dado = req.headers['x-gestao-senha'];
   if (!crypto.timingSafeEqual(hash(dado), hash(senha))) {

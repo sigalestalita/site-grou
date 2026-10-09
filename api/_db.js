@@ -1,11 +1,12 @@
 /* Banco de inscritos (Supabase / PostgREST). Só o servidor fala com ele.
    Variáveis: SUPABASE_SERVICE_KEY (chave secreta do projeto grou-eventos) e, opcional, SUPABASE_URL. */
 const URL_BASE = process.env.SUPABASE_URL || 'https://eycvxhstugodnjmblsdl.supabase.co';
-const ativo = () => !!process.env.SUPABASE_SERVICE_KEY;
+const chave = () => String(process.env.SUPABASE_SERVICE_KEY || '').trim().replace(/^["']+|["']+$/g, '').trim();
+const ativo = () => !!chave();
 
 async function rest(caminho, o) {
   const op = o || {};
-  const k = process.env.SUPABASE_SERVICE_KEY;
+  const k = chave();
   const r = await fetch(URL_BASE + '/rest/v1/' + caminho, {
     method: op.metodo || 'GET',
     /* chaves novas (sb_...) vão só em apikey; as antigas (JWT) também em Authorization */

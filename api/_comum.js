@@ -5,6 +5,9 @@
      DOM_AMBIENTE     "sandbox" (testes) ou "production"
    Sem DOM_API_KEY o checkout fica desligado e a página usa o botão de link. */
 
+/* variáveis coladas na Vercel às vezes levam espaço, quebra de linha ou aspas: limpa antes de usar */
+const env = (nome) => String(process.env[nome] || '').trim().replace(/^["']+|["']+$/g, '').trim();
+
 const PRECO_CHEIO = 249;
 const PRECO_METADE = 124.5;
 
@@ -24,21 +27,21 @@ function precoDoCupom(cupom) {
 }
 
 function ambiente() {
-  return process.env.DOM_AMBIENTE === 'production' ? 'production' : 'sandbox';
+  return env('DOM_AMBIENTE').toLowerCase() === 'production' ? 'production' : 'sandbox';
 }
 function urls() {
   return ambiente() === 'production'
     ? { api: 'https://apiv3.dompagamentos.com.br/checkout/production', sdk: 'https://apiv3.dompagamentos.com.br/js/sdk-dompagamentos.min.js' }
     : { api: 'https://hml-apiv3.dompagamentos.com.br/checkout/sandbox', sdk: 'https://hml-apiv3.dompagamentos.com.br/js/sdk-dompagamentos.min.js' };
 }
-const ativo = () => !!process.env.DOM_API_KEY;
+const ativo = () => !!env('DOM_API_KEY');
 
 async function dom(caminho, opcoes) {
   const o = opcoes || {};
   const r = await fetch(urls().api + caminho, {
     method: o.metodo || 'GET',
     headers: Object.assign({
-      Authorization: 'Bearer ' + process.env.DOM_API_KEY,
+      Authorization: 'Bearer ' + env('DOM_API_KEY'),
       'Content-Type': 'application/json'
     }, o.cabecalhos || {}),
     body: o.corpo ? JSON.stringify(o.corpo) : undefined
@@ -90,4 +93,4 @@ function situacao(status) {
   return 'recusado';
 }
 
-module.exports = { CUPONS_100, CUPONS_50, PRECO_CHEIO, PRECO_METADE, precoDoCupom, normaliza, ambiente, urls, ativo, dom, cpfValido, origemPermitida, corpoJson, responde, situacao };
+module.exports = { env, CUPONS_100, CUPONS_50, PRECO_CHEIO, PRECO_METADE, precoDoCupom, normaliza, ambiente, urls, ativo, dom, cpfValido, origemPermitida, corpoJson, responde, situacao };

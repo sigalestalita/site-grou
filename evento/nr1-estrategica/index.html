@@ -531,6 +531,36 @@ section{position:relative;isolation:isolate;overflow:hidden}
   background:linear-gradient(150deg,var(--ciano),var(--ciano-f));box-shadow:0 14px 30px -12px rgba(18,165,148,.7)}
 .ok__ic svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .ok__cupom{font-family:var(--ft);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ciano-t)}
+/* checkout embutido (DOM Pagamentos) */
+.pg{display:grid;gap:14px}
+.pg[hidden],.pg__res[hidden],.pg__cartao[hidden]{display:none!important}
+.pg__teste{margin:0;padding:8px 12px;border-radius:10px;background:var(--ciano-fundo);color:var(--ciano-t);font-size:12px;font-weight:600;line-height:1.4}
+.pg__met{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border:0;margin:0;padding:0;min-width:0}
+.pg__met legend{padding:0;margin-bottom:8px;font-family:var(--ft);font-size:12px;font-weight:600;color:var(--tinta)}
+.pg__met label{position:relative;display:grid;justify-items:center;gap:5px;padding:12px 6px;border-radius:12px;background:var(--branco);
+  box-shadow:inset 0 0 0 1.5px var(--linha);cursor:pointer;font-family:var(--ft);font-size:12.5px;font-weight:600;color:var(--tinta-2);text-align:center;transition:box-shadow .2s,color .2s}
+.pg__met label svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pg__met input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.pg__met label:has(input:checked){box-shadow:inset 0 0 0 2px var(--ciano-f);color:var(--noite)}
+.pg__met label:has(input:focus-visible){outline:3px solid rgba(108,216,207,.5);outline-offset:2px}
+.pg__met label.off{opacity:.45;cursor:not-allowed}
+.pg__met label.off input{cursor:not-allowed}
+.pg__cartao{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pg select{width:100%;padding:13px 14px;border-radius:12px;border:0;background:var(--branco);font:inherit;font-size:14px;color:var(--tinta);box-shadow:inset 0 0 0 1.5px var(--linha)}
+.pg select:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ciano-f),0 0 0 4px rgba(108,216,207,.25)}
+.pg .btn[disabled]{opacity:.65;cursor:progress}
+.pg__res{display:grid;gap:14px;justify-items:center;text-align:center}
+.pg__res h4{margin:0;font-family:var(--ft);font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--noite)}
+.pg__res p{margin:0;font-size:13.5px;line-height:1.55;color:var(--tinta-2)}
+.pg__qr{width:min(220px,62vw);aspect-ratio:1;border-radius:14px;background:#fff;padding:10px;box-shadow:inset 0 0 0 1.5px var(--linha)}
+.pg__qr img{display:block;width:100%;height:100%;image-rendering:pixelated}
+.pg__cod{width:100%;padding:11px 12px;border-radius:12px;border:0;background:var(--branco);box-shadow:inset 0 0 0 1.5px var(--linha);
+  font-family:var(--fm);font-size:11.5px;line-height:1.45;color:var(--tinta);word-break:break-all;text-align:left;resize:none}
+.pg__espera{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ciano-t)}
+.pg__espera i{width:9px;height:9px;border-radius:50%;background:var(--ciano-f);animation:pgp 1.2s ease-in-out infinite}
+@keyframes pgp{50%{opacity:.25;transform:scale(.7)}}
+@media (prefers-reduced-motion:reduce){.pg__espera i{animation:none}}
+@media (max-width:520px){.pg__cartao{grid-template-columns:1fr}}
 
 /* ---------- faq ---------- */
 .faq{display:grid;gap:9px;max-width:880px;margin-top:clamp(26px,3.8vh,44px)}
@@ -1303,6 +1333,218 @@ document.documentElement.classList.add('js');
     bt.disabled = true; erroEnvio.hidden = true;
     paraRd(d).then(feito, function () { erroEnvio.hidden = false; }).then(function () { bt.disabled = false; });
   });
+
+  /* ===== Checkout embutido (DOM Pagamentos) =====
+     Liga sozinho quando /api/config diz que o pagamento está configurado no servidor.
+     Sem isso, continuam valendo os botões de link (DOM_LINK / DOM_LINK_50). */
+  var PG = null, pgSdk = null;
+  var ICONES = {
+    pix: '<svg viewBox="0 0 24 24"><path d="M12 3l3.5 3.5L12 10 8.5 6.5z"/><path d="M12 14l3.5 3.5L12 21l-3.5-3.5z"/><path d="M3 12l3.5-3.5L10 12l-3.5 3.5z"/><path d="M14 12l3.5-3.5L21 12l-3.5 3.5z"/></svg>',
+    cartao: '<svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg>',
+    boleto: '<svg viewBox="0 0 24 24"><path d="M4 5v14M7 5v14M10 5v14M14 5v14M17 5v14M20 5v14"/></svg>'
+  };
+  var reais = function (v) { return 'R$ ' + v.toFixed(2).replace('.', ','); };
+  var soNum = function (v) { return String(v || '').replace(/\D/g, ''); };
+
+  function formularioPg(meia) {
+    var total = meia ? PG.precoMetade : PG.preco, opc = '';
+    for (var n = 1; n <= 10; n++) opc += '<option value="' + n + '">' + (n === 1 ? 'À vista · ' + reais(total) : n + 'x de ' + reais(total / n)) + '</option>';
+    var cartaoOk = !!PG.chavePublica;
+    return '' +
+      '<form class="pg" novalidate>' +
+        (PG.ambiente === 'sandbox' ? '<p class="pg__teste">Ambiente de teste: nenhum valor real é cobrado.</p>' : '') +
+        '<div class="campos">' +
+          '<label class="campo campo--todo"><span>Nome completo</span><input name="nome" type="text" autocomplete="name" required></label>' +
+          '<label class="campo"><span>E-mail</span><input name="email" type="email" autocomplete="email" required></label>' +
+          '<label class="campo"><span>Celular (WhatsApp)</span><input name="celular" type="tel" autocomplete="tel" inputmode="tel" placeholder="(51) 99999-9999" required></label>' +
+          '<label class="campo"><span>CPF</span><input name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" required></label>' +
+          '<label class="campo"><span>Empresa</span><input name="empresa" type="text" autocomplete="organization" required></label>' +
+          '<label class="campo campo--todo"><span>Cargo</span><input name="cargo" type="text" autocomplete="organization-title" required></label>' +
+        '</div>' +
+        '<fieldset class="pg__met"><legend>Forma de pagamento</legend>' +
+          '<label>' + ICONES.pix + 'Pix<input type="radio" name="metodo" value="pix" checked></label>' +
+          '<label class="' + (cartaoOk ? '' : 'off') + '">' + ICONES.cartao + 'Cartão<input type="radio" name="metodo" value="cartao"' + (cartaoOk ? '' : ' disabled') + '></label>' +
+          '<label>' + ICONES.boleto + 'Boleto<input type="radio" name="metodo" value="boleto"></label>' +
+        '</fieldset>' +
+        '<div class="pg__cartao" hidden>' +
+          '<label class="campo campo--todo"><span>Número do cartão</span><input name="numero" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000"></label>' +
+          '<label class="campo"><span>Validade</span><input name="validade" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA"></label>' +
+          '<label class="campo"><span>CVV</span><input name="cvv" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4"></label>' +
+          '<label class="campo campo--todo"><span>Nome impresso no cartão</span><input name="titular" type="text" autocomplete="cc-name"></label>' +
+          '<label class="campo campo--todo"><span>Parcelas</span><select name="parcelas">' + opc + '</select></label>' +
+        '</div>' +
+        '<label class="aceite"><input name="aceite" type="checkbox" required><span>Autorizo a Grou a entrar em contato sobre o NR-1 Estratégica.</span></label>' +
+        '<button class="btn" type="submit" style="width:100%"><span class="pg__rot">Pagar ' + reais(total) + '</span><svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>' +
+        '<p class="aviso-erro" hidden></p>' +
+      '</form>' +
+      '<div class="pg__res" hidden></div>';
+  }
+
+  function carregaSdk() {
+    if (pgSdk) return pgSdk;
+    pgSdk = new Promise(function (ok, falha) {
+      if (typeof window.getTokenCard === 'function') return ok();
+      window.module = window.module || {};
+      var s = document.createElement('script');
+      s.src = PG.sdk; s.async = true;
+      s.onload = function () { typeof window.getTokenCard === 'function' ? ok() : falha(new Error('sdk')); };
+      s.onerror = function () { pgSdk = null; falha(new Error('sdk')); };
+      document.head.appendChild(s);
+    });
+    return pgSdk;
+  }
+  function geraToken(d) {
+    return carregaSdk().then(function () {
+      return new Promise(function (ok, falha) {
+        var t = setTimeout(function () { falha(new Error('tempo')); }, 20000);
+        window.getTokenCard(PG.chavePublica, {
+          name: d.titular, document: d.cpf, customer_id: '', number: d.numero, cvv: d.cvv, month: d.mes, year: d.ano
+        }, d.parcelas, function (r) {
+          clearTimeout(t);
+          if (r && r.token) ok(r); else falha(new Error((r && r.msgError) || 'cartao'));
+        });
+      });
+    });
+  }
+
+  function iniciaPg(passo, meia) {
+    var holder = document.createElement('div');
+    holder.innerHTML = formularioPg(meia);
+    var antigoBtn = passo.querySelector(meia ? '.js-pagar50' : '.js-pagar');
+    var seguro = passo.querySelector('.seguro');
+    antigoBtn.parentNode.insertBefore(holder, antigoBtn);
+    antigoBtn.style.display = 'none';
+    var pil = passo.querySelector('.metodos'); if (pil) pil.style.display = 'none';
+    if (seguro) seguro.querySelector('span').innerHTML = 'Pagamento seguro pela <b>DOM Pagamentos</b>. Os dados do cartão não passam pelos nossos servidores.';
+    passo.classList.add('pg-on');
+
+    var f = holder.querySelector('.pg'), res = holder.querySelector('.pg__res'), erro = f.querySelector('.aviso-erro');
+    var bloco = f.querySelector('.pg__cartao'), btn = f.querySelector('button[type=submit]'), rot = f.querySelector('.pg__rot');
+    var chave = null, timer = null;
+    var campo = function (n) { return f.elements[n]; };
+    var mostraErro = function (m, nome) {
+      erro.textContent = m; erro.hidden = false;
+      if (nome && campo(nome)) { campo(nome).closest('.campo').classList.add('invalido'); campo(nome).focus(); }
+    };
+    f.addEventListener('input', function (e) {
+      erro.hidden = true;
+      var c = e.target.closest('.campo'); if (c) c.classList.remove('invalido');
+      var n = e.target.name, v = e.target.value;
+      if (n === 'cpf') e.target.value = soNum(v).slice(0, 11).replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, function (m, a, b, c2, d) { return a + '.' + b + '.' + c2 + (d ? '-' + d : ''); }).replace(/^(\d{3})(\d{1,3})$/, '$1.$2');
+      if (n === 'celular') { var s = soNum(v).slice(0, 11); e.target.value = s.length > 6 ? '(' + s.slice(0, 2) + ') ' + s.slice(2, s.length - 4) + '-' + s.slice(-4) : s.length > 2 ? '(' + s.slice(0, 2) + ') ' + s.slice(2) : s; }
+      if (n === 'numero') e.target.value = soNum(v).slice(0, 19).replace(/(\d{4})(?=\d)/g, '$1 ');
+      if (n === 'validade') { var m = soNum(v).slice(0, 4); e.target.value = m.length > 2 ? m.slice(0, 2) + '/' + m.slice(2) : m; }
+      if (n === 'cvv') e.target.value = soNum(v).slice(0, 4);
+    });
+    f.addEventListener('change', function (e) {
+      if (e.target.name !== 'metodo') return;
+      var cartao = e.target.value === 'cartao';
+      bloco.hidden = !cartao;
+      [].forEach.call(bloco.querySelectorAll('input'), function (i) { i.required = cartao; });
+    });
+
+    function pago(d, metodo, total) {
+      clearTimeout(timer);
+      fluxo.querySelector('[data-nome]').textContent = d.nome.split(' ')[0];
+      fluxo.querySelector('[data-email]').textContent = d.email;
+      var oc = fluxo.querySelector('.ok__cupom');
+      oc.textContent = 'Pagamento confirmado · ingresso individual' + (cupomAtual && meia ? ' · cupom ' + cupomAtual : '');
+      ir('ok');
+      if (window.dataLayer) window.dataLayer.push({ event: 'compra_ingresso', metodo: metodo, valor: total, cupom: meia ? cupomAtual : '' });
+    }
+    function espera(id, d, metodo, total, cada, ate) {
+      var inicio = Date.now();
+      (function volta() {
+        timer = setTimeout(function () {
+          fetch('/api/status?id=' + encodeURIComponent(id)).then(function (r) { return r.json(); }).then(function (j) {
+            if (j.situacao === 'pago') return pago(d, metodo, total);
+            if (j.situacao === 'recusado') { res.querySelector('.pg__espera').textContent = 'Pagamento não concluído. Gere um novo pedido para tentar de novo.'; return; }
+            if (Date.now() - inicio < ate) volta();
+          }).catch(function () { if (Date.now() - inicio < ate) volta(); });
+        }, cada);
+      })();
+    }
+    function mostraResultado(r, d, metodo) {
+      f.hidden = true; res.hidden = false;
+      var h = '';
+      if (metodo === 'pix') {
+        var cola = r.pix.copiaECola, ehLink = /^https?:\/\//.test(cola);
+        h = '<h4>Pague com Pix · ' + reais(r.total) + '</h4>' +
+          (r.pix.imagem ? '<div class="pg__qr"><img src="' + r.pix.imagem + '" alt="QR Code do Pix"></div>' : '') +
+          (ehLink
+            ? '<p>Ambiente de teste: use o botão abaixo para simular o pagamento.</p><a class="btn btn--peq" href="' + cola + '" target="_blank" rel="noopener">Abrir pagamento de teste</a>'
+            : '<p>Abra o app do seu banco, escolha Pix e leia o QR Code, ou use o código copia e cola.</p><textarea class="pg__cod" rows="3" readonly>' + cola + '</textarea><button type="button" class="btn btn--peq pg__copia">Copiar código</button>') +
+          '<span class="pg__espera"><i></i>Aguardando o pagamento…</span>' +
+          '<p>Assim que o Pix for confirmado, esta tela se atualiza sozinha.</p>';
+      } else {
+        h = '<h4>Boleto gerado · ' + reais(r.total) + '</h4>' +
+          '<p>Pague no app do seu banco ou imprima. A vaga é confirmada quando o banco compensar o boleto, em até 2 dias úteis.</p>' +
+          (r.boleto.linha ? '<textarea class="pg__cod" rows="2" readonly>' + r.boleto.linha + '</textarea><button type="button" class="btn btn--peq pg__copia">Copiar linha digitável</button>' : '') +
+          (r.boleto.url ? '<a class="btn btn--peq" href="' + r.boleto.url + '" target="_blank" rel="noopener">Abrir boleto</a>' : '') +
+          '<span class="pg__espera"><i></i>Aguardando a compensação…</span>' +
+          '<p>Enviaremos a confirmação para <b>' + d.email.replace(/[<>&"]/g, '') + '</b>.</p>';
+      }
+      res.innerHTML = h + '<button type="button" class="link-sec pg__novo">Escolher outra forma de pagamento</button>';
+      res.querySelector('.pg__novo').onclick = function () { clearTimeout(timer); res.hidden = true; f.hidden = false; chave = null; };
+      var cp = res.querySelector('.pg__copia');
+      if (cp) cp.onclick = function () {
+        var t = res.querySelector('.pg__cod'); t.select();
+        (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).catch(function () { document.execCommand('copy'); });
+        cp.textContent = 'Copiado';
+      };
+      espera(r.id, d, metodo, r.total, metodo === 'pix' ? 4000 : 20000, metodo === 'pix' ? 3600000 : 14400000);
+    }
+
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      erro.hidden = true;
+      if (!f.reportValidity()) return;
+      var d = {}; new FormData(f).forEach(function (v, k) { d[k] = String(v).trim(); });
+      var metodo = d.metodo, total = meia ? PG.precoMetade : PG.preco;
+      var parcelas = parseInt(d.parcelas, 10) || 1;
+      btn.disabled = true; rot.textContent = 'Processando…';
+      chave = chave || (window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'k' + Date.now() + Math.random().toString(16).slice(2));
+      var q = new URLSearchParams(location.search), utm = {};
+      ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+
+      var passoCartao = metodo === 'cartao' ? (function () {
+        var m = (d.validade || '').split('/');
+        if (soNum(d.numero).length < 13 || m.length !== 2 || +m[0] < 1 || +m[0] > 12 || m[1].length !== 2 || soNum(d.cvv).length < 3) return Promise.reject(new Error('dados'));
+        return geraToken({ titular: d.titular || d.nome, cpf: soNum(d.cpf), numero: soNum(d.numero), cvv: d.cvv, mes: m[0], ano: m[1], parcelas: parcelas });
+      })() : Promise.resolve(null);
+
+      passoCartao.then(function (t) {
+        return fetch('/api/checkout', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            metodo: metodo, cupom: meia ? cupomAtual : '', chave: chave, utm: utm,
+            cliente: { nome: d.nome, email: d.email, celular: d.celular, cpf: d.cpf, empresa: d.empresa, cargo: d.cargo },
+            cartao: t ? { token: t.token, bin: t.bin, brand: t.brand, parcelas: parcelas, titular: d.titular || d.nome } : undefined
+          })
+        }).then(function (r) { return r.json().then(function (j) { return { http: r.status, j: j }; }); });
+      }).then(function (o) {
+        if (o.http !== 200) { chave = null; return mostraErro(o.j.erro || 'Não foi possível concluir o pagamento.', o.j.campo === 'cartao' ? 'numero' : o.j.campo); }
+        var r = o.j;
+        if (metodo === 'cartao') {
+          if (r.situacao === 'pago') return pago(d, metodo, r.total);
+          if (r.situacao === 'aguardando') { f.hidden = true; res.hidden = false; res.innerHTML = '<h4>Confirmando o pagamento…</h4><span class="pg__espera"><i></i>Aguarde alguns segundos</span>'; return espera(r.id, d, metodo, r.total, 3000, 120000); }
+          chave = null; return mostraErro('O pagamento não foi autorizado. Confira os dados do cartão ou tente outro cartão.', 'numero');
+        }
+        mostraResultado(r, d, metodo);
+      }).catch(function (err) {
+        chave = null;
+        mostraErro(err && err.message === 'dados' ? 'Confira o número, a validade e o CVV do cartão.' :
+          (metodo === 'cartao' ? 'Não foi possível validar o cartão. Confira os dados e tente de novo.' : 'Não foi possível concluir agora. Tente de novo em instantes.'), metodo === 'cartao' ? 'numero' : null);
+      }).then(function () { btn.disabled = false; rot.textContent = 'Pagar ' + reais(total); });
+    });
+  }
+
+  fetch('/api/config', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
+    if (!c || !c.ativo) return;
+    PG = c;
+    iniciaPg(fluxo.querySelector('[data-p="pagar"]'), false);
+    iniciaPg(fluxo.querySelector('[data-p="desconto"]'), true);
+  }).catch(function () { /* sem API: ficam os botões de link */ });
 
   var suave = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 

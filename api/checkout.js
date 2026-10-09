@@ -73,7 +73,10 @@ module.exports = async (req, res) => {
     const r = await c.dom('/transactions', { metodo: 'POST', corpo: carga, cabecalhos: { 'X-Idempotency-Key': chave } });
     const t = r.json || {};
     if (!t.id) {
-      return c.responde(res, r.http >= 500 ? 502 : 400, { erro: 'Não foi possível criar o pedido. ' + (t.msg ? String(t.msg).slice(0, 160) : 'Tente novamente.') });
+      /* a DOM recusou: registra o motivo nos logs da Vercel e mostra na tela (sem dados sensíveis) */
+      const motivo = String(t.msg || t.message || '').slice(0, 160);
+      console.error('DOM recusou o pedido:', r.http, JSON.stringify({ code: t.code, status: t.status, msg: t.msg, message: t.message, errors: t.errors }).slice(0, 400));
+      return c.responde(res, r.http >= 500 ? 502 : 400, { erro: 'Não foi possível criar o pedido' + (motivo ? ': ' + motivo : '') + ' (código ' + (t.code || r.http) + ').' });
     }
     /* registra no painel de inscritos; uma falha aqui nunca derruba o pagamento */
     if (db.ativo()) {

@@ -615,6 +615,28 @@ section{position:relative;isolation:isolate;overflow:hidden}
   .lm.viva .lm__halo,.lm.viva .lm__ponto,.lm.viva .lm__cab,.lm.viva .lm__corpo,.lm.viva .lm__bl,.lm.viva .lm__br,.lm.viva .lm__p1,.lm.viva .lm__p2,.lm.viva .lm__fa{animation:none}
 }
 /*/LMCSS*/
+/*PMCSS*/
+.pm{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:12px}
+.pm[hidden]{display:none!important}
+.pm__fundo{position:absolute;inset:0;background:rgba(7,3,58,.74);backdrop-filter:blur(4px);animation:pmF .25s ease both}
+.pm__caixa{position:relative;width:min(1000px,100%);height:min(94vh,920px);display:grid;grid-template-rows:auto 1fr;background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:0 40px 100px -20px rgba(0,0,0,.65);animation:pmC .35s var(--ease) both}
+.pm__topo{display:flex;align-items:center;gap:14px;padding:12px 14px 12px 20px;background:var(--noite);color:#fff}
+.pm__topo b{flex:1;font-family:var(--ft);font-size:14px;font-weight:600;letter-spacing:-.01em}
+.pm__abrir{font-size:12px;color:rgba(255,255,255,.7);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.pm__abrir:hover{color:#fff}
+.pm__x{width:36px;height:36px;border:0;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:rgba(255,255,255,.12);transition:background .2s}
+.pm__x:hover{background:rgba(255,255,255,.24)}
+.pm__x svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round}
+.pm__corpo{position:relative;min-height:0;background:#f4f6fb}
+.pm__corpo iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.pm__carrega{position:absolute;inset:0;display:grid;place-items:center;margin:0;font-size:14px;color:var(--tinta-2)}
+.pm__carrega[hidden]{display:none}
+@keyframes pmF{from{opacity:0}}
+@keyframes pmC{from{opacity:0;transform:translateY(24px) scale(.98)}}
+@media (max-width:640px){.pm{padding:0}.pm__caixa{height:100dvh;border-radius:0}.pm__abrir{display:none}}
+@media (prefers-reduced-motion:reduce){.pm__fundo,.pm__caixa{animation:none}}
+/*/PMCSS*/
 .pe{background:var(--noite);color:rgba(255,255,255,.56);padding-block:clamp(34px,5vh,54px) clamp(96px,13vh,120px);
   border-top:1px solid rgba(255,255,255,.1);font-size:13px}
 .pe .linha{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
@@ -1260,6 +1282,22 @@ a.ap__logo:hover .ap__ir,a.ap__logo:focus-visible .ap__ir{opacity:1;transform:no
     <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 
+<!--PM-->
+<div class="pm" id="pm" hidden role="dialog" aria-modal="true" aria-labelledby="pmT">
+  <div class="pm__fundo" data-fecha></div>
+  <div class="pm__caixa">
+    <div class="pm__topo">
+      <b id="pmT">Pagamento seguro · DOM Pagamentos</b>
+      <a class="pm__abrir" id="pmAbrir" href="#" target="_blank" rel="noopener">Abrir em outra aba</a>
+      <button type="button" class="pm__x" data-fecha aria-label="Fechar o pagamento"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="pm__corpo">
+      <p class="pm__carrega" id="pmCarrega">Carregando o pagamento…</p>
+      <iframe id="pmFrame" title="Pagamento do ingresso" allow="payment; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </div>
+</div>
+<!--/PM-->
 
 <script>
 document.documentElement.classList.add('js');
@@ -1267,7 +1305,7 @@ document.documentElement.classList.add('js');
   /* ===== DOM Pagamentos =====
      Cole aqui o link de pagamento criado no painel da DOM (Links de pagamento).
      No link, deixe ligado "solicitar telefone": o cashback do Vale Bônus é entregue no celular do comprador. */
-  var DOM_LINK = "";
+  var DOM_LINK = "https://conta.dompagamentos.com.br/payment/link/fac308da-302d-4273-96e5-d98cff429fa1";
 
   function comUtm(u) {
     try {
@@ -1279,7 +1317,7 @@ document.documentElement.classList.add('js');
 
   /* Link de pagamento com 50% de desconto (R$ 124,50), criado na DOM do mesmo jeito que o de cima.
      É o botão que aparece para quem usa um cupom terminado em 50. */
-  var DOM_LINK_50 = "";
+  var DOM_LINK_50 = "https://conta.dompagamentos.com.br/payment/link/731a06b8-e365-484c-953b-08348e5070dd";
   /* liga os botões de link (plano B do checkout embutido). Os links também podem vir do servidor (DOM_LINK_249 / DOM_LINK_124 na Vercel). */
   function ligaLinks() {
     [['.js-pagar', DOM_LINK], ['.js-pagar50', DOM_LINK_50]].forEach(function (par) {
@@ -1289,6 +1327,45 @@ document.documentElement.classList.add('js');
     });
   }
   ligaLinks();
+
+  /* ===== Pagamento dentro da página =====
+     Os botões de link abrem a página de pagamento da DOM numa janela sobre a LP (sem sair daqui).
+     Ao aprovar, a DOM leva para /obrigado/, que avisa esta página; ela fecha a janela e confirma a vaga. */
+  var pm = document.getElementById('pm'), pmF = document.getElementById('pmFrame'), pmC = document.getElementById('pmCarrega'), pmFoco = null, pmMeia = false;
+  function abrePag(url, meia) {
+    pmFoco = document.activeElement; pmMeia = !!meia;
+    pmC.hidden = false; pmF.onload = function () { pmC.hidden = true; };
+    pmF.src = url; document.getElementById('pmAbrir').href = url;
+    pm.hidden = false; document.documentElement.style.overflow = 'hidden';
+    pm.querySelector('.pm__x').focus();
+    if (window.dataLayer) window.dataLayer.push({ event: 'inicio_pagamento', metodo: 'link_dom', valor: meia ? 124.5 : 249 });
+  }
+  function fechaPag() {
+    pm.hidden = true; pmF.onload = null; pmF.src = 'about:blank'; document.documentElement.style.overflow = '';
+    if (pmFoco && pmFoco.focus) pmFoco.focus();
+  }
+  pm.addEventListener('click', function (e) { if (e.target.closest('[data-fecha]')) fechaPag(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pm.hidden) fechaPag(); });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('.js-pagar, .js-pagar50');
+    if (!a) return;
+    var u = a.getAttribute('href');
+    if (!u || u.charAt(0) === '#' || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    e.preventDefault();
+    abrePag(u, a.classList.contains('js-pagar50'));
+  });
+  window.addEventListener('message', function (e) {
+    if (e.origin !== location.origin || !e.data || e.data.tipo !== 'nr1_pago') return;
+    var meia = pmMeia;
+    fechaPag();
+    var f = document.getElementById('fluxo'), ok = f.querySelector('[data-p="ok"]');
+    ok.querySelector('.passo__tit').textContent = 'Pagamento recebido. Vaga garantida.';
+    ok.querySelector('.passo__txt').innerHTML = 'A confirmação chega por e-mail, enviada pela <b>DOM Pagamentos</b>. Nos vemos em 12 de novembro, às 14h, no Instituto Caldeira.';
+    ok.querySelector('.ok__cupom').textContent = 'Pagamento confirmado · ingresso individual' + (meia ? ' · cupom 50%' : '');
+    ir('ok');
+    document.getElementById('ingresso').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.dataLayer) window.dataLayer.push({ event: 'compra_ingresso', metodo: 'link_dom', valor: meia ? 124.5 : 249 });
+  });
 
   /* ===== Cupons de convite =====
      Os cupons são escritos juntos, sem hífen (GROUCONVITE). Quem digitar com hífen também passa.
@@ -1604,7 +1681,7 @@ document.documentElement.classList.add('js');
       ligaLinks();
     }
     /* sem checkout embutido (desligado ou modo "link"), ficam só os botões de link */
-    if (!c || !c.ativo || c.modo === 'link') return;
+    if (!c || !c.ativo || (c.modo === 'link' && DOM_LINK && DOM_LINK_50)) return;
     PG = c;
     iniciaPg(fluxo.querySelector('[data-p="pagar"]'), false);
     iniciaPg(fluxo.querySelector('[data-p="desconto"]'), true);

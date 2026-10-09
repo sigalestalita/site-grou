@@ -66,6 +66,8 @@ try {
     window.dataLayer.push({ event: 'compra_ingresso', origem: 'link_dom', evento: 'nr1-estrategica' });
   }
 } catch (e) {}
+/* dentro da janela de pagamento da LP: avisa a página principal, que fecha a janela e confirma a vaga */
+try { if (window.parent !== window) window.parent.postMessage({ tipo: 'nr1_pago' }, location.origin); } catch (e) {}
 </script>
 </body>
 </html>

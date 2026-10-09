@@ -4,6 +4,17 @@ const db = require('./_db');
 /* O navegador pergunta aqui se o checkout está ligado e qual SDK carregar. Não devolve nada secreto.
    Com ?verificar=1 o servidor testa a chave na DOM (consulta de um pedido inexistente, sem cobrança)
    e mostra só o começo e o fim dela para conferência. */
+/* Se a DOM não aceita a chave (401/403), o site cai sozinho para os links de pagamento; quando a chave voltar a valer, o checkout embutido volta. */
+let memo = { t: 0, aceita: true };
+async function chaveAceita() {
+  if (Date.now() - memo.t < 60000) return memo.aceita;
+  try {
+    const r = await c.dom('/transactions/00000000-0000-0000-0000-000000000000');
+    memo = { t: Date.now(), aceita: r.http !== 401 && r.http !== 403 };
+  } catch (e) { memo = { t: Date.now(), aceita: true }; }
+  return memo.aceita;
+}
+
 module.exports = async (req, res) => {
   const saida = {
     ativo: c.ativo(),
@@ -17,6 +28,7 @@ module.exports = async (req, res) => {
     links: { cheio: c.env('DOM_LINK_249'), metade: c.env('DOM_LINK_124') },
     modo: c.env('CHECKOUT_MODO').toLowerCase()
   };
+  if (c.ativo() && !saida.modo && !(await chaveAceita())) saida.modo = 'link';
   if (req.query && req.query.verificar && c.ativo()) {
     const k = c.env('DOM_API_KEY');
     saida.verificacao = { chaveTamanho: k.length, chaveInicio: k.slice(0, 4), chaveFim: k.slice(-4), host: c.urls().api };

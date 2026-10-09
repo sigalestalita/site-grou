@@ -75,6 +75,10 @@ module.exports = async (req, res) => {
     if (!t.id) {
       /* a DOM recusou: registra o motivo nos logs da Vercel e mostra na tela (sem dados sensíveis) */
       const motivo = String(t.msg || t.message || '').slice(0, 160);
+      if (r.http === 401 || r.http === 403) {
+        /* problema de configuração nossa (chave): o comprador não precisa ver o código */
+        return c.responde(res, 503, { erro: 'O pagamento online está indisponível no momento. Fale com a gente em atendimento@grougp.com.br e garantimos a sua vaga.' });
+      }
       console.error('DOM recusou o pedido:', r.http, JSON.stringify({ code: t.code, status: t.status, msg: t.msg, message: t.message, errors: t.errors }).slice(0, 400));
       return c.responde(res, r.http >= 500 ? 502 : 400, { erro: 'Não foi possível criar o pedido' + (motivo ? ': ' + motivo : '') + ' (código ' + (t.code || r.http) + ').' });
     }

@@ -12,7 +12,10 @@ module.exports = async (req, res) => {
     chavePublica: c.env('DOM_PUBLIC_KEY'),
     sdk: c.urls().sdk,
     preco: c.PRECO_CHEIO,
-    precoMetade: c.PRECO_METADE
+    precoMetade: c.PRECO_METADE,
+    /* plano B: links de pagamento criados no painel da DOM (DOM_LINK_249 e DOM_LINK_124); CHECKOUT_MODO=link desliga o checkout embutido */
+    links: { cheio: c.env('DOM_LINK_249'), metade: c.env('DOM_LINK_124') },
+    modo: c.env('CHECKOUT_MODO').toLowerCase()
   };
   if (req.query && req.query.verificar && c.ativo()) {
     const k = c.env('DOM_API_KEY');

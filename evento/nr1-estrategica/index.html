@@ -1276,16 +1276,19 @@ document.documentElement.classList.add('js');
       return url.toString();
     } catch (e) { return u; }
   }
-  if (DOM_LINK) [].forEach.call(document.querySelectorAll('.js-pagar'), function (a) {
-    a.href = comUtm(DOM_LINK); a.target = '_blank'; a.rel = 'noopener';
-  });
 
   /* Link de pagamento com 50% de desconto (R$ 124,50), criado na DOM do mesmo jeito que o de cima.
      É o botão que aparece para quem usa um cupom terminado em 50. */
   var DOM_LINK_50 = "";
-  if (DOM_LINK_50) [].forEach.call(document.querySelectorAll('.js-pagar50'), function (a) {
-    a.href = comUtm(DOM_LINK_50); a.target = '_blank'; a.rel = 'noopener';
-  });
+  /* liga os botões de link (plano B do checkout embutido). Os links também podem vir do servidor (DOM_LINK_249 / DOM_LINK_124 na Vercel). */
+  function ligaLinks() {
+    [['.js-pagar', DOM_LINK], ['.js-pagar50', DOM_LINK_50]].forEach(function (par) {
+      if (par[1]) [].forEach.call(document.querySelectorAll(par[0]), function (a) {
+        a.href = comUtm(par[1]); a.target = '_blank'; a.rel = 'noopener';
+      });
+    });
+  }
+  ligaLinks();
 
   /* ===== Cupons de convite =====
      Os cupons são escritos juntos, sem hífen (GROUCONVITE). Quem digitar com hífen também passa.
@@ -1576,6 +1579,7 @@ document.documentElement.classList.add('js');
           })
         }).then(function (r) { return r.json().then(function (j) { return { http: r.status, j: j }; }); });
       }).then(function (o) {
+        if (o.http === 503 && (meia ? DOM_LINK_50 : DOM_LINK)) antigoBtn.style.display = '';
         if (o.http !== 200) { chave = null; return mostraErro(o.j.erro || 'Não foi possível concluir o pagamento.', o.j.campo === 'cartao' ? 'numero' : o.j.campo); }
         var r = o.j;
         if (metodo === 'cartao') {
@@ -1594,7 +1598,13 @@ document.documentElement.classList.add('js');
 
   fetch('/api/config/', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
     if (c) window.__INSC = !!c.inscricoes;
-    if (!c || !c.ativo) return;
+    if (c && c.links) {
+      if (c.links.cheio) DOM_LINK = c.links.cheio;
+      if (c.links.metade) DOM_LINK_50 = c.links.metade;
+      ligaLinks();
+    }
+    /* sem checkout embutido (desligado ou modo "link"), ficam só os botões de link */
+    if (!c || !c.ativo || c.modo === 'link') return;
     PG = c;
     iniciaPg(fluxo.querySelector('[data-p="pagar"]'), false);
     iniciaPg(fluxo.querySelector('[data-p="desconto"]'), true);

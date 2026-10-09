@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
 
   const host = req.headers['x-forwarded-host'] || req.headers.host || '';
   if (process.env.DOM_POSTBACK_URL) carga.postbackUrl = process.env.DOM_POSTBACK_URL;
-  else if (host && !/^(localhost|127\.)/.test(host)) carga.postbackUrl = 'https://' + host + '/api/webhook';
+  else if (host && !/^(localhost|127\.)/.test(host)) carga.postbackUrl = 'https://' + host + '/api/webhook/';
 
   if (metodo === 'credit_card') {
     const k = b.cartao || {};

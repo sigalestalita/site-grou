@@ -1456,7 +1456,7 @@ document.documentElement.classList.add('js');
       var inicio = Date.now();
       (function volta() {
         timer = setTimeout(function () {
-          fetch('/api/status?id=' + encodeURIComponent(id)).then(function (r) { return r.json(); }).then(function (j) {
+          fetch('/api/status/?id=' + encodeURIComponent(id)).then(function (r) { return r.json(); }).then(function (j) {
             if (j.situacao === 'pago') return pago(d, metodo, total);
             if (j.situacao === 'recusado') { res.querySelector('.pg__espera').textContent = 'Pagamento não concluído. Gere um novo pedido para tentar de novo.'; return; }
             if (Date.now() - inicio < ate) volta();
@@ -1514,7 +1514,7 @@ document.documentElement.classList.add('js');
       })() : Promise.resolve(null);
 
       passoCartao.then(function (t) {
-        return fetch('/api/checkout', {
+        return fetch('/api/checkout/', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             metodo: metodo, cupom: meia ? cupomAtual : '', chave: chave, utm: utm,
@@ -1539,7 +1539,7 @@ document.documentElement.classList.add('js');
     });
   }
 
-  fetch('/api/config', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
+  fetch('/api/config/', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
     if (!c || !c.ativo) return;
     PG = c;
     iniciaPg(fluxo.querySelector('[data-p="pagar"]'), false);

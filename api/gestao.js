@@ -1,19 +1,13 @@
-const crypto = require('crypto');
 const c = require('./_comum');
 const db = require('./_db');
+const sessao = require('./_sessao');
 
-const hash = (v) => crypto.createHash('sha256').update(String(v || '')).digest();
-const espera = (ms) => new Promise((r) => setTimeout(r, ms));
-
-/* Painel interno de inscritos. A senha vem no cabeçalho x-gestao-senha e é conferida contra GESTAO_SENHA. */
+/* Dados do painel interno: só para quem está logado e liberado. */
 module.exports = async (req, res) => {
-  const senha = c.env('GESTAO_SENHA');
-  if (!senha || !db.ativo()) return c.responde(res, 503, { erro: 'Painel ainda não configurado.' });
-  const dado = req.headers['x-gestao-senha'];
-  if (!crypto.timingSafeEqual(hash(dado), hash(senha))) {
-    await espera(700);
-    return c.responde(res, 401, { erro: 'Senha incorreta.' });
-  }
+  if (!db.ativo()) return c.responde(res, 503, { erro: 'Painel ainda não configurado.' });
+  const u = await sessao.usuario(req);
+  if (!u) return c.responde(res, 401, { erro: 'Sessão expirada. Entre de novo.' });
+  if (req.method === 'POST' && !c.origemPermitida(req)) return c.responde(res, 403, { erro: 'Origem não permitida.' });
   try {
     if (req.method === 'POST') {
       const b = c.corpoJson(req);

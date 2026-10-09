@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Acesso restrito | Grou</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--noite:#07033a;--royal:#120573;--eletrico:#1b3fd6;--ciano:#6cd8cf;--ciano-f:#12a594;--tinta:#0c0a2e;--tinta-2:#4a4d63;--tinta-3:#8b8fa3;--linha:#e4e7f0;--nevoa:#f4f6fb;--ft:'Poppins',system-ui,sans-serif;--fc:'Montserrat',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;font-family:var(--fc);color:var(--tinta);
+  background:radial-gradient(900px 520px at 50% -8%,rgba(108,216,207,.28),transparent 62%),radial-gradient(700px 500px at 100% 100%,rgba(27,63,214,.5),transparent 65%),linear-gradient(170deg,var(--royal),var(--noite) 60%)}
+.cartao{width:min(420px,100%);padding:34px 30px 30px;border-radius:24px;background:#fff;box-shadow:0 40px 100px -24px rgba(0,0,0,.7);display:grid;gap:16px}
+.marca{width:84px;color:var(--noite)}
+h1{margin:0;font-family:var(--ft);font-weight:600;font-size:24px;letter-spacing:-.02em;color:var(--noite)}
+.sub{margin:-6px 0 0;font-size:13.5px;color:var(--tinta-2)}
+.campo{display:grid;gap:6px}
+.campo>span{font-family:var(--ft);font-size:12px;font-weight:600}
+.entrada{position:relative}
+input{width:100%;padding:14px 14px;border:0;border-radius:12px;background:var(--nevoa);box-shadow:inset 0 0 0 1.5px var(--linha);font:inherit;font-size:15px;color:var(--tinta)}
+input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ciano-f),0 0 0 4px rgba(108,216,207,.25)}
+.entrada input{padding-right:78px}
+.ver{position:absolute;right:8px;top:50%;transform:translateY(-50%);padding:6px 10px;border:0;border-radius:8px;background:none;cursor:pointer;font-family:var(--ft);font-size:12px;font-weight:600;color:var(--eletrico)}
+.ver:hover{background:rgba(27,63,214,.08)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border:0;border-radius:999px;cursor:pointer;font-family:var(--ft);font-size:14.5px;font-weight:600;color:#fff;background:linear-gradient(120deg,var(--royal),var(--eletrico));transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px -14px rgba(27,63,214,.8)}
+.btn[disabled]{opacity:.6;cursor:progress;transform:none}
+.erro{margin:0;padding:10px 13px;border-radius:10px;background:#fdecee;color:#9b1c2c;font-size:13px}
+.nota{margin:0;text-align:center;font-size:12px;color:var(--tinta-3)}
+</style>
+</head>
+<body>
+<main>
+<form class="cartao" id="form" novalidate>
+  <svg class="marca" aria-label="Grou" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450.21 194.46" role="img">
+        <path fill="currentColor" d="M 285.527344 105.605469 C 264.746094 105.605469 248.460938 89.453125 248.460938 68.808594 C 248.460938 48.167969 265.082031 31.742188 285.527344 31.742188 C 305.96875 31.742188 322.324219 48.367188 322.324219 68.808594 C 322.324219 89.253906 305.8125 105.605469 285.527344 105.605469 M 104.371094 90.996094 C 102.625 93.390625 100.609375 95.585938 98.347656 97.519531 C 96.503906 99.203125 94.328125 100.699219 91.945312 101.988281 C 86.441406 105.078125 80.078125 106.902344 73.296875 107.074219 L 73.097656 107.074219 C 72.816406 107.074219 72.179688 107.082031 72.128906 107.082031 C 72.078125 107.082031 71.363281 107.074219 71.363281 107.074219 C 70.964844 107.074219 70.554688 107.0625 70.15625 107.042969 C 60.503906 106.773438 52.246094 103.023438 45.992188 97.378906 C 38.003906 90.449219 32.980469 80.40625 32.980469 69.238281 C 32.980469 68.398438 33.019531 67.574219 33.066406 66.746094 C 33.386719 57.839844 37.445312 49.042969 44.398438 42.300781 C 51.667969 35.273438 61.308594 31.371094 71.523438 31.371094 L 72.230469 31.371094 C 85.484375 31.371094 97.238281 37.773438 104.351562 47.46875 L 104.351562 90.976562 Z M 445.273438 1.046875 L 420.113281 1.046875 C 417.949219 1.046875 416.203125 2.800781 416.203125 4.957031 L 416.203125 84.097656 C 416.203125 95.316406 407.058594 104.441406 395.820312 104.441406 C 384.582031 104.441406 375.4375 95.316406 375.4375 84.097656 L 375.4375 4.765625 C 375.4375 2.601562 373.683594 0.859375 371.527344 0.859375 L 346.367188 0.859375 C 344.214844 0.859375 342.460938 2.613281 342.460938 4.765625 L 342.460938 33.515625 C 330.511719 13.460938 308.664062 0 283.792969 0 C 269.640625 0 256.476562 4.328125 245.539062 11.6875 L 244.628906 12.40625 C 234.597656 4.558594 222.113281 0.140625 209.089844 0.140625 C 196.066406 0.140625 182.992188 4.875 173.121094 12.773438 C 165.847656 5.046875 155.546875 0.210938 144.128906 0.210938 C 131.214844 0.210938 119.71875 6.390625 112.4375 15.957031 L 108.867188 12.804688 C 98.445312 5.007812 87.15625 0 69.738281 0 L 69.117188 0 C 31.074219 0 0.230469 30.84375 0.230469 68.890625 C 0.230469 106.933594 31.074219 137.777344 69.117188 137.777344 L 70.832031 137.777344 C 82.601562 137.777344 93.808594 134.496094 103.832031 128.304688 C 104.359375 151.160156 90.859375 161.910156 72.21875 161.910156 C 60.882812 161.910156 50.558594 157.683594 42.332031 149.722656 C 41.476562 148.917969 40.347656 148.507812 39.25 148.507812 C 38.253906 148.507812 37.265625 148.816406 36.4375 149.496094 L 17.890625 164.503906 C 16.066406 165.960938 15.796875 168.550781 17.242188 170.335938 C 31.3125 187.730469 54.859375 193.921875 72.230469 193.921875 C 114.292969 193.921875 137.628906 168.152344 137 126.917969 L 137 38.621094 C 137.65625 35.28125 140.609375 32.75 144.140625 32.75 C 148.160156 32.75 151.417969 36.011719 151.417969 40.027344 L 151.417969 132.054688 C 151.417969 134.386719 153.382812 136.28125 155.765625 136.28125 L 179.601562 136.28125 C 182.015625 136.28125 183.96875 134.386719 183.96875 132.054688 L 183.96875 57.640625 C 184.058594 43.859375 195.296875 32.679688 209.097656 32.679688 C 214.105469 32.679688 218.921875 34.183594 223 36.886719 C 217.996094 46.441406 215.152344 57.289062 215.152344 68.800781 C 215.152344 106.59375 245.957031 137.339844 283.8125 137.339844 C 309.839844 137.339844 332.527344 122.6875 344.074219 101.148438 L 344.832031 99.78125 C 351.554688 121.550781 371.867188 137.417969 395.832031 137.417969 C 425.25 137.417969 449.191406 113.496094 449.191406 84.097656 L 449.191406 4.957031 C 449.191406 2.792969 447.4375 1.046875 445.285156 1.046875 Z M 445.273438 1.046875 "/>
+      </svg>
+  <h1>Acesso restrito</h1>
+  <p class="sub">Área interna da equipe Grou. Entre com o e-mail liberado e a sua senha.</p>
+  <label class="campo"><span>E-mail</span><input id="email" name="email" type="email" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false" required autofocus></label>
+  <label class="campo"><span>Senha</span>
+    <span class="entrada"><input id="senha" name="senha" type="password" autocomplete="current-password" required><button type="button" class="ver" id="ver" aria-pressed="false">Mostrar</button></span></label>
+  <p class="erro" id="erro" role="alert" hidden></p>
+  <button class="btn" type="submit" id="entrar">Entrar</button>
+  <p class="nota">Sem acesso ou esqueceu a senha? Fale com a Talita.</p>
+</form>
+</main>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var DESTINO = '/gestao/nr1/';
+  /* quem já está logado vai direto para o painel */
+  fetch('/api/acesso/', { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { if (r.ok) location.replace(DESTINO); }).catch(function () {});
+  $('ver').addEventListener('click', function () {
+    var s = $('senha'), mostra = s.type === 'password';
+    s.type = mostra ? 'text' : 'password'; this.textContent = mostra ? 'Ocultar' : 'Mostrar'; this.setAttribute('aria-pressed', mostra);
+  });
+  $('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var er = $('erro'), bt = $('entrar'); er.hidden = true;
+    var email = $('email').value.trim(), senha = $('senha').value;
+    if (!email || !senha) { er.textContent = 'Informe o e-mail e a senha.'; er.hidden = false; return; }
+    bt.disabled = true; bt.textContent = 'Entrando…';
+    fetch('/api/acesso/', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, senha: senha }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { http: r.status, j: j }; }); })
+      .then(function (r) {
+        if (r.http === 200) { location.replace(DESTINO); return; }
+        er.textContent = r.j.erro || 'Não foi possível entrar agora.'; er.hidden = false; $('senha').value = ''; $('senha').focus();
+      })
+      .catch(function () { er.textContent = 'Sem conexão. Tente de novo.'; er.hidden = false; })
+      .then(function () { bt.disabled = false; bt.textContent = 'Entrar'; });
+  });
+})();
+</script>
+</body>
+</html>

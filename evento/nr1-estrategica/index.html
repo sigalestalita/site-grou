@@ -1470,16 +1470,15 @@ document.documentElement.classList.add('js');
       ir('ok');
       if (window.dataLayer) window.dataLayer.push({ event: 'inscricao_convidado', cupom: d.cupom });
     }
-    if (!window.__INSC && !RD_CHAVE) { feito(); return; }
     var bt = formC.querySelector('[type=submit]');
     bt.disabled = true; erroEnvio.hidden = true;
     var q = new URLSearchParams(location.search), utm = {};
     ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
-    /* 1) registra a vaga no painel de inscritos (quando ligado); 2) avisa o RD Station (quando houver chave) */
-    var registro = window.__INSC ? fetch('/api/inscricao/', {
+    /* 1) registra a vaga no painel de inscritos (sempre: se não gravar, a pessoa vê o erro e tenta de novo, em vez de uma confirmação falsa); 2) avisa o RD Station (quando houver chave) */
+    var registro = fetch('/api/inscricao/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cupom: d.cupom, nome: d.nome, email: d.email, celular: d.celular, empresa: d.empresa, cargo: d.cargo, utm: utm })
-    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); }) : Promise.resolve();
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); });
     registro.then(function () { return RD_CHAVE ? paraRd(d) : null; })
       .then(feito, function () { erroEnvio.hidden = false; })
       .then(function () { bt.disabled = false; });

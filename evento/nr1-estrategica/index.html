@@ -1478,9 +1478,16 @@ document.documentElement.classList.add('js');
     var registro = fetch('/api/inscricao/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cupom: d.cupom, nome: d.nome, email: d.email, celular: d.celular, empresa: d.empresa, cargo: d.cargo, utm: utm })
-    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); });
+    }).then(function (r) {
+      if (r.ok) return;
+      /* mostra o motivo que o servidor informou (ex.: celular inválido), em vez de só "tente de novo" */
+      return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error(j.erro || 'HTTP ' + r.status); e.motivo = r.status === 400 && j.erro ? j.erro : ''; throw e; });
+    });
     registro.then(function () { return RD_CHAVE ? paraRd(d) : null; })
-      .then(feito, function () { erroEnvio.hidden = false; })
+      .then(feito, function (err) {
+        erroEnvio.textContent = err && err.motivo ? err.motivo + ' Confira os dados e tente de novo.' : 'Não conseguimos confirmar agora. Tente de novo em alguns instantes.';
+        erroEnvio.hidden = false;
+      })
       .then(function () { bt.disabled = false; });
   });
 

@@ -12,7 +12,10 @@ module.exports = async (req, res) => {
   const b = c.corpoJson(req);
   const cupom = c.normaliza(b.cupom);
   if (!c.CUPONS_100.includes(cupom)) return c.responde(res, 400, { erro: 'Cupom inválido.', campo: 'cupom' });
-  const nome = limpa(b.nome, 100), email = limpa(b.email, 120).toLowerCase(), celular = String(b.celular || '').replace(/\D/g, '');
+  const nome = limpa(b.nome, 100), email = limpa(b.email, 120).toLowerCase();
+  let celular = String(b.celular || '').replace(/\D/g, '');
+  /* aceita o telefone com o código do país (+55), que o preenchimento automático do celular costuma trazer */
+  if ((celular.length === 12 || celular.length === 13) && celular.startsWith('55')) celular = celular.slice(2);
   const empresa = limpa(b.empresa, 80), cargo = limpa(b.cargo, 80);
   if (nome.length < 3) return c.responde(res, 400, { erro: 'Informe o nome.', campo: 'nome' });
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return c.responde(res, 400, { erro: 'E-mail inválido.', campo: 'email' });

@@ -12,7 +12,7 @@ const PRECO_CHEIO = 249;
 const PRECO_METADE = 124.5;
 
 /* Mesmos cupons da página (evento/nr1-estrategica). Quem decide o preço é este arquivo, nunca o navegador. */
-const NOMES = ['MAICON', 'TAIS', 'CAROL', 'MARIANA', 'BRUNA', 'FERNANDA', 'GROU', 'LUMI', 'PARCEIRO', 'MENTOR'];
+const NOMES = ['MAICON', 'TAIS', 'CAROL', 'MARIANA', 'BRUNA', 'FERNANDA', 'GROU', 'LUMI', 'PARCEIRO', 'MENTOR', 'CS', 'MARI', 'ISAC', 'MARCELA'];
 const CUPONS_100 = NOMES.map((n) => n + 'CONVITE');
 const CUPONS_50 = NOMES.map((n) => n + 'CONVITE50');
 

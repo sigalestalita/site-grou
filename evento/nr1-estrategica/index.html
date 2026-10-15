@@ -2,6 +2,30 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T47W6QD');</script>
+<!-- End Google Tag Manager -->
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '570597033128492');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=570597033128492&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NR-1 Estratégica · 12 de novembro, Instituto Caldeira | Grou</title>
 <meta name="description" content="Uma tarde da Grou sobre comportamento, risco psicossocial e conformidade com a NR-1. 12 de novembro de 2026, a partir das 14h, no Instituto Caldeira, em Porto Alegre. Com o soft launch do Lumi.">
@@ -708,6 +732,10 @@ a.ap__logo:hover .ap__ir,a.ap__logo:focus-visible .ap__ir{opacity:1;transform:no
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T47W6QD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -1349,6 +1377,8 @@ document.documentElement.classList.add('js');
   document.addEventListener('click', function (e) {
     var a = e.target.closest('.js-pagar, .js-pagar50');
     if (!a) return;
+    /* Meta Ads: carrinho ao clicar em "Pagar com DOM Pagamentos" */
+    if (window.fbq) fbq('track', 'AddToCart');
     var u = a.getAttribute('href');
     if (!u || u.charAt(0) === '#' || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     e.preventDefault();
@@ -1658,6 +1688,7 @@ document.documentElement.classList.add('js');
       e.preventDefault();
       erro.hidden = true;
       if (!f.reportValidity()) return;
+      if (window.fbq) fbq('track', 'AddToCart');
       var d = {}; new FormData(f).forEach(function (v, k) { d[k] = String(v).trim(); });
       var metodo = d.metodo, total = meia ? PG.precoMetade : PG.preco;
       var parcelas = parseInt(d.parcelas, 10) || 1;

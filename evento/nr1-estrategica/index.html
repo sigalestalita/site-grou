@@ -600,6 +600,18 @@ section{position:relative;isolation:isolate;overflow:hidden}
 .faq .resp b{color:var(--tinta);font-weight:600}
 
 /* ---------- quem fala ---------- */
+.slot__c{display:flex;gap:14px;align-items:flex-start}
+.slot:has(.slot__c){align-items:start}
+.slot:has(.slot__c) .h{margin-top:13px}
+.slot__c .q{margin-top:9px}
+.slot__av{position:relative;flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;margin-top:1px;background:radial-gradient(120% 90% at 30% 10%,#1b3fd6,#120573 55%,#07033a);box-shadow:0 0 0 2px #fff,0 0 0 3.5px rgba(18,165,148,.35);text-decoration:none;transition:transform .25s var(--ease)}
+.slot__av:hover{transform:scale(1.08)}
+.slot__av::before{content:attr(data-ini);position:absolute;inset:0;display:grid;place-items:center;font-family:var(--ft);font-weight:600;font-size:14px;color:#fff}
+.slot__av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;z-index:1}
+.prog__falas{display:inline-flex;align-items:center;gap:8px;margin-top:22px;margin-left:calc(40% + 10px);font-family:var(--ft);font-weight:600;font-size:15px;color:var(--royal);text-decoration:none;border-bottom:1.5px solid rgba(18,5,115,.25);padding-bottom:3px}
+.prog__falas:hover{border-color:var(--royal)}
+@media (max-width:900px){.prog__falas{margin-left:0}}
+
 .falas__grade{margin-top:clamp(28px,4vh,44px);display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .fala{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:var(--branco);box-shadow:inset 0 0 0 1px var(--linha),0 18px 40px -30px rgba(7,3,58,.45);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 .fala:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px rgba(18,165,148,.35),0 26px 50px -30px rgba(7,3,58,.55)}
@@ -607,12 +619,13 @@ section{position:relative;isolation:isolate;overflow:hidden}
 .fala__foto::before{content:attr(data-ini);position:absolute;inset:0;display:grid;place-items:center;font-family:var(--ft);font-weight:600;font-size:64px;letter-spacing:-.03em;color:rgba(255,255,255,.9)}
 .fala__foto::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 80% 100%,rgba(108,216,207,.35),transparent 70%);pointer-events:none}
 .fala__foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;z-index:1}
-.fala__txt{padding:20px 22px 24px;display:grid;gap:6px}
+.fala__txt{padding:20px 22px 24px;display:grid;gap:6px;align-content:start}
 .fala__h{font-family:var(--fm);font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--royal)}
 .fala h3{font-family:var(--ft);font-weight:600;font-size:20px;line-height:1.2;color:var(--tinta)}
 .fala__cargo{justify-self:start;font-family:var(--fm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ciano-t);background:var(--ciano-fundo);padding:4px 9px;border-radius:999px}
 .fala__tema{margin-top:4px;font-size:14px;line-height:1.5;color:var(--tinta-2)}
 .fala__bio{margin-top:6px;padding-top:10px;border-top:1px solid var(--linha);font-size:13.5px;line-height:1.55;color:var(--tinta-2)}
+@media (max-width:640px){.falas__grade{grid-template-columns:1fr;gap:12px}.fala{display:grid;grid-template-columns:108px 1fr}.fala__foto{aspect-ratio:auto;height:100%;min-height:150px}.fala__foto::before{font-size:28px}.fala__txt{padding:14px 16px 16px;gap:5px}.fala h3{font-size:17px}.fala__tema{font-size:13.5px}.fala__bio{font-size:13px}}
 
 /* ---------- fecho e rodapé ---------- */
 .fecho{background:radial-gradient(800px 520px at 50% 110%,rgba(108,216,207,.22),transparent 64%),
@@ -958,25 +971,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <ol class="linha-tempo an" style="--d:.12s">
       <li class="slot slot--marco"><span class="h">14h</span><div><span class="q">Abertura</span></div></li>
-      <li class="slot"><span class="h">14h15</span><div><span class="q">Amanda Zica · Suzano <span class="cargo">Analista de comportamento seguro</span></span>
-        <p class="t">Na NR-1, como passa a ser a questão do risco psicossocial?</p></div></li>
-      <li class="slot"><span class="h">15h</span><div><span class="q">Fernanda Woodhead <span class="cargo">Juíza do Trabalho</span></span>
-        <p class="t">NR-1: o que muda e o que a lei exige?</p></div></li>
-      <li class="slot"><span class="h">15h30</span><div><span class="q">Carolina Fuhrmeister</span>
-        <p class="t">Performance sustentável começa com saúde mental</p></div></li>
-      <li class="slot slot--lumi"><span class="h">15h50</span><div><span class="q">Bruna Salazar <span class="cargo">Soft launch</span></span>
-        <p class="t">Soft launch Lumi: a primeira vez que ele aparece em público.</p></div></li>
-      <li class="slot"><span class="h">16h35</span><div><span class="q">Alessandra Becker</span>
-        <p class="t">Segurança psicológica como resposta ao risco psicossocial</p></div></li>
-      <li class="slot"><span class="h">17h05</span><div><span class="q">Tamy Freitas</span>
-        <p class="t">Dados, RH estratégico e saúde mental</p></div></li>
-      <li class="slot"><span class="h">18h</span><div><span class="q">Bruna Salazar</span>
-        <p class="t">Ressignificando o trabalho após três burnouts</p></div></li>
-      <li class="slot"><span class="h">18h20</span><div><span class="q">Camila Leal Lima <span class="cargo">Juíza do Trabalho</span></span>
-        <p class="t">Quando o adoecimento mental chega à Justiça do Trabalho: a sentença repara, não devolve.</p></div></li>
+      <li class="slot"><span class="h">14h15</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="AZ" aria-label="Conheça Amanda Zica"><img src="/assets/evento/nr1-estrategica/palestrantes/amanda-zica.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Amanda Zica · Suzano <span class="cargo">Analista de comportamento seguro</span></span>
+        <p class="t">Na NR-1, como passa a ser a questão do risco psicossocial?</p></div></div></li>
+      <li class="slot"><span class="h">15h</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="FW" aria-label="Conheça Fernanda Woodhead"><img src="/assets/evento/nr1-estrategica/palestrantes/fernanda-woodhead.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Fernanda Woodhead <span class="cargo">Juíza do Trabalho</span></span>
+        <p class="t">NR-1: o que muda e o que a lei exige?</p></div></div></li>
+      <li class="slot"><span class="h">15h30</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="CF" aria-label="Conheça Carolina Fuhrmeister"><img src="/assets/evento/nr1-estrategica/palestrantes/carolina-fuhrmeister.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Carolina Fuhrmeister</span>
+        <p class="t">Performance sustentável começa com saúde mental</p></div></div></li>
+      <li class="slot slot--lumi"><span class="h">15h50</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="BS" aria-label="Conheça Bruna Salazar"><img src="/assets/evento/nr1-estrategica/palestrantes/bruna-salazar.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Bruna Salazar <span class="cargo">Soft launch</span></span>
+        <p class="t">Soft launch Lumi: a primeira vez que ele aparece em público.</p></div></div></li>
+      <li class="slot"><span class="h">16h35</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="AB" aria-label="Conheça Alessandra Becker"><img src="/assets/evento/nr1-estrategica/palestrantes/alessandra-becker.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Alessandra Becker</span>
+        <p class="t">Segurança psicológica como resposta ao risco psicossocial</p></div></div></li>
+      <li class="slot"><span class="h">17h05</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="TF" aria-label="Conheça Tamy Freitas"><img src="/assets/evento/nr1-estrategica/palestrantes/tamy-freitas.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Tamy Freitas</span>
+        <p class="t">Dados, RH estratégico e saúde mental</p></div></div></li>
+      <li class="slot"><span class="h">18h</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="BS" aria-label="Conheça Bruna Salazar"><img src="/assets/evento/nr1-estrategica/palestrantes/bruna-salazar.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Bruna Salazar</span>
+        <p class="t">Ressignificando o trabalho após três burnouts</p></div></div></li>
+      <li class="slot"><span class="h">18h20</span><div class="slot__c"><a class="slot__av" href="#palestrantes" data-ini="CL" aria-label="Conheça Camila Leal Lima"><img src="/assets/evento/nr1-estrategica/palestrantes/camila-leal-lima.jpg" alt="" loading="lazy" width="44" height="44" onerror="this.remove()"></a><div><span class="q">Camila Leal Lima <span class="cargo">Juíza do Trabalho</span></span>
+        <p class="t">Quando o adoecimento mental chega à Justiça do Trabalho: a sentença repara, não devolve.</p></div></div></li>
       <li class="slot slot--marco"><span class="h">Após</span><div><span class="q">Encerramento e networking</span></div></li>
     </ol>
   </div>
+  <div class="wrap"><a class="prog__falas an" href="#palestrantes">Conheça quem fala <span aria-hidden="true">↓</span></a></div>
 </section>
 
 <!-- ===================== QUEM FALA ===================== -->
@@ -987,12 +1001,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="lede" style="margin-top:18px">Duas juízas do Trabalho, a indústria, a clínica e os dados: quem vive o risco psicossocial na prática.</p></div>
     <div class="falas__grade">
 <article class="fala an" style="--d:0.04s"><div class="fala__foto" data-ini="AZ"><img src="/assets/evento/nr1-estrategica/palestrantes/amanda-zica.jpg" alt="Amanda Zica" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">14h15</span><h3>Amanda Zica</h3><span class="fala__cargo">Suzano · Analista de comportamento seguro</span><p class="fala__tema">“Na NR-1, como passa a ser a questão do risco psicossocial?”</p></div></article>
-<article class="fala an" style="--d:0.09s"><div class="fala__foto" data-ini="FW"><img src="/assets/evento/nr1-estrategica/palestrantes/fernanda-woodhead.jpg" alt="Fernanda Woodhead" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">15h</span><h3>Fernanda Woodhead</h3><span class="fala__cargo">Juíza do Trabalho</span><p class="fala__tema">“NR-1: o que muda e o que a lei exige?”</p></div></article>
+<article class="fala an" style="--d:0.09s"><div class="fala__foto" data-ini="FW"><img src="/assets/evento/nr1-estrategica/palestrantes/fernanda-woodhead.jpg" alt="Fernanda Woodhead" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">15h</span><h3>Fernanda Woodhead</h3><span class="fala__cargo">Juíza do Trabalho</span><p class="fala__tema">“NR-1: o que muda e o que a lei exige?”</p><p class="fala__bio">Juíza do Trabalho no TRT da 4ª Região (RS), titular da 2ª Vara do Trabalho de Bagé e do Posto Avançado de Dom Pedrito, promovida por merecimento em 2026.</p></div></article>
 <article class="fala an" style="--d:0.14s"><div class="fala__foto" data-ini="CF"><img src="/assets/evento/nr1-estrategica/palestrantes/carolina-fuhrmeister.jpg" alt="Carolina Fuhrmeister" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">15h30</span><h3>Carolina Fuhrmeister</h3><p class="fala__tema">“Performance sustentável começa com saúde mental”</p></div></article>
 <article class="fala an" style="--d:0.19s"><div class="fala__foto" data-ini="BS"><img src="/assets/evento/nr1-estrategica/palestrantes/bruna-salazar.jpg" alt="Bruna Salazar" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">15h50 e 18h</span><h3>Bruna Salazar</h3><span class="fala__cargo">Soft launch Lumi</span><p class="fala__tema">“Ressignificando o trabalho após três burnouts”</p></div></article>
-<article class="fala an" style="--d:0.24s"><div class="fala__foto" data-ini="AB"><img src="/assets/evento/nr1-estrategica/palestrantes/alessandra-becker.jpg" alt="Alessandra Becker" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">16h35</span><h3>Alessandra Becker</h3><p class="fala__tema">“Segurança psicológica como resposta ao risco psicossocial”</p></div></article>
+<article class="fala an" style="--d:0.24s"><div class="fala__foto" data-ini="AB"><img src="/assets/evento/nr1-estrategica/palestrantes/alessandra-becker.jpg" alt="Alessandra Becker" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">16h35</span><h3>Alessandra Becker</h3><p class="fala__tema">“Segurança psicológica como resposta ao risco psicossocial”</p><p class="fala__bio">Instrutora do curso Segurança Psicológica para Lideranças, da Alura.</p></div></article>
 <article class="fala an" style="--d:0.29s"><div class="fala__foto" data-ini="TF"><img src="/assets/evento/nr1-estrategica/palestrantes/tamy-freitas.jpg" alt="Tamy Freitas" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">17h05</span><h3>Tamy Freitas</h3><p class="fala__tema">“Dados, RH estratégico e saúde mental”</p></div></article>
-<article class="fala an" style="--d:0.34s"><div class="fala__foto" data-ini="CL"><img src="/assets/evento/nr1-estrategica/palestrantes/camila-leal-lima.jpg" alt="Camila Leal Lima" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">18h20</span><h3>Camila Leal Lima</h3><span class="fala__cargo">Juíza do Trabalho</span><p class="fala__tema">“Quando o adoecimento mental chega à Justiça do Trabalho: a sentença repara, não devolve.”</p></div></article>
+<article class="fala an" style="--d:0.34s"><div class="fala__foto" data-ini="CL"><img src="/assets/evento/nr1-estrategica/palestrantes/camila-leal-lima.jpg" alt="Camila Leal Lima" loading="lazy" decoding="async" width="480" height="560" onerror="this.remove()"></div><div class="fala__txt"><span class="fala__h">18h20</span><h3>Camila Leal Lima</h3><span class="fala__cargo">Juíza do Trabalho</span><p class="fala__tema">“Quando o adoecimento mental chega à Justiça do Trabalho: a sentença repara, não devolve.”</p><p class="fala__bio">Juíza titular da 72ª Vara do Trabalho do Rio de Janeiro (TRT-1) e mediadora judicial. Coordenou os CEJUSCs do TRT-RJ entre 2019 e 2024 e é especialista em Direito e Processo do Trabalho pela UERJ.</p></div></article>
     </div>
   </div>
 </section>

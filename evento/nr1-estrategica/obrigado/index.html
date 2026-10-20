@@ -95,6 +95,14 @@ try {
     window.dataLayer.push({ event: 'compra_ingresso', origem: 'link_dom', evento: 'nr1-estrategica' });
   }
 } catch (e) {}
+/* marca no painel de inscritos o pedido registrado antes de abrir o link da DOM */
+try {
+  var nr1p = JSON.parse(localStorage.getItem('nr1_pedido') || 'null');
+  if (nr1p && nr1p.pedido) {
+    fetch('/api/inscricao/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ acao: 'pago', pedido: nr1p.pedido }) })
+      .then(function (r) { if (r.ok) localStorage.removeItem('nr1_pedido'); }).catch(function () {});
+  }
+} catch (e) {}
 /* dentro da janela de pagamento da LP: avisa a página principal, que fecha a janela e confirma a vaga */
 try { if (window.parent !== window) window.parent.postMessage({ tipo: 'nr1_pago' }, location.origin); } catch (e) {}
 </script>

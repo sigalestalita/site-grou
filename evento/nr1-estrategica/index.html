@@ -539,6 +539,9 @@ section{position:relative;isolation:isolate;overflow:hidden}
 @media (max-width:520px){.campos{grid-template-columns:1fr}}
 .aceite{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:12.5px;line-height:1.5;color:var(--tinta-2);cursor:pointer}
 .aceite input{width:17px;height:17px;margin:1px 0 0;accent-color:var(--ciano-f)}
+.dados-link{display:grid;gap:12px;margin:4px 0 16px}
+.dados-link__tit{font-family:var(--ft);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-2)}
+.pg-on .dados-link{display:none}
 .aviso-erro{padding:10px 13px;border-radius:10px;background:#fdecee;color:#9b1c2c;font-size:13px;line-height:1.45}
 .campo.invalido input{box-shadow:inset 0 0 0 2px #d0384b}
 .aplicado{position:relative;overflow:hidden;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;
@@ -1230,6 +1233,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg>Cartão em até 10x</span>
             <span><svg viewBox="0 0 24 24"><path d="M4 5v14M7 5v14M10 5v14M14 5v14M17 5v14M20 5v14"/></svg>Boleto</span>
           </div>
+          <form class="dados-link" novalidate>
+            <p class="dados-link__tit">Seus dados para o ingresso</p>
+            <div class="campos">
+              <label class="campo campo--todo"><span>Nome completo</span>
+                <input name="nome" type="text" autocomplete="name" required></label>
+              <label class="campo"><span>E-mail</span>
+                <input name="email" type="email" autocomplete="email" required></label>
+              <label class="campo"><span>Celular (WhatsApp)</span>
+                <input name="celular" type="tel" autocomplete="tel" inputmode="tel" placeholder="(51) 99999-9999" required></label>
+              <label class="campo"><span>Empresa</span>
+                <input name="empresa" type="text" autocomplete="organization" required></label>
+              <label class="campo"><span>Cargo</span>
+                <input name="cargo" type="text" autocomplete="organization-title" required></label>
+            </div>
+            <label class="aceite"><input name="aceite" type="checkbox" required>
+              <span>Autorizo a Grou a entrar em contato sobre o NR-1 Estratégica.</span></label>
+            <p class="aviso-erro" hidden></p>
+          </form>
           <a class="btn js-pagar" href="#ingresso" style="width:100%">Pagar com DOM Pagamentos
             <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <p class="seguro"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.4-3.4 8.2-8 9-4.6-.8-8-4.6-8-9V6z"/><path d="M8.5 12l2.4 2.4L15.5 10"/></svg>
@@ -1252,6 +1273,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg>Cartão em até 10x</span>
             <span><svg viewBox="0 0 24 24"><path d="M4 5v14M7 5v14M10 5v14M14 5v14M17 5v14M20 5v14"/></svg>Boleto</span>
           </div>
+          <form class="dados-link" novalidate>
+            <p class="dados-link__tit">Seus dados para o ingresso</p>
+            <div class="campos">
+              <label class="campo campo--todo"><span>Nome completo</span>
+                <input name="nome" type="text" autocomplete="name" required></label>
+              <label class="campo"><span>E-mail</span>
+                <input name="email" type="email" autocomplete="email" required></label>
+              <label class="campo"><span>Celular (WhatsApp)</span>
+                <input name="celular" type="tel" autocomplete="tel" inputmode="tel" placeholder="(51) 99999-9999" required></label>
+              <label class="campo"><span>Empresa</span>
+                <input name="empresa" type="text" autocomplete="organization" required></label>
+              <label class="campo"><span>Cargo</span>
+                <input name="cargo" type="text" autocomplete="organization-title" required></label>
+            </div>
+            <label class="aceite"><input name="aceite" type="checkbox" required>
+              <span>Autorizo a Grou a entrar em contato sobre o NR-1 Estratégica.</span></label>
+            <p class="aviso-erro" hidden></p>
+          </form>
           <a class="btn js-pagar50" href="#ingresso" style="width:100%">Pagar R$ 124,50 com DOM Pagamentos
             <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <p class="seguro"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.4-3.4 8.2-8 9-4.6-.8-8-4.6-8-9V6z"/><path d="M8.5 12l2.4 2.4L15.5 10"/></svg>
@@ -1432,19 +1471,64 @@ document.documentElement.classList.add('js');
   }
   pm.addEventListener('click', function (e) { if (e.target.closest('[data-fecha]')) fechaPag(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pm.hidden) fechaPag(); });
+  /* O pagamento pelo link acontece todo na DOM, sem passar pelo nosso servidor. Por isso a página registra o comprador
+     antes ("aguardando pagamento" no painel) e confirma quando a DOM devolve a pessoa para /obrigado/. */
+  function lePedido() { try { return JSON.parse(localStorage.getItem('nr1_pedido') || 'null'); } catch (x) { return null; } }
+  function registraPedido(f, meia) {
+    var d = {};
+    new FormData(f).forEach(function (v, k) { d[k] = String(v).trim(); });
+    var cupom = meia ? cupomAtual : '', email = d.email.toLowerCase(), salvo = lePedido();
+    if (salvo && salvo.pedido && salvo.email === email && salvo.cupom === cupom) return Promise.resolve();
+    var q = new URLSearchParams(location.search), utm = {};
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+    return fetch('/api/inscricao/', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tipo: 'link', cupom: cupom, nome: d.nome, email: d.email, celular: d.celular, empresa: d.empresa, cargo: d.cargo, utm: utm })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (r.ok && j.pedido) {
+          try { localStorage.setItem('nr1_pedido', JSON.stringify({ pedido: j.pedido, email: email, cupom: cupom })); } catch (x) {}
+          return;
+        }
+        var err = new Error(j.erro || 'HTTP ' + r.status); err.motivo = r.status === 400 && j.erro ? j.erro : ''; throw err;
+      });
+    });
+  }
+  function confirmaPedido() {
+    var s = lePedido();
+    if (!s || !s.pedido) return;
+    fetch('/api/inscricao/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ acao: 'pago', pedido: s.pedido }) })
+      .then(function (r) { if (r.ok) try { localStorage.removeItem('nr1_pedido'); } catch (x) {} }).catch(function () {});
+  }
   document.addEventListener('click', function (e) {
     var a = e.target.closest('.js-pagar, .js-pagar50');
     if (!a) return;
+    var u = a.getAttribute('href');
+    if (!u || u.charAt(0) === '#') return;
+    e.preventDefault();
+    if (a.getAttribute('aria-busy') === 'true') return;
+    var meia = a.classList.contains('js-pagar50');
+    var f = a.closest('.passo').querySelector('.dados-link');
+    if (f && !f.offsetParent) f = null;
+    var erro = f && f.querySelector('.aviso-erro');
+    if (f) {
+      erro.hidden = true;
+      var falta = [].filter.call(f.elements, function (el) { return el.willValidate && !el.checkValidity(); })[0];
+      if (falta) { falta.reportValidity(); falta.focus(); return; }
+    }
     /* Meta Ads: carrinho ao clicar em "Pagar com DOM Pagamentos" */
     if (window.fbq) fbq('track', 'AddToCart');
-    var u = a.getAttribute('href');
-    if (!u || u.charAt(0) === '#' || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
-    e.preventDefault();
-    abrePag(u, a.classList.contains('js-pagar50'));
+    if (!f) { abrePag(u, meia); return; }
+    a.setAttribute('aria-busy', 'true');
+    registraPedido(f, meia).then(function () { abrePag(u, meia); }, function (err) {
+      if (err && err.motivo) { erro.textContent = err.motivo + ' Confira os dados e tente de novo.'; erro.hidden = false; return; }
+      abrePag(u, meia); /* se o registro falhar por instabilidade, o pagamento não fica travado */
+    }).then(function () { a.removeAttribute('aria-busy'); });
   });
   window.addEventListener('message', function (e) {
     if (e.origin !== location.origin || !e.data || e.data.tipo !== 'nr1_pago') return;
     var meia = pmMeia;
+    confirmaPedido();
     fechaPag();
     var f = document.getElementById('fluxo'), ok = f.querySelector('[data-p="ok"]');
     ok.querySelector('.passo__tit').textContent = 'Pagamento recebido. Vaga garantida.';

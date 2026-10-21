@@ -56,8 +56,12 @@ const confirmaLink = (chave) => rest('inscricoes?chave=eq.' + encodeURIComponent
 const lista = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&order=criado_em.desc&limit=5000');
 const marcaPresenca = (id, valor) => rest('inscricoes?id=eq.' + encodeURIComponent(id), { metodo: 'PATCH', corpo: { presente: !!valor }, cabecalhos: { Prefer: 'return=minimal' } });
 
+/* ---- leads das páginas de captação (ex.: demo gratuita do PDA) ---- */
+const gravaLead = (linha) => rest('leads', { metodo: 'POST', corpo: linha, cabecalhos: { Prefer: 'return=minimal' } });
+const listaLeads = () => rest('leads?order=criado_em.desc&limit=5000');
+
 /* ---- acessos ao painel ---- */
 const acesso = async (email) => ((await rest('painel_acessos?email=eq.' + encodeURIComponent(email) + '&limit=1')) || [])[0] || null;
 const atualizaAcesso = (email, campos) => rest('painel_acessos?email=eq.' + encodeURIComponent(email), { metodo: 'PATCH', corpo: campos, cabecalhos: { Prefer: 'return=minimal' } });
 
-module.exports = { chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaLink };
+module.exports = { chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaLink, gravaLead, listaLeads };

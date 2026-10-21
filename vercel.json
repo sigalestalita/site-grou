@@ -63,6 +63,11 @@
       "source": "/convite/:codigo/",
       "destination": "/evento/nr1-estrategica/?cupom=:codigo&utm_source=convite&utm_medium=card&utm_campaign=:codigo",
       "permanent": false
+    },
+    {
+      "source": "/salessprint/",
+      "destination": "/demo-pda/?utm_source=salessprint&utm_medium=qrcode&utm_campaign=sales-sprint",
+      "permanent": false
     }
   ]
 }

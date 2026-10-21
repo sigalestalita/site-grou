@@ -201,6 +201,17 @@ select{width:auto;min-width:170px}
       </table></div>
       <p class="vazio" id="vazio" hidden>Nenhuma inscrição com esses filtros.</p>
     </section>
+
+    <section class="card lista" id="cardLeads">
+      <h2>Leads · demo gratuita do PDA <span id="contaLeads" style="font-weight:400;color:var(--tinta-3)"></span></h2>
+      <p class="sub">Quem preencheu os dados em grougp.com/demo-pda (QR code de eventos) antes de abrir a demo.</p>
+      <div class="filtros"><button class="btn btn--leve" type="button" id="btnCsvLeads">Baixar CSV dos leads</button></div>
+      <div class="rolagem"><table id="tabLeads">
+        <thead><tr><th>Data</th><th>Pessoa</th><th>Contato</th><th>Origem</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <p class="vazio" id="vazioLeads" hidden>Nenhum lead ainda.</p>
+    </section>
   </main>
   <p class="rodape">Dados pessoais de inscritos: uso interno da Grou. Não compartilhe a senha nem exporte a lista fora do necessário.</p>
 </div>
@@ -359,8 +370,35 @@ select{width:auto;min-width:170px}
     }).join('');
   }
 
+  var ROT_ORIGEM = { 'sales-sprint': 'Sales Sprint (QR code)' };
+  function renderLeads() {
+    var L = estado.dados.leads || [];
+    $('contaLeads').textContent = '(' + L.length + ')';
+    $('vazioLeads').hidden = L.length > 0;
+    $('tabLeads').hidden = L.length === 0;
+    $('tabLeads').tBodies[0].innerHTML = L.map(function (i) {
+      var tel = String(i.celular || '').replace(/\D/g, '');
+      return '<tr>' +
+        '<td style="white-space:nowrap">' + esc(data(i.criado_em)) + '</td>' +
+        '<td class="pessoa"><b>' + esc(i.nome) + '</b><span>' + esc(i.empresa || '') + '</span></td>' +
+        '<td class="contato"><span>' + esc(i.email) + '</span>' + (tel ? '<a href="https://wa.me/55' + esc(tel) + '" target="_blank" rel="noopener">' + esc(i.celular) + '</a>' : '') + '</td>' +
+        '<td>' + esc(ROT_ORIGEM[i.origem] || i.origem) + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+  function csvLeads() {
+    var L = estado.dados.leads || [];
+    var cel = function (v) { v = String(v == null ? '' : v); if (/^[=+\-@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+    var cab = ['Data', 'Nome', 'E-mail', 'Celular', 'Empresa', 'Origem', 'Interesse', 'utm_source', 'utm_campaign'];
+    var linhas = L.map(function (i) { return [data(i.criado_em), i.nome, i.email, i.celular, i.empresa, ROT_ORIGEM[i.origem] || i.origem, i.interesse, i.utm_source || '', i.utm_campaign || ''].map(cel).join(';'); });
+    var blob = new Blob(['\ufeff' + [cab.map(cel).join(';')].concat(linhas).join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'leads-demo-pda-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  }
+
   function renderTudo() {
-    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderLista();
+    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderLista(); renderLeads();
     $('selo').hidden = estado.dados.ambiente !== 'sandbox';
     $('atualizado').textContent = 'Atualizado às ' + new Date(estado.dados.geradoEm).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }
@@ -405,6 +443,7 @@ select{width:auto;min-width:170px}
   /* ---- eventos ---- */
   $('btnAtualiza').addEventListener('click', function () { var b = this; b.disabled = true; carrega(false).then(function () { b.disabled = false; }); });
   $('btnCsv').addEventListener('click', csv);
+  $('btnCsvLeads').addEventListener('click', csvLeads);
   $('btnSair').addEventListener('click', sair);
   $('usuario').textContent = USUARIO.nome || USUARIO.email;
   var dlg = $('dlgSenha'), fs = $('formSenha');

@@ -18,10 +18,13 @@ module.exports = async (req, res) => {
       return c.responde(res, 400, { erro: 'Ação inválida.' });
     }
     const linhas = await db.lista('nr1-estrategica');
+    /* leads das páginas de captação (demo PDA etc.); se falhar, o painel de inscritos continua */
+    let leads = [];
+    try { leads = (await db.listaLeads()) || []; } catch (e) { console.error('gestao leads:', e.message); }
     c.responde(res, 200, {
       geradoEm: new Date().toISOString(), ambiente: c.ambiente(),
       cupons: { cem: c.CUPONS_100, metade: c.CUPONS_50 }, preco: c.PRECO_CHEIO, precoMetade: c.PRECO_METADE,
-      inscritos: linhas
+      inscritos: linhas, leads
     });
   } catch (e) {
     console.error('gestao:', e.message);

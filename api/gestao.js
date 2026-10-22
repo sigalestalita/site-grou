@@ -1,6 +1,7 @@
 const c = require('./_comum');
 const db = require('./_db');
 const sessao = require('./_sessao');
+const correio = require('./_email');
 
 /* Dados do painel interno: só para quem está logado e liberado. */
 module.exports = async (req, res) => {
@@ -15,6 +16,15 @@ module.exports = async (req, res) => {
         await db.marcaPresenca(b.id, b.valor);
         return c.responde(res, 200, { ok: true });
       }
+      if (b.acao === 'enviar_confirmacoes') {
+        if (!correio.ativo()) return c.responde(res, 503, { erro: 'Envio de e-mail ainda não configurado (falta RESEND_API_KEY na Vercel).' });
+        const pend = (await db.semConfirmacao('nr1-estrategica')) || [];
+        if (!pend.length) return c.responde(res, 200, { ok: true, enviados: 0 });
+        await correio.enviaLote(pend);
+        await db.marcaEmail(pend.map((i) => i.id));
+        console.log('confirmacoes enviadas pelo painel:', pend.length, 'por', u.email);
+        return c.responde(res, 200, { ok: true, enviados: pend.length });
+      }
       return c.responde(res, 400, { erro: 'Ação inválida.' });
     }
     const linhas = await db.lista('nr1-estrategica');
@@ -22,7 +32,7 @@ module.exports = async (req, res) => {
     let leads = [];
     try { leads = (await db.listaLeads()) || []; } catch (e) { console.error('gestao leads:', e.message); }
     c.responde(res, 200, {
-      geradoEm: new Date().toISOString(), ambiente: c.ambiente(),
+      geradoEm: new Date().toISOString(), ambiente: c.ambiente(), emailAtivo: correio.ativo(),
       cupons: { cem: c.CUPONS_100, metade: c.CUPONS_50 }, preco: c.PRECO_CHEIO, precoMetade: c.PRECO_METADE,
       inscritos: linhas, leads
     });

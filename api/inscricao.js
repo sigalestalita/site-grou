@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const c = require('./_comum');
 const db = require('./_db');
+const correio = require('./_email');
 
 const limpa = (v, max) => String(v || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max || 120);
 
@@ -49,15 +50,26 @@ module.exports = async (req, res) => {
       return c.responde(res, 502, { erro: 'Não foi possível registrar agora.' });
     }
   }
+  const chaveConvite = 'c:nr1-estrategica:' + email + ':' + cupom;
   try {
     await db.grava({
-      chave: 'c:nr1-estrategica:' + email + ':' + cupom, evento: 'nr1-estrategica', tipo: 'convidado',
+      chave: chaveConvite, evento: 'nr1-estrategica', tipo: 'convidado',
       cupom, desconto: 100, nome, email, celular, empresa, cargo, aceite: true, status: 'confirmado', valor: 0,
       utm_source: limpa(u.utm_source, 60) || null, utm_medium: limpa(u.utm_medium, 60) || null, utm_campaign: limpa(u.utm_campaign, 80) || null
     }, true);
-    c.responde(res, 200, { ok: true });
   } catch (e) {
     console.error('inscricao:', e.message);
-    c.responde(res, 502, { erro: 'Não foi possível registrar agora.' });
+    return c.responde(res, 502, { erro: 'Não foi possível registrar agora.' });
   }
+  /* e-mail de confirmação: só uma vez por inscrição; uma falha aqui não desfaz a vaga */
+  if (correio.ativo()) {
+    try {
+      const linha = await db.porChave(chaveConvite);
+      if (linha && !linha.email_confirmacao_em) {
+        await correio.enviaConfirmacao(linha);
+        await db.marcaEmail([linha.id]);
+      }
+    } catch (e) { console.error('email confirmacao:', e.message); }
+  }
+  c.responde(res, 200, { ok: true });
 };

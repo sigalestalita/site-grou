@@ -113,6 +113,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 select{width:auto;min-width:170px}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-family:var(--ft);font-size:11.5px;font-weight:600;white-space:nowrap}
 .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.aviso-email{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#eef1fb;font-size:13.5px}
 .b-pago{background:var(--verde-f);color:var(--verde)}
 .b-confirmado{background:var(--azul-f);color:var(--eletrico)}
 .b-pendente{background:var(--cinza-f);color:var(--tinta-2)}
@@ -194,6 +195,10 @@ select{width:auto;min-width:170px}
           <option value="pendente">Aguardando pagamento</option><option value="recusado">Recusado</option><option value="cancelado">Cancelado</option>
         </select>
         <button class="btn btn--leve" type="button" id="btnLimpa">Limpar filtros</button>
+      </div>
+      <div class="aviso-email" id="avisoEmail" hidden>
+        <span id="txtEmail"></span>
+        <button class="btn btn--leve" type="button" id="btnEmail" hidden>Enviar confirmação aos pendentes</button>
       </div>
       <div class="rolagem"><table id="tabLista">
         <thead><tr><th>Data</th><th>Pessoa</th><th>Contato</th><th>Tipo e cupom</th><th class="n">Valor</th><th>Pagamento</th><th>Situação</th><th>Presente</th></tr></thead>
@@ -397,8 +402,18 @@ select{width:auto;min-width:170px}
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
   }
 
+  function renderEmail() {
+    var conv = estado.dados.inscritos.filter(function (i) { return i.tipo === 'convidado' && i.status === 'confirmado'; });
+    var env = conv.filter(function (i) { return i.email_confirmacao_em; }).length, pend = conv.length - env;
+    $('avisoEmail').hidden = conv.length === 0;
+    $('txtEmail').textContent = !estado.dados.emailAtivo
+      ? 'E-mail de confirmação dos convidados: aguardando a configuração do envio (Resend).'
+      : 'E-mail de confirmação dos convidados: ' + env + ' enviado' + (env === 1 ? '' : 's') + (pend ? ' · ' + pend + ' pendente' + (pend === 1 ? '' : 's') : ' · todos receberam') + '.';
+    $('btnEmail').hidden = !estado.dados.emailAtivo || pend === 0;
+  }
+
   function renderTudo() {
-    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderLista(); renderLeads();
+    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderLista(); renderLeads(); renderEmail();
     $('selo').hidden = estado.dados.ambiente !== 'sandbox';
     $('atualizado').textContent = 'Atualizado às ' + new Date(estado.dados.geradoEm).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }
@@ -444,6 +459,16 @@ select{width:auto;min-width:170px}
   $('btnAtualiza').addEventListener('click', function () { var b = this; b.disabled = true; carrega(false).then(function () { b.disabled = false; }); });
   $('btnCsv').addEventListener('click', csv);
   $('btnCsvLeads').addEventListener('click', csvLeads);
+  $('btnEmail').addEventListener('click', function () {
+    var b = this;
+    if (!confirm('Enviar o e-mail de confirmação para os convidados que ainda não receberam?')) return;
+    b.disabled = true; b.textContent = 'Enviando…';
+    api({ metodo: 'POST', corpo: { acao: 'enviar_confirmacoes' } }).then(function (r) {
+      alert(r.http === 200 ? 'Pronto: ' + r.j.enviados + ' e-mail(s) enviado(s).' : (r.j.erro || 'Não foi possível enviar agora.'));
+      b.disabled = false; b.textContent = 'Enviar confirmação aos pendentes';
+      return carrega(false);
+    });
+  });
   $('btnSair').addEventListener('click', sair);
   $('usuario').textContent = USUARIO.nome || USUARIO.email;
   var dlg = $('dlgSenha'), fs = $('formSenha');

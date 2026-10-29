@@ -33,7 +33,7 @@ function texto(i) {
     '',
     'Quando: quinta, 12 de novembro de 2026',
     'Credenciamento e welcome coffee às 13h30 · abertura às 14h',
-    'Onde: Instituto Caldeira · Av. Farrapos, 1055 · Porto Alegre (RS)',
+    'Onde: Instituto Caldeira · Sala Multiuso · Av. Farrapos, 1055 · Porto Alegre (RS)',
     'Como chegar: ' + MAPA,
     'Ingresso: individual · convite ' + i.cupom,
     '',
@@ -65,7 +65,7 @@ function html(i) {
     + '<p style="margin:0 0 22px;font:15px/1.6 Arial,Helvetica,sans-serif;color:#4a4868">Você entrou no <b style="color:#07033a">NR-1 Estratégica</b> com um convite da Grou e não há nada a pagar. Guarde este e-mail: ele é a confirmação da sua inscrição.</p>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">'
     + linha('Quando', '<b>Quinta, 12 de novembro de 2026</b><br>Credenciamento e welcome coffee às 13h30 · abertura às 14h')
-    + linha('Onde', '<b>Instituto Caldeira</b><br>Av. Farrapos, 1055 · Porto Alegre (RS) · <a href="' + MAPA + '" style="color:#12a594">como chegar</a>')
+    + linha('Onde', '<b>Instituto Caldeira · Sala Multiuso</b><br>Av. Farrapos, 1055 · Porto Alegre (RS) · <a href="' + MAPA + '" style="color:#12a594">como chegar</a>')
     + linha('Ingresso', 'Individual · convite <b>' + cupom + '</b>')
     + '</table>'
     + '<div style="padding:22px 0 6px">' + botao(AGENDA, 'Adicionar à agenda', true) + botao(EVENTO_URL + '#programacao', 'Ver a programação', false) + '</div>'

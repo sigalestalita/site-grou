@@ -517,6 +517,7 @@
         x.classList.toggle('ativo', on);
         x.setAttribute('aria-selected', on ? 'true' : 'false');
         x.tabIndex = on ? 0 : -1;
+        x.title = on ? 'Abrir ' + ((x.querySelector('.rn-rot') || {}).textContent || '').trim() : '';
       });
       paineis.forEach(function (x, k) {
         var on = k === i;
@@ -574,6 +575,8 @@
 
     nos.forEach(function (x, k) {
       x.addEventListener('click', function () {
+        /* a frente que já está na agulha leva à página dela */
+        if (k === i) { var link = $('.link-seta', paineis[k]); if (link) link.click(); return; }
         if (preso()) { irPara(k); return; }
         girar(k); selecionar(k); agendar();
       });

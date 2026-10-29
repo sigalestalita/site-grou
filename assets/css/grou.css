@@ -181,7 +181,9 @@ p b{font-weight:600;color:var(--tinta)}
   opacity:0;visibility:hidden;transform:translateX(-7px);
   transition:opacity .24s ease,transform .3s var(--mola),visibility .24s;
 }
-.sc-painel.ativo{opacity:1;visibility:visible;transform:none}
+/* visibility herdada: com o menu fechado o painel ativo continua escondido e não recebe cliques
+   (forçar "visible" aqui deixava os links invisíveis clicáveis sob o cabeçalho, em todas as páginas) */
+.sc-painel.ativo{opacity:1;visibility:inherit;transform:none}
 .sc-painel a{padding:9px 13px}
 @media(prefers-reduced-motion:reduce){
   .sc-painel{transition:opacity .15s ease,visibility .15s;transform:none}
@@ -719,7 +721,8 @@ body.gaveta-aberta{overflow:hidden}
 .rodape-col a{font-size:13.5px;color:rgba(255,255,255,.66);transition:color .22s,transform .25s var(--mola);display:inline-block}
 .rodape-col a:hover{color:var(--ciano);transform:translateX(3px)}
 .rodape-base{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center;
-  padding-top:24px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:rgba(255,255,255,.44)}
+  padding-top:24px;padding-right:clamp(70px,7vw,88px); /* folga para o botão flutuante do WhatsApp */
+  border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:rgba(255,255,255,.44)}
 .rodape-base a:hover{color:var(--ciano)}
 
 /* Faixa de chamada no rodapé */
@@ -1015,7 +1018,7 @@ body.gaveta-aberta{overflow:hidden}
   transition:opacity .3s var(--mola),transform .35s var(--mola),visibility .3s;
   display:flex;flex-direction:column;
 }
-.cat-painel.ativa{opacity:1;visibility:visible;transform:none;position:relative;inset:auto}
+.cat-painel.ativa{opacity:1;visibility:inherit;transform:none;position:relative;inset:auto}
 .cat-desc{font-size:12.5px;color:var(--tinta-tenue);line-height:1.5;margin-bottom:14px;max-width:52ch}
 .cat-lista{display:grid;grid-template-columns:1fr 1fr;gap:1px 10px;flex:1;align-content:start}
 .cat-lista li{min-width:0}
@@ -1294,6 +1297,26 @@ body.gaveta-aberta{overflow:hidden}
   background:linear-gradient(90deg,var(--ciano),var(--ciano-forte));transition:width .12s linear}
 .horiz-prog .cont{font-size:11.5px;letter-spacing:.14em;color:var(--tinta-tenue);font-variant-numeric:tabular-nums;white-space:nowrap}
 .horiz.escura .horiz-prog .cont{color:rgba(255,255,255,.5)}
+
+/* bordas do trilho esmaecem: o card que entra ou sai lê como "continua", não como cortado */
+@media(min-width:901px){
+  .horiz-fixo{
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 56px,#000 calc(100% - 56px),transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 56px,#000 calc(100% - 56px),transparent 100%);
+  }
+}
+/* notebooks baixos (1366x768, 1280x720): título, cards e progresso cabem inteiros na tela */
+@media(min-width:901px) and (max-height:820px){
+  .horiz-fixo{padding:calc(var(--nav-h) + 6px) 0 18px}
+  .horiz-cab{margin-bottom:18px}
+  .horiz-cab h2{font-size:clamp(26px,3vw,36px)}
+  .horiz-cab .lead{margin-top:8px;font-size:15px;line-height:1.5}
+  .horiz-item{padding:22px}
+  .horiz-item.com-img{padding:0}
+  .horiz-item.com-img .hshot{aspect-ratio:16/10}
+  .horiz-item.com-img .hbody{padding:16px 20px 18px}
+  .horiz-prog{margin-top:14px}
+}
 
 /* sem sticky no mobile: vira carrossel nativo com snap */
 @media(max-width:900px){
@@ -2422,6 +2445,9 @@ body:has(.aca-hero) .topo.fixa .aca-marca img{filter:brightness(0) saturate(100%
 }
 .roleta-prog .cont{font-size:11.5px;letter-spacing:.14em;color:var(--tinta-tenue);font-variant-numeric:tabular-nums;white-space:nowrap}
 .roleta-prog .dica{font-size:11.5px;letter-spacing:.04em;color:var(--tinta-tenue);white-space:nowrap}
+/* a dica vem logo depois do contador: na ponta direita o botão flutuante do WhatsApp a cobria */
+.roleta-prog .dica{order:1}
+.roleta-prog .barra{order:2}
 
 @media(max-width:900px){
   /* sem prender a tela: a seção volta a ter altura própria */

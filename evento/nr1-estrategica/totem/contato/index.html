@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Sua trilha no Lumi · NR-1 Estratégica</title>
+<link rel="icon" href="/assets/evento/nr1-estrategica/totem/logo-lumi.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<!-- Aberta pelo QR code do totem Lumi no NR-1 Estratégica. Mostra a trilha recomendada e capta o contato (com aceite) em /api/lead/. -->
+<style>
+:root{--navy:#0A2458;--azul:#0D3480;--azul-claro:#E3EDFF;--verde:#81CC39;--borda:#E5E7EB;--cinza:#5B5F67;--cinza2:#747D88;--erro:#C62828;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--navy);min-height:100vh;
+  background:radial-gradient(120% 50% at 100% 0%,#DCE8FF 0%,rgba(220,232,255,0) 60%),radial-gradient(90% 40% at 0% 100%,#E9F6DA 0%,rgba(233,246,218,0) 60%),#F7F9FE}
+.wrap{max-width:480px;margin:0 auto;padding:28px max(20px,env(safe-area-inset-right,0px)) 48px max(20px,env(safe-area-inset-left,0px));display:grid;gap:18px}
+.logo{height:34px;width:auto}
+.olho{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--azul)}
+h1{font-size:26px;line-height:1.2;font-weight:800;letter-spacing:-.02em;margin-top:6px;text-wrap:balance}
+p{font-size:15px;line-height:1.55;color:var(--cinza)}
+.cartao{background:#fff;border:1px solid var(--borda);border-radius:16px;padding:16px}
+.trilha img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block}
+.trilha b{display:block;font-size:18px;line-height:1.3;margin-top:12px}
+.trilha span{display:block;font-size:14px;color:var(--cinza);margin-top:4px}
+form{display:grid;gap:12px}
+.campo span{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.campo input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--borda);background:#fff;font-weight:500;font-size:16px;line-height:1.2;font-family:inherit;color:var(--navy)}
+.campo input:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 4px rgba(13,52,128,.12)}
+.campo.invalido input{border-color:var(--erro)}
+.aceite{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:13px;line-height:1.5;color:var(--cinza)}
+.aceite input{width:18px;height:18px;margin-top:1px;accent-color:var(--azul)}
+.btn{display:flex;align-items:center;justify-content:center;height:52px;border-radius:999px;border:0;background:var(--verde);color:var(--navy);font-weight:800;font-size:16px;font-family:inherit;cursor:pointer}
+.btn:disabled{opacity:.6}
+.erro{color:var(--erro);font-size:14px;font-weight:600}
+.ok{text-align:center;padding:24px 16px}
+.ok img{width:64px;height:64px;margin:0 auto 12px;display:block}
+.nota{font-size:12px;color:var(--cinza2);text-align:center}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <img class="logo" src="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" alt="Lumi">
+  <div>
+    <p class="olho">Seu check-in no NR-1 Estratégica</p>
+    <h1 id="titulo">A trilha que o Lumi separou para você</h1>
+    <p id="texto" style="margin-top:8px"></p>
+  </div>
+  <div class="cartao trilha"><img id="capa" src="/assets/evento/nr1-estrategica/totem/trilhas/91.jpg" alt=""><b id="nomeTrilha">Protagonismo</b><span>Trilha de desenvolvimento do Lumi, em vídeo, no seu ritmo.</span></div>
+
+  <div class="cartao" id="formCartao">
+    <h2 style="font-size:18px;font-weight:800">Quer conhecer o Lumi na sua empresa?</h2>
+    <p style="margin:4px 0 14px;font-size:14px">Deixe o seu contato e a equipe da Grou fala com você.</p>
+    <form id="f" novalidate>
+      <label class="campo"><span>Nome e sobrenome</span><input name="nome" autocomplete="name" required></label>
+      <label class="campo"><span>E-mail de trabalho</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+      <label class="campo"><span>Celular com DDD</span><input name="celular" type="tel" autocomplete="tel" inputmode="tel" required></label>
+      <label class="campo"><span>Empresa</span><input name="empresa" autocomplete="organization" required></label>
+      <label class="aceite"><input name="aceite" type="checkbox" required><span>Autorizo a Grou a entrar em contato comigo sobre o Lumi.</span></label>
+      <p class="erro" id="erro" role="alert" hidden></p>
+      <button class="btn" id="enviar" type="submit">Quero conhecer o Lumi</button>
+    </form>
+  </div>
+  <div class="cartao ok" id="pronto" hidden>
+    <img src="/assets/evento/nr1-estrategica/totem/emojis/Happy.svg" alt="">
+    <h2 style="font-size:20px;font-weight:800">Recebemos o seu contato!</h2>
+    <p style="margin-top:6px">A equipe da Grou vai falar com você para mostrar o Lumi. Aproveite o evento!</p>
+  </div>
+  <p class="nota">Suas respostas no totem foram anônimas: este formulário não tem ligação com elas.</p>
+</main>
+<script>
+(function () {
+  'use strict';
+  var Q = new URLSearchParams(location.search);
+  var TRILHAS = { 91: ['Protagonismo', 'Autoliderança'], 86: ['Autoconfiança', 'Autoliderança'], 85: ['Iniciativa', 'Autoliderança'],
+    84: ['Resiliência', 'Resiliência emocional'], 88: ['Inteligência emocional', 'Resiliência emocional'], 83: ['Otimismo', 'Resiliência emocional'],
+    87: ['Resolução de problemas', 'Adaptação e resolução de problemas'], 90: ['Negociação', 'Adaptação e resolução de problemas'],
+    93: ['Comunicação', 'Interação social'], 92: ['Persuasão', 'Interação social'],
+    73: ['Estresse, ansiedade e burnout', 'Saúde mental'], 70: ['Autoconhecimento e regulação emocional', 'Saúde mental'], 76: ['Lidando com a tristeza e depressão', 'Saúde mental'] };
+  var t = TRILHAS[Q.get('t')] ? Q.get('t') : '91';
+  document.getElementById('nomeTrilha').textContent = TRILHAS[t][0];
+  document.getElementById('capa').src = '/assets/evento/nr1-estrategica/totem/trilhas/' + t + '.jpg';
+  document.getElementById('texto').textContent = 'Trilha de ' + TRILHAS[t][1] + ', escolhida a partir do seu onboarding no totem do Lumi.';
+
+  var f = document.getElementById('f'), erro = document.getElementById('erro'), bt = document.getElementById('enviar');
+  function marca(campo, msg) {
+    f.querySelectorAll('.campo').forEach(function (c) { c.classList.remove('invalido'); });
+    if (campo && f.elements[campo]) { f.elements[campo].closest('.campo').classList.add('invalido'); f.elements[campo].focus(); }
+    erro.textContent = msg; erro.hidden = false;
+  }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = {}; new FormData(f).forEach(function (x, k) { v[k] = String(x).trim(); });
+    if ((v.nome || '').split(/\s+/).length < 2) return marca('nome', 'Informe nome e sobrenome.');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email || '')) return marca('email', 'Confira o e-mail.');
+    var tel = (v.celular || '').replace(/\D/g, ''); if (tel.length > 11 && tel.indexOf('55') === 0) tel = tel.slice(2);
+    if (tel.length < 10 || tel.length > 11) return marca('celular', 'Confira o celular, com DDD.');
+    if (!v.empresa) return marca('empresa', 'Informe a empresa.');
+    if (!f.elements.aceite.checked) return marca(null, 'Marque a autorização de contato para continuar.');
+    bt.disabled = true; bt.textContent = 'Enviando…'; erro.hidden = true;
+    fetch('/api/lead/', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: v.nome, email: v.email, celular: v.celular, empresa: v.empresa, origem: 'totem-nr1', interesse: 'lumi',
+        utm: { utm_source: 'totem', utm_medium: 'qrcode', utm_campaign: 'nr1-estrategica' } })
+    }).then(function (r) {
+      if (r.ok) { document.getElementById('formCartao').hidden = true; document.getElementById('pronto').hidden = false; return; }
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        bt.disabled = false; bt.textContent = 'Quero conhecer o Lumi';
+        marca(j.campo, j.erro || 'Não foi possível enviar agora. Tente de novo.');
+      });
+    }).catch(function () { bt.disabled = false; bt.textContent = 'Quero conhecer o Lumi'; marca(null, 'Sem conexão. Tente de novo.'); });
+  });
+})();
+</script>
+</body>
+</html>

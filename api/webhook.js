@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
   if (db.ativo() && id) {
     try {
       const r = await c.dom('/transactions/' + encodeURIComponent(id));
-      if (r.json && r.json.status && r.json.status !== 'error') await db.sincroniza(id, r.json.status);
+      if (r.json && r.json.status && r.json.status !== 'error') await db.avisaPagos(await db.sincroniza(id, r.json.status, r.json));
     } catch (e) {
       console.error('webhook ' + id + ':', e.message);
       return c.responde(res, 500, { erro: 'Falha ao atualizar.' });

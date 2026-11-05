@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   if (b.acao === 'pago') {
     const pedido = String(b.pedido || '');
     if (!/^l:[0-9a-f-]{36}$/i.test(pedido)) return c.responde(res, 400, { erro: 'Pedido inválido.' });
-    try { await db.confirmaLink(pedido); return c.responde(res, 200, { ok: true }); }
+    try { await db.avisaPagos(await db.confirmaLink(pedido)); return c.responde(res, 200, { ok: true }); }
     catch (e) { console.error('confirma link:', e.message); return c.responde(res, 502, { erro: 'Não foi possível atualizar agora.' }); }
   }
   const link = b.tipo === 'link';

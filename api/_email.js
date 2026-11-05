@@ -25,17 +25,23 @@ function assunto() {
   return 'Vaga confirmada · NR-1 Estratégica, 12 de novembro';
 }
 
+/* pagante: quem comprou o ingresso (com ou sem cupom de desconto); convidado: cortesia, sem nada a pagar */
+const pagante = (i) => i.tipo === 'pagante';
+const ingressoTexto = (i) => pagante(i) ? 'individual · pagamento confirmado' + (i.cupom ? ' · cupom ' + i.cupom : '') : 'individual · convite ' + i.cupom;
+
 function texto(i) {
   return [
     'Olá, ' + primeiroNome(i.nome) + '!',
     '',
-    'Sua vaga no NR-1 Estratégica está confirmada. Você entrou com um convite da Grou (' + i.cupom + ') e não há nada a pagar.',
+    pagante(i)
+      ? 'Sua vaga no NR-1 Estratégica está confirmada e o seu pagamento foi recebido.'
+      : 'Sua vaga no NR-1 Estratégica está confirmada. Você entrou com um convite da Grou (' + i.cupom + ') e não há nada a pagar.',
     '',
     'Quando: quinta, 12 de novembro de 2026',
     'Credenciamento e welcome coffee às 13h30 · abertura às 14h',
     'Onde: Instituto Caldeira · Sala Multiuso · Av. Farrapos, 1055 · Porto Alegre (RS)',
     'Como chegar: ' + MAPA,
-    'Ingresso: individual · convite ' + i.cupom,
+    'Ingresso: ' + ingressoTexto(i),
     '',
     'Adicionar à agenda: ' + AGENDA,
     'Programação completa: ' + EVENTO_URL + '#programacao',
@@ -56,17 +62,23 @@ function html(i) {
     + (cheio ? 'background:#120573;color:#ffffff' : 'background:#e8f9f6;color:#0f8778;border:1px solid #bfeee8') + '">' + rot + '</a>';
   return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(assunto()) + '</title></head>'
     + '<body style="margin:0;padding:0;background:#f4f5fa">'
-    + '<div style="display:none;max-height:0;overflow:hidden;opacity:0">Seu convite está garantido. Nos vemos no Instituto Caldeira, em 12 de novembro.</div>'
+    + '<div style="display:none;max-height:0;overflow:hidden;opacity:0">' + (pagante(i) ? 'Pagamento confirmado' : 'Seu convite está garantido') + '. Nos vemos no Instituto Caldeira, em 12 de novembro.</div>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5fa"><tr><td align="center" style="padding:24px 12px">'
     + '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:18px;overflow:hidden">'
     + '<tr><td><a href="' + EVENTO_URL + '"><img src="' + TOPO + '" width="600" alt="NR-1 Estratégica · vaga confirmada" style="display:block;width:100%;height:auto;border:0"></a></td></tr>'
     + '<tr><td style="padding:32px 32px 8px">'
     + '<p style="margin:0 0 6px;font:700 24px/1.3 Arial,Helvetica,sans-serif;color:#07033a">Olá, ' + nome + '! Sua vaga está confirmada.</p>'
-    + '<p style="margin:0 0 22px;font:15px/1.6 Arial,Helvetica,sans-serif;color:#4a4868">Você entrou no <b style="color:#07033a">NR-1 Estratégica</b> com um convite da Grou e não há nada a pagar. Guarde este e-mail: ele é a confirmação da sua inscrição.</p>'
+    + '<p style="margin:0 0 22px;font:15px/1.6 Arial,Helvetica,sans-serif;color:#4a4868">'
+    + (pagante(i)
+      ? 'Recebemos o seu pagamento e a sua vaga no <b style="color:#07033a">NR-1 Estratégica</b> está garantida.'
+      : 'Você entrou no <b style="color:#07033a">NR-1 Estratégica</b> com um convite da Grou e não há nada a pagar.')
+    + ' Guarde este e-mail: ele é a confirmação da sua inscrição.</p>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">'
     + linha('Quando', '<b>Quinta, 12 de novembro de 2026</b><br>Credenciamento e welcome coffee às 13h30 · abertura às 14h')
     + linha('Onde', '<b>Instituto Caldeira · Sala Multiuso</b><br>Av. Farrapos, 1055 · Porto Alegre (RS) · <a href="' + MAPA + '" style="color:#12a594">como chegar</a>')
-    + linha('Ingresso', 'Individual · convite <b>' + cupom + '</b>')
+    + linha('Ingresso', pagante(i)
+      ? 'Individual · <b>pagamento confirmado</b>' + (i.cupom ? ' · cupom ' + cupom : '')
+      : 'Individual · convite <b>' + cupom + '</b>')
     + '</table>'
     + '<div style="padding:22px 0 6px">' + botao(AGENDA, 'Adicionar à agenda', true) + botao(EVENTO_URL + '#programacao', 'Ver a programação', false) + '</div>'
     + '<p style="margin:18px 0 0;font:15px/1.6 Arial,Helvetica,sans-serif;color:#4a4868">Uma tarde com juízas do Trabalho, indústria, clínica e dados para transformar risco psicossocial em performance, com o soft launch do Lumi.</p>'

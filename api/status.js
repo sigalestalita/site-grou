@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   try {
     const r = await c.dom('/transactions/' + id);
     if (!r.json || !r.json.status || r.json.status === 'error') return c.responde(res, 404, { erro: 'Pedido não encontrado.' });
-    if (db.ativo()) { try { await db.sincroniza(id, r.json.status); } catch (e) { console.error('sincroniza ' + id + ':', e.message); } }
+    if (db.ativo()) { try { await db.avisaPagos(await db.sincroniza(id, r.json.status, r.json)); } catch (e) { console.error('sincroniza ' + id + ':', e.message); } }
     c.responde(res, 200, { id, situacao: c.situacao(r.json.status), status: r.json.status });
   } catch (e) {
     c.responde(res, 502, { erro: 'Não foi possível consultar agora.' });

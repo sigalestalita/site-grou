@@ -37,21 +37,44 @@ function statusInterno(statusDom) {
   return 'recusado';
 }
 
-/* atualiza o pedido quando a DOM avisa (webhook) ou quando a página consulta o status */
-async function sincroniza(domId, statusDom) {
+/* atualiza o pedido quando a DOM avisa (webhook) ou quando a página consulta o status.
+   Devolve as linhas que acabaram de virar "pago" (para disparar o e-mail de confirmação).
+   tx: a transação lida na DOM; serve para achar, pelo e-mail do comprador, pedidos feitos pelo link de
+   pagamento, que não guardam o id da DOM (sem isso o boleto pago pelo link ficava "pendente" para sempre). */
+async function sincroniza(domId, statusDom, tx) {
   const novo = statusInterno(statusDom);
   const id = encodeURIComponent(domId);
+  const volta = { Prefer: 'return=representation' };
   if (novo === 'pago') {
-    return rest('inscricoes?dom_id=eq.' + id + '&status=neq.pago', { metodo: 'PATCH', corpo: { status: 'pago', pago_em: new Date().toISOString() }, cabecalhos: { Prefer: 'return=minimal' } });
+    const agora = new Date().toISOString();
+    const linhas = (await rest('inscricoes?dom_id=eq.' + id + '&status=neq.pago', { metodo: 'PATCH', corpo: { status: 'pago', pago_em: agora }, cabecalhos: volta })) || [];
+    if (linhas.length) return linhas;
+    const jaPago = (await rest('inscricoes?dom_id=eq.' + id + '&limit=1')) || [];
+    const email = String((tx && tx.customer && tx.customer.email) || '').trim().toLowerCase();
+    if (jaPago.length || !/^[^@\s*,()]+@[^@\s*,()]+$/.test(email)) return [];
+    return (await rest('inscricoes?evento=eq.nr1-estrategica&tipo=eq.pagante&status=eq.pendente&dom_id=is.null&email=ilike.' + encodeURIComponent(email), {
+      metodo: 'PATCH', corpo: { status: 'pago', pago_em: agora, dom_id: domId }, cabecalhos: volta
+    })) || [];
   }
-  if (novo === 'pendente') return null;
-  return rest('inscricoes?dom_id=eq.' + id + '&status=eq.pendente', { metodo: 'PATCH', corpo: { status: novo }, cabecalhos: { Prefer: 'return=minimal' } });
+  if (novo === 'pendente') return [];
+  await rest('inscricoes?dom_id=eq.' + id + '&status=eq.pendente', { metodo: 'PATCH', corpo: { status: novo }, cabecalhos: { Prefer: 'return=minimal' } });
+  return [];
 }
 
 /* pedido feito pelo link de pagamento da DOM: a página avisa quando a DOM devolve a pessoa para /obrigado/ */
-const confirmaLink = (chave) => rest('inscricoes?chave=eq.' + encodeURIComponent(chave) + '&status=eq.pendente', {
-  metodo: 'PATCH', corpo: { status: 'pago', pago_em: new Date().toISOString() }, cabecalhos: { Prefer: 'return=minimal' }
-});
+const confirmaLink = async (chave) => (await rest('inscricoes?chave=eq.' + encodeURIComponent(chave) + '&status=eq.pendente', {
+  metodo: 'PATCH', corpo: { status: 'pago', pago_em: new Date().toISOString() }, cabecalhos: { Prefer: 'return=representation' }
+})) || [];
+
+/* manda a confirmação a quem acabou de pagar; falha de e-mail não derruba o pedido (o painel reenvia) */
+async function avisaPagos(linhas) {
+  const correio = require('./_email');
+  if (!correio.ativo()) return;
+  for (const i of (linhas || []).filter((l) => l.status === 'pago' && !l.email_confirmacao_em)) {
+    try { await correio.enviaConfirmacao(i); await marcaEmail([i.id]); }
+    catch (e) { console.error('confirmação pago ' + i.id + ':', e.message); }
+  }
+}
 
 const lista = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&order=criado_em.desc&limit=5000');
 const marcaPresenca = (id, valor) => rest('inscricoes?id=eq.' + encodeURIComponent(id), { metodo: 'PATCH', corpo: { presente: !!valor }, cabecalhos: { Prefer: 'return=minimal' } });
@@ -61,14 +84,19 @@ const porChave = async (chave) => ((await rest('inscricoes?chave=eq.' + encodeUR
 const marcaEmail = (ids) => rest('inscricoes?id=in.(' + ids.map(encodeURIComponent).join(',') + ')', {
   metodo: 'PATCH', corpo: { email_confirmacao_em: new Date().toISOString() }, cabecalhos: { Prefer: 'return=minimal' }
 });
-const semConfirmacao = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&tipo=eq.convidado&status=eq.confirmado&email_confirmacao_em=is.null&order=criado_em.asc&limit=100');
+/* convidados confirmados e pagantes já pagos que ainda não receberam a confirmação */
+const semConfirmacao = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&or=(and(tipo.eq.convidado,status.eq.confirmado),and(tipo.eq.pagante,status.eq.pago))&email_confirmacao_em=is.null&order=criado_em.asc&limit=100');
 
 /* ---- leads das páginas de captação (ex.: demo gratuita do PDA) ---- */
 const gravaLead = (linha) => rest('leads', { metodo: 'POST', corpo: linha, cabecalhos: { Prefer: 'return=minimal' } });
 const listaLeads = () => rest('leads?order=criado_em.desc&limit=5000');
 
+/* ---- totem Lumi do evento (respostas anônimas) ---- */
+const totemGrava = (linhas) => rest('totem_respostas?on_conflict=sessao', { metodo: 'POST', corpo: linhas, cabecalhos: { Prefer: 'resolution=ignore-duplicates,return=minimal' } });
+const totemLista = (teste) => rest('totem_respostas?select=area,humor,emocao,respostas&evento=eq.nr1-estrategica&teste=is.' + (teste ? 'true' : 'false') + '&limit=10000');
+
 /* ---- acessos ao painel ---- */
 const acesso = async (email) => ((await rest('painel_acessos?email=eq.' + encodeURIComponent(email) + '&limit=1')) || [])[0] || null;
 const atualizaAcesso = (email, campos) => rest('painel_acessos?email=eq.' + encodeURIComponent(email), { metodo: 'PATCH', corpo: campos, cabecalhos: { Prefer: 'return=minimal' } });
 
-module.exports = { chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaLink, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao };
+module.exports = { chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };

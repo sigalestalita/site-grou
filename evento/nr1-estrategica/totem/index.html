@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Lumi · Totem NR-1 Estratégica</title>
+<link rel="icon" href="/assets/evento/nr1-estrategica/totem/logo-lumi.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<!--
+  Totem Lumi do NR-1 Estratégica (12/11/2026, Instituto Caldeira). Demonstração curta do app, fiel às telas reais:
+  colaborador: equipe → onboarding (categoria + 1 pergunta) → emocionômetro (emoção + descrição) → trilhas para você → Luz (chat)
+  gestor/RH: painel web do Lumi com mapa de calor por setor, ao vivo.
+  Anônimo: não pede nome, e-mail nem telefone. As respostas vão para /api/totem/; sem internet ficam guardadas aqui e sobem depois.
+  Parâmetros: ?modo=palco  só o painel, deitado, para o telão
+              ?teste=1     grava e lê à parte, para testar sem sujar o painel do evento
+  O chat da Luz aqui é roteirizado (sem IA ao vivo no totem); no app, a Luz conversa em tempo real.
+-->
+<style>
+:root{
+  --navy:#0A2458;--navy2:#081F4E;--azul:#0D3480;--azul2:#0E398D;--azul-claro:#E3EDFF;--azul-bg:#EEF3FD;
+  --verde:#81CC39;--verde-onb:#8EE03F;--borda:#E5E7EB;--cinza:#555555;--cinza2:#777777;--fundo:#F3F5F8;--creme:#FEFDF8;--onb:#0B173D;--fim:#101A3E;
+  --ok:#2E7D32;--ok-bg:#E8F5E9;--at:#8A5A00;--at-cor:#FFB71C;--at-bg:#FFF6DD;--ur:#C62828;--ur-bg:#FFEBEE;--esp:#081F4E;--esp-bg:#E4ECFD;--va:#A4A9AF;--va-bg:#F3F5F8;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+/* tudo em rem: no totem (1080x1920, em pé) ~24px por rem */
+html{font-size:min(2.2vw,1.25vh);-webkit-text-size-adjust:100%}
+html.palco{font-size:min(1.05vw,1.58vh)}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--navy);background:var(--fundo);
+  min-height:100vh;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;overscroll-behavior:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation;text-align:inherit}
+img{display:block;max-width:100%}
+.tela{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.tela.ativa{opacity:1;pointer-events:auto}
+.app{background:url(/assets/evento/nr1-estrategica/totem/bg-lumi.png) top right/70% auto no-repeat,radial-gradient(90% 50% at 0% 100%,#E9F6DA 0%,rgba(233,246,218,0) 60%),#F7F9FE}
+.rola{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}.rola::-webkit-scrollbar{display:none}
+
+/* ---------- início ---------- */
+#inicio{align-items:center;justify-content:space-between;padding:6rem 4rem 3.6rem;text-align:center}
+#inicio .logo{height:5.2rem;width:auto;margin:0 auto}
+.selo-evento{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.6rem;padding:.55rem 1.1rem;border-radius:99px;background:#fff;border:1px solid var(--borda);font-weight:600;font-size:1rem;color:var(--cinza)}
+.selo-evento b{color:var(--navy)}
+.inicio-meio{display:flex;flex-direction:column;align-items:center;gap:2rem;width:100%}
+#inicio h1{font-size:3.6rem;line-height:1.08;font-weight:800;letter-spacing:-.04em;max-width:20ch;text-wrap:balance}
+#inicio h1 em{font-style:normal;color:var(--azul)}
+.sub{font-size:1.35rem;line-height:1.45;color:var(--cinza);max-width:34ch;text-wrap:balance}
+.escolhas{display:grid;gap:1.2rem;width:100%;max-width:40rem;margin-top:1rem}
+.escolha{display:flex;align-items:center;gap:1.4rem;padding:1.6rem 1.8rem;border-radius:1.4rem;text-align:left;background:#fff;border:2px solid var(--borda);box-shadow:0 .6rem 1.6rem rgba(13,52,128,.08);transition:transform .12s}
+.escolha:active{transform:scale(.98)}
+.escolha.prim{background:var(--azul);border-color:var(--azul);color:#fff}
+.escolha .ic{flex:none;width:4.2rem;height:4.2rem;border-radius:1rem;display:grid;place-items:center;background:var(--azul-claro)}
+.escolha.prim .ic{background:rgba(255,255,255,.14)}
+.escolha .ic img{width:2.8rem;height:2.8rem}
+.escolha .ic svg{width:2.4rem;height:2.4rem}
+.escolha b{display:block;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+.escolha span{display:block;font-size:1.05rem;margin-top:.2rem;opacity:.8}
+.escolha .seta{margin-left:auto;font-size:2rem;opacity:.7}
+.rodape-inicio{display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:2rem;font-size:1rem;color:#747D88}
+.ao-vivo{display:flex;align-items:center;gap:.7rem;font-size:1.1rem;color:var(--cinza);font-weight:600}
+.pulso{width:.8rem;height:.8rem;border-radius:50%;background:var(--verde);box-shadow:0 0 0 0 rgba(129,204,57,.6);animation:pulso 1.8s infinite}
+@keyframes pulso{70%{box-shadow:0 0 0 .7rem rgba(129,204,57,0)}100%{box-shadow:0 0 0 0 rgba(129,204,57,0)}}
+.mini-mapa{display:grid;grid-template-columns:repeat(5,1fr);gap:.3rem;width:100%;max-width:17rem}
+.mini-mapa i{aspect-ratio:1.4;border-radius:.4rem;background:var(--va-bg)}
+.anonimo{display:inline-flex;align-items:center;gap:.5rem}
+
+/* ---------- onboarding (escuro, como no app) ---------- */
+.onb{background:url(/assets/evento/nr1-estrategica/totem/onboarding-fundo.jpg) center/cover no-repeat,var(--onb);color:#fff}
+.onb-topo{display:flex;align-items:center;gap:1.4rem;padding:3.4rem 3rem 1rem}
+.onb-voltar{width:2.6rem;height:2.6rem;display:grid;place-items:center;font-size:1.6rem;color:#fff}
+.onb-barra{flex:1;height:.25rem;border-radius:2px;background:rgba(255,255,255,.2);overflow:hidden}
+.onb-barra i{display:block;height:100%;background:var(--verde-onb);transition:width .35s}
+.onb-sair{font-size:1rem;color:#fff;opacity:.85;padding:.4rem .2rem}
+.onb-corpo{flex:1;min-height:0;padding:3rem 3rem 0;display:flex;flex-direction:column}
+.brilho{width:2.2rem;height:2.2rem;animation:brilho .9s ease-in-out infinite alternate}
+@keyframes brilho{to{opacity:.3;transform:scale(.8)}}
+.onb-titulo{font-size:1.9rem;line-height:1.4;font-weight:600;margin:1.4rem 0 2.4rem;white-space:pre-line;text-wrap:pretty}
+.onb-ops{display:grid;gap:1rem}
+.onb-op{min-height:4.4rem;border-radius:2.2rem;padding:1.1rem 1.8rem;border:1px solid rgba(254,253,248,.16);background:rgba(255,255,255,.06);font-weight:700;font-size:1.35rem;color:#fff;text-align:center;line-height:1.3;transition:border-color .15s,color .15s,transform .1s}
+.onb-op:active{transform:scale(.98)}
+.onb-op.sel{border-color:var(--verde-onb);color:var(--verde-onb)}
+.onb-rodape{padding:1.6rem 3rem 3rem}
+.btn-onb{display:flex;align-items:center;justify-content:center;width:100%;height:4.6rem;border-radius:2.3rem;background:var(--verde-onb);color:var(--navy2);font-weight:700;font-size:1.4rem;transition:opacity .2s}
+.btn-onb[disabled]{opacity:.4;pointer-events:none}
+#onbFim{background:var(--fim)}
+.fim-img{position:relative}
+.fim-img img{width:100%;aspect-ratio:1728/1290;object-fit:cover;object-position:top}
+.fim-img::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(rgba(16,26,62,0),var(--fim))}
+.fim-txt{flex:1;display:flex;flex-direction:column;justify-content:flex-end;text-align:center;padding:0 3.6rem 3rem;gap:1rem}
+.fim-txt h2{font-size:2.6rem;font-weight:700;letter-spacing:-.02em}
+.fim-txt p{font-size:1.3rem;line-height:1.5;color:#CCCCCC;margin-bottom:1.6rem}
+
+/* ---------- telas claras do app ---------- */
+.topo-app{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:3.2rem 3rem 1rem}
+.topo-app .logo{height:3rem;width:auto}
+.btn-circ{width:3.4rem;height:3.4rem;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:1.5rem;color:var(--navy);box-shadow:0 .2rem .8rem rgba(10,36,88,.08);flex:none}
+.btn-sair{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.1rem;border-radius:99px;background:#fff;border:1px solid var(--borda);font-weight:600;font-size:1rem;color:var(--cinza)}
+.corpo{flex:1;display:flex;flex-direction:column;padding:1.6rem 3rem 0;min-height:0}
+.titulo{font-size:2.4rem;line-height:1.2;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.apoio{font-size:1.2rem;line-height:1.45;color:var(--cinza);margin-top:.5rem}
+.grade-emocoes{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.emo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;min-height:8.6rem;padding:1rem;border-radius:1.3rem;background:#fff;border:2px solid var(--borda);transition:transform .1s,border-color .15s,background .15s}
+.emo:active{transform:scale(.97)}
+.emo img{width:3.4rem;height:3.4rem}
+.emo span{font-size:1.15rem;font-weight:600;color:var(--navy);text-align:center}
+.emo.sel{border-color:var(--azul);background:var(--azul-claro)}
+.rodape-app{padding:1.4rem 3rem 3rem;background:#fff;border-top:1px solid var(--borda);display:flex;flex-direction:column;gap:.6rem}
+.rodape-app.sem-borda{background:transparent;border:0}
+.btn-verde{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;height:4.4rem;border-radius:99px;background:var(--verde);color:var(--navy);font-weight:700;font-size:1.4rem;transition:opacity .2s,transform .1s}
+.btn-verde:active{transform:scale(.98)}
+.btn-verde[disabled]{opacity:.35;pointer-events:none}
+.btn-texto{height:3rem;font-weight:600;font-size:1.15rem;color:var(--azul);text-align:center}
+#emoDetalhe{background:var(--creme)}
+.causas{display:grid;gap:.75rem;margin-top:1.6rem}
+.causa{display:flex;align-items:center;gap:1rem;padding:.75rem 1.2rem;border-radius:1.3rem;background:#fff;border:2px solid var(--borda);font-size:1.25rem;color:var(--navy);text-align:left;transition:border-color .15s,background .15s}
+.causa i{flex:none;width:3rem;height:3rem;border-radius:50%;background:var(--azul-claro);display:grid;place-items:center;font-style:normal;font-size:1.5rem}
+.causa.sel{border-color:var(--azul);background:var(--azul-claro)}
+.causa.sel i{background:#fff}
+/* modal "Emoção registrada!" */
+.veu{position:fixed;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .26s;z-index:5}
+.veu.on{opacity:1;pointer-events:auto}
+.modal{width:min(85%,30rem);background:#fff;border-radius:1.4rem;padding:2.4rem 2rem 1.6rem;text-align:center;transform:scale(.94);transition:transform .26s}
+.veu.on .modal{transform:none}
+.check{width:5.4rem;height:5.4rem;border-radius:50%;background:var(--verde);display:grid;place-items:center;margin:0 auto 1.2rem}
+.check svg{width:2.6rem;height:2.6rem}
+.modal h3{font-size:1.55rem;font-weight:600}
+.modal p{font-size:1.2rem;line-height:1.5;color:var(--cinza);margin:.7rem 0 1.6rem}
+/* trilhas */
+.secao{margin-top:2rem}
+.secao-cab{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
+.secao-cab b{font-size:1.4rem;font-weight:700}
+.tag{display:inline-flex;align-items:center;height:2.1rem;padding:0 .9rem;border-radius:99px;font-size:1rem;font-weight:500}
+.t-cr{background:var(--ur-bg);color:var(--ur)}.t-al{background:var(--at-bg);color:var(--at)}.t-de{background:var(--ok-bg);color:var(--ok)}.t-es{background:var(--esp-bg);color:var(--esp)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{background:#fff;border:1px solid var(--borda);border-radius:1.3rem;overflow:hidden;text-align:left;display:flex;flex-direction:column;transition:transform .1s}
+.card:active{transform:scale(.98)}
+.card .img{position:relative;height:9.5rem;background:#E3EDFF}
+.card .img img{width:100%;height:100%;object-fit:cover}
+.card .badge{position:absolute;top:.7rem;left:.7rem;background:#fff;color:var(--navy2);font-size:.9rem;font-weight:700;padding:.25rem .7rem;border-radius:99px}
+.card .txt{padding:1rem;display:flex;flex-direction:column;gap:.5rem}
+.chip{align-self:flex-start;font-size:.9rem;font-weight:600;padding:.25rem .7rem;border-radius:99px}
+.c-autolideranca{background:#E3EDFF;color:#0D3480}.c-interacao{background:#FDE9F0;color:#C2185B}.c-resiliencia{background:#F1ECFF;color:#6A4FCF}.c-adaptacao{background:#E0F4F2;color:#00796B}.c-saude{background:#E8F5E9;color:#2E7D32}
+.card h4{font-size:1.35rem;font-weight:600;line-height:1.25}
+.card p{font-size:1.02rem;line-height:1.4;color:var(--cinza);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card small{font-size:.95rem;color:var(--cinza2)}
+.mental{border-radius:1.3rem;padding:1.4rem 1.5rem;background:linear-gradient(135deg,#0D3480,#0A2458);color:#fff;margin-top:1.6rem}
+.mental .badge2{display:inline-block;font-size:.9rem;font-weight:700;background:rgba(255,255,255,.16);padding:.25rem .7rem;border-radius:99px}
+.mental h4{font-size:1.5rem;margin:.7rem 0 .4rem}
+.mental p{font-size:1.05rem;line-height:1.45;opacity:.88}
+/* detalhe da trilha */
+#trilha .hero{position:relative;height:17rem;flex:none}
+#trilha .hero img{width:100%;height:100%;object-fit:cover}
+#trilha .hero .btn-circ{position:absolute;top:3rem;left:3rem}
+.det{padding:1.6rem 3rem 0}
+.det h2{font-size:2.3rem;font-weight:700;line-height:1.2;margin:.8rem 0 1rem;letter-spacing:-.02em}
+.pills{display:flex;gap:.6rem;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:.4rem;background:var(--azul-claro);color:var(--azul);font-size:1rem;font-weight:700;padding:.4rem .9rem;border-radius:99px}
+.det h3{font-size:1.3rem;font-weight:700;margin:1.6rem 0 .5rem}
+.det .sobre{font-size:1.15rem;line-height:1.5;color:var(--cinza)}
+.aulas{display:grid;gap:.7rem;margin-top:.4rem}
+.aula{display:grid;grid-template-columns:5.6rem 1fr auto;gap:1rem;align-items:center;padding:.8rem;border:1px solid var(--borda);border-radius:1.3rem;background:#fff}
+.aula .th{width:5.6rem;height:5.6rem;border-radius:.6rem;overflow:hidden;position:relative}
+.aula .th img{width:100%;height:100%;object-fit:cover;filter:brightness(.6)}
+.aula .th span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:1.6rem}
+.aula b{font-size:1.1rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.aula small{display:block;font-size:.95rem;color:var(--cinza2);margin-top:.3rem}
+.aula .seta{color:var(--azul);font-size:1.6rem;padding-right:.4rem}
+.aviso-demo{position:fixed;left:50%;bottom:9rem;transform:translate(-50%,1rem);background:var(--navy);color:#fff;font-size:1.1rem;font-weight:600;padding:.9rem 1.4rem;border-radius:99px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:6;white-space:nowrap}
+.aviso-demo.on{opacity:1;transform:translate(-50%,0)}
+/* Luz */
+.luz-cab{display:flex;align-items:center;gap:1rem;padding:3.2rem 3rem 1rem}
+.luz-cab h2{flex:1;text-align:center;font-size:1.7rem;font-weight:700;margin-right:3.4rem}
+.chat{flex:1;min-height:0;overflow-y:auto;padding:1rem 3rem 1rem;display:flex;flex-direction:column;gap:1rem;scrollbar-width:none}
+.chat::-webkit-scrollbar{display:none}
+.boas-vindas{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:2rem 1rem 1rem}
+.luz-ic{width:5.4rem;height:5.4rem;border-radius:50%;background:var(--verde);display:grid;place-items:center}
+.luz-ic img{width:2.7rem;height:2.7rem;filter:brightness(0) saturate(100%) invert(11%) sepia(41%) saturate(3727%) hue-rotate(211deg) brightness(91%) contrast(97%)}
+.boas-vindas h3{font-size:2rem;font-weight:700;margin-top:.6rem}
+.boas-vindas b{font-size:1.3rem;font-weight:600}
+.boas-vindas p{font-size:1.15rem;line-height:1.5;color:var(--cinza);max-width:26rem}
+.bolha{max-width:88%;padding:1rem 1.5rem;border-radius:1.3rem;font-size:1.25rem;line-height:1.5;white-space:pre-line;animation:entra .25s ease}
+@keyframes entra{from{opacity:0;transform:translateY(.6rem)}}
+.bolha.luz{align-self:flex-start;background:var(--azul-claro);color:var(--navy);border-bottom-left-radius:.3rem}
+.bolha.eu{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:.3rem;max-width:80%}
+.digitando{display:flex;gap:.4rem;padding:1.2rem 1.5rem}
+.digitando i{width:.6rem;height:.6rem;border-radius:50%;background:var(--azul);animation:pula .9s infinite}
+.digitando i:nth-child(2){animation-delay:.12s}.digitando i:nth-child(3){animation-delay:.24s}
+@keyframes pula{50%{transform:translateY(-.4rem)}}
+.sugestoes{display:flex;flex-direction:column;gap:.7rem;padding:0 3rem 1rem}
+.sugestoes p{font-size:1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cinza2)}
+.sug{padding:1rem 1.4rem;border-radius:1.3rem;border:1.5px solid var(--azul);background:#fff;color:var(--azul);font-weight:600;font-size:1.2rem;text-align:left}
+.campo-luz{display:flex;align-items:center;gap:.8rem;padding:1rem 3rem 2.6rem;background:#fff;border-top:1px solid var(--borda)}
+.campo-luz span{flex:1;height:4rem;border:1px solid var(--borda);border-radius:2rem;display:flex;align-items:center;padding:0 1.4rem;color:var(--cinza2);font-size:1.15rem}
+.campo-luz i{width:3rem;height:3rem;border-radius:50%;background:var(--verde);opacity:.4;display:grid;place-items:center;font-style:normal;color:var(--navy)}
+.nota-demo{font-size:.95rem;color:var(--cinza2);text-align:center;padding:0 3rem .6rem}
+/* fim */
+#fim{align-items:center;text-align:center;padding:5rem 3.6rem 3rem}
+#fim .logo{height:4rem;width:auto;margin:0 auto}
+#fim h2{font-size:2.8rem;font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-top:2.4rem;text-wrap:balance}
+.entregas{display:grid;gap:.8rem;margin:2rem 0;width:100%;max-width:36rem;text-align:left}
+.entregas div{display:flex;gap:1rem;align-items:center;background:#fff;border:1px solid var(--borda);border-radius:1.2rem;padding:1rem 1.2rem;font-size:1.15rem;line-height:1.35}
+.entregas div i{flex:none;width:3.2rem;height:3.2rem;border-radius:.9rem;background:var(--azul-claro);display:grid;place-items:center;font-style:normal;font-size:1.5rem}
+.entregas b{display:block;font-size:1.2rem}
+.qr-linha{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;align-items:center;text-align:left;background:#fff;border:1px solid var(--borda);border-radius:1.2rem;padding:1.2rem;width:100%;max-width:36rem}
+.qr{width:9rem;height:9rem}
+.qr svg{width:100%;height:100%;display:block}
+.qr-linha b{display:block;font-size:1.35rem;font-weight:800}
+.qr-linha span{display:block;font-size:1.05rem;color:var(--cinza);margin-top:.35rem;line-height:1.4}
+#fim .acoes{display:grid;gap:.6rem;width:100%;max-width:36rem;margin-top:auto}
+
+/* ---------- painel do gestor (Lumi web) ---------- */
+#painel{background:var(--fundo)}
+.cab-web{display:flex;align-items:center;gap:2rem;padding:1.1rem 2.4rem;background:#fff;border-bottom:1px solid var(--borda)}
+.cab-web .logo{height:2.4rem;width:auto}
+.menu-web{display:flex;gap:1.6rem;font-size:1rem;font-weight:600;color:#5B5F67}
+.menu-web span{padding:.4rem 0;border-bottom:3px solid transparent}
+.menu-web span.on{color:var(--azul2);border-color:var(--azul2)}
+.cab-dir{margin-left:auto;display:flex;align-items:center;gap:1rem}
+.empresa{padding:.4rem .8rem;border-radius:.5rem;background:var(--azul-bg);color:var(--azul2);font-weight:700;font-size:.9rem}
+.avatar{width:2.4rem;height:2.4rem;border-radius:50%;background:var(--azul2);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.painel-corpo{flex:1;padding:1.6rem 2.4rem 2rem;display:flex;flex-direction:column;gap:1.2rem;min-height:0}
+.painel-rolagem{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:1.2rem;scrollbar-width:none}
+.painel-rolagem::-webkit-scrollbar{display:none}
+.painel-tit{display:flex;align-items:center;flex-wrap:wrap;gap:.8rem 1.2rem}
+.painel-tit h2{font-size:1.9rem;font-weight:800;letter-spacing:-.03em}
+.pill-vivo{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .8rem;border-radius:99px;background:var(--ok-bg);color:var(--ok);font-weight:700;font-size:.9rem}
+.pill-vivo .pulso{width:.6rem;height:.6rem}
+.abas{display:flex;gap:1.6rem;border-bottom:1px solid var(--borda);font-weight:600;font-size:1rem;color:#5B5F67}
+.abas span{padding:.5rem 0 .7rem;border-bottom:3px solid transparent;margin-bottom:-1px}
+.abas span.on{color:var(--azul2);border-color:var(--azul2)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.kpi{background:#fff;border:1px solid var(--borda);border-radius:.6rem;padding:1.1rem 1.2rem;min-width:0}
+.kpi span{display:block;font-size:.95rem;color:#5B5F67;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi b{display:flex;align-items:center;gap:.5rem;font-size:2.4rem;font-weight:800;letter-spacing:-.03em;margin-top:.3rem;white-space:nowrap}
+.kpi b.txt{font-size:1.45rem;letter-spacing:-.01em;min-height:3.1rem;white-space:normal;line-height:1.15}
+.kpi b img{width:2.2rem;height:2.2rem}
+.kpi small{display:inline-block;margin-top:.3rem;padding:.15rem .55rem;border-radius:.4rem;font-size:.8rem;font-weight:700;white-space:nowrap}
+.bloco{background:#fff;border:1px solid var(--borda);border-radius:.6rem;padding:1.2rem 1.4rem;min-width:0}
+.bloco h3{font-size:1.2rem;font-weight:800;letter-spacing:-.02em}
+.bloco p.desc{font-size:.9rem;color:#747D88;margin-top:.2rem}
+.mapa{width:100%;border-collapse:separate;border-spacing:.35rem;margin-top:.8rem;table-layout:fixed}
+.mapa th{font-size:.8rem;font-weight:700;color:#5B5F67;text-align:center;padding:.2rem;line-height:1.2;vertical-align:bottom}
+.mapa th.setor{text-align:left;width:8.5rem}
+.mapa th.emo-col{color:var(--azul2)}
+.mapa td.setor{font-size:.95rem;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mapa td.setor small{display:block;font-weight:500;color:#747D88;font-size:.8rem}
+.mapa td.cel{height:3rem;border-radius:.45rem;text-align:center;font-weight:800;font-size:1.05rem;transition:background .6s,color .6s}
+.mapa td.cel img{width:1.4rem;height:1.4rem;display:inline-block;vertical-align:-.3rem;margin-right:.25rem}
+.mapa td.cel.flash{animation:flash 1.2s}
+@keyframes flash{0%{box-shadow:0 0 0 .25rem var(--azul)}100%{box-shadow:0 0 0 0 rgba(13,52,128,0)}}
+.c-ok{background:var(--ok-bg);color:var(--ok)}.c-at{background:var(--at-bg);color:var(--at)}.c-ur{background:var(--ur-bg);color:var(--ur)}.c-es{background:var(--esp-bg);color:var(--esp)}
+.c-va{background:var(--va-bg);color:var(--va);font-weight:600!important;font-size:.85rem!important}
+.legenda{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;margin-top:.8rem;font-size:.82rem;color:#5B5F67;font-weight:600}
+.legenda i{display:inline-block;width:.9rem;height:.9rem;border-radius:.25rem;vertical-align:-.12rem;margin-right:.35rem}
+.legenda em{font-style:normal;color:#747D88;font-weight:700}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;min-height:0}
+.principal{display:grid;gap:1.2rem;min-height:0}
+.lista-barras{display:grid;gap:.55rem;margin-top:.9rem}
+.lista-barras div{display:grid;grid-template-columns:2rem 1fr 2.4rem;gap:.6rem;align-items:center;font-size:.92rem;font-weight:600}
+.lista-barras img,.lista-barras .ico{width:2rem;height:2rem;font-size:1.3rem;text-align:center;line-height:2rem}
+.lista-barras em{font-style:normal;display:block;font-size:.85rem;margin-bottom:.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lista-barras .trilho{display:block;height:.7rem;border-radius:99px;background:var(--fundo);overflow:hidden}
+.lista-barras .trilho i{display:block;height:100%;background:#7191D2;border-radius:99px}
+.lista-barras .trilho.ruim i{background:#E57373}
+.lista-barras b{text-align:right}
+.vazio-msg{padding:1rem 0 .2rem;font-size:.95rem;color:#5B5F67}
+.painel-rodape{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:.85rem;color:#747D88}
+.btn-voltar{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.4rem;border-radius:.5rem;background:var(--azul2);color:#fff;font-weight:700;font-size:1.05rem;flex:none}
+html.palco .btn-voltar{display:none}
+.fila{display:none;font-weight:700;color:var(--at)}.fila.on{display:inline}
+@media (min-aspect-ratio:1/1){
+  .principal{grid-template-columns:1.6fr 1fr;align-items:start}
+  .duas{grid-template-columns:1fr}
+}
+@media (max-aspect-ratio:1/1){
+  .menu-web{display:none}
+  .kpis{gap:.7rem}
+  .kpi{padding:.9rem 1rem}
+  .kpi b{font-size:1.9rem}
+  .kpi b.txt{font-size:1.15rem;min-height:2.5rem}
+  .kpi b img{width:1.8rem;height:1.8rem}
+  .kpi span{font-size:.8rem}
+  .kpi small{font-size:.72rem}
+  .painel-tit h2{font-size:1.7rem}
+  .mapa td.cel{height:2.55rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ INÍCIO ============ -->
+<section class="tela app ativa" id="inicio" aria-label="Início">
+  <div>
+    <img class="logo" src="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" alt="Lumi">
+    <div class="selo-evento"><b>NR-1 Estratégica</b> · Instituto Caldeira</div>
+  </div>
+  <div class="inicio-meio">
+    <h1>Experimente o <em>Lumi</em> em 1 minuto</h1>
+    <p class="sub">Saúde mental e desenvolvimento para quem trabalha. Dados anônimos e ao vivo para quem cuida das pessoas.</p>
+    <div class="escolhas">
+      <button class="escolha prim" data-ir="onbEquipe">
+        <span class="ic"><img src="/assets/evento/nr1-estrategica/totem/emojis/Happy.svg" alt=""></span>
+        <span><b>Sou colaborador</b><span>Experimentar o app</span></span><span class="seta">›</span>
+      </button>
+      <button class="escolha" data-ir="painel">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0E398D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <span><b>Sou gestor ou RH</b><span>Ver o painel da empresa</span></span><span class="seta">›</span>
+      </button>
+    </div>
+  </div>
+  <div class="rodape-inicio">
+    <div class="ao-vivo"><i class="pulso"></i><span id="contador">Painel ao vivo</span></div>
+    <div class="mini-mapa" id="miniMapa" aria-hidden="true"></div>
+    <div class="anonimo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Anônimo: não pedimos nome, e-mail nem telefone.</div>
+  </div>
+</section>
+
+<!-- ============ ONBOARDING: equipe, categoria, pergunta ============ -->
+<section class="tela onb" id="onbEquipe" aria-label="Equipe">
+  <div class="onb-topo"><button class="onb-voltar" data-ir="inicio" aria-label="Voltar">←</button><div class="onb-barra"><i style="width:25%"></i></div><button class="onb-sair" data-ir="inicio">Sair</button></div>
+  <div class="onb-corpo">
+    <svg class="brilho" viewBox="0 0 24 24"><path fill="#8EE03F" d="M12 0C12.6 6.4 17.6 11.4 24 12C17.6 12.6 12.6 17.6 12 24C11.4 17.6 6.4 12.6 0 12C6.4 11.4 11.4 6.4 12 0Z"/></svg>
+    <p class="onb-titulo">Olá! Para começar, em qual equipe você trabalha?</p>
+    <div class="onb-ops" id="opsEquipe"></div>
+  </div>
+</section>
+
+<section class="tela onb" id="onbCategoria" aria-label="Categoria">
+  <div class="onb-topo"><button class="onb-voltar" data-ir="onbEquipe" aria-label="Voltar">←</button><div class="onb-barra"><i style="width:50%"></i></div><button class="onb-sair" data-ir="inicio">Sair</button></div>
+  <div class="onb-corpo">
+    <svg class="brilho" viewBox="0 0 24 24"><path fill="#8EE03F" d="M12 0C12.6 6.4 17.6 11.4 24 12C17.6 12.6 12.6 17.6 12 24C11.4 17.6 6.4 12.6 0 12C6.4 11.4 11.4 6.4 12 0Z"/></svg>
+    <p class="onb-titulo">Agora, você está no controle da sua jornada.
+Qual dessas categorias de competências você gostaria de começar o seu desenvolvimento primeiro?</p>
+    <div class="onb-ops" id="opsCategoria"></div>
+  </div>
+</section>
+
+<section class="tela onb" id="onbPergunta" aria-label="Pergunta">
+  <div class="onb-topo"><button class="onb-voltar" data-ir="onbCategoria" aria-label="Voltar">←</button><div class="onb-barra"><i style="width:75%"></i></div><button class="onb-sair" data-ir="inicio">Sair</button></div>
+  <div class="onb-corpo">
+    <svg class="brilho" viewBox="0 0 24 24"><path fill="#8EE03F" d="M12 0C12.6 6.4 17.6 11.4 24 12C17.6 12.6 12.6 17.6 12 24C11.4 17.6 6.4 12.6 0 12C6.4 11.4 11.4 6.4 12 0Z"/></svg>
+    <p class="onb-titulo" id="perguntaTxt"></p>
+    <div class="onb-ops" id="opsPergunta"></div>
+  </div>
+</section>
+
+<section class="tela" id="onbFim" aria-label="Tudo pronto" style="color:#fff">
+  <div class="fim-img"><img src="/assets/evento/nr1-estrategica/totem/onboarding-fim.jpg" alt=""></div>
+  <div class="fim-txt">
+    <h2>Tudo pronto!</h2>
+    <p>Com base nas suas respostas, preparamos trilhas pensadas para você. Agora é só dar o primeiro passo, no seu ritmo.</p>
+    <button class="btn-onb" data-ir="emocao">Começar minha jornada</button>
+  </div>
+</section>
+
+<!-- ============ EMOCIONÔMETRO ============ -->
+<section class="tela app" id="emocao" aria-label="Como você está se sentindo hoje">
+  <div class="topo-app"><img class="logo" src="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" alt="Lumi"><button class="btn-sair" data-ir="inicio">✕ Sair</button></div>
+  <div class="corpo">
+    <h2 class="titulo">Como você está se sentindo hoje?</h2>
+    <div class="grade-emocoes" id="gradeEmocoes"></div>
+  </div>
+</section>
+
+<section class="tela" id="emoDetalhe" aria-label="Descrever emoção">
+  <div class="topo-app"><button class="btn-circ" data-ir="emocao" aria-label="Voltar">←</button><button class="btn-sair" data-ir="inicio">✕ Sair</button></div>
+  <div class="corpo rola">
+    <h2 class="titulo">Descrever emoção</h2>
+    <p class="apoio">Selecione abaixo uma descrição para a emoção que você escolheu.</p>
+    <div class="causas" id="listaCausas"></div><div style="height:2.4rem"></div>
+  </div>
+  <div class="veu" id="veuEmocao"><div class="modal">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2458" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h3>Emoção registrada!</h3>
+    <p id="msgEmocao"></p>
+    <button class="btn-verde" id="irTrilhas">Ver minhas trilhas</button>
+  </div></div>
+</section>
+
+<!-- ============ TRILHAS PARA VOCÊ ============ -->
+<section class="tela app" id="trilhas" aria-label="Trilhas para você">
+  <div class="topo-app"><img class="logo" src="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" alt="Lumi"><button class="btn-sair" data-ir="inicio">✕ Sair</button></div>
+  <div class="corpo rola">
+    <h2 class="titulo">Trilhas para você</h2>
+    <p class="apoio">Escolhidas a partir do seu onboarding. Toque em uma para ver as aulas.</p>
+    <div id="secoesTrilhas"></div>
+  </div>
+  <div class="rodape-app sem-borda"><button class="btn-verde" data-ir="luz"><img src="/assets/evento/nr1-estrategica/totem/luz-estrelas.png" alt="" style="width:1.6rem;height:1.6rem;filter:brightness(0) saturate(100%) invert(11%) sepia(41%) saturate(3727%) hue-rotate(211deg)">Conversar com a Luz</button></div>
+</section>
+
+<section class="tela" id="trilha" aria-label="Trilha" style="background:#F7F9FE">
+  <div class="hero"><img id="trHero" src="" alt=""><button class="btn-circ" data-ir="trilhas" aria-label="Voltar">←</button></div>
+  <div class="rola">
+    <div class="det">
+      <span class="chip" id="trChip"></span>
+      <h2 id="trTitulo"></h2>
+      <div class="pills"><span class="pill" id="trModulos"></span><span class="pill" id="trTempo"></span></div>
+      <h3>Sobre a trilha</h3>
+      <p class="sobre" id="trSobre"></p>
+      <div style="margin-top:1.4rem"><button class="btn-verde" id="iniciarTrilha">Iniciar trilha</button></div>
+      <h3>Conteúdo da trilha</h3>
+      <div class="aulas" id="trAulas"></div>
+      <div style="height:2rem"></div>
+    </div>
+  </div>
+  <div class="rodape-app"><button class="btn-verde" data-ir="luz">Conversar com a Luz</button></div>
+  <div class="aviso-demo" id="avisoDemo">No app, a primeira aula começa aqui ▶</div>
+</section>
+
+<!-- ============ LUZ (chat) ============ -->
+<section class="tela" id="luz" aria-label="Assistente Luz" style="background:#F7F9FE">
+  <div class="luz-cab"><button class="btn-circ" data-ir="trilhas" aria-label="Voltar">←</button><h2>Assistente - Luz</h2></div>
+  <div class="chat" id="chat"></div>
+  <div class="sugestoes" id="sugestoes"></div>
+  <p class="nota-demo">Demonstração: no app, a Luz conversa com você em tempo real.</p>
+  <div class="campo-luz"><span>Digite sua mensagem</span><i>➤</i></div>
+</section>
+
+<!-- ============ FIM ============ -->
+<section class="tela app" id="fim" aria-label="Fim">
+  <img class="logo" src="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" alt="Lumi">
+  <h2>Esse é o Lumi no dia a dia de quem trabalha</h2>
+  <div class="entregas">
+    <div><i>😌</i><span><b>Check-in emocional</b>Em segundos, todos os dias, no celular.</span></div>
+    <div><i>▶</i><span><b>Trilhas de desenvolvimento</b>Aulas curtas em vídeo, escolhidas para cada pessoa.</span></div>
+    <div><i>✦</i><span><b>Luz, a assistente</b>Para conversar, aprofundar e pedir apoio.</span></div>
+    <div><i>▦</i><span><b>Painel para o RH</b>Dados anônimos por equipe, para agir antes do afastamento.</span></div>
+  </div>
+  <div class="qr-linha"><div class="qr" id="fimQr"></div><div><b>Leve a sua trilha</b><span>Aponte a câmera do celular para guardar a sua trilha e conhecer o Lumi.</span></div></div>
+  <div class="acoes">
+    <button class="btn-verde" data-ir="painel">Ver o painel da empresa</button>
+    <button class="btn-texto" data-ir="inicio">Concluir</button>
+  </div>
+</section>
+
+<!-- ============ PAINEL DO GESTOR (Lumi web) ============ -->
+<section class="tela" id="painel" aria-label="Painel da empresa">
+  <header class="cab-web">
+    <img class="logo" src="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" alt="Lumi">
+    <nav class="menu-web"><span class="on">Dashboard</span><span>Equipes</span><span>Pesquisas</span><span>Planos de Ação</span></nav>
+    <div class="cab-dir"><span class="empresa">NR-1 Estratégica</span><span class="avatar">RH</span></div>
+  </header>
+  <div class="painel-corpo">
+    <div class="painel-rolagem">
+      <div class="painel-tit"><h2>Dashboard</h2><span class="pill-vivo"><i class="pulso"></i>Ao vivo</span></div>
+      <div class="abas"><span class="on">Geral</span><span>Telepsicologia</span></div>
+      <div class="kpis">
+        <div class="kpi"><span>Check-ins</span><b id="kTotal">0</b></div>
+        <div class="kpi"><span>Média emocional</span><b id="kEmo">—</b><small id="kEmoTxt"></small></div>
+        <div class="kpi"><span>Setores analisados</span><b id="kSetores">0</b></div>
+        <div class="kpi"><span>Mais escolhida</span><b class="txt" id="kCat">—</b></div>
+      </div>
+      <div class="principal">
+        <div class="bloco">
+          <h3>Mapa de calor por setor</h3>
+          <p class="desc">Média emocional do check-in e autoavaliação (1 a 5) nas competências do onboarding. Células com menos de <span id="minimo">3</span> respostas ficam ocultas para preservar o anonimato.</p>
+          <table class="mapa" id="mapa"></table>
+          <div class="legenda">
+            <span><em>Emoções:</em></span><span><i style="background:var(--ok)"></i>Risco baixo</span><span><i style="background:var(--at-cor)"></i>Risco moderado</span><span><i style="background:var(--ur)"></i>Risco alto</span>
+          </div>
+          <div class="legenda" style="margin-top:.4rem">
+            <span><em>Competências:</em></span><span><i style="background:var(--ur)"></i>Crítica</span><span><i style="background:var(--at-cor)"></i>Alta prioridade</span><span><i style="background:var(--ok)"></i>Desenvolvimento</span><span><i style="background:var(--esp)"></i>Especialização</span><span><i style="background:#D5D8DC"></i>Aguardando</span>
+          </div>
+        </div>
+        <div class="duas">
+          <div class="bloco"><h3>Emoções mais registradas</h3><div class="lista-barras" id="emoTop"></div></div>
+          <div class="bloco"><h3>O que mais pesa nas emoções difíceis</h3><div class="lista-barras" id="causaTop"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="painel-rodape"><span>Respostas anônimas de quem fez o check-in neste totem. <span class="fila" id="fila"></span></span><button class="btn-voltar" data-ir="inicio">‹ Voltar ao início</button></div>
+  </div>
+</section>
+
+<script src="/assets/evento/nr1-estrategica/totem/qrcode.js"></script>
+<script>
+(function () {
+  'use strict';
+  var Q = new URLSearchParams(location.search);
+  var PALCO = Q.get('modo') === 'palco';
+  var TESTE = Q.get('teste') === '1';
+  var API = '/api/totem/';
+  var IMG = '/assets/evento/nr1-estrategica/totem/';
+  var OCIOSO_MS = 60000, OCIOSO_PAINEL_MS = 90000, ATUALIZA_MS = 5000;
+
+  /* ---------- conteúdo real do app ---------- */
+  var SETORES = [['operacao', 'Operação'], ['administrativo', 'Administrativo'], ['comercial', 'Comercial'], ['pessoas', 'Pessoas e RH'], ['tecnologia', 'Tecnologia'], ['lideranca', 'Liderança']];
+  /* onboarding: categorias e a 1ª pergunta de cada uma (texto do app) */
+  var CATEGORIAS = {
+    autolideranca: { rot: 'Autoliderança', curto: 'Autoliderança', trilhas: [91, 86, 85],
+      p: 'Muito bem! Vamos iniciar sua jornada em Autoliderança.\n\nCom que frequência, no seu dia a dia, você sente que consegue definir e seguir em direção aos seus sonhos e metas profissionais com clareza, mesmo quando as coisas ficam difíceis?',
+      ops: ['Raramente consigo', 'Ocasionalmente consigo', 'Consigo na metade das vezes', 'Frequentemente consigo', 'Quase sempre consigo'],
+      dica: 'Escolha uma pequena ação que depende só de você e faça antes do almoço. Iniciativa se treina em passos curtos, não em grandes decisões.' },
+    adaptacao: { rot: 'Adaptação e Resolução de problemas', curto: 'Adaptação', trilhas: [87, 90],
+      p: 'Muito bem! Vamos iniciar sua jornada em Adaptação e Resolução de Problemas.\n\nQuando algo importante se transforma no seu dia a dia, como você costuma se sentir?',
+      ops: ['Resisto fortemente a qualquer mudança', 'Sinto-me desconfortável e tento evitar mudanças', 'Aceito mudanças, mas preciso de tempo para me adaptar', 'Adapto-me bem à maioria das mudanças', 'Vejo mudanças como oportunidades e me adapto rapidamente'],
+      dica: 'Quando um problema parecer grande demais, escreva-o em uma frase e liste três caminhos possíveis, mesmo imperfeitos. Pensar em opções tira a mente da paralisia.' },
+    resiliencia: { rot: 'Resiliência emocional', curto: 'Resiliência', trilhas: [84, 88, 83],
+      p: 'Muito bem! Vamos iniciar sua jornada em Resiliência emocional.\n\nQuando a vida traz momentos adversos no trabalho, como você costuma se recuperar?',
+      ops: ['Demoro muito tempo ou não me recupero completamente', 'Demoro muito tempo para me recuperar', 'Levo alguns dias para me recuperar', 'Recupero-me em pouco tempo', 'Recupero-me rapidamente e aprendo com a experiência'],
+      dica: 'Ao fim do dia, anote uma dificuldade e o que você aprendeu com ela. Resiliência é treinar a recuperação, não evitar a queda.' },
+    interacao: { rot: 'Interação social', curto: 'Interação social', trilhas: [93, 92],
+      p: 'Muito bem! Vamos iniciar sua jornada em Interação social.\n\nComo você avalia sua habilidade de compartilhar seus pensamentos e ideias com outras pessoas?',
+      ops: ['Tenho grande dificuldade para me expressar claramente', 'Frequentemente não consigo transmitir minhas ideias', 'Comunico-me razoavelmente bem em algumas situações', 'Geralmente me comunico bem com diferentes pessoas', 'Sempre me comunico com clareza e eficácia em qualquer situação'],
+      dica: 'Na próxima conversa, antes de responder, repita com as suas palavras o que a outra pessoa disse. Escuta ativa muda o rumo de muitas conversas.' }
+  };
+  var ORDEM_CAT = ['autolideranca', 'adaptacao', 'resiliencia', 'interacao'];
+  /* emocionômetro: rótulo, emoji, valor, causas e a 1ª mensagem do app */
+  var EMOCOES = {
+    alegria: ['Alegria/Satisfação', 'Happy', 1, '🎯 Conquista pessoal|💝 Relacionamentos|🏆 Trabalho/Estudos|🎉 Evento especial|🌱 Autocuidado|💰 Situação financeira|🌞 Clima/Ambiente|🎵 Entretenimento|🙏 Espiritualidade|❤️ Amor próprio', 'Que bom ver você feliz hoje! Continue cultivando momentos como este no seu dia.'],
+    amor: ['Amor/Gratidão', 'Love', 2, '💕 Relacionamento amoroso|👨‍👩‍👧‍👦 Família|👥 Amizades|🙏 Momento de gratidão|🌅 Beleza natural|🎁 Gentileza recebida|🏆 Reconhecimento|🌱 Crescimento pessoal|🎵 Arte/Música|❤️ Amor próprio', 'Que sentimento maravilhoso! Cultive essa gratidão e lembre-se dela nos momentos desafiadores.'],
+    tristeza: ['Tristeza/Desânimo', 'Sad', -1, '💼 Trabalho/Estudos|💔 Relacionamentos|🏥 Saúde física|🧠 Saúde mental|💸 Situação financeira|👨‍👩‍👧‍👦 Família|🎯 Objetivos não alcançados|🌧️ Clima/Ambiente|😞 Solidão', 'Momentos de tristeza fazem parte da jornada. A Luz está no chat para te ouvir e apoiar quando precisar, ok?'],
+    raiva: ['Raiva/Irritação', 'Angry', -2, '💼 Trabalho/Estudos|💔 Relacionamentos|🚗 Trânsito/Transporte|💸 Situação financeira|🏛️ Questões políticas/Sociais|👨‍👩‍👧‍👦 Família|⚖️ Injustiças|🏥 Saúde|🎯 Frustrações pessoais', 'Libere esse sentimento conversando com a Luz no chat de forma segura e construtiva.'],
+    cansaco: ['Cansaço/Esgotamento', 'Tired', -1, '💼 Trabalho excessivo|📚 Estudos intensos|😴 Falta de sono|🏥 Saúde física|🧠 Saúde mental|👶 Cuidados familiares|🎯 Sobrecarga de atividades|🌧️ Mudanças climáticas|💊 Medicamentos|🏃 Exercício intenso', 'O descanso é essencial. Se precisar de dicas para recuperar sua energia, a Luz está disponível no chat.'],
+    calma: ['Calma/Alívio', 'Calm', 1, '🧘 Meditação/Mindfulness|🌿 Natureza/Ar livre|🛁 Autocuidado|🎯 Problema resolvido|💼 Trabalho finalizado|🏥 Saúde melhorou|💔 Relacionamento resolvido|💰 Estabilidade financeira|🏠 Ambiente tranquilo|🙏 Espiritualidade', 'Momentos de tranquilidade são preciosos. Aproveite essa sensação de paz e leve-a pelo resto do dia.'],
+    surpresa: ['Surpresa/Espanto', 'Surprise', 0, '📰 Notícias inesperadas|💼 Trabalho/Estudos|💔 Relacionamentos|🎁 Evento inesperado|👨‍👩‍👧‍👦 Família|💰 Situação financeira|🏥 Saúde|🎯 Oportunidade surgiu|🌍 Descoberta nova|📱 Redes sociais', 'Uau! Algo te surpreendeu hoje? Conte para a Luz no chat!'],
+    indiferenca: ['Indiferença/Neutralidade', 'Indifference', 0, '📅 Rotina normal|💼 Trabalho/Estudos|🏠 Ambiente familiar|🌤️ Clima neutro|📱 Sem eventos marcantes|😴 Baixa energia|🤷 Indefinido|🚶 Atividades rotineiras', 'Às vezes, a estabilidade também é importante para o equilíbrio emocional.'],
+    medo: ['Medo/Ansiedade', 'Fear', -2, '🧠 Saúde mental|🏥 Saúde física|💼 Trabalho/Estudos|💸 Situação financeira|💔 Relacionamentos|🔮 Futuro incerto|👨‍👩‍👧‍👦 Família|🌍 Questões globais|📋 Compromissos/Responsabilidades', 'Respire fundo. Você não está sozinho. A Luz está disponível no chat com técnicas que podem te ajudar nesse momento.'],
+    estresse: ['Estresse/Frustração', 'Stress', -2, '💼 Pressão no trabalho|📚 Estudos/Provas|💸 Problemas financeiros|💔 Relacionamentos conflituosos|🏥 Questões de saúde|⏰ Falta de tempo|🎯 Metas não alcançadas|👨‍👩‍👧‍👦 Conflitos familiares|📱 Sobrecarga digital', 'O que acha de trocar uma ideia com a Luz no chat sobre técnicas rápidas para aliviar essa pressão que você está sentindo?']
+  };
+  var ORDEM_EMO = ['alegria', 'amor', 'tristeza', 'raiva', 'cansaco', 'calma', 'surpresa', 'indiferenca', 'medo', 'estresse'];
+  var SAUDE = { tristeza: 76, raiva: 70, cansaco: 73, medo: 73, estresse: 73 };
+  /* trilhas publicadas no Lumi: título, categoria, descrição e aulas (título, segundos de vídeo) */
+  var TRILHAS = {"70":{"t":"Autoconhecimento e regulação emocional","c":"Saúde mental","d":"Reconheça e nomeie suas emoções, aprenda técnicas de regulação e transforme crenças limitantes em pensamentos mais conscientes e equilibrados.","a":[["Introdução ao Autoconhecimento e Regulação Emocional",32],["Os 5 Pilares da Inteligência Emocional",352],["Emoções vs. Sentimentos e Alfabetização Emocional",372],["Práticas e Técnicas de Regulação Emocional",346],["Crenças Limitantes e Padrões de Pensamento",364],["Mapeamento Emocional e Ampliação do Vocabulário",362],["Gatilhos Emocionais e o Ciclo da TCC",345],["Padrões Comportamentais e Ciclos de Impacto (Negativos e Positivos)",300],["Valores Pessoais e Ação Compromissada (ACT)",292]]},"73":{"t":"Estresse, ansiedade e burnout","c":"Saúde mental","d":"Reconheça os sinais de sobrecarga, entenda seus gatilhos e desenvolva estratégias para recuperar equilíbrio e energia.","a":[["O Que É o Estresse e Seus Impactos no Trabalho",274],["Os Tipos de Estresse: Positivo, Tolerável e Tóxico",255],["Ferramentas Práticas de Gestão e Autorregulação do Estresse",284],["Compreendendo a Ansiedade e a Reação à Incerteza",218],["Ansiedade Funcional vs. Ansiedade Desregulada",257],["Técnicas Práticas para Desacelerar e Regular a Ansiedade",294],["Entendendo o Burnout: Dimensões, Sintomas e Causas",267],["Prevenção do Burnout: Limites, Expectativas e Cultura de Trabalho",320],["Conectando Estresse, Ansiedade e Burnout: Diagnóstico e Recuperação",509]]},"76":{"t":"Lidando com a tristeza e depressão","c":"Saúde mental","d":"Entenda o que é tristeza e depressão, como identificar sinais e quais caminhos buscar para se cuidar com consciência.","a":[["Introdução ao Lumi, TCC e o Estudo da Tristeza e Depressão",45],["Tristeza vs. Depressão: Entendendo as Diferenças Fundamentais",181],["As Emoções como Mensageiras e Guias para a Ação",158],["A Função Evolutiva e Adaptativa da Tristeza",551],["Sintomas Cognitivos, Distorções e a Tríade Cognitiva de Beck",348],["Sintomas Físicos, Comportamentais e a Ativação Comportamental",301],["Do Círculo Vicioso ao Círculo Virtuoso da Recuperação",275],["Psicologia e Psiquiatria: A Complementaridade do Tratamento",135],["Coragem, Vulnerabilidade e Autocompaixão na Terapia",333],["Síntese da Trilha: Conectando Aprendizados e Vencendo o Estigma",419]]},"83":{"t":"Otimismo","c":"Resiliência emocional","d":"Treine o olhar para possibilidades, fortaleça a esperança e construa uma mentalidade que impulsiona resultados.","a":[["Introdução ao Otimismo Estratégico e os Fundamentos da Trilha",271],["O Otimismo no Futuro do Trabalho e na Construção de Carreira",480],["Teste de Tendência ao Otimismo e a Escala de Autoavaliação",301],["A Lente do Copo Meio Cheio: Estilos Explicativos e Neurociência",352],["Superando Barreiras: Viés de Negatividade e a Matriz de Influência",284],["Otimismo Aprendido e Neuroplasticidade",389],["O Modelo ABCDE de Martin Seligman",377],["Otimismo Realista vs. Positividade Tóxica",329],["5 Fatos Surpreendentes sobre os Otimistas",324],["Benefícios Científicos do Otimismo e o Escudo para a Saúde Mental",371]]},"84":{"t":"Resiliência","c":"Resiliência emocional","d":"Fortaleça sua capacidade de se recuperar diante de adversidades e seguir em frente com mais recursos internos.","a":[["O Conceito e a Origem da Resiliência",233],["A Importância da Resiliência no Ambiente de Trabalho",284],["As Três Características Fundamentais da Resiliência",289],["Enfrentar a Realidade com Postura Adulta",265],["A Busca por Significado e Propósito",291],["Capacidade de Improvisação e Bricolagem",271],["Componentes da Resiliência (Parte 1) – Autoconfiança, Otimismo, Propósito e Adaptabilidade",327],["Componentes da Resiliência (Parte 2) – Criatividade, Gestão Emocional e Pedido de Ajuda",289],["Estratégias Práticas – Diálogo Interno, Treino Neural e Conexões Saudáveis",275],["Mindfulness e Leituras Recomendadas para a Resiliência",353]]},"85":{"t":"Iniciativa","c":"Autoliderança","d":"Saia da espera e coloque ideias em movimento. Desenvolva a coragem de agir antes de ser solicitado.","a":[["O Que É Iniciativa – A Força que Impulsiona a Ação",36],["A Psicologia por Trás da Iniciativa",442],["O Perfil Protagonista – Curiosidade e Atitude",397],["Iniciativa no Trabalho e Autorresponsabilidade",359],["Autogestão de Carreira e Liderança como Atitude",310],["Estratégias Práticas para Desenvolver a Iniciativa",409],["Vencendo Barreiras – Do Medo de Errar à Segurança Psicológica",580],["Iniciativa e Acabativa na Liderança",344],["Aprendizagem Contínua e Protagonismo no Desenvolvimento",317],["Transformando a Iniciativa em um Hábito Sustentável",351]]},"86":{"t":"Autoconfiança","c":"Autoliderança","d":"Desenvolva a crença em si mesmo, supere sabotadores internos e treine a confiança para agir com clareza diante de riscos e incertezas.","a":[["Autoconfiança: Dom ou Habilidade Treinável?",327],["A Natureza da Confiança: Expectativa, Linguagem e Vulnerabilidade",317],["O que É (e o que NÃO É) Autoconfiança",388],["A Importância da Autoconfiança: Transformando Potencial em Ação",413],["Identificando os Sabotadores Internos",436],["Estratégias Práticas para Gerenciar os Sabotadores",381],["Autoconfiança Racional: O Treino da Habilidade",394],["Autoconfiança Emocional: Atalhos para o Momento Presente",363],["Enfrentando a Aversão ao Risco e Transformando o Medo em Combustível",334],["Navegando na Incerteza e Focando no que Você Controla",316],["Apresentação do Facilitador e Propósito da Trilha",78]]},"87":{"t":"Resolução de problemas","c":"Adaptação e resolução de problemas","d":"Aprenda a analisar situações complexas, pensar de forma estruturada e encontrar soluções com clareza e criatividade.","a":[["Introdução e A Evolução da Resolução Criativa de Problemas",193],["A Neurociência da Criatividade e os Estados Neurais",454],["Pensamento Lateral e Conexões Inusitadas",436],["Brainstorming, Inteligência Coletiva e Técnicas Avançadas",562],["Design Thinking e o Modelo do Duplo Diamante",410],["Inovação Aberta, Incremental, Radical e Disruptiva",368],["Criatividade Colaborativa e Facilitação de Grupos",482],["Cultivando Ambientes Criativos e o Ambiente Anfitrião",309],["Bloqueio Criativo e Estratégias de Desbloqueio",361],["Síntese Prática, Métricas e Plano de Ação (30-60-90 Dias)",762]]},"88":{"t":"Inteligência emocional","c":"Resiliência emocional","d":"Desenvolva a habilidade de reconhecer, compreender e gerenciar emoções para agir com mais equilíbrio e eficácia.","a":[["Introdução à Inteligência Emocional e o Modelo RULER",128],["Coerência Emocional, o Cérebro Trino e Emoção como Informação",368],["Inteligência Emocional como Hard Skill e Tomada de Decisão",82],["Compreendendo as Nossas Emoções",345],["Nomeando Emoções (Labeling), Vocabulário Emocional e Mood Meter",225],["Expressando Emoções: Herança Genética da Comunicação e a Mensagem EU",597],["Regulação, Maturidade Emocional e Análise de Comportamentos",402],["Matriz de Habilidades e Interesses, Autorregulação e Carreira",370]]},"90":{"t":"Negociação","c":"Adaptação e resolução de problemas","d":"Desenvolva habilidades para conduzir conversas difíceis, criar acordos e gerar valor em qualquer negociação.","a":[["Introdução à Negociação como Processo de Influência",368],["Da Teoria à Prática — Casos Globais e o Conceito Ganha-Ganha",367],["Como Medimos o Sucesso? A Armadilha da Barganha Posicional",357],["Armadilhas Psicológicas e Riscos das Métricas Tradicionais",364],["Negociações Complexas e os Fatores Tangíveis e Intangíveis",385],["A Confiança como Redutor de Complexidade e o 1º Elemento: Alternativas",351],["Posições vs. Interesses e a Criação de Opções de Ganho Mútuo",361],["Eficiência de Pareto, Legitimidade e Compromisso Inteligente",374],["Elementos de Processo: Comunicação Clara, Relação Assertiva e a Regra do Acordo",342],["Os 7 Elementos como Lente de Preparação, Execução e Reflexão",224]]},"91":{"t":"Protagonismo","c":"Autoliderança","d":"Assuma o comando da própria trajetória e desenvolva postura ativa diante dos desafios e oportunidades da vida.","a":[["O Conceito de Protagonismo e o Modelo CHÁ",422],["Mentalidade de Protagonista — A Força da Intenção Interior",343],["Autoconhecimento como Base do Sucesso",349],["Responsabilidade e Escolhas — A Prática da Accountability",393],["Aprendizado Contínuo (Lifelong Learning) e Curiosidade",355],["Atualização Constante em um Mundo em Transformação",64],["Protagonismo na Carreira — A Postura \"Ser, Sendo\"",430],["Protagonismo em Equipe e a Atitude de Dono",312],["Aula 9",393],["Comunicação Protagonista",434],["Legado, Marca Pessoal e a Liberdade de Escolha",326]]},"92":{"t":"Persuasão","c":"Interação social","d":"Aprenda a influenciar com ética, construir argumentos sólidos e comunicar ideias de forma que mova pessoas.","a":[["Introdução à Negociação, Rapport e Espelhamento",357],["Escuta Ativa e Os 6 Passos da Conexão Genuína",577],["Mapeamento Emocional e Perfis de Temperamento (Keirsey)",594],["Gestão de Relacionamentos, Reputação e Ética",344],["O Mapa de Influência e as Três Zonas de Ação",308],["Neurociência da Negociação e Segurança Psicológica",349],["Como Destravar o \"Não\" com Perguntas Calibradas",351],["Coautoria Cognitiva e o Poder do Silêncio",370],["Posições vs. Interesses e Negociações Complexas",461],["Vendas, Geração de Valor e Diferenciação Competitiva",482]]},"93":{"t":"Comunicação","c":"Interação social","d":"Desenvolva uma comunicação mais consciente, assertiva e conectada — do que você sente ao que você gera nos outros.","a":[["Comunicação começa em mim",343],["O mito da clareza",321],["O paradoxo do silêncio",358],["Desinformação e vieses",327],["A “abominável arte” de não escutar",421],["Estilos de comunicação",408],["Escuta em camadas",353],["Conversas que movem",345],["Sincronia x Assincronia",447],["Check-out",342]]}};
+  var CAT_CLASSE = { 'Autoliderança': 'c-autolideranca', 'Interação social': 'c-interacao', 'Resiliência emocional': 'c-resiliencia', 'Adaptação e resolução de problemas': 'c-adaptacao', 'Saúde mental': 'c-saude' };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var emojiImg = function (k) { return IMG + 'emojis/' + EMOCOES[k][1] + '.svg'; };
+  function uuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+  }
+  var guarda = {
+    le: function (k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    grava: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* sem armazenamento */ } }
+  };
+
+  /* ---------- navegação ---------- */
+  var atual = 'inicio', est;
+  function novo() { est = { area: null, categoria: null, nota: null, emocao: null, causa: null, enviado: false, trilha: null }; }
+  novo();
+  var ENTRA = {
+    inicio: function () { novo(); limpa(); },
+    onbEquipe: function () { if (atual === 'inicio') { novo(); limpa(); } },
+    onbPergunta: montaPergunta,
+    emoDetalhe: montaCausas,
+    trilhas: montaTrilhas,
+    luz: montaLuz,
+    fim: montaFim,
+    painel: function () { carrega(); }
+  };
+  function vai(id) {
+    if (ENTRA[id]) ENTRA[id]();
+    document.querySelectorAll('.tela').forEach(function (t) { t.classList.toggle('ativa', t.id === id); });
+    var r = document.querySelector('#' + id + ' .rola'); if (r) r.scrollTop = 0;
+    atual = id; mexeu();
+  }
+  document.addEventListener('click', function (ev) { var b = ev.target.closest('[data-ir]'); if (b) vai(b.getAttribute('data-ir')); });
+  var seguindo;
+  function segue(id) { clearTimeout(seguindo); seguindo = setTimeout(function () { vai(id); }, 300); }
+  function limpa() {
+    document.querySelectorAll('.sel').forEach(function (x) { x.classList.remove('sel'); });
+    $('veuEmocao').classList.remove('on');
+  }
+  function opcoes(caixa, lista, cls, aoEscolher) {
+    caixa.innerHTML = '';
+    lista.forEach(function (o) {
+      var b = document.createElement('button');
+      b.className = cls; b.innerHTML = o.html;
+      b.addEventListener('click', function () {
+        caixa.querySelectorAll('.' + cls.split(' ')[0]).forEach(function (x) { x.classList.toggle('sel', x === b); });
+        aoEscolher(o.v);
+      });
+      caixa.appendChild(b);
+    });
+  }
+
+  /* ---------- onboarding ---------- */
+  opcoes($('opsEquipe'), SETORES.map(function (s) { return { v: s[0], html: esc(s[1]) }; }), 'onb-op', function (v) { est.area = v; segue('onbCategoria'); });
+  opcoes($('opsCategoria'), ORDEM_CAT.map(function (k) { return { v: k, html: esc(CATEGORIAS[k].rot) }; }), 'onb-op', function (v) {
+    if (est.categoria !== v) est.nota = null;
+    est.categoria = v; segue('onbPergunta');
+  });
+  function montaPergunta() {
+    var c = CATEGORIAS[est.categoria];
+    $('perguntaTxt').textContent = c.p;
+    opcoes($('opsPergunta'), c.ops.map(function (o, i) { return { v: i + 1, html: esc(o) }; }), 'onb-op', function (v) { est.nota = v; segue('onbFim'); });
+    if (est.nota) $('opsPergunta').children[est.nota - 1].classList.add('sel');
+  }
+
+  /* ---------- emocionômetro ---------- */
+  opcoes($('gradeEmocoes'), ORDEM_EMO.map(function (k) { return { v: k, html: '<img src="' + emojiImg(k) + '" alt=""><span>' + EMOCOES[k][0] + '</span>' }; }), 'emo', function (v) {
+    if (est.emocao !== v) est.causa = null;
+    est.emocao = v; segue('emoDetalhe');
+  });
+  function montaCausas() {
+    opcoes($('listaCausas'), EMOCOES[est.emocao][3].split('|').map(function (c) {
+      var i = c.indexOf(' ');
+      return { v: c.slice(i + 1), html: '<i>' + c.slice(0, i) + '</i><span>' + esc(c.slice(i + 1)) + '</span>' };
+    }), 'causa', function (v) { est.causa = v; setTimeout(registra, 300); });
+  }
+  function registra() {
+    $('msgEmocao').textContent = EMOCOES[est.emocao][4];
+    $('veuEmocao').classList.add('on');
+    if (!est.enviado) {
+      est.enviado = true;
+      enfileira({ sessao: uuid(), area: est.area, categoria: est.categoria, nota: est.nota, emocao: est.emocao, causa: est.causa, quando: new Date().toISOString(), teste: TESTE });
+    }
+  }
+  $('irTrilhas').addEventListener('click', function () { $('veuEmocao').classList.remove('on'); vai('trilhas'); });
+
+  /* ---------- trilhas ---------- */
+  function status(nota) { var r = nota * 20; return r > 80 ? ['Especialização', 't-es'] : r > 60 ? ['Desenvolvimento', 't-de'] : r > 40 ? ['Alta prioridade', 't-al'] : ['Crítica', 't-cr']; }
+  function minutos(seg) { var m = Math.max(1, Math.round(seg / 60)); return m + ' min'; }
+  function card(id) {
+    var t = TRILHAS[id];
+    return '<button class="card" data-trilha="' + id + '"><div class="img"><img src="' + IMG + 'trilhas/' + id + '.jpg" alt=""><span class="badge">' + t.a.length + ' aulas</span></div>'
+      + '<div class="txt"><span class="chip ' + (CAT_CLASSE[t.c] || '') + '">' + esc(t.c) + '</span><h4>' + esc(t.t) + '</h4><p>' + esc(t.d) + '</p></div></button>';
+  }
+  function montaTrilhas() {
+    var c = CATEGORIAS[est.categoria], st = status(est.nota), h = '';
+    var saude = SAUDE[est.emocao];
+    if (saude) {
+      h += '<div class="mental"><span class="badge2">1 trilha</span><h4>Cuide da sua mente e bem-estar</h4><p>Criamos a trilha de Saúde Mental pensando em você, com recursos que podem trazer alívio e direção para o que você pode estar passando.</p></div>'
+        + '<div class="secao"><div class="cards">' + card(saude) + '</div></div>';
+    }
+    h += '<div class="secao"><div class="secao-cab"><b>' + esc(c.rot) + '</b><span class="tag ' + st[1] + '">' + st[0] + '</span></div><div class="cards">' + c.trilhas.map(card).join('') + '</div></div>';
+    $('secoesTrilhas').innerHTML = h;
+    est.trilha = saude || c.trilhas[0];
+  }
+  $('secoesTrilhas').addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-trilha]'); if (!b) return;
+    abreTrilha(Number(b.getAttribute('data-trilha')));
+  });
+  function abreTrilha(id) {
+    var t = TRILHAS[id];
+    est.trilha = id;
+    $('trHero').src = IMG + 'trilhas/' + id + '.jpg';
+    $('trChip').className = 'chip ' + (CAT_CLASSE[t.c] || ''); $('trChip').textContent = t.c;
+    $('trTitulo').textContent = t.t;
+    $('trModulos').textContent = '▶ ' + t.a.length + ' módulos';
+    var total = t.a.reduce(function (s, a) { return s + a[1]; }, 0);
+    $('trTempo').textContent = '⏱ ' + Math.round(total / 60) + ' min de vídeo';
+    $('trSobre').textContent = t.d;
+    $('trAulas').innerHTML = t.a.slice(0, 5).map(function (a, i) {
+      return '<div class="aula"><div class="th"><img src="' + IMG + 'trilhas/' + id + '.jpg" alt=""><span>▶</span></div><div><b>' + (i + 1) + '. ' + esc(a[0]) + '</b><small>' + (a[1] ? '⏱ ' + minutos(a[1]) : 'Leitura') + '</small></div><span class="seta">›</span></div>';
+    }).join('') + (t.a.length > 5 ? '<p class="apoio" style="text-align:center">+ ' + (t.a.length - 5) + ' aulas</p>' : '');
+    vai('trilha');
+  }
+  var avisoT;
+  $('iniciarTrilha').addEventListener('click', function () { var a = $('avisoDemo'); a.classList.add('on'); clearTimeout(avisoT); avisoT = setTimeout(function () { a.classList.remove('on'); }, 2200); });
+
+  /* ---------- Luz (roteiro de demonstração) ---------- */
+  var chat = $('chat'), sug = $('sugestoes'), usadas = {};
+  function respostas() {
+    var e = EMOCOES[est.emocao], neg = e[2] < 0, c = CATEGORIAS[est.categoria], t = TRILHAS[est.trilha], primeira = t.a[0];
+    var lista = [];
+    if (neg) {
+      lista.push(['Me ajuda com uma pausa de 1 minuto?',
+        'Claro, vamos juntos.\n\nInspire pelo nariz contando até 4. Segure por 4. Solte devagar pela boca contando até 6. Repita três vezes, sem pressa.\n\nPausas curtas assim, ao longo do dia, ajudam a baixar a tensão do corpo. Quando quiser ir mais fundo, a trilha "' + t.t + '" está separada para você.']);
+      lista.push(['Por que estou me sentindo assim?',
+        'Obrigada por compartilhar. Você registrou ' + e[0].toLowerCase() + ', ligado a "' + est.causa + '". Sentir isso não é fraqueza: é um sinal de que algo pede atenção.\n\nUm bom primeiro passo é nomear o que mais pesa e conversar com alguém de confiança. Se esse sentimento estiver frequente ou intenso, procure apoio profissional. Você não precisa passar por isso sozinho.']);
+    } else {
+      lista.push(['Me dá uma dica para hoje?', 'Que bom que o dia começou bem! Uma dica de ' + c.curto.toLowerCase() + ':\n\n' + c.dica]);
+      lista.push(['Como mantenho esse bem-estar?', 'Repare no que trouxe esse momento: você registrou "' + est.causa + '". Guardar isso ajuda a voltar a esse estado quando o dia apertar.\n\nUm check-in por dia, de poucos segundos, já mostra seus padrões com o tempo. E eu fico por aqui para conversar quando quiser.']);
+    }
+    lista.push(['Por onde começo a minha trilha?',
+      'Comece pela trilha "' + t.t + '": são ' + t.a.length + ' aulas curtas, no seu ritmo. A primeira, "' + primeira[0] + '"' + (primeira[1] ? ', tem ' + minutos(primeira[1]) : '') + '.\n\nDepois de cada aula, é só me chamar aqui para aprofundar o tema ou tirar dúvidas.']);
+    return lista;
+  }
+  function montaLuz() {
+    usadas = {};
+    chat.innerHTML = '<div class="boas-vindas"><div class="luz-ic"><img src="' + IMG + 'luz-estrelas.png" alt=""></div><h3>Luz</h3><b>Ei, você não está sozinho!</b><p>Eu sou a Luz, sua companheira de jornada. Estou aqui para te acompanhar com carinho no seu crescimento pessoal e bem-estar. Como posso te apoiar hoje?</p></div>';
+    mostraSugestoes();
+  }
+  function mostraSugestoes() {
+    var lista = respostas().filter(function (r) { return !usadas[r[0]]; });
+    var h = '<p>Toque para perguntar</p>' + lista.map(function (r) { return '<button class="sug" data-p="' + esc(r[0]) + '">' + esc(r[0]) + '</button>'; }).join('');
+    if (Object.keys(usadas).length) h += '<button class="btn-verde" data-ir="fim" style="margin-top:.4rem">Concluir</button>';
+    sug.innerHTML = h;
+  }
+  sug.addEventListener('click', function (ev) {
+    var b = ev.target.closest('.sug'); if (!b) return;
+    var p = b.getAttribute('data-p'), r = respostas().filter(function (x) { return x[0] === p; })[0];
+    usadas[p] = 1; sug.innerHTML = '';
+    var bv = chat.querySelector('.boas-vindas'); if (bv) bv.remove();
+    bolha('eu', p);
+    var d = document.createElement('div'); d.className = 'bolha luz digitando'; d.innerHTML = '<i></i><i></i><i></i>'; chat.appendChild(d); rolaChat();
+    setTimeout(function () { d.remove(); bolha('luz', r[1]); mostraSugestoes(); }, 1300);
+  });
+  function bolha(quem, txt) { var b = document.createElement('div'); b.className = 'bolha ' + quem; b.textContent = txt; chat.appendChild(b); rolaChat(); }
+  function rolaChat() { chat.scrollTop = chat.scrollHeight; }
+
+  /* ---------- fim ---------- */
+  function montaFim() {
+    var url = location.origin + '/evento/nr1-estrategica/totem/contato/?t=' + (est.trilha || '');
+    try { var q = qrcode(0, 'M'); q.addData(url); q.make(); $('fimQr').innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); } catch (e) { $('fimQr').innerHTML = ''; }
+  }
+
+  /* ---------- envio (com fila offline) ---------- */
+  var FILA = 'lumi_totem2_fila' + (TESTE ? '_teste' : '');
+  function enfileira(r) { var f = guarda.le(FILA, []); f.push(r); guarda.grava(FILA, f); envia(); }
+  var enviando = false;
+  function envia() {
+    var f = guarda.le(FILA, []);
+    mostraFila(f.length);
+    if (!f.length || enviando) return;
+    enviando = true;
+    var lote = f.slice(0, 50), ids = {}; lote.forEach(function (r) { ids[r.sessao] = 1; });
+    fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ respostas: lote }) })
+      .then(function (r) { if (r.ok || r.status === 400) return r; throw new Error(r.status); })
+      .then(function () {
+        /* sai da fila o lote enviado; o que o servidor recusou como inválido também sai (não adianta reenviar) */
+        var resto = guarda.le(FILA, []).filter(function (r) { return !ids[r.sessao]; });
+        guarda.grava(FILA, resto); mostraFila(resto.length); carrega();
+      })
+      .catch(function () { /* sem conexão: tenta de novo depois */ })
+      .then(function () { enviando = false; });
+  }
+  function mostraFila(n) { var el = $('fila'); el.textContent = n ? n + (n === 1 ? ' resposta aguardando' : ' respostas aguardando') + ' conexão.' : ''; el.classList.toggle('on', n > 0); }
+  setInterval(envia, 8000);
+  window.addEventListener('online', envia);
+
+  /* ---------- painel do gestor ---------- */
+  var ULT = 'lumi_totem2_ultimo' + (TESTE ? '_teste' : ''), ultimo = null, celulas = {};
+  function carrega() {
+    return fetch(API + (TESTE ? '?teste=1' : ''), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { ultimo = d; guarda.grava(ULT, d); desenha(d); })
+      .catch(function () { var d = ultimo || guarda.le(ULT, null); if (d) desenha(d); });
+  }
+  var fmt = function (n, sinal) { return n == null ? '—' : (sinal && n > 0 ? '+' : '') + n.toFixed(1).replace('.', ','); };
+  function risco(me) { return me == null ? null : me >= 0 ? ['Risco baixo', 'c-ok', 'var(--ok)'] : me > -1 ? ['Risco moderado', 'c-at', 'var(--at-cor)'] : ['Risco alto', 'c-ur', 'var(--ur)']; }
+  function emojiMedia(me) { return me >= 1 ? 'Happy' : me >= 0.25 ? 'Calm' : me > -0.25 ? 'Indifference' : me > -1 ? 'Tired' : 'Stress'; }
+  function nivel(v) { if (v == null) return null; var r = v * 20; return r > 80 ? 'c-es' : r > 60 ? 'c-ok' : r > 40 ? 'c-at' : 'c-ur'; }
+  var COR_NIVEL = { 'c-es': 'var(--esp)', 'c-ok': 'var(--ok)', 'c-at': 'var(--at-cor)', 'c-ur': 'var(--ur)' };
+  function desenha(d) {
+    $('minimo').textContent = d.minimo;
+    $('contador').textContent = d.total ? d.total + (d.total === 1 ? ' pessoa já experimentou' : ' pessoas já experimentaram') + ' · painel ao vivo' : 'Seja a primeira pessoa a experimentar';
+    var mini = '';
+    SETORES.forEach(function (s) {
+      var x = d.setores[s[0]], rk = risco(x.emocional);
+      mini += '<i style="background:' + (rk ? rk[2] : 'var(--va-bg)') + '"></i>';
+      ORDEM_CAT.forEach(function (k) { var nv = nivel(x.categorias[k]); mini += '<i style="background:' + (nv ? COR_NIVEL[nv] : 'var(--va-bg)') + ';opacity:' + (nv ? .85 : 1) + '"></i>'; });
+    });
+    $('miniMapa').innerHTML = mini;
+
+    $('kTotal').textContent = d.total;
+    var me = d.mediaEmocional, rk = risco(me);
+    if (me == null) { $('kEmo').textContent = '—'; $('kEmoTxt').style.display = 'none'; }
+    else {
+      $('kEmo').innerHTML = '<img src="' + IMG + 'emojis/' + emojiMedia(me) + '.svg" alt="">' + fmt(me, true);
+      $('kEmoTxt').style.display = ''; $('kEmoTxt').textContent = rk[0]; $('kEmoTxt').className = rk[1];
+    }
+    $('kSetores').textContent = SETORES.filter(function (s) { return d.setores[s[0]].n >= d.minimo; }).length;
+    var top = ORDEM_CAT.slice().sort(function (a, b) { return (d.categorias[b] || 0) - (d.categorias[a] || 0); })[0];
+    $('kCat').textContent = d.total && d.categorias[top] ? CATEGORIAS[top].curto : '—';
+
+    var h = '<thead><tr><th class="setor">Setor</th><th class="emo-col">Média emocional</th>' + ORDEM_CAT.map(function (k) { return '<th>' + CATEGORIAS[k].curto + '</th>'; }).join('') + '</tr></thead><tbody>';
+    SETORES.forEach(function (s) {
+      var x = d.setores[s[0]];
+      h += '<tr><td class="setor">' + s[1] + '<small>' + x.n + (x.n === 1 ? ' check-in' : ' check-ins') + '</small></td>';
+      var r2 = risco(x.emocional);
+      h += celula(s[0] + '.emo', x.emocional, r2 ? r2[1] : 'c-va', x.emocional == null ? (x.n ? x.n + '/' + d.minimo : '—') : '<img src="' + IMG + 'emojis/' + emojiMedia(x.emocional) + '.svg" alt="">' + fmt(x.emocional, true));
+      ORDEM_CAT.forEach(function (k) { var v = x.categorias[k]; h += celula(s[0] + '.' + k, v, nivel(v) || 'c-va', v == null ? '—' : fmt(v)); });
+      h += '</tr>';
+    });
+    $('mapa').innerHTML = h + '</tbody>';
+
+    var lista = ORDEM_EMO.map(function (k) { return [k, d.emocoes[k] || 0]; }).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 5);
+    var max = Math.max(1, lista[0][1]);
+    $('emoTop').innerHTML = d.total ? lista.map(function (e) {
+      return '<div><img src="' + emojiImg(e[0]) + '" alt=""><span><em>' + EMOCOES[e[0]][0] + '</em><span class="trilho' + (EMOCOES[e[0]][2] < 0 ? ' ruim' : '') + '"><i style="width:' + (e[1] / max * 100) + '%"></i></span></span><b>' + e[1] + '</b></div>';
+    }).join('') : '<p class="vazio-msg">As emoções aparecem aqui conforme as pessoas fazem o check-in.</p>';
+    var cmax = d.causas.length ? d.causas[0][1] : 1;
+    $('causaTop').innerHTML = d.causas.length ? d.causas.map(function (c) {
+      return '<div><span class="ico">' + iconeCausa(c[0]) + '</span><span><em>' + esc(c[0]) + '</em><span class="trilho ruim"><i style="width:' + (c[1] / cmax * 100) + '%"></i></span></span><b>' + c[1] + '</b></div>';
+    }).join('') : '<p class="vazio-msg">Os motivos aparecem aqui quando alguém registra tristeza, raiva, cansaço, medo ou estresse.</p>';
+  }
+  function celula(id, v, cls, txt) {
+    var mudou = celulas[id] !== undefined && celulas[id] !== v; celulas[id] = v;
+    return '<td class="cel ' + cls + (mudou ? ' flash' : '') + '">' + txt + '</td>';
+  }
+  var ICONES = {}; ORDEM_EMO.forEach(function (k) { EMOCOES[k][3].split('|').forEach(function (c) { var i = c.indexOf(' '); ICONES[c.slice(i + 1)] = c.slice(0, i); }); });
+  function iconeCausa(c) { return ICONES[c] || '•'; }
+  setInterval(function () { if (atual === 'painel' || atual === 'inicio' || PALCO) carrega(); }, ATUALIZA_MS);
+
+  /* ---------- volta sozinho ao início ---------- */
+  var timer;
+  function mexeu() {
+    clearTimeout(timer);
+    if (PALCO || atual === 'inicio') return;
+    timer = setTimeout(function () { vai('inicio'); }, atual === 'painel' ? OCIOSO_PAINEL_MS : OCIOSO_MS);
+  }
+  ['pointerdown', 'keydown'].forEach(function (ev) { document.addEventListener(ev, mexeu, { passive: true }); });
+
+  /* ---------- quiosque ---------- */
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+  var travaTela = function () { try { if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(function () {}); } catch (e) { /* opcional */ } };
+  document.addEventListener('pointerdown', function primeira() {
+    travaTela();
+    try { var el = document.documentElement; if (!document.fullscreenElement && el.requestFullscreen && !Q.has('semtelacheia')) el.requestFullscreen().catch(function () {}); } catch (e) { /* opcional */ }
+    document.removeEventListener('pointerdown', primeira);
+  });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) travaTela(); });
+
+  if (PALCO) { document.documentElement.classList.add('palco'); vai('painel'); }
+  if (TESTE) document.title = '[TESTE] ' + document.title;
+  carrega(); envia();
+})();
+</script>
+</body>
+</html>

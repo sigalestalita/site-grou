@@ -124,6 +124,11 @@ select{width:auto;min-width:170px}
 .contato a:hover{text-decoration:underline}
 .sub-linha{display:block;color:var(--tinta-3);font-size:12px}
 .presenca{width:20px;height:20px;accent-color:var(--ciano-f);cursor:pointer}
+.conf-pg{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+.conf-pg select{min-width:0;width:auto;padding:5px 8px;border-radius:8px;font-size:12px}
+.conf-pg button{padding:5px 10px;border:0;border-radius:999px;cursor:pointer;font-family:var(--ft);font-size:11.5px;font-weight:600;color:var(--verde);background:var(--verde-f)}
+.conf-pg button:hover{filter:brightness(.96)}
+.conf-pg button:disabled{opacity:.6;cursor:wait}
 .vazio{padding:34px 12px;text-align:center;color:var(--tinta-3)}
 .rodape{color:var(--tinta-3);font-size:12px;text-align:center;padding:0 0 30px}
 
@@ -369,7 +374,9 @@ select{width:auto;min-width:170px}
         '<td><span class="tag tag--' + tag + '">' + tipo + (i.desconto ? ' · ' + i.desconto + '%' : '') + '</span>' + (i.cupom ? '<span class="sub-linha cod">' + esc(i.cupom) + '</span>' : '') + '</td>' +
         '<td class="n">' + (i.tipo === 'convidado' ? '—' : BRL(i.valor)) + '</td>' +
         '<td>' + pg + '</td>' +
-        '<td><span class="badge b-' + esc(i.status) + '">' + esc(ROT_STATUS[i.status] || i.status) + '</span></td>' +
+        '<td><span class="badge b-' + esc(i.status) + '">' + esc(ROT_STATUS[i.status] || i.status) + '</span>' +
+          (i.status === 'pendente' && i.tipo === 'pagante' ? '<div class="conf-pg"><select aria-label="Forma de pagamento de ' + esc(i.nome) + '"><option value="pix">Pix</option><option value="cartao">Cartão</option><option value="boleto">Boleto</option></select>' +
+            '<button type="button" data-conf="' + esc(i.id) + '">✓ Confirmar pagamento</button></div>' : '') + '</td>' +
         '<td>' + (confirmada(i) ? '<input type="checkbox" class="presenca" data-id="' + esc(i.id) + '"' + (i.presente ? ' checked' : '') + ' aria-label="Presença de ' + esc(i.nome) + '">' : '') + '</td>' +
         '</tr>';
     }).join('');
@@ -403,12 +410,12 @@ select{width:auto;min-width:170px}
   }
 
   function renderEmail() {
-    var conv = estado.dados.inscritos.filter(function (i) { return i.tipo === 'convidado' && i.status === 'confirmado'; });
+    var conv = estado.dados.inscritos.filter(function (i) { return (i.tipo === 'convidado' && i.status === 'confirmado') || (i.tipo === 'pagante' && i.status === 'pago'); });
     var env = conv.filter(function (i) { return i.email_confirmacao_em; }).length, pend = conv.length - env;
     $('avisoEmail').hidden = conv.length === 0;
     $('txtEmail').textContent = !estado.dados.emailAtivo
-      ? 'E-mail de confirmação dos convidados: aguardando a configuração do envio (Resend).'
-      : 'E-mail de confirmação dos convidados: ' + env + ' enviado' + (env === 1 ? '' : 's') + (pend ? ' · ' + pend + ' pendente' + (pend === 1 ? '' : 's') : ' · todos receberam') + '.';
+      ? 'E-mail de inscrição confirmada: aguardando a configuração do envio (Resend).'
+      : 'E-mail de inscrição confirmada (convidados e pagantes): ' + env + ' enviado' + (env === 1 ? '' : 's') + (pend ? ' · ' + pend + ' pendente' + (pend === 1 ? '' : 's') : ' · todos receberam') + '.';
     $('btnEmail').hidden = !estado.dados.emailAtivo || pend === 0;
   }
 
@@ -461,7 +468,7 @@ select{width:auto;min-width:170px}
   $('btnCsvLeads').addEventListener('click', csvLeads);
   $('btnEmail').addEventListener('click', function () {
     var b = this;
-    if (!confirm('Enviar o e-mail de confirmação para os convidados que ainda não receberam?')) return;
+    if (!confirm('Enviar o e-mail de inscrição confirmada para quem ainda não recebeu?')) return;
     b.disabled = true; b.textContent = 'Enviando…';
     api({ metodo: 'POST', corpo: { acao: 'enviar_confirmacoes' } }).then(function (r) {
       alert(r.http === 200 ? 'Pronto: ' + r.j.enviados + ' e-mail(s) enviado(s).' : (r.j.erro || 'Não foi possível enviar agora.'));
@@ -501,6 +508,18 @@ select{width:auto;min-width:170px}
   $('btnLimpa').addEventListener('click', function () {
     estado.grupo = 'todos'; estado.cupom = ''; estado.busca = ''; estado.status = '';
     $('busca').value = ''; $('selStatus').value = ''; renderGrupos(); renderCupons(); renderLista();
+  });
+  $('tabLista').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-conf]'); if (!b) return;
+    var id = b.dataset.conf, sel = b.parentNode.querySelector('select'), metodo = sel ? sel.value : 'pix';
+    var i = estado.dados.inscritos.filter(function (x) { return x.id === id; })[0]; if (!i) return;
+    if (!confirm('Confirmar o pagamento de ' + i.nome + ' (' + BRL(i.valor) + ' · ' + (ROT_METODO[metodo] || metodo) + ')?\n\nConfira antes na DOM. A inscrição passa a "pago" e ' + i.email + ' recebe o e-mail de inscrição confirmada.')) return;
+    b.disabled = true; b.textContent = 'Confirmando…';
+    api({ metodo: 'POST', corpo: { acao: 'confirmar_pagamento', id: id, metodo: metodo } }).then(function (r) {
+      if (r.http === 200) alert(r.j.emailEnviado ? 'Pagamento confirmado e e-mail enviado para ' + i.email + '.' : 'Pagamento confirmado, mas o e-mail não saiu agora. Use "Enviar confirmação aos pendentes" para reenviar.');
+      else alert(r.j.erro || 'Não foi possível confirmar agora.');
+      return carrega(false);
+    }).catch(function () { alert('Sem conexão. Tente de novo.'); b.disabled = false; b.textContent = '✓ Confirmar pagamento'; });
   });
   $('tabLista').addEventListener('change', function (e) {
     var c = e.target.closest('.presenca'); if (!c) return;

@@ -76,6 +76,11 @@ async function avisaPagos(linhas) {
   }
 }
 
+/* pagante pendente confirmado à mão no painel (só muda quem ainda está aguardando) */
+const confirmaManual = (id, metodo) => rest('inscricoes?id=eq.' + encodeURIComponent(id) + '&tipo=eq.pagante&status=eq.pendente', {
+  metodo: 'PATCH', corpo: { status: 'pago', pago_em: new Date().toISOString(), metodo }, cabecalhos: { Prefer: 'return=representation' }
+});
+
 const lista = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&order=criado_em.desc&limit=5000');
 const marcaPresenca = (id, valor) => rest('inscricoes?id=eq.' + encodeURIComponent(id), { metodo: 'PATCH', corpo: { presente: !!valor }, cabecalhos: { Prefer: 'return=minimal' } });
 
@@ -99,4 +104,4 @@ const totemLista = (teste) => rest('totem_respostas?select=area,humor,emocao,res
 const acesso = async (email) => ((await rest('painel_acessos?email=eq.' + encodeURIComponent(email) + '&limit=1')) || [])[0] || null;
 const atualizaAcesso = (email, campos) => rest('painel_acessos?email=eq.' + encodeURIComponent(email), { metodo: 'PATCH', corpo: campos, cabecalhos: { Prefer: 'return=minimal' } });
 
-module.exports = { chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };
+module.exports = { chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaManual, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };

@@ -16,6 +16,19 @@ module.exports = async (req, res) => {
         await db.marcaPresenca(b.id, b.valor);
         return c.responde(res, 200, { ok: true });
       }
+      /* pagamento confirmado à mão (ex.: Pix pago na DOM que não voltou para o site): vira "pago" e recebe o e-mail */
+      if (b.acao === 'confirmar_pagamento' && /^[0-9a-f-]{36}$/i.test(String(b.id || ''))) {
+        const metodo = ['pix', 'cartao', 'boleto'].includes(b.metodo) ? b.metodo : 'pix';
+        const linhas = (await db.confirmaManual(b.id, metodo)) || [];
+        if (!linhas.length) return c.responde(res, 409, { erro: 'Essa inscrição não está mais aguardando pagamento. Atualize o painel.' });
+        console.log('pagamento confirmado no painel:', b.id, metodo, 'por', u.email);
+        let emailEnviado = false;
+        if (correio.ativo()) {
+          try { await correio.enviaConfirmacao(linhas[0]); await db.marcaEmail([linhas[0].id]); emailEnviado = true; }
+          catch (e) { console.error('confirmação manual ' + b.id + ':', e.message); }
+        }
+        return c.responde(res, 200, { ok: true, emailEnviado });
+      }
       if (b.acao === 'enviar_confirmacoes') {
         if (!correio.ativo()) return c.responde(res, 503, { erro: 'Envio de e-mail ainda não configurado (falta RESEND_API_KEY na Vercel).' });
         const pend = (await db.semConfirmacao('nr1-estrategica')) || [];

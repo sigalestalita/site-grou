@@ -4,12 +4,12 @@
 const SITE = 'https://www.grougp.com';
 const EVENTO_URL = SITE + '/evento/nr1-estrategica/';
 const TOPO = SITE + '/assets/evento/nr1-estrategica/email/topo-confirmacao.jpg';
-const MAPA = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Instituto Caldeira, Av. Farrapos, 1055, Porto Alegre - RS');
+const MAPA = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Instituto Caldeira, Tv. São José, 455 - Navegantes, Porto Alegre - RS');
 const AGENDA = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
   + '&text=' + encodeURIComponent('NR-1 Estratégica · Grou')
   + '&dates=20261112T163000Z/20261112T220000Z'
   + '&details=' + encodeURIComponent('Credenciamento e welcome coffee às 13h30, abertura às 14h. Programação: ' + EVENTO_URL)
-  + '&location=' + encodeURIComponent('Instituto Caldeira, Av. Farrapos, 1055, Porto Alegre - RS');
+  + '&location=' + encodeURIComponent('Instituto Caldeira, Tv. São José, 455 - Navegantes, Porto Alegre - RS');
 const WHATS = 'https://wa.me/5551991892049';
 const WHATS_TXT = '(51) 99189-2049';
 const CONTATO = 'atendimento@grougp.com.br';
@@ -39,7 +39,7 @@ function texto(i) {
     '',
     'Quando: quinta, 12 de novembro de 2026',
     'Credenciamento e welcome coffee às 13h30 · abertura às 14h',
-    'Onde: Instituto Caldeira · Sala Multiuso · Av. Farrapos, 1055 · Porto Alegre (RS)',
+    'Onde: Instituto Caldeira · Sala Multiuso · Tv. São José, 455 · Navegantes · Porto Alegre (RS)',
     'Como chegar: ' + MAPA,
     'Ingresso: ' + ingressoTexto(i),
     '',
@@ -75,7 +75,7 @@ function html(i) {
     + ' Guarde este e-mail: ele é a confirmação da sua inscrição.</p>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">'
     + linha('Quando', '<b>Quinta, 12 de novembro de 2026</b><br>Credenciamento e welcome coffee às 13h30 · abertura às 14h')
-    + linha('Onde', '<b>Instituto Caldeira · Sala Multiuso</b><br>Av. Farrapos, 1055 · Porto Alegre (RS) · <a href="' + MAPA + '" style="color:#12a594">como chegar</a>')
+    + linha('Onde', '<b>Instituto Caldeira · Sala Multiuso</b><br>Tv. São José, 455 · Navegantes · Porto Alegre (RS) · <a href="' + MAPA + '" style="color:#12a594">como chegar</a>')
     + linha('Ingresso', pagante(i)
       ? 'Individual · <b>pagamento confirmado</b>' + (i.cupom ? ' · cupom ' + cupom : '')
       : 'Individual · convite <b>' + cupom + '</b>')

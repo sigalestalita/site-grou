@@ -139,6 +139,29 @@ select{width:auto;min-width:170px}
   .lista td{border:0;padding:3px 0}
   .lista td.n{text-align:left}
 }
+/* e-mails do evento (entregas do Resend) */
+.ent{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:6px}
+.ent__c{border-radius:14px;background:var(--nevoa);padding:14px 16px;display:grid;gap:8px}
+.ent__c h3{font-size:14px}
+.ent__n{font-family:var(--ft);font-size:26px;font-weight:600;line-height:1}
+.ent__n small{font-size:13px;font-weight:500;color:var(--tinta-3)}
+.ent__barra{display:flex;height:8px;border-radius:8px;overflow:hidden;background:var(--linha)}
+.ent__barra i{display:block;height:100%}
+.ent__leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--tinta-2)}
+.ent__leg span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--c)}
+.st{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;font-family:var(--ft);font-size:11px;font-weight:600;white-space:nowrap}
+.st--chegou{background:var(--verde-f);color:var(--verde)}
+.st--caminho{background:var(--azul-f);color:var(--eletrico)}
+.st--voltou,.st--falhou,.st--bloqueado{background:var(--verm-f);color:var(--verm)}
+.st--nada{background:var(--cinza-f);color:var(--tinta-3)}
+.emails-mini{display:grid;gap:4px}
+.emails-mini span.rot{font-size:11px;color:var(--tinta-3);margin-right:4px}
+.prob h3{font-size:15px;margin:22px 0 4px}
+.prob td{vertical-align:top}
+.corrige{display:flex;gap:6px;flex-wrap:wrap;min-width:260px}
+.corrige input{flex:1;min-width:180px;padding:8px 10px;border:0;border-radius:10px;background:var(--nevoa);box-shadow:inset 0 0 0 1.5px var(--linha);font-size:13px}
+.corrige button{padding:8px 14px;font-size:12.5px}
+.prob .dica{font-size:12px;color:var(--tinta-3);margin-top:4px}
 </style>
 </head>
 <body>
@@ -189,6 +212,20 @@ select{width:auto;min-width:170px}
       <div class="pgto" id="pgto"></div>
     </section>
 
+    <section class="card prob" id="cardEntregas" hidden>
+      <h2>E-mails do evento</h2>
+      <p class="sub" id="subEntregas">Situação de cada e-mail, lida no Resend. Conta pessoas, não envios: quem recebeu numa segunda tentativa aparece como entregue.</p>
+      <div class="ent" id="ent"></div>
+      <h3>Precisam de atenção <span id="contaProb" style="font-weight:400;color:var(--tinta-3)"></span></h3>
+      <p class="sub">Inscritos confirmados cuja confirmação ou guia não chegou. Para e-mail que voltou, corrija o endereço (confira com a pessoa pelo WhatsApp) e reenvie.</p>
+      <div class="filtros" id="filGuia" hidden><button class="btn btn--leve" type="button" id="btnGuias">Enviar o guia para quem ainda não recebeu</button></div>
+      <div class="rolagem"><table id="tabProb">
+        <thead><tr><th>Pessoa</th><th>Confirmação</th><th>Guia</th><th>E-mail · corrigir e reenviar</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <p class="vazio" id="vazioProb" hidden>Tudo certo: todos os inscritos confirmados receberam a confirmação e o guia.</p>
+    </section>
+
     <section class="card lista">
       <h2>Inscritos <span id="contaLista" style="font-weight:400;color:var(--tinta-3)"></span></h2>
       <p class="sub" id="subLista">Todos os inscritos, do mais recente para o mais antigo.</p>
@@ -206,7 +243,7 @@ select{width:auto;min-width:170px}
         <button class="btn btn--leve" type="button" id="btnEmail" hidden>Enviar confirmação aos pendentes</button>
       </div>
       <div class="rolagem"><table id="tabLista">
-        <thead><tr><th>Data</th><th>Pessoa</th><th>Contato</th><th>Tipo e cupom</th><th class="n">Valor</th><th>Pagamento</th><th>Situação</th><th>Presente</th></tr></thead>
+        <thead><tr><th>Data</th><th>Pessoa</th><th>Contato</th><th>Tipo e cupom</th><th class="n">Valor</th><th>Pagamento</th><th>E-mails</th><th>Situação</th><th>Presente</th></tr></thead>
         <tbody></tbody>
       </table></div>
       <p class="vazio" id="vazio" hidden>Nenhuma inscrição com esses filtros.</p>
@@ -374,6 +411,7 @@ select{width:auto;min-width:170px}
         '<td><span class="tag tag--' + tag + '">' + tipo + (i.desconto ? ' · ' + i.desconto + '%' : '') + '</span>' + (i.cupom ? '<span class="sub-linha cod">' + esc(i.cupom) + '</span>' : '') + '</td>' +
         '<td class="n">' + (i.tipo === 'convidado' ? '—' : BRL(i.valor)) + '</td>' +
         '<td>' + pg + '</td>' +
+        '<td>' + emailsMini(i) + '</td>' +
         '<td><span class="badge b-' + esc(i.status) + '">' + esc(ROT_STATUS[i.status] || i.status) + '</span>' +
           (i.status === 'pendente' && i.tipo === 'pagante' ? '<div class="conf-pg"><select aria-label="Forma de pagamento de ' + esc(i.nome) + '"><option value="pix">Pix</option><option value="cartao">Cartão</option><option value="boleto">Boleto</option></select>' +
             '<button type="button" data-conf="' + esc(i.id) + '">✓ Confirmar pagamento</button></div>' : '') + '</td>' +
@@ -419,8 +457,68 @@ select{width:auto;min-width:170px}
     $('btnEmail').hidden = !estado.dados.emailAtivo || pend === 0;
   }
 
+  /* ---- e-mails do evento ---- */
+  var ROT_SIT = { chegou: 'Chegou', caminho: 'A caminho', voltou: 'Voltou', falhou: 'Falhou', bloqueado: 'Bloqueado', nada: 'Não enviado' };
+  var DICA_SIT = { voltou: 'o endereço não existe ou recusou', bloqueado: 'o Resend bloqueou: esse endereço já voltou antes', falhou: 'o envio falhou' };
+  var COR_SIT = { chegou: 'var(--verde)', caminho: 'var(--eletrico)', bloqueado: '#e0a03a', voltou: 'var(--verm)', falhou: '#7a1424' };
+  var sitDe = function (i, tipo) {
+    var e = estado.dados.entregas; if (!e) return null;
+    var p = e.porEmail[String(i.email || '').trim().toLowerCase()];
+    return (p && p[tipo]) || 'nada';
+  };
+  var st = function (s) { return s ? '<span class="st st--' + s + '"' + (DICA_SIT[s] ? ' title="' + DICA_SIT[s] + '"' : '') + '>' + ROT_SIT[s] + '</span>' : ''; };
+  var okSit = function (s) { return s === 'chegou' || s === 'caminho'; };
+  function emailsMini(i) {
+    if (!estado.dados.entregas || !confirmada(i)) return '';
+    return '<div class="emails-mini"><div><span class="rot">Confirmação</span>' + st(sitDe(i, 'conf')) + '</div><div><span class="rot">Guia</span>' + st(sitDe(i, 'guia')) + '</div></div>';
+  }
+  function problemas() {
+    var L = estado.dados.inscritos.filter(confirmada);
+    var okNome = {};
+    L.forEach(function (i) { if (okSit(sitDe(i, 'conf')) && okSit(sitDe(i, 'guia'))) okNome[String(i.nome || '').trim().toLowerCase()] = i.email; });
+    return L.filter(function (i) {
+      if (okSit(sitDe(i, 'conf')) && okSit(sitDe(i, 'guia'))) return false;
+      var outro = okNome[String(i.nome || '').trim().toLowerCase()];
+      return !(outro && outro !== i.email);
+    });
+  }
+  function renderEntregas() {
+    var e = estado.dados.entregas;
+    $('cardEntregas').hidden = !e;
+    if (!e) return;
+    $('subEntregas').textContent = 'Situação de cada e-mail, lida no Resend às ' + new Date(e.lidoEm).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }) + '. Conta pessoas, não envios: quem recebeu numa segunda tentativa aparece como entregue.';
+    $('ent').innerHTML = e.tipos.map(function (t) {
+      var tot = t.pessoas || 1, probl = t.voltou + t.falhou + t.bloqueado;
+      var barra = ['chegou', 'caminho', 'bloqueado', 'voltou', 'falhou'].map(function (k) { return t[k] ? '<i style="width:' + (100 * t[k] / tot).toFixed(2) + '%;background:' + COR_SIT[k] + '" title="' + ROT_SIT[k] + ': ' + t[k] + '"></i>' : ''; }).join('');
+      var leg = ['chegou', 'caminho', 'voltou', 'bloqueado', 'falhou'].filter(function (k) { return t[k]; }).map(function (k) { return '<span style="--c:' + COR_SIT[k] + '">' + ROT_SIT[k] + ' ' + t[k] + '</span>'; }).join('');
+      return '<div class="ent__c"><h3>' + esc(t.nome) + '</h3><div class="ent__n">' + t.chegou + ' <small>de ' + t.pessoas + ' pessoas chegaram' + (probl ? ' · ' + probl + ' com problema' : '') + '</small></div><div class="ent__barra">' + barra + '</div><div class="ent__leg">' + leg + '</div></div>';
+    }).join('');
+    var P = problemas();
+    var semGuia = P.filter(function (i) { return sitDe(i, 'guia') === 'nada' && okSit(sitDe(i, 'conf')); }).length;
+    $('filGuia').hidden = semGuia === 0;
+    $('btnGuias').textContent = 'Enviar o guia para quem ainda não recebeu (' + semGuia + ')';
+    $('contaProb').textContent = '(' + P.length + ')';
+    $('vazioProb').hidden = P.length > 0;
+    $('tabProb').hidden = P.length === 0;
+    $('tabProb').tBodies[0].innerHTML = P.map(function (i) {
+      var sc = sitDe(i, 'conf'), sg = sitDe(i, 'guia');
+      var tel = String(i.celular || '').replace(/\D/g, '');
+      var ruim = !okSit(sc) && sc !== 'nada' || (sg !== 'nada' && !okSit(sg));
+      return '<tr>' +
+        '<td class="pessoa"><b>' + esc(i.nome) + '</b><span>' + esc([i.empresa, 'inscrição ' + data(i.criado_em)].filter(Boolean).join(' · ')) + '</span>' +
+          (tel ? '<span><a href="https://wa.me/55' + esc(tel) + '" target="_blank" rel="noopener">' + esc(i.celular) + '</a></span>' : '') + '</td>' +
+        '<td>' + st(sc) + (DICA_SIT[sc] ? '<div class="dica">' + DICA_SIT[sc] + '</div>' : '') + '</td>' +
+        '<td>' + st(sg) + (DICA_SIT[sg] ? '<div class="dica">' + DICA_SIT[sg] + '</div>' : '') + '</td>' +
+        '<td><div class="corrige" data-id="' + esc(i.id) + '" data-email="' + esc(i.email) + '">' +
+          '<input type="email" value="' + esc(i.email) + '" aria-label="E-mail de ' + esc(i.nome) + '">' +
+          '<button class="btn" type="button" data-acao="enviar" data-rot="' + (ruim ? 'Reenviar' : 'Enviar') + '">' + (ruim ? 'Reenviar' : 'Enviar') + '</button></div>' +
+          (ruim ? '<div class="dica">Se o e-mail estiver errado, corrija aqui antes de reenviar.</div>' : '') + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+
   function renderTudo() {
-    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderLista(); renderLeads(); renderEmail();
+    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderEntregas(); renderLista(); renderLeads(); renderEmail();
     $('selo').hidden = estado.dados.ambiente !== 'sandbox';
     $('atualizado').textContent = 'Atualizado às ' + new Date(estado.dados.geradoEm).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }
@@ -528,6 +626,46 @@ select{width:auto;min-width:170px}
     api({ metodo: 'POST', corpo: { acao: 'presenca', id: id, valor: v } }).then(function (r) {
       if (r.http !== 200) { c.checked = !v; estado.dados.inscritos.forEach(function (i) { if (i.id === id) i.presente = !v; }); }
       renderKpis();
+    });
+  });
+
+  $('tabProb').addEventListener('input', function (e) {
+    var box = e.target.closest('.corrige'); if (!box) return;
+    var b = box.querySelector('button'), mudou = e.target.value.trim().toLowerCase() !== box.dataset.email.toLowerCase();
+    b.textContent = mudou ? 'Corrigir e reenviar' : (b.dataset.rot || b.textContent);
+  });
+  $('tabProb').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-acao="enviar"]'); if (!b) return;
+    var box = b.closest('.corrige'), id = box.dataset.id, atual = box.dataset.email, novo = box.querySelector('input').value.trim().toLowerCase();
+    var i = estado.dados.inscritos.filter(function (x) { return x.id === id; })[0]; if (!i) return;
+    var corrigir = novo !== atual.toLowerCase();
+    var falta = [];
+    if (corrigir || !okSit(sitDe(i, 'conf'))) falta.push('conf');
+    if (corrigir || !okSit(sitDe(i, 'guia'))) falta.push('guia');
+    var oque = falta.map(function (k) { return k === 'conf' ? 'a confirmação de vaga' : 'o guia'; }).join(' e ');
+    if (!confirm((corrigir ? 'Trocar o e-mail de ' + i.nome + ' de\n' + atual + '\npara\n' + novo + '\n\ne enviar ' : 'Enviar ') + oque + ' para ' + (corrigir ? novo : atual) + '?')) return;
+    b.disabled = true; b.textContent = 'Enviando…';
+    api({ metodo: 'POST', corpo: { acao: corrigir ? 'corrigir_email' : 'reenviar', id: id, email: novo, enviar: falta } }).then(function (r) {
+      if (r.http === 200) {
+        var f = r.j.feito || {}, erro = Object.keys(f).filter(function (k) { return !f[k]; });
+        alert(erro.length ? 'Não foi possível enviar agora (' + erro.join(', ') + '). Tente de novo em alguns minutos.' : 'Pronto: enviado para ' + r.j.email + '. A situação no Resend atualiza em até 1 minuto.');
+      } else alert(r.j.erro || 'Não foi possível enviar agora.');
+      return carrega(false);
+    }).catch(function () { alert('Sem conexão. Tente de novo.'); b.disabled = false; b.textContent = 'Reenviar'; });
+  });
+  $('btnGuias').addEventListener('click', function () {
+    var P = problemas().filter(function (i) { return sitDe(i, 'guia') === 'nada' && okSit(sitDe(i, 'conf')); });
+    if (!P.length || !confirm('Enviar o "Falta pouco" com o Guia do Inscrito para ' + P.length + ' pessoa(s) que ainda não receberam?')) return;
+    var b = $('btnGuias'); b.disabled = true;
+    var feitos = 0, falhas = 0;
+    P.reduce(function (p, i) {
+      return p.then(function () {
+        b.textContent = 'Enviando ' + (feitos + falhas + 1) + ' de ' + P.length + '…';
+        return api({ metodo: 'POST', corpo: { acao: 'reenviar', id: i.id, enviar: ['guia'] } }).then(function (r) { if (r.http === 200 && r.j.feito && r.j.feito.guia) feitos++; else falhas++; });
+      });
+    }, Promise.resolve()).then(function () {
+      alert('Guia enviado para ' + feitos + ' pessoa(s)' + (falhas ? '; ' + falhas + ' falharam (tente de novo).' : '.'));
+      b.disabled = false; return carrega(false);
     });
   });
 

@@ -2,6 +2,11 @@ const c = require('./_comum');
 const db = require('./_db');
 const sessao = require('./_sessao');
 const correio = require('./_email');
+const guia = require('./_email_guia');
+const entregas = require('./_entregas');
+
+const EMAIL_OK = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const confirmada = (i) => (i.tipo === 'convidado' && i.status === 'confirmado') || (i.tipo === 'pagante' && i.status === 'pago');
 
 /* Dados do painel interno: só para quem está logado e liberado. */
 module.exports = async (req, res) => {
@@ -29,6 +34,30 @@ module.exports = async (req, res) => {
         }
         return c.responde(res, 200, { ok: true, emailEnviado });
       }
+      /* reenvio pelo painel: corrige o e-mail (se veio um novo) e manda confirmação e/ou guia de novo */
+      if ((b.acao === 'corrigir_email' || b.acao === 'reenviar') && /^[0-9a-f-]{36}$/i.test(String(b.id || ''))) {
+        if (!correio.ativo()) return c.responde(res, 503, { erro: 'Envio de e-mail não configurado.' });
+        let i = await db.porId(b.id);
+        if (!i || !confirmada(i)) return c.responde(res, 404, { erro: 'Inscrição não encontrada ou não confirmada.' });
+        if (b.acao === 'corrigir_email') {
+          const novo = String(b.email || '').trim().toLowerCase().slice(0, 120);
+          if (!EMAIL_OK.test(novo)) return c.responde(res, 400, { erro: 'E-mail inválido.' });
+          i = await db.atualizaEmail(i.id, novo);
+          console.log('e-mail corrigido no painel:', b.id, 'por', u.email);
+        }
+        const quer = Array.isArray(b.enviar) ? b.enviar : ['conf', 'guia'];
+        const feito = {};
+        if (quer.includes('conf')) {
+          try { await correio.enviaConfirmacao(i); await db.marcaEmail([i.id]); feito.conf = true; }
+          catch (e) { console.error('reenvio conf ' + i.id + ':', e.message); feito.conf = false; }
+        }
+        if (quer.includes('guia')) {
+          try { await guia.enviaGuia(i); feito.guia = true; }
+          catch (e) { console.error('reenvio guia ' + i.id + ':', e.message); feito.guia = false; }
+        }
+        entregas.esquece();
+        return c.responde(res, 200, { ok: true, email: i.email, feito });
+      }
       if (b.acao === 'enviar_confirmacoes') {
         if (!correio.ativo()) return c.responde(res, 503, { erro: 'Envio de e-mail ainda não configurado (falta RESEND_API_KEY na Vercel).' });
         const pend = (await db.semConfirmacao('nr1-estrategica')) || [];
@@ -44,7 +73,11 @@ module.exports = async (req, res) => {
     /* leads das páginas de captação (demo PDA etc.); se falhar, o painel de inscritos continua */
     let leads = [];
     try { leads = (await db.listaLeads()) || []; } catch (e) { console.error('gestao leads:', e.message); }
+    /* entregas lidas no Resend; se falhar, o painel continua com o resto */
+    let ent = null;
+    try { ent = await entregas.entregas(req.query && req.query.entregas === 'novo'); } catch (e) { console.error('gestao entregas:', e.message); }
     c.responde(res, 200, {
+      entregas: ent,
       geradoEm: new Date().toISOString(), ambiente: c.ambiente(), emailAtivo: correio.ativo(),
       cupons: { cem: c.CUPONS_100, metade: c.CUPONS_50 }, preco: c.PRECO_CHEIO, precoMetade: c.PRECO_METADE,
       inscritos: linhas, leads

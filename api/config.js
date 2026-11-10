@@ -26,10 +26,8 @@ module.exports = async (req, res) => {
     precoMetade: c.PRECO_METADE,
     /* plano B: links de pagamento criados no painel da DOM (DOM_LINK_249 e DOM_LINK_124); CHECKOUT_MODO=link desliga o checkout embutido */
     links: { cheio: c.env('DOM_LINK_249'), metade: c.env('DOM_LINK_124') },
-    modo: c.env('CHECKOUT_MODO').toLowerCase(),
-    esgotado: c.ESGOTADO
+    modo: c.env('CHECKOUT_MODO').toLowerCase()
   };
-  if (c.ESGOTADO) { saida.ativo = false; saida.links = { cheio: '', metade: '' }; }
   if (c.ativo() && !saida.modo && !(await chaveAceita())) saida.modo = 'link';
   if (req.query && req.query.verificar && c.ativo()) {
     const k = c.env('DOM_API_KEY');

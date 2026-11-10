@@ -764,25 +764,6 @@ a.ap__logo:hover .ap__ir,a.ap__logo:focus-visible .ap__ir{opacity:1;transform:no
 @media (max-width:1020px){.ap{flex-basis:calc((100% - 20px) / 2)}}
 @media (max-width:640px){.ap{flex-basis:84%}.apoio__ctl{display:none}.apoio__pista{padding-bottom:18px}.ap__ir{display:none}}
 @media (prefers-reduced-motion:reduce){.ap,.ap__logo img,.apoio__prog i{transition:none}.ap:hover{transform:none}}
-/* ===== SOLD OUT ===== */
-.esg-selo{display:inline-flex;align-items:center;gap:10px;padding:9px 18px 9px 14px;border-radius:999px;background:#fff;color:var(--noite);
-  font-family:var(--ft);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 30px -12px rgba(0,0,0,.5)}
-.esg-selo i{width:9px;height:9px;border-radius:50%;background:#ff5a5f;box-shadow:0 0 0 0 rgba(255,90,95,.6);animation:esgPulso 1.8s infinite}
-.esg-selo small{font-size:inherit;font-weight:500;letter-spacing:.06em;text-transform:none;color:var(--tinta-2)}
-@keyframes esgPulso{70%{box-shadow:0 0 0 10px rgba(255,90,95,0)}100%{box-shadow:0 0 0 0 rgba(255,90,95,0)}}
-.heroi .esg-topo{margin-bottom:18px}
-.esg-btn{cursor:default;pointer-events:none;background:rgba(255,255,255,.14)!important;color:#fff!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35)!important}
-.esg-txt{font-family:var(--ft);font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.82);max-width:340px;text-align:left}
-.esg-txt b{color:#fff}
-.bilhete__b > :not(.esg-painel){display:none!important}
-.esg-painel{display:grid;gap:14px;justify-items:start;align-content:center}
-.esg-painel .esg-selo{background:var(--noite);color:#fff}
-.esg-painel .esg-selo small{color:#c9cde8}
-.esg-painel h3{font-size:clamp(24px,2.4vw,32px);letter-spacing:-.02em}
-.esg-painel p{color:var(--tinta-2);line-height:1.6}
-.topo .esg-mini{font-family:var(--ft);font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ff5a5f}
-@media (max-width:640px){.esg-txt{text-align:center}}
-@media (prefers-reduced-motion:reduce){.esg-selo i{animation:none}}
 </style>
 </head>
 <body>
@@ -800,7 +781,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </svg>
 
 <div class="urg">
-  <span class="oculta-mob"><b style="color:#ff8a8d">Sold out</b> · ingressos esgotados</span>
+  <span class="oculta-mob">Vagas limitadas</span>
   <span class="rel" id="rel" aria-label="Contagem regressiva para o evento">
     <span class="cx">--<small>dias</small></span><span class="cx">--<small>hrs</small></span>
     <span class="cx">--<small>min</small></span><span class="cx">--<small>seg</small></span>
@@ -811,8 +792,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="topo" id="topo">
   <svg class="marca" aria-label="Grou" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450.21 194.46" role="img"> <path fill="currentColor" d="M 285.527344 105.605469 C 264.746094 105.605469 248.460938 89.453125 248.460938 68.808594 C 248.460938 48.167969 265.082031 31.742188 285.527344 31.742188 C 305.96875 31.742188 322.324219 48.367188 322.324219 68.808594 C 322.324219 89.253906 305.8125 105.605469 285.527344 105.605469 M 104.371094 90.996094 C 102.625 93.390625 100.609375 95.585938 98.347656 97.519531 C 96.503906 99.203125 94.328125 100.699219 91.945312 101.988281 C 86.441406 105.078125 80.078125 106.902344 73.296875 107.074219 L 73.097656 107.074219 C 72.816406 107.074219 72.179688 107.082031 72.128906 107.082031 C 72.078125 107.082031 71.363281 107.074219 71.363281 107.074219 C 70.964844 107.074219 70.554688 107.0625 70.15625 107.042969 C 60.503906 106.773438 52.246094 103.023438 45.992188 97.378906 C 38.003906 90.449219 32.980469 80.40625 32.980469 69.238281 C 32.980469 68.398438 33.019531 67.574219 33.066406 66.746094 C 33.386719 57.839844 37.445312 49.042969 44.398438 42.300781 C 51.667969 35.273438 61.308594 31.371094 71.523438 31.371094 L 72.230469 31.371094 C 85.484375 31.371094 97.238281 37.773438 104.351562 47.46875 L 104.351562 90.976562 Z M 445.273438 1.046875 L 420.113281 1.046875 C 417.949219 1.046875 416.203125 2.800781 416.203125 4.957031 L 416.203125 84.097656 C 416.203125 95.316406 407.058594 104.441406 395.820312 104.441406 C 384.582031 104.441406 375.4375 95.316406 375.4375 84.097656 L 375.4375 4.765625 C 375.4375 2.601562 373.683594 0.859375 371.527344 0.859375 L 346.367188 0.859375 C 344.214844 0.859375 342.460938 2.613281 342.460938 4.765625 L 342.460938 33.515625 C 330.511719 13.460938 308.664062 0 283.792969 0 C 269.640625 0 256.476562 4.328125 245.539062 11.6875 L 244.628906 12.40625 C 234.597656 4.558594 222.113281 0.140625 209.089844 0.140625 C 196.066406 0.140625 182.992188 4.875 173.121094 12.773438 C 165.847656 5.046875 155.546875 0.210938 144.128906 0.210938 C 131.214844 0.210938 119.71875 6.390625 112.4375 15.957031 L 108.867188 12.804688 C 98.445312 5.007812 87.15625 0 69.738281 0 L 69.117188 0 C 31.074219 0 0.230469 30.84375 0.230469 68.890625 C 0.230469 106.933594 31.074219 137.777344 69.117188 137.777344 L 70.832031 137.777344 C 82.601562 137.777344 93.808594 134.496094 103.832031 128.304688 C 104.359375 151.160156 90.859375 161.910156 72.21875 161.910156 C 60.882812 161.910156 50.558594 157.683594 42.332031 149.722656 C 41.476562 148.917969 40.347656 148.507812 39.25 148.507812 C 38.253906 148.507812 37.265625 148.816406 36.4375 149.496094 L 17.890625 164.503906 C 16.066406 165.960938 15.796875 168.550781 17.242188 170.335938 C 31.3125 187.730469 54.859375 193.921875 72.230469 193.921875 C 114.292969 193.921875 137.628906 168.152344 137 126.917969 L 137 38.621094 C 137.65625 35.28125 140.609375 32.75 144.140625 32.75 C 148.160156 32.75 151.417969 36.011719 151.417969 40.027344 L 151.417969 132.054688 C 151.417969 134.386719 153.382812 136.28125 155.765625 136.28125 L 179.601562 136.28125 C 182.015625 136.28125 183.96875 134.386719 183.96875 132.054688 L 183.96875 57.640625 C 184.058594 43.859375 195.296875 32.679688 209.097656 32.679688 C 214.105469 32.679688 218.921875 34.183594 223 36.886719 C 217.996094 46.441406 215.152344 57.289062 215.152344 68.800781 C 215.152344 106.59375 245.957031 137.339844 283.8125 137.339844 C 309.839844 137.339844 332.527344 122.6875 344.074219 101.148438 L 344.832031 99.78125 C 351.554688 121.550781 371.867188 137.417969 395.832031 137.417969 C 425.25 137.417969 449.191406 113.496094 449.191406 84.097656 L 449.191406 4.957031 C 449.191406 2.792969 447.4375 1.046875 445.285156 1.046875 Z M 445.273438 1.046875 "/> </svg>
   <div class="acao">
-    <span class="esg-mini">Sold out</span>
-    <a class="btn btn--peq" href="#programacao">Ver programação
+    <span class="preco-min">R$ 249 · <b>100% de cashback</b></span>
+    <a class="btn btn--peq js-cta" href="#ingresso">Garantir meu lugar
       <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </header>
@@ -828,14 +809,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.4V12l3 1.8"/></svg>A partir das 14h</span>
       <span><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.4A7 7 0 0 1 19 9.6C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.6" r="2.6"/></svg>Instituto Caldeira · Porto Alegre</span>
     </div>
-    <p class="esg-topo an" style="--d:.06s"><span class="esg-selo"><i aria-hidden="true"></i>Sold out <small>· ingressos esgotados</small></span></p>
     <h1 class="an" style="--d:.1s">NR-1 Estratégica</h1>
     <p class="sub-h an" style="--d:.18s">transformando risco em <b>performance.</b></p>
     <p class="lede an" style="--d:.26s">Uma tarde da Grou sobre comportamento, risco psicossocial e conformidade
       com a NR-1. Com duas juízas do Trabalho, o case Suzano e quem já transformou dado psicossocial em decisão de negócio.</p>
     <div class="cta an" style="--d:.34s">
-      <span class="btn btn--luz esg-btn" aria-disabled="true">Ingressos esgotados</span>
-      <p class="esg-txt"><b>Todas as vagas foram preenchidas.</b> Obrigado a cada pessoa que vem construir essa tarde com a gente.</p>
+      <a class="btn btn--luz js-cta" href="#ingresso">Garantir meu ingresso
+        <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <span class="valor"><b>R$ 249</b><span>ou 10x de R$ 24,90</span></span>
+      <a class="selo" href="#cashback" aria-label="100% de cashback: veja como funciona">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="circ" d="M60,60 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/></defs>
+          <text><textPath href="#circ">O ingresso volta inteiro · O ingresso volta inteiro ·</textPath></text></svg>
+        <span class="miolo"><b>100%</b><small>cashback</small></span>
+      </a>
     </div>
     <div class="assina an" style="--d:.44s">
       <span>Realização</span><svg class="marca" aria-label="Grou" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450.21 194.46" role="img"> <path fill="currentColor" d="M 285.527344 105.605469 C 264.746094 105.605469 248.460938 89.453125 248.460938 68.808594 C 248.460938 48.167969 265.082031 31.742188 285.527344 31.742188 C 305.96875 31.742188 322.324219 48.367188 322.324219 68.808594 C 322.324219 89.253906 305.8125 105.605469 285.527344 105.605469 M 104.371094 90.996094 C 102.625 93.390625 100.609375 95.585938 98.347656 97.519531 C 96.503906 99.203125 94.328125 100.699219 91.945312 101.988281 C 86.441406 105.078125 80.078125 106.902344 73.296875 107.074219 L 73.097656 107.074219 C 72.816406 107.074219 72.179688 107.082031 72.128906 107.082031 C 72.078125 107.082031 71.363281 107.074219 71.363281 107.074219 C 70.964844 107.074219 70.554688 107.0625 70.15625 107.042969 C 60.503906 106.773438 52.246094 103.023438 45.992188 97.378906 C 38.003906 90.449219 32.980469 80.40625 32.980469 69.238281 C 32.980469 68.398438 33.019531 67.574219 33.066406 66.746094 C 33.386719 57.839844 37.445312 49.042969 44.398438 42.300781 C 51.667969 35.273438 61.308594 31.371094 71.523438 31.371094 L 72.230469 31.371094 C 85.484375 31.371094 97.238281 37.773438 104.351562 47.46875 L 104.351562 90.976562 Z M 445.273438 1.046875 L 420.113281 1.046875 C 417.949219 1.046875 416.203125 2.800781 416.203125 4.957031 L 416.203125 84.097656 C 416.203125 95.316406 407.058594 104.441406 395.820312 104.441406 C 384.582031 104.441406 375.4375 95.316406 375.4375 84.097656 L 375.4375 4.765625 C 375.4375 2.601562 373.683594 0.859375 371.527344 0.859375 L 346.367188 0.859375 C 344.214844 0.859375 342.460938 2.613281 342.460938 4.765625 L 342.460938 33.515625 C 330.511719 13.460938 308.664062 0 283.792969 0 C 269.640625 0 256.476562 4.328125 245.539062 11.6875 L 244.628906 12.40625 C 234.597656 4.558594 222.113281 0.140625 209.089844 0.140625 C 196.066406 0.140625 182.992188 4.875 173.121094 12.773438 C 165.847656 5.046875 155.546875 0.210938 144.128906 0.210938 C 131.214844 0.210938 119.71875 6.390625 112.4375 15.957031 L 108.867188 12.804688 C 98.445312 5.007812 87.15625 0 69.738281 0 L 69.117188 0 C 31.074219 0 0.230469 30.84375 0.230469 68.890625 C 0.230469 106.933594 31.074219 137.777344 69.117188 137.777344 L 70.832031 137.777344 C 82.601562 137.777344 93.808594 134.496094 103.832031 128.304688 C 104.359375 151.160156 90.859375 161.910156 72.21875 161.910156 C 60.882812 161.910156 50.558594 157.683594 42.332031 149.722656 C 41.476562 148.917969 40.347656 148.507812 39.25 148.507812 C 38.253906 148.507812 37.265625 148.816406 36.4375 149.496094 L 17.890625 164.503906 C 16.066406 165.960938 15.796875 168.550781 17.242188 170.335938 C 31.3125 187.730469 54.859375 193.921875 72.230469 193.921875 C 114.292969 193.921875 137.628906 168.152344 137 126.917969 L 137 38.621094 C 137.65625 35.28125 140.609375 32.75 144.140625 32.75 C 148.160156 32.75 151.417969 36.011719 151.417969 40.027344 L 151.417969 132.054688 C 151.417969 134.386719 153.382812 136.28125 155.765625 136.28125 L 179.601562 136.28125 C 182.015625 136.28125 183.96875 134.386719 183.96875 132.054688 L 183.96875 57.640625 C 184.058594 43.859375 195.296875 32.679688 209.097656 32.679688 C 214.105469 32.679688 218.921875 34.183594 223 36.886719 C 217.996094 46.441406 215.152344 57.289062 215.152344 68.800781 C 215.152344 106.59375 245.957031 137.339844 283.8125 137.339844 C 309.839844 137.339844 332.527344 122.6875 344.074219 101.148438 L 344.832031 99.78125 C 351.554688 121.550781 371.867188 137.417969 395.832031 137.417969 C 425.25 137.417969 449.191406 113.496094 449.191406 84.097656 L 449.191406 4.957031 C 449.191406 2.792969 447.4375 1.046875 445.285156 1.046875 Z M 445.273438 1.046875 "/> </svg>
@@ -1211,12 +1197,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </ul>
       </div>
       <div class="bilhete__b" id="fluxo" aria-live="polite">
-        <div class="esg-painel">
-          <span class="esg-selo"><i aria-hidden="true"></i>Sold out <small>· ingressos esgotados</small></span>
-          <h3>Todas as vagas foram preenchidas.</h3>
-          <p>As inscrições e a venda de ingressos estão encerradas. Quem já tem a vaga confirmada recebe por e-mail o Guia do Inscrito, com local, chegada e programação.</p>
-          <p style="font-size:14px">Dúvidas? Fale com a gente pelo WhatsApp <a href="https://wa.me/5551991892049" style="color:var(--royal);font-weight:600">(51) 99189-2049</a>.</p>
-        </div>
 
         <!-- 1. a pergunta -->
         <div class="passo" data-p="pergunta">
@@ -1391,7 +1371,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cb__rodape an" style="--d:.28s">
       <p>Válido para compras individuais no CPF. Compras em nome da empresa (CNPJ) não geram cashback.
         As regras de uso do crédito seguem a política do Vale Bônus.</p>
-      <span class="btn btn--luz esg-btn" aria-disabled="true" style="background:var(--noite)!important">Ingressos esgotados</span>
+      <a class="btn btn--luz js-cta" href="#ingresso">Quero meu ingresso com cashback
+        <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section>
@@ -1450,8 +1431,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!--/LM-->
         <h2 class="an" style="--d:.1s">A norma já mudou.<br>A sua empresa <b>também vai</b>.</h2>
     <p class="lede an" style="--d:.18s">12 de novembro · 14h · Instituto Caldeira · Porto Alegre</p>
-    <p class="an" style="--d:.26s"><span class="esg-selo"><i aria-hidden="true"></i>Sold out <small>· ingressos esgotados</small></span></p>
-    <p class="cb-linha an" style="--d:.32s">Obrigado a todas as pessoas inscritas. Nos vemos na quinta!</p>
+    <a class="btn btn--luz js-cta an" href="#ingresso" style="--d:.26s">Garantir meu ingresso · R$ 249
+      <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <p class="cb-linha an" style="--d:.32s">e receba <b>100% de volta em cashback</b></p>
   </div>
 </section>
 
@@ -1464,8 +1446,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <div class="rodape-cta" id="rcta">
-  <div class="txt"><b>NR-1 Estratégica · 12.11</b><span><em>Sold out</em> · ingressos esgotados</span></div>
-  <a class="btn btn--peq" href="#programacao">Ver programação
+  <div class="txt"><b>NR-1 Estratégica · 12.11</b><span>R$ 249 · <em>100% de cashback</em></span></div>
+  <a class="btn btn--peq js-cta" href="#ingresso">Garantir ingresso
     <svg class="seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 

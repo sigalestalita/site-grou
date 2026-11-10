@@ -93,7 +93,4 @@ function situacao(status) {
   return 'recusado';
 }
 
-/* Sold out: com true, o servidor recusa novas inscrições e novas compras (as confirmações de pagamentos já feitos seguem valendo). */
-const ESGOTADO = true;
-
-module.exports = { ESGOTADO, env, CUPONS_100, CUPONS_50, PRECO_CHEIO, PRECO_METADE, precoDoCupom, normaliza, ambiente, urls, ativo, dom, cpfValido, origemPermitida, corpoJson, responde, situacao };
+module.exports = { env, CUPONS_100, CUPONS_50, PRECO_CHEIO, PRECO_METADE, precoDoCupom, normaliza, ambiente, urls, ativo, dom, cpfValido, origemPermitida, corpoJson, responde, situacao };

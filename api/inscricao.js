@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
     try { await db.avisaPagos(await db.confirmaLink(pedido)); return c.responde(res, 200, { ok: true }); }
     catch (e) { console.error('confirma link:', e.message); return c.responde(res, 502, { erro: 'Não foi possível atualizar agora.' }); }
   }
+  if (c.ESGOTADO) return c.responde(res, 410, { erro: 'Ingressos esgotados. As inscrições estão encerradas.', esgotado: true });
   const link = b.tipo === 'link';
   const cupom = c.normaliza(b.cupom);
   const preco = link ? c.precoDoCupom(cupom) : null;

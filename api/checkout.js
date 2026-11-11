@@ -14,6 +14,7 @@ const soDigitos = (v) => String(v || '').replace(/\D/g, '');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return c.responde(res, 405, { erro: 'Método não permitido.' });
+  if (c.ESGOTADO) return c.responde(res, 410, { erro: 'Ingressos esgotados. As vendas estão encerradas.', esgotado: true });
   if (!c.ativo()) return c.responde(res, 503, { erro: 'Pagamento indisponível no momento.' });
   if (!c.origemPermitida(req)) return c.responde(res, 403, { erro: 'Origem não permitida.' });
 

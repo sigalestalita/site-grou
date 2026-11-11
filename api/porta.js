@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
   const b = c.corpoJson(req);
   /* campo invisível (robôs preenchem) e formulário enviado rápido demais */
-  if (b.site || Number(b.t) < 2500) return c.responde(res, 200, { ok: true });
+  if (b.site || !(Number(b.t) >= 2500)) return c.responde(res, 200, { ok: true });
   const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'sem-ip';
   if (freia(ip)) return c.responde(res, 429, { erro: 'Muitas inscrições seguidas deste aparelho. Fale com a equipe do credenciamento.' });
 

@@ -52,7 +52,7 @@ input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ciano-f),0 0 0 4px rgb
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
-  var DESTINO = '/gestao/nr1/';
+  var DESTINO = (function () { var v = new URLSearchParams(location.search).get('volta') || ''; return /^\/(gestao|evento\/nr1-estrategica\/etiquetas)\/[\w\/-]*$/.test(v) ? v : '/gestao/nr1/'; })();
   /* quem já está logado vai direto para o painel */
   fetch('/api/acesso/', { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { if (r.ok) location.replace(DESTINO); }).catch(function () {});
   $('ver').addEventListener('click', function () {

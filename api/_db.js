@@ -87,6 +87,8 @@ const atualizaEmail = async (id, email) => ((await rest('inscricoes?id=eq.' + en
   metodo: 'PATCH', corpo: { email, atualizado_em: new Date().toISOString() }, cabecalhos: { Prefer: 'return=representation' }
 })) || [])[0] || null;
 const porId = async (id) => ((await rest('inscricoes?id=eq.' + encodeURIComponent(id) + '&limit=1')) || [])[0] || null;
+/* inscrição feita na porta do evento, para quem não se inscreveu pela página (já entra com check-in) */
+const insereNaHora = async (linha) => ((await rest('inscricoes', { metodo: 'POST', corpo: linha, cabecalhos: { Prefer: 'return=representation' } })) || [])[0] || null;
 const marcaPresenca = (id, valor) => rest('inscricoes?id=eq.' + encodeURIComponent(id), { metodo: 'PATCH', corpo: { presente: !!valor }, cabecalhos: { Prefer: 'return=minimal' } });
 
 /* ---- e-mail de confirmação (convidados com cupom de 100%) ---- */
@@ -95,7 +97,7 @@ const marcaEmail = (ids) => rest('inscricoes?id=in.(' + ids.map(encodeURICompone
   metodo: 'PATCH', corpo: { email_confirmacao_em: new Date().toISOString() }, cabecalhos: { Prefer: 'return=minimal' }
 });
 /* convidados confirmados e pagantes já pagos que ainda não receberam a confirmação */
-const semConfirmacao = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&or=(and(tipo.eq.convidado,status.eq.confirmado),and(tipo.eq.pagante,status.eq.pago))&email_confirmacao_em=is.null&order=criado_em.asc&limit=100');
+const semConfirmacao = (evento) => rest('inscricoes?evento=eq.' + encodeURIComponent(evento) + '&or=(and(tipo.eq.convidado,status.eq.confirmado),and(tipo.eq.pagante,status.eq.pago))&email_confirmacao_em=is.null&email=neq.&order=criado_em.asc&limit=100');
 
 /* ---- leads das páginas de captação (ex.: demo gratuita do PDA) ---- */
 const gravaLead = (linha) => rest('leads', { metodo: 'POST', corpo: linha, cabecalhos: { Prefer: 'return=minimal' } });
@@ -109,4 +111,4 @@ const totemLista = (teste) => rest('totem_respostas?select=area,humor,emocao,res
 const acesso = async (email) => ((await rest('painel_acessos?email=eq.' + encodeURIComponent(email) + '&limit=1')) || [])[0] || null;
 const atualizaAcesso = (email, campos) => rest('painel_acessos?email=eq.' + encodeURIComponent(email), { metodo: 'PATCH', corpo: campos, cabecalhos: { Prefer: 'return=minimal' } });
 
-module.exports = { atualizaEmail, porId, chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaManual, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };
+module.exports = { insereNaHora, atualizaEmail, porId, chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaManual, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };

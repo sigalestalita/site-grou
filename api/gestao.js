@@ -17,6 +17,22 @@ module.exports = async (req, res) => {
   try {
     if (req.method === 'POST') {
       const b = c.corpoJson(req);
+      /* credenciamento: quem chegou sem inscrição é inscrito na hora (convidado, cupom NAHORA) e já entra presente */
+      if (b.acao === 'na_hora') {
+        const txt = (v, n) => String(v || '').replace(/\s+/g, ' ').trim().slice(0, n);
+        const nome = txt(b.nome, 120);
+        if (nome.length < 2) return c.responde(res, 400, { erro: 'Informe o nome.' });
+        const email = txt(b.email, 120).toLowerCase();
+        if (email && !EMAIL_OK.test(email)) return c.responde(res, 400, { erro: 'E-mail inválido. Deixe em branco se a pessoa não quiser informar.' });
+        const celular = String(b.celular || '').replace(/\D/g, '').slice(0, 13);
+        const linha = await db.insereNaHora({
+          chave: 'h:nr1-estrategica:' + require('crypto').randomUUID(), evento: 'nr1-estrategica', tipo: 'convidado', cupom: 'NAHORA', desconto: 100, valor: 0,
+          nome, email, celular: celular || null, cargo: txt(b.cargo, 120) || null, empresa: txt(b.empresa, 120) || null,
+          aceite: true, status: 'confirmado', presente: true
+        });
+        console.log('inscrição na hora:', linha && linha.id, 'por', u.email);
+        return c.responde(res, 200, { ok: true, inscricao: linha });
+      }
       if (b.acao === 'presenca' && /^[0-9a-f-]{36}$/i.test(String(b.id || ''))) {
         await db.marcaPresenca(b.id, b.valor);
         return c.responde(res, 200, { ok: true });
@@ -70,6 +86,12 @@ module.exports = async (req, res) => {
       return c.responde(res, 400, { erro: 'Ação inválida.' });
     }
     const linhas = await db.lista('nr1-estrategica');
+    /* versão enxuta para a tela de credenciamento e etiquetas */
+    if (req.query && req.query.leve) {
+      const campos = ['id', 'nome', 'email', 'celular', 'cargo', 'empresa', 'tipo', 'status', 'cupom', 'presente'];
+      return c.responde(res, 200, { geradoEm: new Date().toISOString(), usuario: u.nome || u.email,
+        inscritos: linhas.map((i) => { const o = {}; campos.forEach((k) => { o[k] = i[k]; }); return o; }) });
+    }
     /* leads das páginas de captação (demo PDA etc.); se falhar, o painel de inscritos continua */
     let leads = [];
     try { leads = (await db.listaLeads()) || []; } catch (e) { console.error('gestao leads:', e.message); }

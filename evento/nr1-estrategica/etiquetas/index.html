@@ -4,53 +4,83 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Etiquetas do crachá · NR-1 Estratégica</title>
+<title>Credenciamento e etiquetas · NR-1 Estratégica</title>
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Montserrat:wght@500;700&display=swap">
 <script src="qrcode.min.js"></script>
 <style>
-:root{--royal:#120573;--noite:#07033a;--eletrico:#1b3fd6;--ciano:#6cd8cf;--texto:#4a4d63;--suave:#7c7a96;--linha:#e4e7f0;--nevoa:#eef0f7;--fundo:#f6f7fb;--verde:#1fa855;--erro:#c62845}
+:root{--royal:#120573;--noite:#07033a;--eletrico:#1b3fd6;--ciano:#6cd8cf;--texto:#4a4d63;--suave:#7c7a96;--linha:#e4e7f0;--nevoa:#eef0f7;--fundo:#f6f7fb;--verde:#0f8778;--verde-f:#e3f6f1;--azul-f:#e8edff;--erro:#b3283c;--erro-f:#fdecee;--amarelo:#9a5b00;--amarelo-f:#fff4e0}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--fundo);color:var(--noite);font:15px/1.55 Poppins,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
-.app{max-width:1080px;margin:0 auto;padding:28px max(18px,env(safe-area-inset-right,0px)) 48px max(18px,env(safe-area-inset-left,0px))}
-.topo{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 20px;margin-bottom:22px}
+.app{max-width:1180px;margin:0 auto;padding:24px max(18px,env(safe-area-inset-right,0px)) 48px max(18px,env(safe-area-inset-left,0px))}
+.topo{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 20px;margin-bottom:20px}
 .rot{margin:0 0 4px;font:700 12px/1.3 Poppins,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--eletrico)}
-h1{margin:0;font-size:clamp(26px,4vw,34px);line-height:1.15;color:var(--royal)}
-.topo p{margin:4px 0 0;color:var(--texto);max-width:60ch}
-.grade{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:22px;align-items:start}
-.cartao{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:20px}
-form{display:grid;gap:14px}
+h1{margin:0;font-size:clamp(24px,3.6vw,32px);line-height:1.15;color:var(--royal)}
+h2{margin:0 0 10px;font-size:16px;color:var(--royal)}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;color:var(--texto)}
+.contador{display:inline-flex;align-items:baseline;gap:6px;padding:8px 14px;border-radius:999px;background:var(--royal);color:#fff;font-size:13px}
+.contador b{font-size:18px}
+.status a{color:var(--royal);font-weight:600}
+.grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px;align-items:start}
+.col{display:grid;gap:20px;min-width:0}
+.cartao{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:20px;min-width:0}
+input[type=search],input[type=text],input[type=tel],input[type=email],input:not([type]){font:inherit;font-size:16px;padding:11px 13px;border:1.5px solid var(--linha);border-radius:10px;background:#fff;color:var(--noite);width:100%}
+input:focus{outline:none;border-color:var(--eletrico);box-shadow:0 0 0 3px rgba(27,63,214,.15)}
+.busca{font-size:17px!important;padding:14px 16px!important}
+.res{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px;max-height:420px;overflow:auto}
+.res li button{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:var(--fundo);cursor:pointer;border:1.5px solid transparent}
+.res li button:hover,.res li button:focus-visible{border-color:var(--eletrico)}
+.res li button[aria-pressed=true]{background:var(--azul-f);border-color:var(--eletrico)}
+.res .p{min-width:0}
+.res .p b{display:block;font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res .p small{display:block;color:var(--suave);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tags{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.t-ok{background:var(--azul-f);color:var(--eletrico)}
+.t-pres{background:var(--verde-f);color:var(--verde)}
+.t-pend{background:var(--amarelo-f);color:var(--amarelo)}
+.t-canc{background:var(--erro-f);color:var(--erro)}
+.nada{margin:12px 0 0;font-size:14px;color:var(--texto)}
+.nahora{margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:var(--nevoa);font-size:14px}
+form{display:grid;gap:12px}
 label{display:grid;gap:5px;font-weight:600;font-size:14px}
 label small{font-weight:400;color:var(--suave);font-size:12px}
-input{font:inherit;font-size:16px;padding:11px 13px;border:1.5px solid var(--linha);border-radius:10px;background:#fff;color:var(--noite);width:100%}
-input:focus{outline:none;border-color:var(--eletrico);box-shadow:0 0 0 3px rgba(27,63,214,.15)}
+.modo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.modo p{margin:0;font-size:13.5px;color:var(--texto)}
+.aviso{margin:0;padding:10px 12px;border-radius:10px;font-size:13.5px}
+.aviso.av{background:var(--amarelo-f);color:var(--amarelo)}
+.aviso.ok{background:var(--verde-f);color:var(--verde)}
+.aviso.er{background:var(--erro-f);color:var(--erro)}
 .dica{font-size:12.5px;font-weight:500;margin-top:-2px}
-.dica.ok{color:var(--verde)}.dica.av{color:#b26a00}.dica.er{color:var(--erro)}
-.botoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.dica.ok{color:var(--verde)}.dica.av{color:var(--amarelo)}.dica.er{color:var(--erro)}
+.check{display:flex;align-items:center;gap:8px;font-weight:500;font-size:13.5px}
+.botoes{display:flex;flex-wrap:wrap;gap:10px}
 button{font:600 15px Poppins,sans-serif;border:0;border-radius:11px;padding:12px 18px;cursor:pointer;background:var(--royal);color:#fff}
 button:hover{filter:brightness(1.12)}
 button.sec{background:#fff;color:var(--royal);border:1.5px solid var(--royal)}
 button.mini{font-size:13px;padding:6px 12px;border-radius:8px}
 button.lixo{background:transparent;color:var(--erro);border:0;padding:4px 6px;font-size:13px}
 button:disabled{opacity:.45;cursor:default;filter:none}
-.prev{display:grid;gap:12px}
-.prev h2,.fila h2{margin:0;font-size:16px;color:var(--royal)}
-.palco{background:var(--nevoa);border-radius:14px;padding:24px 12px;display:grid;place-items:center;overflow:hidden;min-width:0}
-.zoom{transform-origin:center;}
+.palco{background:var(--nevoa);border-radius:14px;padding:22px 12px;display:grid;place-items:center;overflow:hidden;min-width:0}
 .palco .e{box-shadow:0 2px 10px rgba(7,3,58,.16);border-radius:2mm}
-.legenda{font-size:12.5px;color:var(--suave);margin:0}
-.fila{margin-top:22px}
+.legenda{font-size:12.5px;color:var(--suave);margin:10px 0 0}
 .fila-cab{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.fila-cab h2{margin:0}
 .fila ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .fila li{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--fundo);border-radius:10px;padding:8px 12px;font-size:14px}
 .fila li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fila li small{color:var(--suave)}
 .vazio{color:var(--suave);font-size:14px;margin:0}
-.ajuda{margin-top:22px;font-size:13.5px;color:var(--texto)}
+.ajuda{font-size:13.5px;color:var(--texto)}
 .ajuda b{color:var(--royal)}
 .ajuda ul{margin:6px 0 0;padding-left:18px}
-@media (max-width:820px){.grade{grid-template-columns:minmax(0,1fr)}}
+.porta{max-width:460px;margin:12vh auto 0;text-align:center}
+.porta p{color:var(--texto)}
+.porta a{display:inline-block;margin-top:8px;padding:13px 22px;border-radius:11px;background:var(--royal);color:#fff;font-weight:600;text-decoration:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:12px 18px;border-radius:12px;background:var(--noite);color:#fff;font-size:14px;box-shadow:0 12px 30px rgba(7,3,58,.35);z-index:5;max-width:calc(100vw - 32px)}
+@media (max-width:900px){.grade{grid-template-columns:minmax(0,1fr)}}
 
 /* ===== etiqueta (mesmo layout das etiquetas impressas: 78 × 40 mm) ===== */
 .e{width:78mm;height:40mm;position:relative;background:#fff;display:flex;align-items:center;gap:3.2mm;padding:0 4mm 0 5mm;overflow:hidden;font-family:'Poppins',sans-serif;color:#07033a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -72,7 +102,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 #impressao{position:fixed;left:0;top:0;visibility:hidden;pointer-events:none;z-index:-1}
 @media print{
   body{background:#fff}
-  .app{display:none}
+  .app,.toast{display:none!important}
   #impressao{position:static;visibility:visible;z-index:auto}
   #impressao .u .e{page-break-after:always;break-after:page}
   #impressao .f{width:210mm;height:297mm;position:relative;page-break-after:always;break-after:page;overflow:hidden}
@@ -86,70 +116,104 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 </head>
 <body>
 <div class="app">
+  <div class="porta" id="porta" hidden>
+    <p class="rot">NR-1 Estratégica · credenciamento</p>
+    <h1>Entre com o login do painel</h1>
+    <p>Esta tela usa a lista de inscritos, então pede o mesmo e-mail e senha do painel de gestão.</p>
+    <a href="/gestao/?volta=/evento/nr1-estrategica/etiquetas/">Entrar</a>
+  </div>
+  <p class="aviso er" id="erroGeral" hidden></p>
+
+  <div id="tela" hidden>
   <header class="topo">
     <div>
       <p class="rot">NR-1 Estratégica · credenciamento</p>
-      <h1>Etiquetas do crachá</h1>
-      <p>Para quem chegou sem inscrição pela página. Preencha, confira a prévia e imprima. O QR code abre o WhatsApp da pessoa.</p>
+      <h1>Check-in e etiquetas do crachá</h1>
+    </div>
+    <div class="status">
+      <span class="contador"><b id="nPres">0</b> check-ins de <span id="nConf">0</span> confirmados</span>
+      <span id="atualizado"></span>
+      <a href="/gestao/nr1/">Painel</a>
     </div>
   </header>
 
   <div class="grade">
-    <div class="cartao">
-      <form id="form" autocomplete="off" novalidate>
-        <label>Nome<input id="nome" required placeholder="Ex.: Ana Carolina Machado"></label>
-        <label>Telefone (WhatsApp)<input id="fone" inputmode="tel" placeholder="(51) 99999-9999"><span class="dica" id="dicaFone" aria-live="polite"></span></label>
-        <label>Cargo <small>opcional</small><input id="cargo" placeholder="Ex.: Gerente de RH"></label>
-        <label>Empresa <small>opcional</small><input id="empresa" placeholder="Ex.: Grou"></label>
-        <label style="display:flex;align-items:center;gap:8px;font-weight:500;font-size:13.5px"><input id="completo" type="checkbox" style="width:auto"> Usar o nome completo, como foi digitado</label>
-        <div class="botoes">
-          <button type="submit" id="imprimir">Imprimir etiqueta</button>
-          <button type="button" class="sec" id="addFila">Adicionar à folha A4</button>
+    <div class="col">
+      <section class="cartao" aria-labelledby="tBusca">
+        <h2 id="tBusca">1. Encontre a pessoa</h2>
+        <input class="busca" id="busca" type="search" placeholder="Nome, empresa, e-mail ou telefone" autocomplete="off" aria-label="Buscar inscrito">
+        <ul class="res" id="res"></ul>
+        <p class="nada" id="nada" hidden></p>
+        <div class="nahora" id="boxNaHora">
+          <span>Não está na lista?</span>
+          <button type="button" class="sec mini" id="btnNaHora">Inscrever na hora</button>
         </div>
-        <button type="button" class="sec mini" id="limpar" style="justify-self:start">Limpar campos</button>
-      </form>
+      </section>
+
+      <section class="cartao" aria-labelledby="tDados">
+        <div class="modo"><h2 id="tDados" style="margin:0">2. Confira os dados</h2><button type="button" class="sec mini" id="limpar">Limpar</button></div>
+        <p class="aviso" id="aviso" hidden></p>
+        <form id="form" autocomplete="off" novalidate>
+          <label>Nome<input id="nome" required placeholder="Nome e sobrenome"></label>
+          <label>Telefone (WhatsApp)<input id="fone" type="tel" inputmode="tel" placeholder="(51) 99999-9999"><span class="dica" id="dicaFone" aria-live="polite"></span></label>
+          <label>Cargo <small>opcional</small><input id="cargo" placeholder="Ex.: Gerente de RH"></label>
+          <label>Empresa <small>opcional</small><input id="empresa" placeholder="Ex.: Grou"></label>
+          <label id="boxEmail" hidden>E-mail <small>opcional</small><input id="email" type="email" placeholder="nome@empresa.com.br"></label>
+          <label class="check"><input id="completo" type="checkbox"> Usar o nome completo, como está escrito</label>
+          <div class="botoes">
+            <button type="submit" id="principal" disabled>Fazer check-in e imprimir</button>
+            <button type="button" class="sec" id="addFila" disabled>Check-in e pôr na folha A4</button>
+          </div>
+        </form>
+      </section>
     </div>
 
-    <div class="prev cartao">
-      <h2>Prévia</h2>
-      <div class="palco" id="palco"><div class="zoom" id="zoom"></div></div>
-      <p class="legenda" id="legenda">Tamanho real: 78 × 40 mm, o mesmo das etiquetas já impressas.</p>
+    <div class="col">
+      <section class="cartao" aria-labelledby="tPrev">
+        <h2 id="tPrev">Prévia da etiqueta</h2>
+        <div class="palco" id="palco"><div id="zoom"></div></div>
+        <p class="legenda" id="legenda">Tamanho real: 78 × 40 mm, o mesmo das etiquetas já impressas.</p>
+      </section>
 
-      <div class="fila">
+      <section class="cartao fila" aria-labelledby="tFila">
         <div class="fila-cab">
-          <h2>Folha A4 <small id="contaFila" style="font-weight:500;color:var(--suave)"></small></h2>
-          <div class="botoes" style="margin:0">
+          <h2 id="tFila">Folha A4 <small id="contaFila" style="font-weight:500;color:var(--suave)"></small></h2>
+          <div class="botoes">
             <button type="button" class="mini" id="imprimirFila" disabled>Imprimir folha A4</button>
             <button type="button" class="sec mini" id="limparFila" disabled>Esvaziar</button>
           </div>
         </div>
         <ul id="fila"></ul>
-        <p class="vazio" id="filaVazia">Nenhuma etiqueta na folha. Use a folha A4 se for imprimir várias de uma vez (14 por folha, com marcas de corte).</p>
-      </div>
+        <p class="vazio" id="filaVazia">Para imprimir várias de uma vez: 14 por folha, com marcas de corte.</p>
+      </section>
+
+      <section class="ajuda">
+        <b>Como funciona</b>
+        <ul>
+          <li><b>Inscrito:</b> busque, confira e clique em “Fazer check-in e imprimir”. O check-in aparece na hora no painel.</li>
+          <li><b>Não está na lista:</b> “Inscrever na hora” cria a inscrição como convidado (cupom NAHORA), já com check-in.</li>
+          <li>Ajustes no nome, cargo ou empresa de quem já é inscrito valem só para a etiqueta. O cadastro não muda.</li>
+          <li>Na impressão: escala 100% (ou “Tamanho real”) e margens “Nenhuma”.</li>
+        </ul>
+      </section>
     </div>
   </div>
-
-  <div class="ajuda">
-    <b>Na hora de imprimir</b>
-    <ul>
-      <li><b>Imprimir etiqueta</b> sai no tamanho 78 × 40 mm. Na janela de impressão, deixe a escala em 100% (ou “Tamanho real”) e as margens em “Nenhuma”.</li>
-      <li><b>Folha A4</b> junta várias etiquetas, 2 colunas por 7 linhas, com marcas de corte nas bordas.</li>
-      <li>Sem telefone válido, a etiqueta sai sem QR, só com o nome centralizado, igual às outras.</li>
-    </ul>
   </div>
 </div>
 
 <div id="impressao"></div>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
   var ZAP = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>';
   var MIN = {da:1,de:1,'do':1,dos:1,das:1,e:1,em:1,no:1,na:1};
-  var esc = function(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
   var limpa = function(s){ return String(s||'').replace(/\s+/g,' ').trim(); };
+  var sem = function(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); };
 
-  /* Caixa: só corrige quando a pessoa digitou tudo em maiúsculas ou tudo em minúsculas */
+  /* ---------- etiqueta ---------- */
   function caixa(s){
     s = limpa(s); if(!s) return '';
     var letras = s.replace(/[^A-Za-zÀ-ÿ]/g,'');
@@ -161,7 +225,6 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       return l.split('-').map(function(p){ return p.charAt(0).toUpperCase()+p.slice(1); }).join('-');
     }).join(' ');
   }
-  /* Nome curto: primeiro nome + último sobrenome (Ana/Maria/Anna + segundo nome; mantém Dalla Coletta, Dal Agnol, De ...) */
   function curto(nome){
     var t = nome.split(' ');
     if(t.length <= 2) return nome;
@@ -173,7 +236,6 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     if(resto.length >= 2 && (/^(dalla|dal|del|della|van|von)$/i.test(resto[resto.length-2]) || resto[resto.length-2] === 'De')) ult = resto[resto.length-2]+' '+ult;
     return base.concat([ult]).join(' ');
   }
-  /* Telefone: celular brasileiro com DDD; aceita +55, acrescenta o 9 quando falta */
   function fone(c){
     var d = String(c||'').replace(/\D/g,'');
     if(!d) return {num:null, msg:'', tipo:''};
@@ -190,13 +252,9 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     return '<svg viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges"><path d="'+p+'"/></svg>';
   }
   function dados(){
-    var nome = caixa($('nome').value);
-    var f = fone($('fone').value);
-    var r = {nome:nome, curto: $('completo').checked ? nome : curto(nome), cargo:caixa($('cargo').value), empresa:caixa($('empresa').value), num:f.num, f:f};
-    if(f.num){
-      var pri = r.curto.split(' ')[0];
-      r.link = 'https://wa.me/55'+f.num+'?text='+encodeURIComponent('Oi, '+pri+'! Nos conhecemos no NR-1 Estratégica.');
-    }
+    var nome = caixa($('nome').value), f = fone($('fone').value);
+    var r = {nome:nome, curto: $('completo').checked ? nome : curto(nome), cargo:caixa($('cargo').value), empresa:caixa($('empresa').value), f:f};
+    if(f.num) r.link = 'https://wa.me/55'+f.num+'?text='+encodeURIComponent('Oi, '+r.curto.split(' ')[0]+'! Nos conhecemos no NR-1 Estratégica.');
     return r;
   }
   function etq(e){
@@ -204,7 +262,6 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       (e.cargo?'<div class="cg">'+esc(e.cargo)+'</div>':'')+(e.empresa?'<div class="em">'+esc(e.empresa)+'</div>':'')+'</div>'+
       (e.link?'<div class="q">'+qrSvg(e.link)+'<small>'+ZAP+'Me chama no WhatsApp</small></div>':'')+'</div>';
   }
-  /* Nome em uma linha: encolhe até caber (mínimo ~62%; abaixo disso quebra em duas linhas menores) */
   function ajusta(raiz){
     raiz.querySelectorAll('.nm').forEach(function(n){
       var s = n.firstElementChild; s.style.transform=''; n.style.whiteSpace=''; n.style.fontSize='';
@@ -215,44 +272,23 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   function escalaPrevia(){
     var palco = $('palco'), z = $('zoom'), e = z.firstElementChild; if(!e) return;
     z.style.width = z.style.height = '0px';
-    var w = e.offsetWidth, livre = palco.clientWidth - 24;
-    var k = Math.min(2, livre / w);
+    var w = e.offsetWidth, k = Math.min(1.8, (palco.clientWidth - 24) / w);
     z.style.width = (w*k)+'px'; z.style.height = (e.offsetHeight*k)+'px';
     e.style.transformOrigin = 'top left'; e.style.transform = 'scale('+k+')';
   }
-  function atualiza(){
+  function previa(){
     var d = dados();
-    var dica = $('dicaFone'); dica.textContent = d.f.msg; dica.className = 'dica '+d.f.tipo;
-    $('zoom').innerHTML = etq(d);
-    ajusta($('zoom'));
-    escalaPrevia();
-    $('legenda').textContent = d.curto && d.curto !== d.nome ? 'Na etiqueta: “'+d.curto+'”. Marque “Usar o nome completo” se preferir o nome inteiro. Tamanho real: 78 × 40 mm.' : 'Tamanho real: 78 × 40 mm, o mesmo das etiquetas já impressas.';
+    $('dicaFone').textContent = d.f.msg; $('dicaFone').className = 'dica '+d.f.tipo;
+    $('zoom').innerHTML = etq(d); ajusta($('zoom')); escalaPrevia();
+    $('legenda').textContent = d.curto && d.curto !== d.nome ? 'Na etiqueta: “'+d.curto+'”. Marque “Usar o nome completo” se preferir o nome inteiro.' : 'Tamanho real: 78 × 40 mm, o mesmo das etiquetas já impressas.';
+    botoes();
     return d;
   }
 
-  /* fila da folha A4 (fica guardada neste navegador) */
-  var CH = 'nr1-etiquetas-fila', fila = [];
-  try { fila = JSON.parse(localStorage.getItem(CH) || '[]') || []; } catch(e){ fila = []; }
-  function salva(){ try { localStorage.setItem(CH, JSON.stringify(fila)); } catch(e){} }
-  function desenhaFila(){
-    var ul = $('fila'); ul.innerHTML = '';
-    fila.forEach(function(e,i){
-      var li = document.createElement('li');
-      li.innerHTML = '<span><b>'+esc(e.curto)+'</b> <small>'+esc([e.cargo,e.empresa].filter(Boolean).join(' · '))+(e.link?'':' · sem QR')+'</small></span>';
-      var b = document.createElement('button'); b.type='button'; b.className='lixo'; b.textContent='Tirar'; b.setAttribute('aria-label','Tirar '+e.curto+' da folha');
-      b.onclick = function(){ fila.splice(i,1); salva(); desenhaFila(); };
-      li.appendChild(b); ul.appendChild(li);
-    });
-    $('filaVazia').hidden = fila.length > 0;
-    $('imprimirFila').disabled = $('limparFila').disabled = !fila.length;
-    $('contaFila').textContent = fila.length ? '· '+fila.length+(fila.length===1?' etiqueta':' etiquetas')+(fila.length>14?' ('+Math.ceil(fila.length/14)+' folhas)':'') : '';
-  }
-
+  /* ---------- impressão ---------- */
   function imprime(html, pagina){
-    var alvo = $('impressao'); alvo.innerHTML = html;
-    $('pagina').textContent = pagina;
-    var go = function(){ ajusta(alvo); setTimeout(function(){ window.print(); }, 50); };
-    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(go);
+    var alvo = $('impressao'); alvo.innerHTML = html; $('pagina').textContent = pagina;
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ ajusta(alvo); setTimeout(function(){ window.print(); }, 50); });
   }
   function folhasA4(lista){
     var html = '', W=78, H=40, MX=27, MY=8.5;
@@ -264,29 +300,155 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     }
     return html;
   }
-  function valido(){
-    if(!limpa($('nome').value)){ $('nome').focus(); $('nome').setAttribute('aria-invalid','true'); return false; }
-    $('nome').removeAttribute('aria-invalid'); return true;
+  var CH = 'nr1-etiquetas-fila', fila = [];
+  try { fila = JSON.parse(localStorage.getItem(CH) || '[]') || []; } catch(e){ fila = []; }
+  function salvaFila(){ try { localStorage.setItem(CH, JSON.stringify(fila)); } catch(e){} }
+  function desenhaFila(){
+    var ul = $('fila'); ul.innerHTML = '';
+    fila.forEach(function(e,i){
+      var li = document.createElement('li');
+      li.innerHTML = '<span><b>'+esc(e.curto)+'</b> <small>'+esc([e.cargo,e.empresa].filter(Boolean).join(' · '))+(e.link?'':' · sem QR')+'</small></span>';
+      var b = document.createElement('button'); b.type='button'; b.className='lixo'; b.textContent='Tirar';
+      b.onclick = function(){ fila.splice(i,1); salvaFila(); desenhaFila(); };
+      li.appendChild(b); ul.appendChild(li);
+    });
+    $('filaVazia').hidden = fila.length > 0;
+    $('imprimirFila').disabled = $('limparFila').disabled = !fila.length;
+    $('contaFila').textContent = fila.length ? '· '+fila.length+(fila.length===1?' etiqueta':' etiquetas') : '';
   }
 
-  ['nome','fone','cargo','empresa','completo'].forEach(function(id){ $(id).addEventListener('input', atualiza); });
+  /* ---------- inscritos (mesma base do painel) ---------- */
+  var lista = [], sel = null, modo = 'vazio';   /* modo: vazio | inscrito | nahora */
+  var confirmada = function(i){ return (i.tipo === 'convidado' && i.status === 'confirmado') || (i.tipo === 'pagante' && i.status === 'pago'); };
+  function api(o){
+    o = o || {};
+    return fetch('/api/gestao/' + (o.corpo ? '' : '?leve=1'), { method: o.corpo ? 'POST' : 'GET', cache:'no-store', credentials:'same-origin',
+      headers:{'Content-Type':'application/json'}, body: o.corpo ? JSON.stringify(o.corpo) : undefined })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {http:r.status, j:j}; }); });
+  }
+  function carrega(){
+    return api().then(function(r){
+      if(r.http === 401){ $('tela').hidden = true; $('porta').hidden = false; return; }
+      if(r.http !== 200){ $('erroGeral').textContent = r.j.erro || 'Não foi possível ler os inscritos agora.'; $('erroGeral').hidden = false; return; }
+      $('erroGeral').hidden = true; $('porta').hidden = true; $('tela').hidden = false;
+      lista = (r.j.inscritos || []).map(function(i){ i._b = sem([i.nome,i.email,i.empresa,i.cargo,String(i.celular||'').replace(/\D/g,'')].join(' ')); return i; });
+      if(sel){ var s = lista.filter(function(i){ return i.id === sel.id; })[0]; if(s) sel = s; }
+      $('atualizado').textContent = 'Lista de '+new Date(r.j.geradoEm).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'});
+      contador(); busca(); aviso();
+    }).catch(function(){ $('erroGeral').textContent = 'Sem conexão. Confira a internet e tente de novo.'; $('erroGeral').hidden = false; });
+  }
+  function contador(){
+    var c = lista.filter(confirmada);
+    $('nConf').textContent = c.length; $('nPres').textContent = c.filter(function(i){ return i.presente; }).length;
+  }
+  function tagsDe(i){
+    var t = '';
+    if(i.presente) t += '<span class="tag t-pres">✓ Check-in feito</span>';
+    if(confirmada(i)) t += i.presente ? '' : '<span class="tag t-ok">Inscrito</span>';
+    else if(i.status === 'pendente') t += '<span class="tag t-pend">Aguardando pagamento</span>';
+    else t += '<span class="tag t-canc">'+(i.status === 'cancelado' ? 'Cancelado' : 'Recusado')+'</span>';
+    return t;
+  }
+  function busca(){
+    var q = sem(limpa($('busca').value)), dig = q.replace(/\D/g,'');
+    var ul = $('res'), achou = [];
+    if(q.length >= 2){
+      var partes = q.split(' ');
+      achou = lista.filter(function(i){
+        return partes.every(function(p){ return i._b.indexOf(p) >= 0; }) || (dig.length >= 4 && String(i.celular||'').replace(/\D/g,'').indexOf(dig) >= 0);
+      });
+      /* inscrições válidas primeiro; uma pessoa pode ter cadastro repetido */
+      achou.sort(function(a,b){ return (confirmada(b)-confirmada(a)) || a.nome.localeCompare(b.nome,'pt-BR'); });
+    }
+    ul.innerHTML = achou.slice(0,12).map(function(i){
+      return '<li><button type="button" data-id="'+esc(i.id)+'" aria-pressed="'+(sel && sel.id === i.id)+'"><span class="p"><b>'+esc(i.nome)+'</b><small>'+esc([i.cargo,i.empresa].filter(Boolean).join(' · ') || i.email)+'</small></span><span class="tags">'+tagsDe(i)+'</span></button></li>';
+    }).join('');
+    $('nada').hidden = !(q.length >= 2 && !achou.length);
+    $('nada').textContent = 'Ninguém com “'+limpa($('busca').value)+'” na lista de inscritos.';
+    if(achou.length > 12){ $('nada').hidden = false; $('nada').textContent = 'Mostrando 12 de '+achou.length+'. Digite mais para filtrar.'; }
+  }
+  function escolhe(i){
+    sel = i; modo = 'inscrito';
+    $('nome').value = i.nome || ''; $('fone').value = i.celular || ''; $('cargo').value = i.cargo || ''; $('empresa').value = i.empresa || '';
+    $('completo').checked = false; $('boxEmail').hidden = true;
+    busca(); previa(); aviso();
+  }
+  function naHora(){
+    sel = null; modo = 'nahora';
+    var q = limpa($('busca').value);
+    $('form').reset(); if(q && !/\d{4}/.test(q) && q.indexOf('@') < 0) $('nome').value = caixa(q);
+    $('boxEmail').hidden = false; busca(); previa(); aviso(); $(q ? 'fone' : 'nome').focus();
+  }
+  function aviso(){
+    var a = $('aviso'), t = '', c = '';
+    if(modo === 'inscrito' && sel){
+      if(!confirmada(sel)){ t = sel.status === 'pendente' ? 'Inscrição aguardando pagamento. Confira com a equipe antes de entregar o crachá.' : 'Inscrição '+(sel.status === 'cancelado' ? 'cancelada' : 'recusada')+'. Confira com a equipe antes de entregar o crachá.'; c = 'av'; }
+      else if(sel.presente){ t = sel.nome+' já fez check-in. Dá para imprimir de novo, se precisar.'; c = 'ok'; }
+      else { t = 'Inscrição confirmada: '+sel.nome+(sel.cupom ? ' · '+sel.cupom : '')+'.'; c = 'ok'; }
+    } else if(modo === 'nahora'){ t = 'Inscrição na hora: a pessoa entra na lista como convidada e já com check-in.'; c = 'av'; }
+    a.textContent = t; a.className = 'aviso '+c; a.hidden = !t;
+    botoes();
+  }
+  function botoes(){
+    var temNome = !!limpa($('nome').value), p = $('principal'), f = $('addFila');
+    if(modo === 'nahora'){ p.textContent = 'Inscrever, fazer check-in e imprimir'; f.textContent = 'Inscrever e pôr na folha A4'; }
+    else if(modo === 'inscrito' && sel && sel.presente){ p.textContent = 'Imprimir de novo'; f.textContent = 'Pôr na folha A4'; }
+    else { p.textContent = 'Fazer check-in e imprimir'; f.textContent = 'Check-in e pôr na folha A4'; }
+    p.disabled = f.disabled = !(temNome && modo !== 'vazio');
+  }
+  function toast(msg){ var t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function(){ t.hidden = true; }, 4000); }
+
+  /* registra no servidor (check-in ou inscrição na hora) e depois imprime / põe na folha */
+  function registra(){
+    if(modo === 'inscrito' && sel){
+      if(sel.presente) return Promise.resolve(true);
+      if(!confirmada(sel) && !confirm(sel.nome+': a inscrição não está confirmada ('+sel.status+'). Fazer o check-in mesmo assim?')) return Promise.resolve(false);
+      return api({corpo:{acao:'presenca', id:sel.id, valor:true}}).then(function(r){
+        if(r.http !== 200){ alert(r.j.erro || 'Não foi possível registrar o check-in. A etiqueta não foi impressa.'); return false; }
+        sel.presente = true; contador(); busca(); aviso(); toast('Check-in de '+sel.nome+' registrado.'); return true;
+      });
+    }
+    if(modo === 'nahora'){
+      var corpo = {acao:'na_hora', nome:limpa($('nome').value), celular:$('fone').value, cargo:limpa($('cargo').value), empresa:limpa($('empresa').value), email:limpa($('email').value)};
+      var dup = lista.filter(function(i){ return sem(i.nome) === sem(corpo.nome); })[0];
+      if(dup && !confirm('Já existe '+dup.nome+' na lista ('+(dup.empresa || dup.email || 'sem empresa')+'). Criar outra inscrição mesmo assim?')) return Promise.resolve(false);
+      return api({corpo:corpo}).then(function(r){
+        if(r.http !== 200 || !r.j.inscricao){ alert(r.j.erro || 'Não foi possível inscrever agora. A etiqueta não foi impressa.'); return false; }
+        var i = r.j.inscricao; i._b = sem([i.nome,i.email,i.empresa,i.cargo,String(i.celular||'').replace(/\D/g,'')].join(' '));
+        lista.unshift(i); sel = i; modo = 'inscrito'; contador(); aviso(); toast(i.nome+' inscrito e com check-in.'); return true;
+      });
+    }
+    return Promise.resolve(false);
+  }
+  function trava(v){ $('principal').disabled = $('addFila').disabled = v; if(!v) botoes(); }
+
+  $('busca').addEventListener('input', busca);
+  $('busca').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ var b = $('res').querySelector('button'); if(b){ e.preventDefault(); b.click(); } } });
+  $('res').addEventListener('click', function(e){ var b = e.target.closest('[data-id]'); if(!b) return; var i = lista.filter(function(x){ return x.id === b.dataset.id; })[0]; if(i) escolhe(i); });
+  $('btnNaHora').addEventListener('click', naHora);
+  ['nome','fone','cargo','empresa','completo'].forEach(function(id){ $(id).addEventListener('input', previa); });
+  $('limpar').addEventListener('click', function(){ sel = null; modo = 'vazio'; $('form').reset(); $('boxEmail').hidden = true; $('busca').value = ''; busca(); previa(); aviso(); $('busca').focus(); });
   $('form').addEventListener('submit', function(ev){
-    ev.preventDefault(); if(!valido()) return;
-    var d = atualiza();
-    imprime('<div class="u">'+etq(d)+'</div>', '@page{size:78mm 40mm;margin:0}');
+    ev.preventDefault(); if(!limpa($('nome').value)) return $('nome').focus();
+    var d = previa(); trava(true);
+    registra().then(function(ok){ trava(false); if(ok) imprime('<div class="u">'+etq(d)+'</div>', '@page{size:78mm 40mm;margin:0}'); });
   });
   $('addFila').addEventListener('click', function(){
-    if(!valido()) return;
-    var d = atualiza(); delete d.f;
-    fila.push(d); salva(); desenhaFila();
-    $('form').reset(); atualiza(); $('nome').focus();
+    if(!limpa($('nome').value)) return $('nome').focus();
+    var d = previa(); trava(true);
+    registra().then(function(ok){
+      trava(false); if(!ok) return;
+      delete d.f; fila.push(d); salvaFila(); desenhaFila();
+      sel = null; modo = 'vazio'; $('form').reset(); $('boxEmail').hidden = true; $('busca').value = ''; busca(); previa(); aviso(); $('busca').focus();
+    });
   });
-  $('limpar').addEventListener('click', function(){ $('form').reset(); atualiza(); $('nome').focus(); });
   $('imprimirFila').addEventListener('click', function(){ if(fila.length) imprime(folhasA4(fila), '@page{size:A4;margin:0}'); });
-  $('limparFila').addEventListener('click', function(){ fila = []; salva(); desenhaFila(); });
+  $('limparFila').addEventListener('click', function(){ if(confirm('Tirar todas as etiquetas da folha?')){ fila = []; salvaFila(); desenhaFila(); } });
   window.addEventListener('resize', escalaPrevia);
-  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(atualiza);
-  atualiza(); desenhaFila();
+  setInterval(function(){ if(!document.hidden && !$('tela').hidden) carrega(); }, 60000);
+
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(previa);
+  previa(); desenhaFila(); carrega().then(function(){ if(!$('tela').hidden) $('busca').focus(); });
 })();
 </script>
 </body>

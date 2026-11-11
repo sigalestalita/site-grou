@@ -124,6 +124,8 @@ select{width:auto;min-width:170px}
 .contato a:hover{text-decoration:underline}
 .sub-linha{display:block;color:var(--tinta-3);font-size:12px}
 .presenca{width:20px;height:20px;accent-color:var(--ciano-f);cursor:pointer}
+.etq-link{display:block;margin-top:6px;font-family:var(--ft);font-size:11.5px;font-weight:600;color:var(--eletrico);text-decoration:none;white-space:nowrap}
+.etq-link:hover{text-decoration:underline}
 .conf-pg{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
 .conf-pg select{min-width:0;width:auto;padding:5px 8px;border-radius:8px;font-size:12px}
 .conf-pg button{padding:5px 10px;border:0;border-radius:999px;cursor:pointer;font-family:var(--ft);font-size:11.5px;font-weight:600;color:var(--verde);background:var(--verde-f)}
@@ -177,6 +179,7 @@ select{width:auto;min-width:170px}
       <div class="acoes">
         <span class="atualizado" id="atualizado"></span>
         <label class="auto"><input type="checkbox" id="auto" checked> Atualizar sozinho</label>
+        <button class="btn" id="btnNaHora" type="button" style="background:var(--ciano);color:var(--noite)">+ Inscrever na hora</button>
         <a class="btn btn--leve" href="/evento/nr1-estrategica/etiquetas/" style="text-decoration:none">Credenciamento e etiquetas</a>
         <button class="btn btn--leve" id="btnAtualiza" type="button">Atualizar</button>
         <button class="btn btn--leve" id="btnCsv" type="button">Baixar CSV</button>
@@ -264,6 +267,22 @@ select{width:auto;min-width:170px}
   <p class="rodape">Dados pessoais de inscritos: uso interno da Grou. Não compartilhe a senha nem exporte a lista fora do necessário.</p>
 </div>
 
+<dialog id="dlgNaHora" class="dlg">
+  <form id="formNaHora" method="dialog" novalidate>
+    <h2>Inscrever na hora</h2>
+    <p class="sub">Para quem chegou ao evento sem inscrição. Entra como convidado (cupom NAHORA).</p>
+    <label class="campo"><span>Nome *</span><input name="nome" required maxlength="120" autocomplete="off"></label>
+    <label class="campo"><span>Telefone (WhatsApp) · vai no QR da etiqueta</span><input name="celular" type="tel" inputmode="tel" maxlength="20" placeholder="(51) 99999-9999" autocomplete="off"></label>
+    <label class="campo"><span>Cargo</span><input name="cargo" maxlength="120" autocomplete="off"></label>
+    <label class="campo"><span>Empresa</span><input name="empresa" maxlength="120" autocomplete="off"></label>
+    <label class="campo"><span>E-mail · opcional</span><input name="email" type="email" maxlength="120" autocomplete="off"></label>
+    <label class="auto" style="color:var(--tinta-2);font-size:13px"><input type="checkbox" name="presente" checked> Já está no evento (marcar check-in)</label>
+    <p class="erro" id="erroNaHora" hidden></p>
+    <div class="okmsg" id="okNaHora" hidden></div>
+    <div class="dlg__acoes" id="acNaHora"><button class="btn btn--leve" type="button" id="cancelaNaHora">Fechar</button><button class="btn" type="submit" id="salvaNaHora">Inscrever</button></div>
+    <div class="dlg__acoes" id="acNaHoraOk" hidden><button class="btn btn--leve" type="button" id="outraNaHora">Inscrever outra pessoa</button><a class="btn" id="etqNaHora" href="#" target="_blank" rel="noopener" style="text-decoration:none">Imprimir etiqueta</a></div>
+  </form>
+</dialog>
 <dialog id="dlgSenha" class="dlg">
   <form id="formSenha" method="dialog">
     <h2>Trocar senha</h2>
@@ -409,14 +428,15 @@ select{width:auto;min-width:170px}
         '<td style="white-space:nowrap">' + esc(data(i.criado_em)) + '</td>' +
         '<td class="pessoa"><b>' + esc(i.nome) + '</b><span>' + esc([i.cargo, i.empresa].filter(Boolean).join(' · ')) + '</span></td>' +
         '<td class="contato"><span>' + esc(i.email) + '</span>' + (tel ? '<a href="https://wa.me/55' + esc(tel) + '" target="_blank" rel="noopener">' + esc(i.celular) + '</a>' : '') + '</td>' +
-        '<td><span class="tag tag--' + tag + '">' + tipo + (i.desconto ? ' · ' + i.desconto + '%' : '') + '</span>' + (i.cupom ? '<span class="sub-linha cod">' + esc(i.cupom) + '</span>' : '') + '</td>' +
+        '<td><span class="tag tag--' + tag + '">' + tipo + (i.desconto ? ' · ' + i.desconto + '%' : '') + '</span>' + (i.cupom ? '<span class="sub-linha cod">' + esc(i.cupom) + (i.cupom === 'NAHORA' ? ' · na porta' : '') + '</span>' : '') + '</td>' +
         '<td class="n">' + (i.tipo === 'convidado' ? '—' : BRL(i.valor)) + '</td>' +
         '<td>' + pg + '</td>' +
         '<td>' + emailsMini(i) + '</td>' +
         '<td><span class="badge b-' + esc(i.status) + '">' + esc(ROT_STATUS[i.status] || i.status) + '</span>' +
           (i.status === 'pendente' && i.tipo === 'pagante' ? '<div class="conf-pg"><select aria-label="Forma de pagamento de ' + esc(i.nome) + '"><option value="pix">Pix</option><option value="cartao">Cartão</option><option value="boleto">Boleto</option></select>' +
             '<button type="button" data-conf="' + esc(i.id) + '">✓ Confirmar pagamento</button></div>' : '') + '</td>' +
-        '<td>' + (confirmada(i) ? '<input type="checkbox" class="presenca" data-id="' + esc(i.id) + '"' + (i.presente ? ' checked' : '') + ' aria-label="Presença de ' + esc(i.nome) + '">' : '') + '</td>' +
+        '<td>' + (confirmada(i) ? '<input type="checkbox" class="presenca" data-id="' + esc(i.id) + '"' + (i.presente ? ' checked' : '') + ' aria-label="Presença de ' + esc(i.nome) + '">' +
+          '<a class="etq-link" href="/evento/nr1-estrategica/etiquetas/?id=' + encodeURIComponent(i.id) + '" target="_blank" rel="noopener" title="Abrir a etiqueta de ' + esc(i.nome) + '">Etiqueta</a>' : '') + '</td>' +
         '</tr>';
     }).join('');
   }
@@ -668,6 +688,40 @@ select{width:auto;min-width:170px}
       alert('Guia enviado para ' + feitos + ' pessoa(s)' + (falhas ? '; ' + falhas + ' falharam (tente de novo).' : '.'));
       b.disabled = false; return carrega(false);
     });
+  });
+
+  /* ---- inscrição na hora (porta do evento) ---- */
+  var dNH = $('dlgNaHora'), fNH = $('formNaHora');
+  function abreNaHora() {
+    fNH.reset(); $('erroNaHora').hidden = true; $('okNaHora').hidden = true; $('acNaHora').hidden = false; $('acNaHoraOk').hidden = true;
+    Array.prototype.forEach.call(fNH.elements, function (el) { el.disabled = false; });
+    dNH.showModal(); fNH.elements.nome.focus();
+  }
+  $('btnNaHora').addEventListener('click', abreNaHora);
+  $('outraNaHora').addEventListener('click', abreNaHora);
+  $('cancelaNaHora').addEventListener('click', function () { dNH.close(); });
+  fNH.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var el = fNH.elements, er = $('erroNaHora'); er.hidden = true;
+    var corpo = { acao: 'na_hora', nome: el.nome.value.trim(), celular: el.celular.value, cargo: el.cargo.value.trim(), empresa: el.empresa.value.trim(), email: el.email.value.trim(), presente: el.presente.checked };
+    if (corpo.nome.length < 2) { er.textContent = 'Informe o nome.'; er.hidden = false; el.nome.focus(); return; }
+    var dig = String(corpo.celular).replace(/\D/g, '');
+    if (dig && dig.length < 10) { er.textContent = 'Telefone incompleto: use DDD + número (ou deixe em branco).'; er.hidden = false; el.celular.focus(); return; }
+    var chaveNome = function (v) { return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase(); };
+    var dup = (estado.dados ? estado.dados.inscritos : []).filter(function (i) { return chaveNome(i.nome) === chaveNome(corpo.nome); })[0];
+    if (dup && !confirm('Já existe ' + dup.nome + ' na lista (' + (dup.empresa || dup.email || 'sem empresa') + ', ' + (ROT_STATUS[dup.status] || dup.status) + '). Criar outra inscrição mesmo assim?')) return;
+    $('salvaNaHora').disabled = true; $('salvaNaHora').textContent = 'Inscrevendo…';
+    api({ metodo: 'POST', corpo: corpo }).then(function (r) {
+      $('salvaNaHora').disabled = false; $('salvaNaHora').textContent = 'Inscrever';
+      if (r.http !== 200 || !r.j.inscricao) { er.textContent = r.j.erro || 'Não foi possível inscrever agora.'; er.hidden = false; return; }
+      var i = r.j.inscricao;
+      $('okNaHora').textContent = 'Inscrição de ' + i.nome + ' feita' + (i.presente ? ', já com check-in' : '') + '. Agora é só imprimir a etiqueta.';
+      $('okNaHora').hidden = false; $('acNaHora').hidden = true; $('acNaHoraOk').hidden = false;
+      Array.prototype.forEach.call(fNH.elements, function (x) { if (x.tagName === 'INPUT') x.disabled = true; });
+      $('etqNaHora').href = '/evento/nr1-estrategica/etiquetas/?id=' + encodeURIComponent(i.id);
+      $('etqNaHora').focus();
+      carrega(true);
+    }).catch(function () { $('salvaNaHora').disabled = false; $('salvaNaHora').textContent = 'Inscrever'; er.textContent = 'Sem conexão. Tente de novo.'; er.hidden = false; });
   });
 
   carrega(false).then(function () { if (estado.dados) agenda(); });

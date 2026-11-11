@@ -383,7 +383,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     var a = $('aviso'), t = '', c = '';
     if(modo === 'inscrito' && sel){
       if(!confirmada(sel)){ t = sel.status === 'pendente' ? 'Inscrição aguardando pagamento. Confira com a equipe antes de entregar o crachá.' : 'Inscrição '+(sel.status === 'cancelado' ? 'cancelada' : 'recusada')+'. Confira com a equipe antes de entregar o crachá.'; c = 'av'; }
-      else if(sel.presente){ t = sel.nome+' já fez check-in. Dá para imprimir de novo, se precisar.'; c = 'ok'; }
+      else if(sel.presente){ t = sel.nome+' já está com check-in. É só imprimir a etiqueta.'; c = 'ok'; }
       else { t = 'Inscrição confirmada: '+sel.nome+(sel.cupom ? ' · '+sel.cupom : '')+'.'; c = 'ok'; }
     } else if(modo === 'nahora'){ t = 'Inscrição na hora: a pessoa entra na lista como convidada e já com check-in.'; c = 'av'; }
     a.textContent = t; a.className = 'aviso '+c; a.hidden = !t;
@@ -392,7 +392,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   function botoes(){
     var temNome = !!limpa($('nome').value), p = $('principal'), f = $('addFila');
     if(modo === 'nahora'){ p.textContent = 'Inscrever, fazer check-in e imprimir'; f.textContent = 'Inscrever e pôr na folha A4'; }
-    else if(modo === 'inscrito' && sel && sel.presente){ p.textContent = 'Imprimir de novo'; f.textContent = 'Pôr na folha A4'; }
+    else if(modo === 'inscrito' && sel && sel.presente){ p.textContent = 'Imprimir etiqueta'; f.textContent = 'Pôr na folha A4'; }
     else { p.textContent = 'Fazer check-in e imprimir'; f.textContent = 'Check-in e pôr na folha A4'; }
     p.disabled = f.disabled = !(temNome && modo !== 'vazio');
   }
@@ -448,7 +448,13 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   setInterval(function(){ if(!document.hidden && !$('tela').hidden) carrega(); }, 60000);
 
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(previa);
-  previa(); desenhaFila(); carrega().then(function(){ if(!$('tela').hidden) $('busca').focus(); });
+  /* vindo do painel (?id=...): já abre a pessoa escolhida */
+  var pedido = new URLSearchParams(location.search).get('id');
+  previa(); desenhaFila(); carrega().then(function(){
+    if($('tela').hidden) return;
+    var i = pedido && lista.filter(function(x){ return x.id === pedido; })[0];
+    if(i){ $('busca').value = i.nome; escolhe(i); $('principal').focus(); } else $('busca').focus();
+  });
 })();
 </script>
 </body>

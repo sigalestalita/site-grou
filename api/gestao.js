@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
         const linha = await db.insereNaHora({
           chave: 'h:nr1-estrategica:' + require('crypto').randomUUID(), evento: 'nr1-estrategica', tipo: 'convidado', cupom: 'NAHORA', desconto: 100, valor: 0,
           nome, email, celular: celular || null, cargo: txt(b.cargo, 120) || null, empresa: txt(b.empresa, 120) || null,
-          aceite: true, status: 'confirmado', presente: true
+          aceite: true, status: 'confirmado', presente: b.presente !== false
         });
         console.log('inscrição na hora:', linha && linha.id, 'por', u.email);
         return c.responde(res, 200, { ok: true, inscricao: linha });

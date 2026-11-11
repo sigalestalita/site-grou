@@ -43,6 +43,9 @@ input:focus{outline:none;border-color:var(--eletrico);box-shadow:0 0 0 3px rgba(
 .t-pend{background:var(--amarelo-f);color:var(--amarelo)}
 .t-canc{background:var(--erro-f);color:var(--erro)}
 .nada{margin:12px 0 0;font-size:14px;color:var(--texto)}
+.qr{border:2px solid var(--ciano);background:#f3fcfb}
+.qr .res{margin-top:0;max-height:300px}
+.qr .res li button{background:#fff}
 .nahora{margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:var(--nevoa);font-size:14px}
 form{display:grid;gap:12px}
 label{display:grid;gap:5px;font-weight:600;font-size:14px}
@@ -139,6 +142,11 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 
   <div class="grade">
     <div class="col">
+      <section class="cartao qr" id="cardQr" aria-labelledby="tQr" hidden>
+        <h2 id="tQr">Inscritos pelo QR code, aguardando etiqueta <span id="nQr" class="tag t-pend"></span></h2>
+        <ul class="res" id="resQr"></ul>
+      </section>
+
       <section class="cartao" aria-labelledby="tBusca">
         <h2 id="tBusca">1. Encontre a pessoa</h2>
         <input class="busca" id="busca" type="search" placeholder="Nome, empresa, e-mail ou telefone" autocomplete="off" aria-label="Buscar inscrito">
@@ -191,6 +199,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
         <b>Como funciona</b>
         <ul>
           <li><b>Inscrito:</b> busque, confira e clique em “Fazer check-in e imprimir”. O check-in aparece na hora no painel.</li>
+          <li><b>Inscritos pelo QR code:</b> quem se inscreve sozinho pelo cartaz aparece no quadro verde, no topo, em até 15 segundos. Clique no nome e imprima.</li>
           <li><b>Não está na lista:</b> “Inscrever na hora” cria a inscrição como convidado (cupom NAHORA), já com check-in.</li>
           <li>Ajustes no nome, cargo ou empresa de quem já é inscrito valem só para a etiqueta. O cadastro não muda.</li>
           <li>Na impressão: escala 100% (ou “Tamanho real”) e margens “Nenhuma”.</li>
@@ -334,8 +343,18 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       lista = (r.j.inscritos || []).map(function(i){ i._b = sem([i.nome,i.email,i.empresa,i.cargo,String(i.celular||'').replace(/\D/g,'')].join(' ')); return i; });
       if(sel){ var s = lista.filter(function(i){ return i.id === sel.id; })[0]; if(s) sel = s; }
       $('atualizado').textContent = 'Lista de '+new Date(r.j.geradoEm).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'});
-      contador(); busca(); aviso();
+      contador(); filaQr(); busca(); aviso();
     }).catch(function(){ $('erroGeral').textContent = 'Sem conexão. Confira a internet e tente de novo.'; $('erroGeral').hidden = false; });
+  }
+  /* quem se inscreveu sozinho pelo QR da porta e ainda não pegou o crachá */
+  function filaQr(){
+    var q = lista.filter(function(i){ return i.cupom === 'QRPORTA' && confirmada(i) && !i.presente; })
+      .sort(function(a,b){ return String(a.criado_em||'').localeCompare(String(b.criado_em||'')); });
+    $('cardQr').hidden = !q.length; $('nQr').textContent = q.length;
+    $('resQr').innerHTML = q.map(function(i){
+      var h = i.criado_em ? new Date(i.criado_em).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}) : '';
+      return '<li><button type="button" data-id="'+esc(i.id)+'" aria-pressed="'+(sel && sel.id === i.id)+'"><span class="p"><b>'+esc(i.nome)+'</b><small>'+esc([i.cargo,i.empresa].filter(Boolean).join(' · ') || 'sem cargo e empresa')+'</small></span><span class="tags"><span class="tag t-ok">'+esc(h)+'</span></span></button></li>';
+    }).join('');
   }
   function contador(){
     var c = lista.filter(confirmada);
@@ -371,7 +390,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     sel = i; modo = 'inscrito';
     $('nome').value = i.nome || ''; $('fone').value = i.celular || ''; $('cargo').value = i.cargo || ''; $('empresa').value = i.empresa || '';
     $('completo').checked = false; $('boxEmail').hidden = true;
-    busca(); previa(); aviso();
+    busca(); filaQr(); previa(); aviso();
   }
   function naHora(){
     sel = null; modo = 'nahora';
@@ -405,7 +424,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       if(!confirmada(sel) && !confirm(sel.nome+': a inscrição não está confirmada ('+sel.status+'). Fazer o check-in mesmo assim?')) return Promise.resolve(false);
       return api({corpo:{acao:'presenca', id:sel.id, valor:true}}).then(function(r){
         if(r.http !== 200){ alert(r.j.erro || 'Não foi possível registrar o check-in. A etiqueta não foi impressa.'); return false; }
-        sel.presente = true; contador(); busca(); aviso(); toast('Check-in de '+sel.nome+' registrado.'); return true;
+        sel.presente = true; contador(); filaQr(); busca(); aviso(); toast('Check-in de '+sel.nome+' registrado.'); return true;
       });
     }
     if(modo === 'nahora'){
@@ -424,6 +443,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 
   $('busca').addEventListener('input', busca);
   $('busca').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ var b = $('res').querySelector('button'); if(b){ e.preventDefault(); b.click(); } } });
+  $('resQr').addEventListener('click', function(e){ var b = e.target.closest('[data-id]'); if(!b) return; var i = lista.filter(function(x){ return x.id === b.dataset.id; })[0]; if(i){ $('busca').value = i.nome; escolhe(i); } });
   $('res').addEventListener('click', function(e){ var b = e.target.closest('[data-id]'); if(!b) return; var i = lista.filter(function(x){ return x.id === b.dataset.id; })[0]; if(i) escolhe(i); });
   $('btnNaHora').addEventListener('click', naHora);
   ['nome','fone','cargo','empresa','completo'].forEach(function(id){ $(id).addEventListener('input', previa); });
@@ -445,7 +465,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   $('imprimirFila').addEventListener('click', function(){ if(fila.length) imprime(folhasA4(fila), '@page{size:A4;margin:0}'); });
   $('limparFila').addEventListener('click', function(){ if(confirm('Tirar todas as etiquetas da folha?')){ fila = []; salvaFila(); desenhaFila(); } });
   window.addEventListener('resize', escalaPrevia);
-  setInterval(function(){ if(!document.hidden && !$('tela').hidden) carrega(); }, 60000);
+  setInterval(function(){ if(!document.hidden && !$('tela').hidden) carrega(); }, 15000);
 
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(previa);
   /* vindo do painel (?id=...): já abre a pessoa escolhida */

@@ -385,7 +385,7 @@ select{width:auto;min-width:170px}
     cat.cem.forEach(function (c) { linhas.push({ cod: c, nome: c, beneficio: '100% · gratuito', tag: '100' }); });
     cat.metade.forEach(function (c) { linhas.push({ cod: c, nome: c, beneficio: '50% · ' + BRL(estado.dados.precoMetade), tag: '50' }); });
     var conhecidos = {}; linhas.forEach(function (l) { conhecidos[l.cod] = 1; });
-    L.forEach(function (i) { if (i.cupom && !conhecidos[i.cupom]) { conhecidos[i.cupom] = 1; linhas.push({ cod: i.cupom, nome: i.cupom, beneficio: i.cupom === 'NAHORA' ? 'inscrição na porta do evento' : 'cupom fora da lista', tag: i.cupom === 'NAHORA' ? '100' : '0' }); } });
+    L.forEach(function (i) { if (i.cupom && !conhecidos[i.cupom]) { conhecidos[i.cupom] = 1; linhas.push({ cod: i.cupom, nome: i.cupom, beneficio: i.cupom === 'NAHORA' ? 'inscrição na porta, pela equipe' : i.cupom === 'QRPORTA' ? 'inscrição na porta, pelo QR code' : 'cupom fora da lista', tag: (i.cupom === 'NAHORA' || i.cupom === 'QRPORTA') ? '100' : '0' }); } });
     var dados = linhas.map(function (l) {
       var m = L.filter(function (i) { return l.cod === '__sem' ? !i.cupom : i.cupom === l.cod; });
       return { l: l, ins: m.length, conf: m.filter(confirmada).length, ag: m.filter(function (i) { return i.status === 'pendente'; }).length,
@@ -428,7 +428,7 @@ select{width:auto;min-width:170px}
         '<td style="white-space:nowrap">' + esc(data(i.criado_em)) + '</td>' +
         '<td class="pessoa"><b>' + esc(i.nome) + '</b><span>' + esc([i.cargo, i.empresa].filter(Boolean).join(' · ')) + '</span></td>' +
         '<td class="contato"><span>' + esc(i.email) + '</span>' + (tel ? '<a href="https://wa.me/55' + esc(tel) + '" target="_blank" rel="noopener">' + esc(i.celular) + '</a>' : '') + '</td>' +
-        '<td><span class="tag tag--' + tag + '">' + tipo + (i.desconto ? ' · ' + i.desconto + '%' : '') + '</span>' + (i.cupom ? '<span class="sub-linha cod">' + esc(i.cupom) + (i.cupom === 'NAHORA' ? ' · na porta' : '') + '</span>' : '') + '</td>' +
+        '<td><span class="tag tag--' + tag + '">' + tipo + (i.desconto ? ' · ' + i.desconto + '%' : '') + '</span>' + (i.cupom ? '<span class="sub-linha cod">' + esc(i.cupom) + (i.cupom === 'NAHORA' ? ' · na porta' : i.cupom === 'QRPORTA' ? ' · QR da porta' : '') + '</span>' : '') + '</td>' +
         '<td class="n">' + (i.tipo === 'convidado' ? '—' : BRL(i.valor)) + '</td>' +
         '<td>' + pg + '</td>' +
         '<td>' + emailsMini(i) + '</td>' +

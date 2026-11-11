@@ -89,6 +89,8 @@ const atualizaEmail = async (id, email) => ((await rest('inscricoes?id=eq.' + en
 const porId = async (id) => ((await rest('inscricoes?id=eq.' + encodeURIComponent(id) + '&limit=1')) || [])[0] || null;
 /* inscrição feita na porta do evento, para quem não se inscreveu pela página (já entra com check-in) */
 const insereNaHora = async (linha) => ((await rest('inscricoes', { metodo: 'POST', corpo: linha, cabecalhos: { Prefer: 'return=representation' } })) || [])[0] || null;
+/* inscrições do evento com o mesmo celular ou e-mail (filtros já validados: só dígitos e e-mail sem vírgula/parênteses) */
+const buscaPorContato = (evento, filtros) => rest('inscricoes?select=nome,tipo,status&evento=eq.' + encodeURIComponent(evento) + '&or=' + encodeURIComponent('(' + filtros.join(',') + ')') + '&limit=20');
 const marcaPresenca = (id, valor) => rest('inscricoes?id=eq.' + encodeURIComponent(id), { metodo: 'PATCH', corpo: { presente: !!valor }, cabecalhos: { Prefer: 'return=minimal' } });
 
 /* ---- e-mail de confirmação (convidados com cupom de 100%) ---- */
@@ -111,4 +113,4 @@ const totemLista = (teste) => rest('totem_respostas?select=area,humor,emocao,res
 const acesso = async (email) => ((await rest('painel_acessos?email=eq.' + encodeURIComponent(email) + '&limit=1')) || [])[0] || null;
 const atualizaAcesso = (email, campos) => rest('painel_acessos?email=eq.' + encodeURIComponent(email), { metodo: 'PATCH', corpo: campos, cabecalhos: { Prefer: 'return=minimal' } });
 
-module.exports = { insereNaHora, atualizaEmail, porId, chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaManual, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };
+module.exports = { buscaPorContato, insereNaHora, atualizaEmail, porId, chave, acesso, atualizaAcesso, ativo, grava, sincroniza, statusInterno, lista, marcaPresenca, confirmaManual, confirmaLink, avisaPagos, gravaLead, listaLeads, porChave, marcaEmail, semConfirmacao, totemGrava, totemLista };

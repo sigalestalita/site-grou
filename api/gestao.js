@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
     const linhas = await db.lista('nr1-estrategica');
     /* versão enxuta para a tela de credenciamento e etiquetas */
     if (req.query && req.query.leve) {
-      const campos = ['id', 'nome', 'email', 'celular', 'cargo', 'empresa', 'tipo', 'status', 'cupom', 'presente'];
+      const campos = ['id', 'nome', 'email', 'celular', 'cargo', 'empresa', 'tipo', 'status', 'cupom', 'presente', 'criado_em'];
       return c.responde(res, 200, { geradoEm: new Date().toISOString(), usuario: u.nome || u.email,
         inscritos: linhas.map((i) => { const o = {}; campos.forEach((k) => { o[k] = i[k]; }); return o; }) });
     }

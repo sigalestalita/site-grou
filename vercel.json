@@ -65,6 +65,11 @@
       "permanent": false
     },
     {
+      "source": "/credenciamento/",
+      "destination": "/evento/nr1-estrategica/porta/",
+      "permanent": false
+    },
+    {
       "source": "/salessprint/",
       "destination": "/demo-pda/?utm_source=salessprint&utm_medium=qrcode&utm_campaign=sales-sprint",
       "permanent": false

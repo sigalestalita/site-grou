@@ -8,7 +8,6 @@
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Montserrat:wght@500;700&display=swap">
-<script src="qrcode.min.js"></script>
 <style>
 :root{--royal:#120573;--noite:#07033a;--eletrico:#1b3fd6;--ciano:#6cd8cf;--texto:#4a4d63;--suave:#7c7a96;--linha:#e4e7f0;--nevoa:#eef0f7;--fundo:#f6f7fb;--verde:#0f8778;--verde-f:#e3f6f1;--azul-f:#e8edff;--erro:#b3283c;--erro-f:#fdecee;--amarelo:#9a5b00;--amarelo-f:#fff4e0}
 *{box-sizing:border-box}
@@ -85,21 +84,14 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:12px 18px;border-radius:12px;background:var(--noite);color:#fff;font-size:14px;box-shadow:0 12px 30px rgba(7,3,58,.35);z-index:5;max-width:calc(100vw - 32px)}
 @media (max-width:900px){.grade{grid-template-columns:minmax(0,1fr)}}
 
-/* ===== etiqueta: 82 × 30 mm, impressa uma embaixo da outra num rolo de 82 mm de largura ===== */
-.e{width:82mm;height:30mm;position:relative;background:#fff;display:flex;align-items:center;gap:3mm;padding:0 3mm 0 4.5mm;overflow:hidden;font-family:'Poppins',sans-serif;color:#07033a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.e.semqr{justify-content:center;text-align:center;padding:0 6mm}
-.e.semqr .ln{margin-left:auto;margin-right:auto}
+/* ===== etiqueta: 82 × 30 mm, só texto (sem QR), impressa uma embaixo da outra num rolo de 82 mm ===== */
+.e{width:82mm;height:30mm;position:relative;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 5mm;overflow:hidden;font-family:'Poppins',sans-serif;color:#07033a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .e .tx{flex:1;min-width:0}
-.e .nm{font-weight:600;letter-spacing:-.025em;line-height:1.04;font-size:5.4mm;white-space:nowrap}
-.e .nm span{display:inline-block;transform-origin:left center}
-.e.semqr .nm span{transform-origin:center}
-.e .ln{display:block;width:10mm;height:.6mm;border-radius:1mm;background:linear-gradient(90deg,#1b3fd6,#6cd8cf);margin:1.7mm 0 1.5mm}
-.e .cg{font-family:'Montserrat',sans-serif;font-weight:700;font-size:2.5mm;line-height:1.25;color:#120573;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.e .em{font-family:'Montserrat',sans-serif;font-weight:500;font-size:2.5mm;line-height:1.25;color:#4a4d63;margin-top:.4mm;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-.e .q{flex:none;width:22mm;display:flex;flex-direction:column;align-items:center}
-.e .q > svg{width:21.5mm;height:21.5mm;display:block;fill:#07033a}
-.e .q small{display:flex;align-items:center;gap:.7mm;margin-top:1mm;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.7mm;letter-spacing:.02em;color:#120573;white-space:nowrap}
-.e .q small svg{width:2.2mm;height:2.2mm;color:#1fa855}
+.e .nm{display:flex;justify-content:center;font-weight:600;letter-spacing:-.025em;line-height:1.04;font-size:7.6mm;white-space:nowrap}
+.e .nm span{display:inline-block;transform-origin:center}
+.e .ln{display:block;width:12mm;height:.7mm;border-radius:1mm;background:linear-gradient(90deg,#1b3fd6,#6cd8cf);margin:1.9mm auto 1.7mm}
+.e .cg{font-family:'Montserrat',sans-serif;font-weight:700;font-size:3.5mm;line-height:1.2;color:#120573;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.e .em{font-family:'Montserrat',sans-serif;font-weight:500;font-size:3.5mm;line-height:1.2;color:#4a4d63;margin-top:.5mm;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 
 /* ===== impressão ===== */
 #impressao{position:fixed;left:0;top:0;visibility:hidden;pointer-events:none;z-index:-1}
@@ -213,7 +205,6 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var ZAP = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>';
   var MIN = {da:1,de:1,'do':1,dos:1,das:1,e:1,em:1,no:1,na:1};
   var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
   var limpa = function(s){ return String(s||'').replace(/\s+/g,' ').trim(); };
@@ -246,16 +237,10 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     var d = String(c||'').replace(/\D/g,'');
     if(!d) return {num:null, msg:'', tipo:''};
     if((d.length === 12 || d.length === 13) && d.indexOf('55') === 0) d = d.slice(2);
-    if(d.length === 11 && d.charAt(2) === '9') return {num:d, msg:'QR vai abrir o WhatsApp de ('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7), tipo:'ok'};
+    if(d.length === 11 && d.charAt(2) === '9') return {num:d, msg:'WhatsApp: ('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7), tipo:'ok'};
     if(d.length === 10 && /[6789]/.test(d.charAt(2))){ var n = d.slice(0,2)+'9'+d.slice(2); return {num:n, msg:'Acrescentei o 9: ('+n.slice(0,2)+') '+n.slice(2,7)+'-'+n.slice(7), tipo:'av'}; }
-    if(d.length === 10) return {num:null, msg:'Parece telefone fixo. A etiqueta sai sem QR.', tipo:'er'};
-    return {num:null, msg:'Número incompleto. Use DDD + celular. Sem número válido, sai sem QR.', tipo:'er'};
-  }
-  function qrSvg(texto){
-    var q = qrcode(0,'M'); q.addData(texto); q.make();
-    var n = q.getModuleCount(), p = '';
-    for(var y=0;y<n;y++) for(var x=0;x<n;x++) if(q.isDark(y,x)) p += 'M'+x+' '+y+'h1v1h-1z';
-    return '<svg viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges"><path d="'+p+'"/></svg>';
+    if(d.length === 10) return {num:null, msg:'Parece telefone fixo. Confira se é o celular.', tipo:'er'};
+    return {num:null, msg:'Número incompleto. Use DDD + celular.', tipo:'er'};
   }
   function dados(){
     var nome = caixa($('nome').value), f = fone($('fone').value);
@@ -264,15 +249,17 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     return r;
   }
   function etq(e){
-    return '<div class="e'+(e.link?'':' semqr')+'"><div class="tx"><div class="nm"><span>'+esc(e.curto||'Nome')+'</span></div><i class="ln"></i>'+
-      (e.cargo?'<div class="cg">'+esc(e.cargo)+'</div>':'')+(e.empresa?'<div class="em">'+esc(e.empresa)+'</div>':'')+'</div>'+
-      (e.link?'<div class="q">'+qrSvg(e.link)+'<small>'+ZAP+'Me chama no WhatsApp</small></div>':'')+'</div>';
+    return '<div class="e"><div class="tx"><div class="nm"><span>'+esc(e.curto||'Nome')+'</span></div><i class="ln"></i>'+
+      (e.cargo?'<div class="cg">'+esc(e.cargo)+'</div>':'')+(e.empresa?'<div class="em">'+esc(e.empresa)+'</div>':'')+'</div></div>';
   }
   function ajusta(raiz){
     raiz.querySelectorAll('.nm').forEach(function(n){
       var s = n.firstElementChild; s.style.transform=''; n.style.whiteSpace=''; n.style.fontSize='';
       var k = Math.min(1, n.clientWidth / s.scrollWidth);
-      if(k < 1){ if(k < .62){ n.style.whiteSpace='normal'; n.style.fontSize='4.2mm'; } else s.style.transform='scale('+k+')'; }
+      if(k < 1){ if(k < .62){ n.style.whiteSpace='normal'; n.style.fontSize='5.6mm'; } else s.style.transform='scale('+k+')'; }
+      /* nome quebrado em várias linhas: diminui até o bloco caber na altura da etiqueta */
+      var e = n.closest('.e'), tx = n.parentNode, mm = e.clientHeight / 30, t = 5.6;
+      while(n.style.whiteSpace === 'normal' && tx.offsetHeight > e.clientHeight - 3*mm && t > 3.6){ t -= .3; n.style.fontSize = t+'mm'; }
     });
   }
   function escalaPrevia(){
@@ -303,7 +290,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     var ul = $('fila'); ul.innerHTML = '';
     fila.forEach(function(e,i){
       var li = document.createElement('li');
-      li.innerHTML = '<span><b>'+esc(e.curto)+'</b> <small>'+esc([e.cargo,e.empresa].filter(Boolean).join(' · '))+(e.link?'':' · sem QR')+'</small></span>';
+      li.innerHTML = '<span><b>'+esc(e.curto)+'</b> <small>'+esc([e.cargo,e.empresa].filter(Boolean).join(' · '))+'</small></span>';
       var b = document.createElement('button'); b.type='button'; b.className='lixo'; b.textContent='Tirar';
       b.onclick = function(){ fila.splice(i,1); salvaFila(); desenhaFila(); };
       li.appendChild(b); ul.appendChild(li);

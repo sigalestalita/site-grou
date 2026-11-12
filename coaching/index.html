@@ -706,6 +706,15 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
 }
 </style>
 <script>document.documentElement.classList.add("js");</script>
+<style id="metodo-claro">
+#metodo .step{border-color:var(--line)}
+#metodo .step .n{color:var(--red-txt)}
+#metodo .step p{color:var(--muted)}
+#metodo .cp{border-color:var(--line);background:var(--surface)}
+#metodo .cp b{color:var(--ink)}
+#metodo .cp span{color:var(--muted)}
+#metodo .cp .tg{color:var(--red-txt)}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -748,17 +757,20 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
   <nav class="nav" id="railnav">
     <span class="nav-line"></span><span class="nav-prog" id="prog"></span>
     <a href="#inicio">Início</a>
-    <a href="#cenario">O cenário</a>
+    <a href="#plataforma">A plataforma</a>
+    <a href="#metodo">Como funciona</a>
     <a class="grp b2b" href="#empresas" aria-expanded="false" aria-controls="sub-empresas"><span>Para empresas</span> <svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3.5 1.5 7 5l-3.5 3.5"/></svg></a>
     <span class="subs" id="sub-empresas" data-open="false"><span class="subs-in">
       <a class="sub b2b" href="#coaching">Coaching</a>
+      <a class="sub b2b" href="#mentoria">Mentoria On-Demand</a>
+      <a class="sub b2b" href="#transition">Transition</a>
     </span></span>
     <a class="grp b2c" href="#voce" aria-expanded="false" aria-controls="sub-voce"><span>Para você</span> <svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3.5 1.5 7 5l-3.5 3.5"/></svg></a>
     <span class="subs" id="sub-voce" data-open="false"><span class="subs-in">
-      <a class="sub b2c" href="#carreira">Planeje sua carreira</a>
+      <a class="sub b2c" href="#carreira">Planejamento de Carreira</a>
       <a class="sub b2c" href="#bussola">Bússola</a>
     </span></span>
-    <a href="#plataforma">A plataforma</a>
+    <a href="#contratacao">Contratação</a>
     <a href="#especialistas">Especialistas</a>
     <a href="#contato">Contato</a>
   </nav>
@@ -786,17 +798,20 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
   <nav class="nav" id="drawernav">
     <span class="nav-line"></span>
     <a href="#inicio">Início</a>
-    <a href="#cenario">O cenário</a>
+    <a href="#plataforma">A plataforma</a>
+    <a href="#metodo">Como funciona</a>
     <a class="grp b2b" href="#empresas" aria-expanded="false" aria-controls="dsub-empresas"><span>Para empresas</span> <svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3.5 1.5 7 5l-3.5 3.5"/></svg></a>
     <span class="subs" id="dsub-empresas" data-open="false"><span class="subs-in">
       <a class="sub b2b" href="#coaching">Coaching</a>
+      <a class="sub b2b" href="#mentoria">Mentoria On-Demand</a>
+      <a class="sub b2b" href="#transition">Transition</a>
     </span></span>
     <a class="grp b2c" href="#voce" aria-expanded="false" aria-controls="dsub-voce"><span>Para você</span> <svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3.5 1.5 7 5l-3.5 3.5"/></svg></a>
     <span class="subs" id="dsub-voce" data-open="false"><span class="subs-in">
-      <a class="sub b2c" href="#carreira">Planeje sua carreira</a>
+      <a class="sub b2c" href="#carreira">Planejamento de Carreira</a>
       <a class="sub b2c" href="#bussola">Bússola</a>
     </span></span>
-    <a href="#plataforma">A plataforma</a>
+    <a href="#contratacao">Contratação</a>
     <a href="#especialistas">Especialistas</a>
     <a href="#contato">Contato</a>
   </nav>
@@ -807,7 +822,7 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
 </aside>
 
 <main>
-<!-- ================================================================ hero -->
+<!-- ============================================================= inicio -->
 <section class="hero" id="inicio">
   <span class="gfx gfx-hero" data-par="-.16"><svg viewBox="0 0 200 200"><use href="#sg-wave"/></svg></span>
   <div class="wrap">
@@ -855,456 +870,8 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
     </dl>
   </div>
 </section>
-<!-- ============================================================= clientes -->
-<div class="clients">
-  <p class="clients-h">Empresas que confiam na Self Guru</p>
-  <div class="marquee">
-    <div class="track" id="track">
-      <img src="/assets/img/coaching/07-dell.png" alt="Dell"><img src="/assets/img/coaching/08-gerdau.png" alt="Gerdau"><img src="/assets/img/coaching/09-sap.png" alt="SAP">
-      <img src="/assets/img/coaching/10-panvel.png" alt="Panvel"><img src="/assets/img/coaching/11-99.png" alt="99">
-    </div>
-  </div>
-</div>
-<!-- ============================================================== índices -->
-<section class="ink" style="padding-block:clamp(3.4rem,6vw,5.5rem)">
-  <div class="wrap rv">
-    <div class="two start">
-      <div>
-        <p class="eyebrow r">Resultados</p>
-        <h2 style="font-size:var(--s-2)">O que dizem quem já passou pelo programa.</h2>
-      </div>
-      <p class="lead" style="font-size:var(--s-0)">Notas atribuídas pelos clientes atendidos ao fim das jornadas de desenvolvimento.</p>
-    </div>
-    <div class="gauges">
-      <figure class="gauge" style="margin:0">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Nota 9,5 de 10">
-          <circle class="tr" cx="60" cy="60" r="50"></circle>
-          <circle class="arc" cx="60" cy="60" r="50" style="--dash:314.2;--off:15.7"></circle>
-          <text class="val" x="60" y="60" text-anchor="middle" dominant-baseline="central">9,5</text>
-        </svg>
-        <span class="cap"></span>
-        <p>Efetividade atribuída pelos clientes atendidos</p>
-      </figure>
-      <figure class="gauge" style="margin:0">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Nota 9,9 de 10">
-          <circle class="tr" cx="60" cy="60" r="50"></circle>
-          <circle class="arc" cx="60" cy="60" r="50" style="--dash:314.2;--off:3.1"></circle>
-          <text class="val" x="60" y="60" text-anchor="middle" dominant-baseline="central">9,9</text>
-        </svg>
-        <span class="cap"></span>
-        <p>Qualidade do atendimento da especialista</p>
-      </figure>
-      <figure class="gauge" style="margin:0">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Nota 9,7 de 10">
-          <circle class="tr" cx="60" cy="60" r="50"></circle>
-          <circle class="arc" cx="60" cy="60" r="50" style="--dash:314.2;--off:9.4"></circle>
-          <text class="val" x="60" y="60" text-anchor="middle" dominant-baseline="central">9,7</text>
-        </svg>
-        <span class="cap"></span>
-        <p>Índice de recomendação</p>
-      </figure>
-    </div>
-  </div>
-</section>
-<!-- =============================================================== cenário -->
-<section id="cenario">
-  <span class="gfx gfx-cen" data-par=".1"><svg viewBox="0 0 200 200"><use href="#sg-ring-thin"/></svg></span>
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow r">Tendências em desenvolvimento de lideranças</p>
-        <h2>Desenvolver talentos é uma dor constante das empresas.</h2>
-      </div>
-      <div class="txt rv">
-        <p>Há urgência por aprendizado personalizado, direcionado a <span class="em-r">desafios e mudanças reais</span> — poucos líderes estão alcançando o desenvolvimento necessário para enfrentar os principais desafios das empresas.</p>
-        <p>O cenário atual exige novas abordagens para fechar lacunas e preparar líderes para os desafios do amanhã.</p>
-      </div>
-    </div>
 
-    <div class="facts rv">
-      <div class="fact glow">
-        <span class="big">1 em 10</span>
-        <p>A cada 10 profissionais selecionados, apenas <strong>1 possui talento para liderar</strong>.</p>
-        <span class="src">Gallup</span>
-      </div>
-      <div class="fact glow">
-        <span class="big">1%</span>
-        <p>Há um gap na transferência de habilidades da sala de aula para o dia a dia: apenas 1% dos currículos das universidades contempla <strong>people skills</strong>.</p>
-        <span class="src">Formação</span>
-      </div>
-      <div class="fact glow">
-        <span class="big">One size<br>fits none</span>
-        <p>O mercado está se distanciando dos modelos de prateleira. <strong>A personalização é o futuro do desenvolvimento.</strong></p>
-        <span class="src">Mercado</span>
-      </div>
-    </div>
-
-    <div class="model rv">
-      <h3>Modelo de aprendizagem 70:20:10</h3>
-      <p class="sub">O modelo parte do princípio de que o aprendizado acontece assim — e é por isso que os encontros partem dos desafios reais de quem participa.</p>
-      <div class="bar">
-        <div class="mcol c70">
-          <div class="seg"><b>70%</b></div>
-          <p>a partir de experiências próprias e da vivência profissional do cotidiano.</p>
-        </div>
-        <div class="mcol c20">
-          <div class="seg"><b>20%</b></div>
-          <p>a partir de aprendizado informal e interações.</p>
-        </div>
-        <div class="mcol c10">
-          <div class="seg"><b>10%</b></div>
-          <p>pelo aprendizado formal.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- =============================================================== método -->
-<section class="ink" id="metodo">
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow r">Como funciona</p>
-        <h2>Do diagnóstico ao desenvolvimento acompanhado.</h2>
-        <p class="lead" style="margin-top:1.2rem">Objetivos, encontros e acompanhamento de evolução.</p>
-      </div>
-      <div class="steps rv">
-        <div class="step"><span class="n">01</span><h4>Alinhamento</h4><p>Objetivos construídos com líder, RH e especialista.</p></div>
-        <div class="step"><span class="n">02</span><h4>Assessments</h4><p>PDA, Dilemas de Gestão e Âncoras de Carreira, conforme o programa.</p></div>
-        <div class="step"><span class="n">03</span><h4>Encontros individuais</h4><p>Conversas estratégicas conectadas aos desafios reais do profissional.</p></div>
-        <div class="step"><span class="n">04</span><h4>Acompanhamento</h4><p>Pontos de verificação com gestor e RH.</p></div>
-        <div class="step"><span class="n">05</span><h4>Continuidade</h4><p>Encerramento com plano de continuidade e indicadores de evolução.</p></div>
-      </div>
-    </div>
-
-    <div class="rv" style="margin-top:clamp(3rem,6vw,4.6rem)">
-      <h3 style="font-size:var(--s-2)">Desenvolvimento conectado à pessoa e ao negócio.</h3>
-      <p style="margin-top:.6rem">Benefícios esperados dos programas Self Guru.</p>
-      <div class="compass">
-        <div class="cp"><span class="tg">01</span><b>Para o profissional</b><span>Autogestão, clareza sobre pontos fortes, comunicação com o time e decisões mais seguras e rápidas.</span></div>
-        <div class="cp"><span class="tg">02</span><b>Para a empresa</b><span>Times mais engajados e produtivos, acompanhamento em tempo real e desenvolvimento escalável com qualidade.</span></div>
-        <div class="cp"><span class="tg">03</span><b>Competências trabalhadas</b><span>Comunicação e feedback; gestão de pessoas e conflitos; inteligência emocional e autoconfiança; decisão e visão estratégica; adaptabilidade, autocuidado e equilíbrio.</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ============================================================== frentes -->
-<section id="frentes">
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow">Programas</p>
-        <h2>Qual momento pede acompanhamento?</h2>
-      </div>
-      <div class="txt rv">
-        <p>Escolha conforme o público e o desafio. O método é sempre o mesmo: mapear o comportamento com dados, colocar um especialista ao lado da pessoa e sustentar o processo dentro da plataforma. O que muda é quem contrata, o que se busca e como a jornada é conduzida.</p>
-      </div>
-    </div>
-    <div class="forks rv">
-      <a class="fork-card b2b glow" href="#empresas">
-        <span class="pill">B2B</span>
-        <h3>Para empresas</h3>
-        <p>Para o RH e as lideranças que precisam desenvolver pessoas, com gestor e RH dentro do processo, do alinhamento inicial ao encerramento.</p>
-        <ul><li><strong>Coaching</strong> · 6 ou 10 encontros em 90 dias</li><li><strong>Mentoria On-Demand</strong> · por quantidade de encontros</li><li><strong>Transition</strong> · 8 a 12 encontros</li></ul>
-        <span class="go">Ver o programa <span class="ar" aria-hidden="true">→</span></span>
-      </a>
-      <a class="fork-card b2c glow" href="#voce">
-        <span class="pill">B2C</span>
-        <h3>Para você</h3>
-        <p>Para profissionais decidindo o próximo passo e jovens escolhendo a primeira carreira. Contratado direto por você, sem empresa no meio do processo.</p>
-        <ul><li><strong>Planejamento de Carreira</strong> · 6 encontros em 90 dias</li><li><strong>Bússola</strong> · orientação profissional para jovens</li></ul>
-        <span class="go">Ver os programas <span class="ar" aria-hidden="true">→</span></span>
-      </a>
-    </div>
-  </div>
-</section>
-<!-- ============================================================= empresas -->
-<section class="alt pillar b2b" id="empresas">
-  <div class="wrap">
-    <div class="pillar-top rv">
-      <span class="pill">B2B</span>
-      <h2 class="pillar-h">Para empresas</h2>
-    </div>
-    <div class="two start">
-      <p class="lead rv">Desenvolvimento comportamental de lideranças contratado pela empresa, com objetivos alinhados ao negócio e acompanhamento do RH em tempo real.</p>
-      <div class="choose rv">
-        <div><i></i><span><strong>Quem contrata:</strong> RH, gestores e diretoria.</span></div>
-        <div><i></i><span><strong>Programas:</strong> Coaching, para coordenadores, gerentes e diretores; Mentoria On-Demand, para líderes com desafios pontuais de gestão; e Transition, para empresas que buscam cuidado no desligamento.</span></div>
-        <div><i></i><span><strong>Como acompanha:</strong> objetivos alinhados com líder, RH e especialista, pontos de verificação com gestor e RH e progresso da jornada em tempo real na plataforma.</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ============================================================== coaching -->
-<section class="b2b" id="coaching">
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow">Coaching · para empresas</p>
-        <h2>Coaching: do diagnóstico ao plano de ação.</h2>
-      </div>
-      <div class="txt rv">
-        <p>Programa que desenvolve líderes de modo <strong>personalizado e ágil</strong>, utilizando tecnologias para o autoconhecimento. Foi criado para atender <strong>todos os níveis de liderança</strong>, de forma rápida e conectada à prática diária, apoiando em suas jornadas de crescimento, alinhadas aos objetivos do negócio.</p>
-        <div class="choose" style="margin-top:0">
-          <div><i></i><span><strong>Para quem:</strong> coordenadores, gerentes e diretores.</span></div>
-          <div><i></i><span><strong>Duração:</strong> 90 dias.</span></div>
-          <div><i></i><span><strong>Encontros:</strong> 6 ou 10, online, com especialistas.</span></div>
-          <div><i></i><span><strong>Acompanhamento:</strong> RH e gestor.</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slider rv" data-slider style="margin-top:clamp(2.6rem,5vw,4rem)">
-      <div class="slider-head">
-        <h3 style="font-size:var(--s-2)">Como funciona</h3>
-        <div class="slider-nav"><button class="snav" type="button" data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 16 16"><path d="M10 2 4 8l6 6"/></svg></button><button class="snav" type="button" data-dir="1" aria-label="Próximo"><svg viewBox="0 0 16 16"><path d="M6 2l6 6-6 6"/></svg></button></div>
-      </div>
-      <div class="slider-track">
-        <article class="tl-card"><span class="n">01</span><h4>Encontros</h4>
-          <p>6 ou 10 encontros online com especialistas, conectados aos desafios práticos da realidade do profissional.</p></article>
-        <article class="tl-card"><span class="n">02</span><h4>Instrumentos</h4>
-          <p>Aplicação das ferramentas de assessment comportamental para gerar dados estratégicos de desenvolvimento.</p>
-          <span class="tag">PDA · Dilemas de Gestão · Âncoras de Carreira</span></article>
-        <article class="tl-card"><span class="n">03</span><h4>Acompanhamento</h4>
-          <p>RH e gestor acompanham a jornada, do alinhamento dos objetivos ao encerramento.</p></article>
-        <article class="tl-card"><span class="n">04</span><h4>Entrega</h4>
-          <p>Plano de ação comportamental e indicadores de evolução.</p></article>
-      </div>
-    </div>
-
-    <h3 style="font-size:var(--s-2);margin-top:clamp(2.6rem,5vw,4rem)" class="rv">Por que usar</h3>
-    <div class="benes rv">
-      <div class="bene"><i></i><b>Autoconhecimento e autogestão do próprio perfil</b></div>
-      <div class="bene"><i></i><b>Melhoria na abordagem comportamental do time</b></div>
-      <div class="bene"><i></i><b>Consolidação da relação com pares, liderança e time</b></div>
-      <div class="bene"><i></i><b>Auxílio na tomada de decisões</b></div>
-      <div class="bene"><i></i><b>Apoio na gestão das atividades diárias</b></div>
-      <div class="bene"><i></i><b>Ampliação da visão para resolver problemas</b></div>
-      <div class="bene"><i></i><b>Mais repertório em métodos e estratégias de gestão de pessoas</b></div>
-      <div class="bene"><i></i><b>Um espaço reservado para pensar a própria liderança</b></div>
-    </div>
-
-    <h3 style="font-size:var(--s-2);margin-top:clamp(2.6rem,5vw,4rem)" class="rv">Dois formatos</h3>
-    <div class="formats rv">
-      <div class="fmt">
-        <span class="k">06 <span>encontros</span></span>
-        <b>Jornada essencial</b>
-        <p>O ciclo completo do método — assessment, alinhamento, sessões individuais e encerramento — no formato mais direto.</p>
-        <ul><li>Assessment comportamental</li><li>Encontro inicial com RH e gestor</li><li>Sessões individuais com a especialista</li><li>Report de encerramento</li></ul>
-      </div>
-      <div class="fmt hi">
-        <span class="badge">Mais profundo</span>
-        <span class="k">10 <span>encontros</span></span>
-        <b>Jornada estendida</b>
-        <p>Para desafios de maior complexidade ou mudanças de escopo, com mais tempo de acompanhamento entre uma prática e outra.</p>
-        <ul><li>Tudo da jornada essencial</li><li>Mais quatro sessões individuais</li><li>Acompanhamento prolongado dos desafios do dia a dia</li></ul>
-      </div>
-    </div>
-    <p class="note">Investimento sob consulta. A proposta considera o programa escolhido, a quantidade de participantes e os encontros previstos, e tem validade de 30 dias.</p>
-  </div>
-</section>
-<!-- ============================================================= mentoria -->
-<section class="alt b2b" id="mentoria">
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow">Mentoria On-Demand · para empresas</p>
-        <h2>Um desafio. Uma conversa com especialista.</h2>
-        <div class="txt" style="margin-top:1.4rem">
-          <p>Orientação estratégica, <strong>sob medida e no momento certo</strong>, para decisões e desafios reais de gestão.</p>
-        </div>
-        <div class="choose">
-          <div><i></i><span><strong>Para quem:</strong> líderes com desafios pontuais de gestão.</span></div>
-          <div><i></i><span><strong>Formato:</strong> individual.</span></div>
-          <div><i></i><span><strong>Foco:</strong> desafios de gestão.</span></div>
-          <div><i></i><span><strong>Contratação:</strong> por quantidade de encontros.</span></div>
-        </div>
-      </div>
-      <div class="steps rv">
-        <div class="step"><span class="n">01</span><h4>Encontros 1:1</h4><p>Conversa focada no contexto e no desafio de gestão.</p></div>
-        <div class="step"><span class="n">02</span><h4>Rede de especialistas</h4><p>Acesso a especialistas seniores da rede Self Guru.</p></div>
-        <div class="step"><span class="n">03</span><h4>Entrega</h4><p>Líderes mais confiantes, times mais produtivos.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- =========================================================== transition -->
-<section class="b2b" id="transition">
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow">Transition · para empresas</p>
-        <h2>Acolhimento e direção para o próximo passo.</h2>
-        <div class="txt" style="margin-top:1.4rem">
-          <p>Desligamento responsável, com <strong>propósito e acolhimento</strong>, para apoiar o reposicionamento e o protagonismo profissional.</p>
-        </div>
-        <div class="choose">
-          <div><i></i><span><strong>Para quem:</strong> empresas que buscam cuidado no desligamento.</span></div>
-          <div><i></i><span><strong>Encontros:</strong> 8 a 12.</span></div>
-          <div><i></i><span><strong>Atendimento:</strong> individual.</span></div>
-          <div><i></i><span><strong>Objetivo:</strong> transição profissional.</span></div>
-        </div>
-      </div>
-      <div class="steps rv">
-        <div class="step"><span class="n">01</span><h4>8 a 12 encontros</h4><p>Atendimento individual.</p></div>
-        <div class="step"><span class="n">02</span><h4>Autoconhecimento</h4><p>PDA e Âncoras de Carreira.</p></div>
-        <div class="step"><span class="n">03</span><h4>Reposicionamento</h4><p>Protagonismo profissional; preserva o employer branding e o propósito da marca.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- =============================================================== faixa -->
-<div class="band">
-  <img class="band-img" id="bandImg" src="/assets/img/coaching/12-lider-em-um-ambiente-corporativo.jpg" alt="Líder em um ambiente corporativo" loading="lazy">
-  <div class="wrap">
-    <blockquote class="rv">
-      <p>Líderes anseiam por aprendizagem personalizada: treinamento com instrutor (56%), coaching profissional (54%) e assessment para desenvolvimento (45%).</p>
-      <p class="sub">A pesquisa Gartner “CEO and Senior Business Executive” mostra a produtividade entre as 5 principais prioridades estratégicas de negócios até 2025.</p>
-      <cite>Gartner, 2023</cite>
-    </blockquote>
-  </div>
-</div>
-<!-- ================================================================= você -->
-<section class="alt pillar b2c" id="voce">
-  <div class="wrap">
-    <div class="pillar-top rv">
-      <span class="pill">B2C</span>
-      <h2 class="pillar-h">Para você</h2>
-    </div>
-    <div class="two start">
-      <p class="lead rv">Dois programas contratados diretamente pela pessoa: um para quem já está na carreira e precisa decidir o próximo passo, outro para quem ainda vai escolher o primeiro.</p>
-      <div class="choose rv">
-        <div><i></i><span><strong>Quem contrata:</strong> o próprio profissional — ou a família, no caso do Bússola.</span></div>
-        <div><i></i><span><strong>Para quem:</strong> profissionais que buscam clareza e crescimento, e jovens saindo do ensino médio.</span></div>
-        <div><i></i><span><strong>Como funciona:</strong> avaliação de perfil, encontros individuais e um plano de ação para seguir sozinho depois.</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ============================================================= carreira -->
-<section class="b2c" id="carreira">
-  <span class="gfx gfx-carr" data-par=".14"><svg viewBox="0 0 200 200"><use href="#sg-wave"/></svg></span>
-  <div class="wrap">
-    <div class="two">
-      <div class="frame rv" data-par="-.05">
-        <img src="/assets/img/coaching/13-profissional-em-seu-ambiente-de-trabalho.jpg" alt="Profissional em seu ambiente de trabalho">
-        <div class="frame-note">
-          <b>Âncoras de Carreira</b>
-          <span>o que realmente importa para você na sua realização profissional</span>
-        </div>
-      </div>
-      <div class="rv">
-        <p class="eyebrow">Planejamento de Carreira · para pessoas</p>
-        <h2>Clareza para decidir os próximos passos.</h2>
-        <div class="txt" style="margin-top:1.4rem">
-          <p>A mudança de trabalho, empresa ou até mesmo de profissão, muitas vezes faz parte da sua trajetória de autoconhecimento e transformação. A Self Guru auxilia na <strong>identificação de oportunidades</strong> e <strong>planejamento de ações</strong> para alcançar o objetivo definido.</p>
-          <p>Se você está vivendo esse momento, uma especialista Self Guru caminha com você na construção do plano: entender o ponto de partida, identificar oportunidades reais e organizar as ações que levam ao objetivo.</p>
-        </div>
-        <div class="choose">
-          <div><i></i><span><strong>Para quem:</strong> profissionais que buscam clareza e crescimento.</span></div>
-          <div><i></i><span><strong>Duração:</strong> 90 dias.</span></div>
-          <div><i></i><span><strong>Encontros:</strong> 6.</span></div>
-          <div><i></i><span><strong>Foco:</strong> desenvolvimento de carreira.</span></div>
-        </div>
-        <div class="steps">
-          <div class="step"><span class="n">01</span><h4>6 encontros</h4><p>Acompanhamento com especialista.</p></div>
-          <div class="step"><span class="n">02</span><h4>Autoconhecimento</h4><p>Assessments para autoconhecimento e foco.</p></div>
-          <div class="step"><span class="n">03</span><h4>Plano de ação</h4><p>Próximos passos definidos.</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ============================================================== bússola -->
-<section class="ink b2c" id="bussola">
-  <span class="gfx gfx-bus" data-par="-.1"><svg viewBox="0 0 200 200"><use href="#sg-wave"/></svg></span>
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow">Bússola</p>
-        <h2>Não sabe que caminho seguir? A gente ajuda a descobrir.</h2>
-      </div>
-      <div class="txt rv">
-        <p>O <strong>Bússola</strong> é uma jornada de orientação profissional para quem está saindo do ensino médio e quer acertar de primeira na carreira — e no futuro. Autoconhecimento, match de carreiras e um plano de ação concreto, com acompanhamento de psicólogos.</p>
-        <div class="stack" style="margin-top:0">
-          <span class="faces">
-            <img src="/assets/img/coaching/14-imagem.jpg" alt="" loading="lazy">
-            <img src="/assets/img/coaching/15-imagem.jpg" alt="" loading="lazy">
-          </span>
-          <p style="color:var(--panel-muted)">87% dos jovens se sentem perdidos sobre qual carreira seguir e 40% trocam de curso nos dois primeiros anos.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="compass rv">
-      <div class="cp"><span class="tg">Ferramenta</span><b>Teste TOV</b><span>O Teste de Orientação Vocacional da PDA International mapeia o perfil comportamental, as forças naturais e as motivações do jovem.</span></div>
-      <div class="cp"><span class="tg">Direção</span><b>Match de carreiras</b><span>Cruzamos o perfil com áreas de atuação e carreiras, mostrando quais caminhos têm mais aderência com quem ele realmente é.</span></div>
-      <div class="cp"><span class="tg">Prática</span><b>Plano de ação</b><span>Não é só uma lista de profissões: sai de lá um plano concreto, com metas e prazos para os próximos 12 meses.</span></div>
-    </div>
-
-    <div class="rv" style="margin-top:clamp(2.6rem,5vw,3.6rem)">
-      <div class="slider" data-slider>
-        <div class="slider-head">
-          <h3 style="font-size:var(--s-2)">A jornada completa tem cinco encontros</h3>
-          <div class="slider-nav"><button class="snav" type="button" data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 16 16"><path d="M10 2 4 8l6 6"/></svg></button><button class="snav" type="button" data-dir="1" aria-label="Próximo"><svg viewBox="0 0 16 16"><path d="M6 2l6 6-6 6"/></svg></button></div>
-        </div>
-        <div class="slider-track">
-        <article class="tl-card"><span class="n">01</span><h4>Devolutiva TOV e autoconhecimento</h4><span class="dur">70–90 min</span><p>Aplicação do teste, devolutiva completa do perfil comportamental e construção da Matriz de Decisão de carreira.</p></article>
-        <article class="tl-card"><span class="n">02</span><h4>Matriz de decisões</h4><span class="dur">60 min</span><p>Mapeamento das competências atuais e identificação das habilidades a desenvolver para a carreira desejada.</p></article>
-        <article class="tl-card"><span class="n">03</span><h4>Desenhando caminhos</h4><span class="dur">60 min</span><p>Exploração de rotas de formação, cursos, faculdades e alternativas de carreira, com múltiplos cenários.</p></article>
-        <article class="tl-card"><span class="n">04</span><h4>Lidando com pressão</h4><span class="dur">60 min</span><p>Técnicas para gerenciar ansiedade, lidar com expectativas externas e decidir em contextos de incerteza.</p></article>
-        <article class="tl-card"><span class="n">05</span><h4>Plano de ação e carta “eu do futuro”</h4><span class="dur">60 min</span><p>Consolidação de tudo em um plano concreto, com metas, prazos e compromissos para os próximos 12 meses.</p></article>
-        </div>
-      </div>
-
-      <div class="formats">
-        <div class="fmt" style="background:transparent;border-color:var(--panel-line)">
-          <span class="k" style="color:#fff">01 <span style="color:var(--panel-muted)">encontro</span></span>
-          <b style="color:#fff">Experiência inicial</b>
-          <p style="color:var(--panel-muted)">Para quem quer começar entendendo o próprio perfil e ter uma primeira clareza sobre carreiras.</p>
-          <ul style="color:var(--panel-muted)"><li>Teste TOV completo com relatório</li><li>Devolutiva personalizada</li><li>Matriz de Decisão de carreiras</li></ul>
-        </div>
-        <div class="fmt hi" style="background:transparent">
-          <span class="badge">Mais escolhido</span>
-          <span class="k" style="color:#fff">05 <span style="color:var(--panel-muted)">encontros</span></span>
-          <b style="color:#fff">Jornada completa</b>
-          <p style="color:var(--panel-muted)">A experiência completa de orientação profissional, com acompanhamento até o jovem encontrar o próprio norte.</p>
-          <ul style="color:var(--panel-muted)"><li>Tudo da experiência inicial</li><li>Mapeamento de competências e rotas de formação</li><li>Técnicas para gestão da ansiedade</li><li>Plano de ação para 12 meses</li></ul>
-        </div>
-      </div>
-
-      <p class="eyebrow" style="margin-top:2.6rem">Inteligências múltiplas mapeadas</p>
-      <div class="mi">
-        <span>Linguística</span><span>Lógico-matemática</span><span>Espacial</span><span>Interpessoal</span>
-        <span>Intrapessoal</span><span>Corporal-cinestésica</span><span>Musical</span><span>Naturalista</span>
-      </div>
-      <p style="font-size:.84rem;color:var(--panel-muted);margin-top:.9rem;max-width:60ch">Baseado na teoria de Howard Gardner, identificamos as inteligências dominantes para alinhar com carreiras que potencializam os talentos naturais.</p>
-
-      <div class="ctas">
-        <a class="btn rd" href="https://bussola.grougp.com.br/" target="_blank" rel="noopener">Conhecer o Bússola <span class="ar" aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ============================================================ ferramentas -->
-<section class="alt" id="ferramentas" style="padding-block:clamp(3.4rem,6vw,5.5rem)">
-  <div class="wrap">
-    <div class="two start">
-      <div class="rv">
-        <p class="eyebrow">As ferramentas</p>
-        <h2 style="font-size:var(--s-2)">Personalização não é achismo. É leitura de dados.</h2>
-      </div>
-      <p class="lead rv" style="font-size:var(--s-0)">Os instrumentos que sustentam os programas vêm do ecossistema Grou, representante da PDA International no Brasil — validada em mais de 40 países.</p>
-    </div>
-    <div class="tools rv">
-      <div class="tool"><span class="tg">Assessment</span><h4>PDA Assessment</h4><p>Análise de perfil que gera dados assertivos sobre tendências de comportamento, habilidades e competências.</p></div>
-      <div class="tool"><span class="tg">Julgamento gerencial</span><h4>Dilemas de Gestão</h4><p>Mapeia competências de liderança e know-how em cenários típicos de gestão de pessoas.</p></div>
-      <div class="tool"><span class="tg">Motivação</span><h4>Âncoras de Carreira</h4><p>Revela os pilares e as motivações que guiam a carreira de cada profissional.</p></div>
-      <div class="tool"><span class="tg">Orientação vocacional</span><h4>Teste TOV</h4><p>Mapeia perfil comportamental, forças naturais e motivações de jovens — a base do programa Bússola.</p></div>
-    </div>
-  </div>
-</section>
-<!-- =========================================================== plataforma -->
+<!-- ============================================================= plataforma -->
 <section class="ink" id="plataforma">
   <div class="wrap">
     <div class="two start">
@@ -1386,7 +953,374 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
     </div>
   </div>
 </section>
-<!-- ========================================================= especialistas -->
+
+<!-- ============================================================= metodo -->
+<section class="alt" id="metodo">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow r">Como funciona</p>
+        <h2>Do diagnóstico ao desenvolvimento acompanhado.</h2>
+        <p class="lead" style="margin-top:1.2rem">Objetivos, encontros e acompanhamento de evolução.</p>
+      </div>
+      <div class="steps rv">
+        <div class="step"><span class="n">01</span><h4>Alinhamento</h4><p>Objetivos construídos com líder, RH e especialista.</p></div>
+        <div class="step"><span class="n">02</span><h4>Assessments</h4><p>PDA, Dilemas de Gestão e Âncoras de Carreira, conforme o programa.</p></div>
+        <div class="step"><span class="n">03</span><h4>Encontros individuais</h4><p>Conversas estratégicas conectadas aos desafios reais do profissional.</p></div>
+        <div class="step"><span class="n">04</span><h4>Acompanhamento</h4><p>Pontos de verificação com gestor e RH.</p></div>
+        <div class="step"><span class="n">05</span><h4>Continuidade</h4><p>Encerramento com plano de continuidade e indicadores de evolução.</p></div>
+      </div>
+    </div>
+
+    <div class="rv" style="margin-top:clamp(3rem,6vw,4.6rem)">
+      <h3 style="font-size:var(--s-2)">Desenvolvimento conectado à pessoa e ao negócio.</h3>
+      <p style="margin-top:.6rem">Benefícios esperados dos programas Self Guru.</p>
+      <div class="compass">
+        <div class="cp"><span class="tg">01</span><b>Para o profissional</b><span>Autogestão, clareza sobre pontos fortes, comunicação com o time e decisões mais seguras e rápidas.</span></div>
+        <div class="cp"><span class="tg">02</span><b>Para a empresa</b><span>Times mais engajados e produtivos, acompanhamento em tempo real e desenvolvimento escalável com qualidade.</span></div>
+        <div class="cp"><span class="tg">03</span><b>Competências trabalhadas</b><span>Comunicação e feedback; gestão de pessoas e conflitos; inteligência emocional e autoconfiança; decisão e visão estratégica; adaptabilidade, autocuidado e equilíbrio.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= frentes -->
+<section id="frentes">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">Programas</p>
+        <h2>Qual momento pede acompanhamento?</h2>
+      </div>
+      <div class="txt rv">
+        <p>Escolha conforme o público e o desafio. O método é sempre o mesmo: mapear o comportamento com dados, colocar um especialista ao lado da pessoa e sustentar o processo dentro da plataforma. Para jovens escolhendo a primeira carreira, há também o <a href="#bussola" style="color:inherit;text-decoration:underline">Bússola</a>.</p>
+      </div>
+    </div>
+    <div class="forks rv" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">
+      <a class="fork-card b2b glow" href="#coaching">
+        <span class="pill">Para empresas</span>
+        <h3>Coaching</h3>
+        <p>Programa que desenvolve líderes de modo personalizado e ágil, utilizando tecnologias para o autoconhecimento. Foi criado para atender todos os níveis de liderança, de forma rápida e conectada à prática diária, apoiando em suas jornadas de crescimento, alinhadas aos objetivos do negócio.</p>
+        <span class="go">Conhecer o programa <span class="ar" aria-hidden="true">→</span></span>
+      </a>
+      <a class="fork-card b2b glow" href="#mentoria">
+        <span class="pill">Para empresas</span>
+        <h3>Mentoria On-Demand</h3>
+        <p>Orientação estratégica, sob medida e no momento certo, para decisões e desafios reais de gestão.</p>
+        <span class="go">Conhecer o programa <span class="ar" aria-hidden="true">→</span></span>
+      </a>
+      <a class="fork-card b2b glow" href="#transition">
+        <span class="pill">Para empresas</span>
+        <h3>Transition</h3>
+        <p>Desligamento responsável, com propósito e acolhimento, para apoiar o reposicionamento e o protagonismo profissional.</p>
+        <span class="go">Conhecer o programa <span class="ar" aria-hidden="true">→</span></span>
+      </a>
+      <a class="fork-card b2c glow" href="#carreira">
+        <span class="pill">Para pessoas</span>
+        <h3>Planejamento de Carreira</h3>
+        <p>A mudança de trabalho, empresa ou até mesmo de profissão, muitas vezes faz parte da sua trajetória de autoconhecimento e transformação. A Self Guru auxilia na identificação de oportunidades e planejamento de ações para alcançar o objetivo definido.</p>
+        <span class="go">Conhecer o programa <span class="ar" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= empresas -->
+<section class="alt pillar b2b" id="empresas">
+  <div class="wrap">
+    <div class="pillar-top rv">
+      <span class="pill">B2B</span>
+      <h2 class="pillar-h">Para empresas</h2>
+    </div>
+    <div class="two start">
+      <p class="lead rv">Desenvolvimento comportamental de lideranças contratado pela empresa, com objetivos alinhados ao negócio e acompanhamento do RH em tempo real.</p>
+      <div class="choose rv">
+        <div><i></i><span><strong>Quem contrata:</strong> RH, gestores e diretoria.</span></div>
+        <div><i></i><span><strong>Programas:</strong> Coaching, para coordenadores, gerentes e diretores; Mentoria On-Demand, para líderes com desafios pontuais de gestão; e Transition, para empresas que buscam cuidado no desligamento.</span></div>
+        <div><i></i><span><strong>Como acompanha:</strong> objetivos alinhados com líder, RH e especialista, pontos de verificação com gestor e RH e progresso da jornada em tempo real na plataforma.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= coaching -->
+<section class="b2b" id="coaching">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">Coaching · para empresas</p>
+        <h2>Coaching: do diagnóstico ao plano de ação.</h2>
+      </div>
+      <div class="txt rv">
+        <p>Programa que desenvolve líderes de modo <strong>personalizado e ágil</strong>, utilizando tecnologias para o autoconhecimento. Foi criado para atender <strong>todos os níveis de liderança</strong>, de forma rápida e conectada à prática diária, apoiando em suas jornadas de crescimento, alinhadas aos objetivos do negócio.</p>
+        <div class="choose" style="margin-top:0">
+          <div><i></i><span><strong>Para quem:</strong> coordenadores, gerentes e diretores.</span></div>
+          <div><i></i><span><strong>Duração:</strong> 90 dias.</span></div>
+          <div><i></i><span><strong>Encontros:</strong> 6 ou 10, online, com especialistas.</span></div>
+          <div><i></i><span><strong>Acompanhamento:</strong> RH e gestor.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider rv" data-slider style="margin-top:clamp(2.6rem,5vw,4rem)">
+      <div class="slider-head">
+        <h3 style="font-size:var(--s-2)">Como funciona</h3>
+        <div class="slider-nav"><button class="snav" type="button" data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 16 16"><path d="M10 2 4 8l6 6"/></svg></button><button class="snav" type="button" data-dir="1" aria-label="Próximo"><svg viewBox="0 0 16 16"><path d="M6 2l6 6-6 6"/></svg></button></div>
+      </div>
+      <div class="slider-track">
+        <article class="tl-card"><span class="n">01</span><h4>Encontros</h4>
+          <p>6 ou 10 encontros online com especialistas, conectados aos desafios práticos da realidade do profissional.</p></article>
+        <article class="tl-card"><span class="n">02</span><h4>Instrumentos</h4>
+          <p>Aplicação das ferramentas de assessment comportamental para gerar dados estratégicos de desenvolvimento.</p>
+          <span class="tag">PDA · Dilemas de Gestão · Âncoras de Carreira</span></article>
+        <article class="tl-card"><span class="n">03</span><h4>Acompanhamento</h4>
+          <p>RH e gestor acompanham a jornada, do alinhamento dos objetivos ao encerramento.</p></article>
+        <article class="tl-card"><span class="n">04</span><h4>Entrega</h4>
+          <p>Plano de ação comportamental e indicadores de evolução.</p></article>
+      </div>
+    </div>
+
+    <h3 style="font-size:var(--s-2);margin-top:clamp(2.6rem,5vw,4rem)" class="rv">Por que usar</h3>
+    <div class="benes rv">
+      <div class="bene"><i></i><b>Autoconhecimento e autogestão do próprio perfil</b></div>
+      <div class="bene"><i></i><b>Melhoria na abordagem comportamental do time</b></div>
+      <div class="bene"><i></i><b>Consolidação da relação com pares, liderança e time</b></div>
+      <div class="bene"><i></i><b>Auxílio na tomada de decisões</b></div>
+      <div class="bene"><i></i><b>Apoio na gestão das atividades diárias</b></div>
+      <div class="bene"><i></i><b>Ampliação da visão para resolver problemas</b></div>
+      <div class="bene"><i></i><b>Mais repertório em métodos e estratégias de gestão de pessoas</b></div>
+      <div class="bene"><i></i><b>Um espaço reservado para pensar a própria liderança</b></div>
+    </div>
+
+    <h3 style="font-size:var(--s-2);margin-top:clamp(2.6rem,5vw,4rem)" class="rv">Dois formatos</h3>
+    <div class="formats rv">
+      <div class="fmt">
+        <span class="k">06 <span>encontros</span></span>
+        <b>Jornada essencial</b>
+        <p>O ciclo completo do método — assessment, alinhamento, sessões individuais e encerramento — no formato mais direto.</p>
+        <ul><li>Assessment comportamental</li><li>Encontro inicial com RH e gestor</li><li>Sessões individuais com a especialista</li><li>Report de encerramento</li></ul>
+      </div>
+      <div class="fmt hi">
+        <span class="badge">Mais profundo</span>
+        <span class="k">10 <span>encontros</span></span>
+        <b>Jornada estendida</b>
+        <p>Para desafios de maior complexidade ou mudanças de escopo, com mais tempo de acompanhamento entre uma prática e outra.</p>
+        <ul><li>Tudo da jornada essencial</li><li>Mais quatro sessões individuais</li><li>Acompanhamento prolongado dos desafios do dia a dia</li></ul>
+      </div>
+    </div>
+    <p class="note">Investimento sob consulta. A proposta considera o programa escolhido, a quantidade de participantes e os encontros previstos, e tem validade de 30 dias.</p>
+  </div>
+</section>
+
+<!-- ============================================================= mentoria -->
+<section class="alt b2b" id="mentoria">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">Mentoria On-Demand · para empresas</p>
+        <h2>Um desafio. Uma conversa com especialista.</h2>
+        <div class="txt" style="margin-top:1.4rem">
+          <p>Orientação estratégica, <strong>sob medida e no momento certo</strong>, para decisões e desafios reais de gestão.</p>
+        </div>
+        <div class="choose">
+          <div><i></i><span><strong>Para quem:</strong> líderes com desafios pontuais de gestão.</span></div>
+          <div><i></i><span><strong>Formato:</strong> individual.</span></div>
+          <div><i></i><span><strong>Foco:</strong> desafios de gestão.</span></div>
+          <div><i></i><span><strong>Contratação:</strong> por quantidade de encontros.</span></div>
+        </div>
+      </div>
+      <div class="steps rv">
+        <div class="step"><span class="n">01</span><h4>Encontros 1:1</h4><p>Conversa focada no contexto e no desafio de gestão.</p></div>
+        <div class="step"><span class="n">02</span><h4>Rede de especialistas</h4><p>Acesso a especialistas seniores da rede Self Guru.</p></div>
+        <div class="step"><span class="n">03</span><h4>Entrega</h4><p>Líderes mais confiantes, times mais produtivos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= transition -->
+<section class="b2b" id="transition">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">Transition · para empresas</p>
+        <h2>Acolhimento e direção para o próximo passo.</h2>
+        <div class="txt" style="margin-top:1.4rem">
+          <p>Desligamento responsável, com <strong>propósito e acolhimento</strong>, para apoiar o reposicionamento e o protagonismo profissional.</p>
+        </div>
+        <div class="choose">
+          <div><i></i><span><strong>Para quem:</strong> empresas que buscam cuidado no desligamento.</span></div>
+          <div><i></i><span><strong>Encontros:</strong> 8 a 12.</span></div>
+          <div><i></i><span><strong>Atendimento:</strong> individual.</span></div>
+          <div><i></i><span><strong>Objetivo:</strong> transição profissional.</span></div>
+        </div>
+      </div>
+      <div class="steps rv">
+        <div class="step"><span class="n">01</span><h4>8 a 12 encontros</h4><p>Atendimento individual.</p></div>
+        <div class="step"><span class="n">02</span><h4>Autoconhecimento</h4><p>PDA e Âncoras de Carreira.</p></div>
+        <div class="step"><span class="n">03</span><h4>Reposicionamento</h4><p>Protagonismo profissional; preserva o employer branding e o propósito da marca.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= voce -->
+<section class="alt pillar b2c" id="voce">
+  <div class="wrap">
+    <div class="pillar-top rv">
+      <span class="pill">B2C</span>
+      <h2 class="pillar-h">Para você</h2>
+    </div>
+    <div class="two start">
+      <p class="lead rv">Dois programas contratados diretamente pela pessoa: um para quem já está na carreira e precisa decidir o próximo passo, outro para quem ainda vai escolher o primeiro.</p>
+      <div class="choose rv">
+        <div><i></i><span><strong>Quem contrata:</strong> o próprio profissional — ou a família, no caso do Bússola.</span></div>
+        <div><i></i><span><strong>Para quem:</strong> profissionais que buscam clareza e crescimento, e jovens saindo do ensino médio.</span></div>
+        <div><i></i><span><strong>Como funciona:</strong> avaliação de perfil, encontros individuais e um plano de ação para seguir sozinho depois.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= carreira -->
+<section class="b2c" id="carreira">
+  <span class="gfx gfx-carr" data-par=".14"><svg viewBox="0 0 200 200"><use href="#sg-wave"/></svg></span>
+  <div class="wrap">
+    <div class="two">
+      <div class="frame rv" data-par="-.05">
+        <img src="/assets/img/coaching/13-profissional-em-seu-ambiente-de-trabalho.jpg" alt="Profissional em seu ambiente de trabalho">
+        <div class="frame-note">
+          <b>Âncoras de Carreira</b>
+          <span>o que realmente importa para você na sua realização profissional</span>
+        </div>
+      </div>
+      <div class="rv">
+        <p class="eyebrow">Planejamento de Carreira · para pessoas</p>
+        <h2>Clareza para decidir os próximos passos.</h2>
+        <div class="txt" style="margin-top:1.4rem">
+          <p>A mudança de trabalho, empresa ou até mesmo de profissão, muitas vezes faz parte da sua trajetória de autoconhecimento e transformação. A Self Guru auxilia na <strong>identificação de oportunidades</strong> e <strong>planejamento de ações</strong> para alcançar o objetivo definido.</p>
+          <p>Se você está vivendo esse momento, uma especialista Self Guru caminha com você na construção do plano: entender o ponto de partida, identificar oportunidades reais e organizar as ações que levam ao objetivo.</p>
+        </div>
+        <div class="choose">
+          <div><i></i><span><strong>Para quem:</strong> profissionais que buscam clareza e crescimento.</span></div>
+          <div><i></i><span><strong>Duração:</strong> 90 dias.</span></div>
+          <div><i></i><span><strong>Encontros:</strong> 6.</span></div>
+          <div><i></i><span><strong>Foco:</strong> desenvolvimento de carreira.</span></div>
+        </div>
+        <div class="steps">
+          <div class="step"><span class="n">01</span><h4>6 encontros</h4><p>Acompanhamento com especialista.</p></div>
+          <div class="step"><span class="n">02</span><h4>Autoconhecimento</h4><p>Assessments para autoconhecimento e foco.</p></div>
+          <div class="step"><span class="n">03</span><h4>Plano de ação</h4><p>Próximos passos definidos.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= bussola -->
+<section class="ink b2c" id="bussola">
+  <span class="gfx gfx-bus" data-par="-.1"><svg viewBox="0 0 200 200"><use href="#sg-wave"/></svg></span>
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">Bússola</p>
+        <h2>Não sabe que caminho seguir? A gente ajuda a descobrir.</h2>
+      </div>
+      <div class="txt rv">
+        <p>O <strong>Bússola</strong> é uma jornada de orientação profissional para quem está saindo do ensino médio e quer acertar de primeira na carreira — e no futuro. Autoconhecimento, match de carreiras e um plano de ação concreto, com acompanhamento de psicólogos.</p>
+        <div class="stack" style="margin-top:0">
+          <span class="faces">
+            <img src="/assets/img/coaching/14-imagem.jpg" alt="" loading="lazy">
+            <img src="/assets/img/coaching/15-imagem.jpg" alt="" loading="lazy">
+          </span>
+          <p style="color:var(--panel-muted)">87% dos jovens se sentem perdidos sobre qual carreira seguir e 40% trocam de curso nos dois primeiros anos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="compass rv">
+      <div class="cp"><span class="tg">Ferramenta</span><b>Teste TOV</b><span>O Teste de Orientação Vocacional da PDA International mapeia o perfil comportamental, as forças naturais e as motivações do jovem.</span></div>
+      <div class="cp"><span class="tg">Direção</span><b>Match de carreiras</b><span>Cruzamos o perfil com áreas de atuação e carreiras, mostrando quais caminhos têm mais aderência com quem ele realmente é.</span></div>
+      <div class="cp"><span class="tg">Prática</span><b>Plano de ação</b><span>Não é só uma lista de profissões: sai de lá um plano concreto, com metas e prazos para os próximos 12 meses.</span></div>
+    </div>
+
+    <div class="rv" style="margin-top:clamp(2.6rem,5vw,3.6rem)">
+      <div class="slider" data-slider>
+        <div class="slider-head">
+          <h3 style="font-size:var(--s-2)">A jornada completa tem cinco encontros</h3>
+          <div class="slider-nav"><button class="snav" type="button" data-dir="-1" aria-label="Anterior"><svg viewBox="0 0 16 16"><path d="M10 2 4 8l6 6"/></svg></button><button class="snav" type="button" data-dir="1" aria-label="Próximo"><svg viewBox="0 0 16 16"><path d="M6 2l6 6-6 6"/></svg></button></div>
+        </div>
+        <div class="slider-track">
+        <article class="tl-card"><span class="n">01</span><h4>Devolutiva TOV e autoconhecimento</h4><span class="dur">70–90 min</span><p>Aplicação do teste, devolutiva completa do perfil comportamental e construção da Matriz de Decisão de carreira.</p></article>
+        <article class="tl-card"><span class="n">02</span><h4>Matriz de decisões</h4><span class="dur">60 min</span><p>Mapeamento das competências atuais e identificação das habilidades a desenvolver para a carreira desejada.</p></article>
+        <article class="tl-card"><span class="n">03</span><h4>Desenhando caminhos</h4><span class="dur">60 min</span><p>Exploração de rotas de formação, cursos, faculdades e alternativas de carreira, com múltiplos cenários.</p></article>
+        <article class="tl-card"><span class="n">04</span><h4>Lidando com pressão</h4><span class="dur">60 min</span><p>Técnicas para gerenciar ansiedade, lidar com expectativas externas e decidir em contextos de incerteza.</p></article>
+        <article class="tl-card"><span class="n">05</span><h4>Plano de ação e carta “eu do futuro”</h4><span class="dur">60 min</span><p>Consolidação de tudo em um plano concreto, com metas, prazos e compromissos para os próximos 12 meses.</p></article>
+        </div>
+      </div>
+
+      <div class="formats">
+        <div class="fmt" style="background:transparent;border-color:var(--panel-line)">
+          <span class="k" style="color:#fff">01 <span style="color:var(--panel-muted)">encontro</span></span>
+          <b style="color:#fff">Experiência inicial</b>
+          <p style="color:var(--panel-muted)">Para quem quer começar entendendo o próprio perfil e ter uma primeira clareza sobre carreiras.</p>
+          <ul style="color:var(--panel-muted)"><li>Teste TOV completo com relatório</li><li>Devolutiva personalizada</li><li>Matriz de Decisão de carreiras</li></ul>
+        </div>
+        <div class="fmt hi" style="background:transparent">
+          <span class="badge">Mais escolhido</span>
+          <span class="k" style="color:#fff">05 <span style="color:var(--panel-muted)">encontros</span></span>
+          <b style="color:#fff">Jornada completa</b>
+          <p style="color:var(--panel-muted)">A experiência completa de orientação profissional, com acompanhamento até o jovem encontrar o próprio norte.</p>
+          <ul style="color:var(--panel-muted)"><li>Tudo da experiência inicial</li><li>Mapeamento de competências e rotas de formação</li><li>Técnicas para gestão da ansiedade</li><li>Plano de ação para 12 meses</li></ul>
+        </div>
+      </div>
+
+      <p class="eyebrow" style="margin-top:2.6rem">Inteligências múltiplas mapeadas</p>
+      <div class="mi">
+        <span>Linguística</span><span>Lógico-matemática</span><span>Espacial</span><span>Interpessoal</span>
+        <span>Intrapessoal</span><span>Corporal-cinestésica</span><span>Musical</span><span>Naturalista</span>
+      </div>
+      <p style="font-size:.84rem;color:var(--panel-muted);margin-top:.9rem;max-width:60ch">Baseado na teoria de Howard Gardner, identificamos as inteligências dominantes para alinhar com carreiras que potencializam os talentos naturais.</p>
+
+      <div class="ctas">
+        <a class="btn rd" href="https://bussola.grougp.com.br/" target="_blank" rel="noopener">Conhecer o Bússola <span class="ar" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= contratacao -->
+<section class="alt" id="contratacao">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">Contratação</p>
+        <h2>Uma contratação alinhada ao momento.</h2>
+      </div>
+      <div class="txt rv">
+        <p>Programa, público e quantidade de participantes. A proposta considera o programa escolhido, a quantidade de participantes e os encontros previstos.</p>
+      </div>
+    </div>
+    <div class="forks rv" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))">
+      <div class="fork-card b2b">
+        <span class="pill">Para empresas</span>
+        <ul style="list-style:none;padding:0;margin:6px 0 0"><li><a href="#coaching" style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line,rgba(0,0,0,.08));color:inherit;text-decoration:none"><strong>Coaching</strong><span aria-hidden="true">↗</span></a></li><li><a href="#mentoria" style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line,rgba(0,0,0,.08));color:inherit;text-decoration:none"><strong>Mentoria On-Demand</strong><span aria-hidden="true">↗</span></a></li><li><a href="#transition" style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line,rgba(0,0,0,.08));color:inherit;text-decoration:none"><strong>Transition</strong><span aria-hidden="true">↗</span></a></li></ul>
+      </div>
+      <div class="fork-card b2c">
+        <span class="pill">Para pessoas</span>
+        <ul style="list-style:none;padding:0;margin:6px 0 0"><li><a href="#carreira" style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line,rgba(0,0,0,.08));color:inherit;text-decoration:none"><strong>Planejamento de Carreira</strong><span aria-hidden="true">↗</span></a></li><li><a href="#bussola" style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line,rgba(0,0,0,.08));color:inherit;text-decoration:none"><strong>Bússola</strong><span aria-hidden="true">↗</span></a></li></ul>
+      </div>
+      <div class="fork-card glow">
+        <span class="pill">Investimento</span>
+        <h3>Sob consulta.</h3>
+        <p>A proposta considera o programa escolhido, a quantidade de participantes e os encontros previstos.</p>
+        <a class="go" href="#contato" style="text-decoration:none">Solicitar proposta <span class="ar" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= especialistas -->
 <section id="especialistas">
   <div class="wrap">
     <div class="two start">
@@ -1419,7 +1353,69 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
 
   </div>
 </section>
-<!-- ============================================================ depoimento -->
+
+<!-- ============================================================= ferramentas -->
+<section class="alt" id="ferramentas" style="padding-block:clamp(3.4rem,6vw,5.5rem)">
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow">As ferramentas</p>
+        <h2 style="font-size:var(--s-2)">Personalização não é achismo. É leitura de dados.</h2>
+      </div>
+      <p class="lead rv" style="font-size:var(--s-0)">Os instrumentos que sustentam os programas vêm do ecossistema Grou, representante da PDA International no Brasil — validada em mais de 40 países.</p>
+    </div>
+    <div class="tools rv">
+      <div class="tool"><span class="tg">Assessment</span><h4>PDA Assessment</h4><p>Análise de perfil que gera dados assertivos sobre tendências de comportamento, habilidades e competências.</p></div>
+      <div class="tool"><span class="tg">Julgamento gerencial</span><h4>Dilemas de Gestão</h4><p>Mapeia competências de liderança e know-how em cenários típicos de gestão de pessoas.</p></div>
+      <div class="tool"><span class="tg">Motivação</span><h4>Âncoras de Carreira</h4><p>Revela os pilares e as motivações que guiam a carreira de cada profissional.</p></div>
+      <div class="tool"><span class="tg">Orientação vocacional</span><h4>Teste TOV</h4><p>Mapeia perfil comportamental, forças naturais e motivações de jovens — a base do programa Bússola.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= resultados -->
+<section class="ink" style="padding-block:clamp(3.4rem,6vw,5.5rem)">
+  <div class="wrap rv">
+    <div class="two start">
+      <div>
+        <p class="eyebrow r">Resultados</p>
+        <h2 style="font-size:var(--s-2)">O que dizem quem já passou pelo programa.</h2>
+      </div>
+      <p class="lead" style="font-size:var(--s-0)">Notas atribuídas pelos clientes atendidos ao fim das jornadas de desenvolvimento.</p>
+    </div>
+    <div class="gauges">
+      <figure class="gauge" style="margin:0">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Nota 9,5 de 10">
+          <circle class="tr" cx="60" cy="60" r="50"></circle>
+          <circle class="arc" cx="60" cy="60" r="50" style="--dash:314.2;--off:15.7"></circle>
+          <text class="val" x="60" y="60" text-anchor="middle" dominant-baseline="central">9,5</text>
+        </svg>
+        <span class="cap"></span>
+        <p>Efetividade atribuída pelos clientes atendidos</p>
+      </figure>
+      <figure class="gauge" style="margin:0">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Nota 9,9 de 10">
+          <circle class="tr" cx="60" cy="60" r="50"></circle>
+          <circle class="arc" cx="60" cy="60" r="50" style="--dash:314.2;--off:3.1"></circle>
+          <text class="val" x="60" y="60" text-anchor="middle" dominant-baseline="central">9,9</text>
+        </svg>
+        <span class="cap"></span>
+        <p>Qualidade do atendimento da especialista</p>
+      </figure>
+      <figure class="gauge" style="margin:0">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Nota 9,7 de 10">
+          <circle class="tr" cx="60" cy="60" r="50"></circle>
+          <circle class="arc" cx="60" cy="60" r="50" style="--dash:314.2;--off:9.4"></circle>
+          <text class="val" x="60" y="60" text-anchor="middle" dominant-baseline="central">9,7</text>
+        </svg>
+        <span class="cap"></span>
+        <p>Índice de recomendação</p>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= depoimento -->
 <section class="alt" style="padding-block:clamp(3.2rem,6vw,5.5rem)">
   <div class="wrap testi rv">
     <blockquote>
@@ -1429,40 +1425,62 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
     <div class="logo-slot"><img src="/assets/img/coaching/07-dell.png" alt="Dell Technologies"></div>
   </div>
 </section>
-<!-- ============================================================== contato -->
-<section class="ink" id="contato">
-  <span class="gfx gfx-ct" data-par="-.12"><svg viewBox="0 0 200 200"><use href="#sg-ring-thin"/></svg></span>
-  <div class="wrap contact rv">
-    <div>
-      <p class="eyebrow">Contato</p>
-      <h2>Vamos entender o seu momento antes de propor qualquer caminho.</h2>
-      <p class="lead" style="margin-top:1.2rem;font-size:var(--s-0)">Conte se você fala pela sua empresa, pela sua própria carreira ou pelo futuro de um filho, e por onde quer começar. Uma contratação alinhada ao momento: o investimento é sob consulta e a proposta considera o programa escolhido, a quantidade de participantes e os encontros previstos.</p>
-      <div class="clist" style="margin-top:2rem">
-        <a href="mailto:contato@selfguru.com.br"><span>E-mail</span><b>contato@selfguru.com.br</b></a>
-        <a href="tel:+5551991505377"><span>Telefone</span><b>+55 (51) 99150-5377</b></a>
+
+<!-- ============================================================= cenario -->
+<section id="cenario">
+  <span class="gfx gfx-cen" data-par=".1"><svg viewBox="0 0 200 200"><use href="#sg-ring-thin"/></svg></span>
+  <div class="wrap">
+    <div class="two start">
+      <div class="rv">
+        <p class="eyebrow r">Tendências em desenvolvimento de lideranças</p>
+        <h2>Desenvolver talentos é uma dor constante das empresas.</h2>
+      </div>
+      <div class="txt rv">
+        <p>Há urgência por aprendizado personalizado, direcionado a <span class="em-r">desafios e mudanças reais</span> — poucos líderes estão alcançando o desenvolvimento necessário para enfrentar os principais desafios das empresas.</p>
+        <p>O cenário atual exige novas abordagens para fechar lacunas e preparar líderes para os desafios do amanhã.</p>
       </div>
     </div>
 
-    <div class="form-card">
-      <p class="fc-h">Fale com a gente</p>
-      <p class="fc-s">Respondemos em até um dia útil.</p>
-      <div role="main" id="self-guru-site-contato-e7ba942f5c5955e776a6"></div>
-      <div class="fc-fallback" id="rdFallback" hidden>
-        <p>O formulário é carregado pelo RD Station. Esta pré-visualização bloqueia scripts de outros domínios, então ele não aparece aqui — no site publicado, ele carrega normalmente neste espaço.</p>
-        <div class="lnk">
-          <a href="mailto:contato@selfguru.com.br">contato@selfguru.com.br</a>
-          <a href="tel:+5551991505377">+55 (51) 99150-5377</a>
+    <div class="facts rv">
+      <div class="fact glow">
+        <span class="big">1 em 10</span>
+        <p>A cada 10 profissionais selecionados, apenas <strong>1 possui talento para liderar</strong>.</p>
+        <span class="src">Gallup</span>
+      </div>
+      <div class="fact glow">
+        <span class="big">1%</span>
+        <p>Há um gap na transferência de habilidades da sala de aula para o dia a dia: apenas 1% dos currículos das universidades contempla <strong>people skills</strong>.</p>
+        <span class="src">Formação</span>
+      </div>
+      <div class="fact glow">
+        <span class="big">One size<br>fits none</span>
+        <p>O mercado está se distanciando dos modelos de prateleira. <strong>A personalização é o futuro do desenvolvimento.</strong></p>
+        <span class="src">Mercado</span>
+      </div>
+    </div>
+
+    <div class="model rv">
+      <h3>Modelo de aprendizagem 70:20:10</h3>
+      <p class="sub">O modelo parte do princípio de que o aprendizado acontece assim — e é por isso que os encontros partem dos desafios reais de quem participa.</p>
+      <div class="bar">
+        <div class="mcol c70">
+          <div class="seg"><b>70%</b></div>
+          <p>a partir de experiências próprias e da vivência profissional do cotidiano.</p>
+        </div>
+        <div class="mcol c20">
+          <div class="seg"><b>20%</b></div>
+          <p>a partir de aprendizado informal e interações.</p>
+        </div>
+        <div class="mcol c10">
+          <div class="seg"><b>10%</b></div>
+          <p>pelo aprendizado formal.</p>
         </div>
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="https://d335luupugsy2.cloudfront.net/js/rdstation-forms/stable/rdstation-forms.min.js"></script>
-  <script type="text/javascript">
-    try { new RDStationForms('self-guru-site-contato-e7ba942f5c5955e776a6', 'null').createForm(); }
-    catch (e) { /* script do RD indisponível neste ambiente */ }
-  </script>
 </section>
-<!-- ================================================================ vídeo -->
+
+<!-- ============================================================= video -->
 <section id="video" class="alt" style="padding-block:clamp(3.4rem,6vw,5.2rem)">
   <div class="wrap video-grid">
     <div class="rv">
@@ -1494,6 +1512,40 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.22
       </div>
     </div>
   </div>
+</section>
+
+<!-- ============================================================= contato -->
+<section class="ink" id="contato">
+  <span class="gfx gfx-ct" data-par="-.12"><svg viewBox="0 0 200 200"><use href="#sg-ring-thin"/></svg></span>
+  <div class="wrap contact rv">
+    <div>
+      <p class="eyebrow">Contato</p>
+      <h2>Vamos entender o seu momento antes de propor qualquer caminho.</h2>
+      <p class="lead" style="margin-top:1.2rem;font-size:var(--s-0)">Conte se você fala pela sua empresa, pela sua própria carreira ou pelo futuro de um filho, e por onde quer começar.</p>
+      <div class="clist" style="margin-top:2rem">
+        <a href="mailto:contato@selfguru.com.br"><span>E-mail</span><b>contato@selfguru.com.br</b></a>
+        <a href="tel:+5551991505377"><span>Telefone</span><b>+55 (51) 99150-5377</b></a>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <p class="fc-h">Fale com a gente</p>
+      <p class="fc-s">Respondemos em até um dia útil.</p>
+      <div role="main" id="self-guru-site-contato-e7ba942f5c5955e776a6"></div>
+      <div class="fc-fallback" id="rdFallback" hidden>
+        <p>O formulário é carregado pelo RD Station. Esta pré-visualização bloqueia scripts de outros domínios, então ele não aparece aqui — no site publicado, ele carrega normalmente neste espaço.</p>
+        <div class="lnk">
+          <a href="mailto:contato@selfguru.com.br">contato@selfguru.com.br</a>
+          <a href="tel:+5551991505377">+55 (51) 99150-5377</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://d335luupugsy2.cloudfront.net/js/rdstation-forms/stable/rdstation-forms.min.js"></script>
+  <script type="text/javascript">
+    try { new RDStationForms('self-guru-site-contato-e7ba942f5c5955e776a6', 'null').createForm(); }
+    catch (e) { /* script do RD indisponível neste ambiente */ }
+  </script>
 </section>
 </main>
 

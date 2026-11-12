@@ -85,21 +85,21 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:12px 18px;border-radius:12px;background:var(--noite);color:#fff;font-size:14px;box-shadow:0 12px 30px rgba(7,3,58,.35);z-index:5;max-width:calc(100vw - 32px)}
 @media (max-width:900px){.grade{grid-template-columns:minmax(0,1fr)}}
 
-/* ===== etiqueta (mesmo layout das etiquetas impressas: 78 × 40 mm) ===== */
-.e{width:78mm;height:40mm;position:relative;background:#fff;display:flex;align-items:center;gap:3.2mm;padding:0 4mm 0 5mm;overflow:hidden;font-family:'Poppins',sans-serif;color:#07033a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+/* ===== etiqueta: 82 × 30 mm, impressa uma embaixo da outra num rolo de 82 mm de largura ===== */
+.e{width:82mm;height:30mm;position:relative;background:#fff;display:flex;align-items:center;gap:3mm;padding:0 3mm 0 4.5mm;overflow:hidden;font-family:'Poppins',sans-serif;color:#07033a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .e.semqr{justify-content:center;text-align:center;padding:0 6mm}
 .e.semqr .ln{margin-left:auto;margin-right:auto}
 .e .tx{flex:1;min-width:0}
-.e .nm{font-weight:600;letter-spacing:-.025em;line-height:1.04;font-size:6.2mm;white-space:nowrap}
+.e .nm{font-weight:600;letter-spacing:-.025em;line-height:1.04;font-size:5.4mm;white-space:nowrap}
 .e .nm span{display:inline-block;transform-origin:left center}
 .e.semqr .nm span{transform-origin:center}
-.e .ln{display:block;width:10mm;height:.6mm;border-radius:1mm;background:linear-gradient(90deg,#1b3fd6,#6cd8cf);margin:2.3mm 0 2mm}
-.e .cg{font-family:'Montserrat',sans-serif;font-weight:700;font-size:2.75mm;line-height:1.25;color:#120573;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.e .em{font-family:'Montserrat',sans-serif;font-weight:500;font-size:2.75mm;line-height:1.25;color:#4a4d63;margin-top:.5mm;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.e .q{flex:none;width:25mm;display:flex;flex-direction:column;align-items:center}
-.e .q > svg{width:25mm;height:25mm;display:block;fill:#07033a}
-.e .q small{display:flex;align-items:center;gap:.7mm;margin-top:1.6mm;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.85mm;letter-spacing:.02em;color:#120573;white-space:nowrap}
-.e .q small svg{width:2.4mm;height:2.4mm;color:#1fa855}
+.e .ln{display:block;width:10mm;height:.6mm;border-radius:1mm;background:linear-gradient(90deg,#1b3fd6,#6cd8cf);margin:1.7mm 0 1.5mm}
+.e .cg{font-family:'Montserrat',sans-serif;font-weight:700;font-size:2.5mm;line-height:1.25;color:#120573;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.e .em{font-family:'Montserrat',sans-serif;font-weight:500;font-size:2.5mm;line-height:1.25;color:#4a4d63;margin-top:.4mm;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.e .q{flex:none;width:22mm;display:flex;flex-direction:column;align-items:center}
+.e .q > svg{width:21.5mm;height:21.5mm;display:block;fill:#07033a}
+.e .q small{display:flex;align-items:center;gap:.7mm;margin-top:1mm;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.7mm;letter-spacing:.02em;color:#120573;white-space:nowrap}
+.e .q small svg{width:2.2mm;height:2.2mm;color:#1fa855}
 
 /* ===== impressão ===== */
 #impressao{position:fixed;left:0;top:0;visibility:hidden;pointer-events:none;z-index:-1}
@@ -107,12 +107,9 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   body{background:#fff}
   .app,.toast{display:none!important}
   #impressao{position:static;visibility:visible;z-index:auto}
-  #impressao .u .e{page-break-after:always;break-after:page}
-  #impressao .f{width:210mm;height:297mm;position:relative;page-break-after:always;break-after:page;overflow:hidden}
-  #impressao .g{position:absolute;left:27mm;top:8.5mm;display:grid;grid-template-columns:78mm 78mm;grid-auto-rows:40mm}
-  #impressao .mv{position:absolute;width:0;height:6.5mm;border-left:.15mm solid #000}
-  #impressao .mh{position:absolute;height:0;width:24mm;border-top:.15mm solid #000}
-  #impressao .rod{position:absolute;bottom:1mm;right:27mm;font:500 2.2mm Montserrat,sans-serif;color:#999}
+  /* cada etiqueta é uma página de 82 × 30 mm: a impressora de rolo avança uma por vez */
+  #impressao .u .e{page-break-after:always;break-after:page;border-radius:0}
+  #impressao .u .e:last-child{page-break-after:auto;break-after:auto}
 }
 </style>
 <style id="pagina"></style>
@@ -170,7 +167,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
           <label class="check"><input id="completo" type="checkbox"> Usar o nome completo, como está escrito</label>
           <div class="botoes">
             <button type="submit" id="principal" disabled>Fazer check-in e imprimir</button>
-            <button type="button" class="sec" id="addFila" disabled>Check-in e pôr na folha A4</button>
+            <button type="button" class="sec" id="addFila" disabled>Check-in e pôr na fila</button>
           </div>
         </form>
       </section>
@@ -180,19 +177,19 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       <section class="cartao" aria-labelledby="tPrev">
         <h2 id="tPrev">Prévia da etiqueta</h2>
         <div class="palco" id="palco"><div id="zoom"></div></div>
-        <p class="legenda" id="legenda">Tamanho real: 78 × 40 mm, o mesmo das etiquetas já impressas.</p>
+        <p class="legenda" id="legenda">Tamanho real: 82 × 30 mm.</p>
       </section>
 
       <section class="cartao fila" aria-labelledby="tFila">
         <div class="fila-cab">
-          <h2 id="tFila">Folha A4 <small id="contaFila" style="font-weight:500;color:var(--suave)"></small></h2>
+          <h2 id="tFila">Fila de impressão <small id="contaFila" style="font-weight:500;color:var(--suave)"></small></h2>
           <div class="botoes">
-            <button type="button" class="mini" id="imprimirFila" disabled>Imprimir folha A4</button>
+            <button type="button" class="mini" id="imprimirFila" disabled>Imprimir todas</button>
             <button type="button" class="sec mini" id="limparFila" disabled>Esvaziar</button>
           </div>
         </div>
         <ul id="fila"></ul>
-        <p class="vazio" id="filaVazia">Para imprimir várias de uma vez: 14 por folha, com marcas de corte.</p>
+        <p class="vazio" id="filaVazia">Para imprimir várias de uma vez: saem uma embaixo da outra no rolo de 82 mm.</p>
       </section>
 
       <section class="ajuda">
@@ -275,7 +272,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     raiz.querySelectorAll('.nm').forEach(function(n){
       var s = n.firstElementChild; s.style.transform=''; n.style.whiteSpace=''; n.style.fontSize='';
       var k = Math.min(1, n.clientWidth / s.scrollWidth);
-      if(k < 1){ if(k < .62){ n.style.whiteSpace='normal'; n.style.fontSize='4.6mm'; } else s.style.transform='scale('+k+')'; }
+      if(k < 1){ if(k < .62){ n.style.whiteSpace='normal'; n.style.fontSize='4.2mm'; } else s.style.transform='scale('+k+')'; }
     });
   }
   function escalaPrevia(){
@@ -289,7 +286,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
     var d = dados();
     $('dicaFone').textContent = d.f.msg; $('dicaFone').className = 'dica '+d.f.tipo;
     $('zoom').innerHTML = etq(d); ajusta($('zoom')); escalaPrevia();
-    $('legenda').textContent = d.curto && d.curto !== d.nome ? 'Na etiqueta: “'+d.curto+'”. Marque “Usar o nome completo” se preferir o nome inteiro.' : 'Tamanho real: 78 × 40 mm, o mesmo das etiquetas já impressas.';
+    $('legenda').textContent = d.curto && d.curto !== d.nome ? 'Na etiqueta: “'+d.curto+'”. Marque “Usar o nome completo” se preferir o nome inteiro.' : 'Tamanho real: 82 × 30 mm.';
     botoes();
     return d;
   }
@@ -298,16 +295,6 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   function imprime(html, pagina){
     var alvo = $('impressao'); alvo.innerHTML = html; $('pagina').textContent = pagina;
     (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ ajusta(alvo); setTimeout(function(){ window.print(); }, 50); });
-  }
-  function folhasA4(lista){
-    var html = '', W=78, H=40, MX=27, MY=8.5;
-    for(var i=0;i<lista.length;i+=14){
-      var p = lista.slice(i,i+14), m='';
-      [MX, MX+W, MX+2*W].forEach(function(x){ m += '<i class="mv" style="left:'+x+'mm;top:0"></i><i class="mv" style="left:'+x+'mm;bottom:0"></i>'; });
-      for(var k=0;k<8;k++){ var y = MY+k*H; m += '<i class="mh" style="top:'+y+'mm;left:0"></i><i class="mh" style="top:'+y+'mm;right:0"></i>'; }
-      html += '<div class="f">'+m+'<div class="g">'+p.map(etq).join('')+'</div><div class="rod">NR-1 Estratégica · etiquetas '+(i+1)+'–'+(i+p.length)+' de '+lista.length+'</div></div>';
-    }
-    return html;
   }
   var CH = 'nr1-etiquetas-fila', fila = [];
   try { fila = JSON.parse(localStorage.getItem(CH) || '[]') || []; } catch(e){ fila = []; }
@@ -410,14 +397,14 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   }
   function botoes(){
     var temNome = !!limpa($('nome').value), p = $('principal'), f = $('addFila');
-    if(modo === 'nahora'){ p.textContent = 'Inscrever, fazer check-in e imprimir'; f.textContent = 'Inscrever e pôr na folha A4'; }
-    else if(modo === 'inscrito' && sel && sel.presente){ p.textContent = 'Imprimir etiqueta'; f.textContent = 'Pôr na folha A4'; }
-    else { p.textContent = 'Fazer check-in e imprimir'; f.textContent = 'Check-in e pôr na folha A4'; }
+    if(modo === 'nahora'){ p.textContent = 'Inscrever, fazer check-in e imprimir'; f.textContent = 'Inscrever e pôr na fila'; }
+    else if(modo === 'inscrito' && sel && sel.presente){ p.textContent = 'Imprimir etiqueta'; f.textContent = 'Pôr na fila'; }
+    else { p.textContent = 'Fazer check-in e imprimir'; f.textContent = 'Check-in e pôr na fila'; }
     p.disabled = f.disabled = !(temNome && modo !== 'vazio');
   }
   function toast(msg){ var t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function(){ t.hidden = true; }, 4000); }
 
-  /* registra no servidor (check-in ou inscrição na hora) e depois imprime / põe na folha */
+  /* registra no servidor (check-in ou inscrição na hora) e depois imprime / põe na fila */
   function registra(){
     if(modo === 'inscrito' && sel){
       if(sel.presente) return Promise.resolve(true);
@@ -451,7 +438,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   $('form').addEventListener('submit', function(ev){
     ev.preventDefault(); if(!limpa($('nome').value)) return $('nome').focus();
     var d = previa(); trava(true);
-    registra().then(function(ok){ trava(false); if(ok) imprime('<div class="u">'+etq(d)+'</div>', '@page{size:78mm 40mm;margin:0}'); });
+    registra().then(function(ok){ trava(false); if(ok) imprime('<div class="u">'+etq(d)+'</div>', '@page{size:82mm 30mm;margin:0}'); });
   });
   $('addFila').addEventListener('click', function(){
     if(!limpa($('nome').value)) return $('nome').focus();
@@ -462,8 +449,8 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       sel = null; modo = 'vazio'; $('form').reset(); $('boxEmail').hidden = true; $('busca').value = ''; busca(); previa(); aviso(); $('busca').focus();
     });
   });
-  $('imprimirFila').addEventListener('click', function(){ if(fila.length) imprime(folhasA4(fila), '@page{size:A4;margin:0}'); });
-  $('limparFila').addEventListener('click', function(){ if(confirm('Tirar todas as etiquetas da folha?')){ fila = []; salvaFila(); desenhaFila(); } });
+  $('imprimirFila').addEventListener('click', function(){ if(fila.length) imprime('<div class="u">'+fila.map(etq).join('')+'</div>', '@page{size:82mm 30mm;margin:0}'); });
+  $('limparFila').addEventListener('click', function(){ if(confirm('Tirar todas as etiquetas da fila?')){ fila = []; salvaFila(); desenhaFila(); } });
   window.addEventListener('resize', escalaPrevia);
   setInterval(function(){ if(!document.hidden && !$('tela').hidden) carrega(); }, 15000);
 

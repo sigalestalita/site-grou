@@ -19,6 +19,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/grou.css?v=99539974">
+<style id="aca-plataforma">
+.pd-abas{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 auto 22px}
+.pd-aba{font:inherit;font-size:14px;padding:10px 18px;border-radius:999px;border:1px solid var(--linha);background:#fff;color:var(--tinta);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.pd-aba[aria-selected=true]{background:var(--azul-royal,#120573);border-color:var(--azul-royal,#120573);color:#fff}
+.pd-nav{max-width:1080px;margin:0 auto;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 40px 80px -40px rgba(7,3,58,.5),0 0 0 1px rgba(7,3,58,.07)}
+.pd-barra{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#eef0f6;border-bottom:1px solid #e2e5ee}
+.pd-barra i{width:10px;height:10px;border-radius:50%;background:#d3d6e2;display:block}
+.pd-barra span{margin-left:12px;max-width:360px;flex:1;height:22px;border-radius:7px;background:#fff;font-size:11px;color:#8a8da3;display:flex;align-items:center;padding:0 10px;white-space:nowrap;overflow:hidden}
+.pd-tela{display:block;width:100%;height:auto;aspect-ratio:16/10}
+.pd-tela[hidden]{display:none}
+.pd-legenda{max-width:640px;margin:18px auto 0;text-align:center;font-size:14.5px;color:var(--tinta-suave)}
+.pd-numeros{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 34px;margin-top:30px}
+.pd-numeros span{font-size:13px;color:var(--tinta-suave)}
+.pd-numeros b{display:block;font-size:26px;font-weight:600;color:var(--tinta);letter-spacing:-.02em}
+</style>
 </head>
 <body>
 <div class="veu" aria-hidden="true"></div>
@@ -111,6 +126,20 @@
 </section>
 
 <!-- ================= FORMAÇÕES ================= -->
+<section class="sec alt" id="plataforma">
+  <div class="wrap">
+    <div class="sec-head centro" data-reveal="up"><span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Por dentro da plataforma</span><h2 class="h-lg">Como é a Grou Academy <b>por dentro</b>.</h2><p class="lead">Tudo fica na plataforma de Customer Success da Grou: cursos, trilhas, aulas em vídeo e certificados, no mesmo acesso.</p></div>
+    <div class="pd-abas" role="tablist" aria-label="Telas da Grou Academy" data-reveal="up"><button type="button" class="pd-aba" role="tab" id="pd-t-catalogo" aria-controls="pd-p-catalogo" aria-selected="true" data-pd="catalogo">Catálogo</button><button type="button" class="pd-aba" role="tab" id="pd-t-curso" aria-controls="pd-p-curso" aria-selected="false" data-pd="curso">Página do curso</button><button type="button" class="pd-aba" role="tab" id="pd-t-aula" aria-controls="pd-p-aula" aria-selected="false" data-pd="aula">Aula</button></div>
+    <div class="pd-nav" data-reveal="up"><div class="pd-barra" aria-hidden="true"><i></i><i></i><i></i><span id="pd-url">cs.grougp.com.br/academy</span></div><img class="pd-tela" role="tabpanel" id="pd-p-catalogo" aria-labelledby="pd-t-catalogo" src="/assets/img/academy/por-dentro/catalogo.webp" width="1920" height="1200" alt="Catálogo da Grou Academy, com cursos por trilha, busca e o curso em andamento" loading="lazy" decoding="async" data-url="cs.grougp.com.br/academy" data-leg="Catálogo com todos os cursos, busca, filtros por trilha e o atalho para continuar de onde parou."><img class="pd-tela" role="tabpanel" id="pd-p-curso" aria-labelledby="pd-t-curso" src="/assets/img/academy/por-dentro/curso.webp" width="1920" height="1200" alt="Página do curso People Analytics na Prática, com descrição, módulos, duração e certificado" loading="lazy" decoding="async" data-url="cs.grougp.com.br/academy/people-analytics-na-pratica" data-leg="Cada curso mostra módulos, aulas, duração, especialista responsável e o certificado de conclusão." hidden><img class="pd-tela" role="tabpanel" id="pd-p-aula" aria-labelledby="pd-t-aula" src="/assets/img/academy/por-dentro/aula.webp" width="1920" height="1200" alt="Aula em vídeo do curso People Analytics na Prática, com o índice do curso ao lado" loading="lazy" decoding="async" data-url="cs.grougp.com.br/academy/people-analytics-na-pratica/aula" data-leg="Aulas em vídeo com o índice ao lado, progresso por módulo e o botão para marcar como concluída." hidden></div>
+    <p class="pd-legenda" id="pd-leg" aria-live="polite">Catálogo com todos os cursos, busca, filtros por trilha e o atalho para continuar de onde parou.</p>
+    <div class="pd-numeros" data-reveal="up"><span><b>28</b>cursos</span><span><b>238</b>aulas</span><span><b>19 h</b>de conteúdo</span><span><b>6</b>trilhas</span></div>
+  </div>
+</section>
+<script>
+(function(){var abas=document.querySelectorAll('.pd-aba');abas.forEach(function(a){a.addEventListener('click',function(){
+abas.forEach(function(b){var on=b===a;b.setAttribute('aria-selected',on);var t=document.getElementById('pd-p-'+b.dataset.pd);t.hidden=!on;if(on){document.getElementById('pd-url').textContent=t.dataset.url;document.getElementById('pd-leg').textContent=t.dataset.leg;}});});});})();
+</script>
+
 <section class="sec" id="cursos">
   <div class="wrap">
     <div class="sec-head centro" data-reveal="up"><span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Nossas formações</span><h2 class="h-lg">Formações que viram <b>autoridade</b> no seu currículo.</h2></div>

@@ -21,6 +21,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/grou.css?v=99539974">
+<style id="hero-capa">
+/* hero no estilo das capas da Apresentação Comercial: foto à direita, degradê claro, chips e cartão de vidro */
+.hero-capa{position:relative;overflow:hidden;background:#fff;min-height:clamp(600px,48vw,760px);display:flex;align-items:center}
+.hero-capa .hero-grade{display:none}
+.hero-capa>.hero-interno{position:relative;z-index:1;width:100%}
+.capa-foto{position:absolute;inset:0;background:var(--foto) 70% center/cover no-repeat}
+.capa-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.97) 30%,rgba(255,255,255,.62) 50%,rgba(255,255,255,.08) 70%,rgba(255,255,255,0) 100%)}
+.hero-capa h1{font-weight:300}
+.hero-capa h1 b{font-weight:600}
+.capa-chips{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 30px;max-width:560px}
+.capa-chip{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.92);border:1px solid var(--linha);font-size:13px;line-height:1.3;color:var(--tinta);box-shadow:0 8px 20px -14px rgba(7,3,58,.35)}
+.capa-chip svg{width:15px;height:15px;flex:none;color:var(--ciano-forte,#12a594)}
+.hero-capa .hero-visual{align-self:flex-start;margin-top:clamp(0px,4vw,60px)}
+.capa-card{width:min(300px,100%);margin-left:auto;padding:16px 18px 14px;border-radius:16px;background:rgba(255,255,255,.74);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);box-shadow:0 24px 50px -26px rgba(7,3,58,.45)}
+.capa-card small{display:block;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ciano-texto,#0f8778);margin-bottom:10px}
+.capa-linha{display:grid;grid-template-columns:1fr 34px;gap:2px 10px;align-items:center;font-size:12px;color:var(--tinta);padding:5px 0}
+.capa-linha span{grid-column:1/-1;display:flex;justify-content:space-between}
+.capa-linha span b{font-weight:600;font-variant-numeric:tabular-nums}
+.capa-linha i{grid-column:1/-1;display:block;height:5px;border-radius:5px;background:rgba(7,3,58,.08);overflow:hidden}
+.capa-linha i::before{content:"";display:block;height:100%;width:var(--w);border-radius:5px;background:linear-gradient(90deg,#1b3fd6,#6cd8cf)}
+.capa-linha.baixo i::before{background:linear-gradient(90deg,#7c6cf0,#a99df6)}
+@media (max-width:900px){
+  .hero-capa{display:block;min-height:0;padding-top:0}
+  .capa-foto{bottom:auto;height:330px;background-position:72% 30%}
+  .capa-foto::after{background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,0) 45%,rgba(255,255,255,.85) 85%,#fff 100%)}
+  .hero-capa>.hero-interno{padding-top:250px}
+  .hero-capa .hero-visual{display:none}
+  .capa-chips{justify-content:center;margin-left:auto;margin-right:auto}
+}
+</style>
 </head>
 <body>
 <div class="veu" aria-hidden="true"></div>
@@ -90,21 +120,22 @@
 
 <main id="conteudo-principal">
 
-<section class="hero hero-sub">
+<section class="hero hero-sub hero-capa">
+  <div class="capa-foto" aria-hidden="true" style="--foto:url(/assets/img/capas/qr.webp)"></div>
   <div class="hero-grade" aria-hidden="true"></div>
   <div class="hero-interno">
     <div class="hero-cols">
       <div class="hero-copy">
         <nav class="migalhas" aria-label="Você está em" data-reveal="up"><a href="/">Início</a><span aria-hidden="true">/</span><a href="/tecnologias/">Tecnologias</a><span aria-hidden="true">/</span><span style="color:var(--tinta-suave)">Questionário de Resiliência</span></nav>
         <span class="eyebrow" data-reveal="up"><i class="ponto" aria-hidden="true"></i> Talogy · Questionário de Resiliência</span>
-        <h1 class="h-lg" data-reveal="up" style="--d:90ms">Resiliência, a soft skill <b>mais exigida pelo mercado</b>.</h1>
-        <p class="lead" data-reveal="up" style="--d:190ms">Medida em <b>oito componentes</b> para seleção e desenvolvimento, com relatórios de avaliação e feedback e devolutiva orientada. São 54 itens respondidos em cerca de 10 minutos.</p>
+        <h1 class="h-lg" data-reveal="up" style="--d:90ms">Questionário de <b>Resiliência</b>.</h1>
+        <p class="lead" data-reveal="up" style="--d:190ms">Resiliência, a soft skill mais exigida pelo mercado, medida em oito componentes para <b>seleção</b> e <b>desenvolvimento</b>.</p>
+        <div class="capa-chips" data-reveal="up" style="--d:240ms"><span class="capa-chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Oito componentes</span><span class="capa-chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Relatórios de avaliação e feedback</span><span class="capa-chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Devolutiva orientada</span></div>
         <div class="hero-ctas" data-reveal="up" style="--d:280ms">
           <a class="btn btn-primario" href="/contato/">Contratar a ferramenta <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></a><a class="btn btn-contorno" href="/tecnologias/">Ver todas as tecnologias</a>
         </div>
-        <div class="hero-selos" data-reveal="up" style="--d:380ms"><span class="hero-selo"><b>54</b> itens</span><span class="hero-selo"><b>10 min</b> para responder</span><span class="hero-selo"><b>8</b> componentes</span></div>
       </div>
-      <div class="hero-visual" data-reveal="right" style="--d:240ms" data-parallax="0.05"><div class="painel"><h3>Perfil de resiliência</h3><p style="margin-bottom:26px">QR · Relatório do profissional (exemplo)</p><div class="barras"><div><div class="barra-rot"><b>Autoconfiança</b><span class="v">86</span></div><div class="barra-t"><i style="--w:86%;--d:0ms"></i></div></div><div><div class="barra-rot"><b>Adaptabilidade</b><span class="v">74</span></div><div class="barra-t"><i style="--w:74%;--d:110ms"></i></div></div><div><div class="barra-rot"><b>Controle emocional</b><span class="v">58</span></div><div class="barra-t alt"><i style="--w:58%;--d:220ms"></i></div></div><div><div class="barra-rot"><b>Busca de apoio</b><span class="v">41</span></div><div class="barra-t alt"><i style="--w:41%;--d:330ms"></i></div></div></div></div></div>
+      <div class="hero-visual" data-reveal="right" style="--d:240ms" data-parallax="0.05"><div class="capa-card" aria-label="QR · Relatório do profissional (exemplo)"><small>QR · Relatório do profissional</small><div class="capa-linha"><span>Autoconfiança<b>86</b></span><i style="--w:86%"></i></div><div class="capa-linha"><span>Adaptabilidade<b>74</b></span><i style="--w:74%"></i></div><div class="capa-linha baixo"><span>Controle emocional<b>58</b></span><i style="--w:58%"></i></div><div class="capa-linha baixo"><span>Busca de apoio<b>41</b></span><i style="--w:41%"></i></div></div></div>
     </div>
   </div>
 </section>

@@ -92,8 +92,9 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 .e .nm{display:flex;justify-content:center;font-weight:600;letter-spacing:-.025em;line-height:1.04;font-size:7.6mm;white-space:nowrap}
 .e .nm span{display:inline-block;transform-origin:center}
 .e .ln{display:block;width:12mm;height:.7mm;border-radius:1mm;background:linear-gradient(90deg,#1b3fd6,#6cd8cf);margin:1.9mm auto 1.7mm}
-.e .cg{font-family:'Montserrat',sans-serif;font-weight:700;font-size:3.5mm;line-height:1.2;color:#120573;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.e .em{font-family:'Montserrat',sans-serif;font-weight:500;font-size:3.5mm;line-height:1.2;color:#4a4d63;margin-top:.5mm;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+/* empresa em negrito em cima; cargo mais fino embaixo */
+.e .em{font-family:'Montserrat',sans-serif;font-weight:700;font-size:3.5mm;line-height:1.2;color:#120573;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.e .cg{font-family:'Montserrat',sans-serif;font-weight:400;font-size:3.5mm;line-height:1.2;color:#4a4d63;margin-top:.5mm;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 
 /* ===== impressão ===== */
 #impressao{position:fixed;left:0;top:0;visibility:hidden;pointer-events:none;z-index:-1}
@@ -262,7 +263,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   }
   function etq(e){
     return '<div class="e"><div class="tx"><div class="nm"><span>'+esc(e.curto||'Nome')+'</span></div><i class="ln"></i>'+
-      (e.cargo?'<div class="cg">'+esc(e.cargo)+'</div>':'')+(e.empresa?'<div class="em">'+esc(e.empresa)+'</div>':'')+'</div></div>';
+      (e.empresa?'<div class="em">'+esc(e.empresa)+'</div>':'')+(e.cargo?'<div class="cg">'+esc(e.cargo)+'</div>':'')+'</div></div>';
   }
   function ajusta(raiz){
     raiz.querySelectorAll('.nm').forEach(function(n){

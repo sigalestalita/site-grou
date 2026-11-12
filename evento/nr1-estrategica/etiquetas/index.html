@@ -84,6 +84,10 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:12px 18px;border-radius:12px;background:var(--noite);color:#fff;font-size:14px;box-shadow:0 12px 30px rgba(7,3,58,.35);z-index:5;max-width:calc(100vw - 32px)}
 @media (max-width:900px){.grade{grid-template-columns:minmax(0,1fr)}}
 
+.sem-grupo{border-top:1px solid var(--linha);padding:8px 0}
+.sem-grupo summary{cursor:pointer;font-size:14px}
+.sem-grupo ul{list-style:none;margin:8px 0 2px;padding:0;display:grid;gap:4px;font-size:13.5px}
+.sem-grupo li small{color:var(--suave);margin-left:6px}
 .opcoes{display:grid;gap:8px;margin:4px 0 14px}
 .opcoes small{font-weight:500;color:var(--suave)}
 /* ===== etiqueta: 82 × 30 mm, só texto (sem QR), impressa uma embaixo da outra num rolo de 82 mm ===== */
@@ -175,10 +179,16 @@ button:disabled{opacity:.45;cursor:default;filter:none}
         <p class="legenda" id="legenda">Tamanho real: 82 × 30 mm.</p>
       </section>
 
+      <section class="cartao" aria-labelledby="tSem">
+        <h2 id="tSem">Sem crachá <small id="nSemCracha" style="font-weight:500;color:var(--suave)"></small></h2>
+        <p class="vazio" style="margin-bottom:10px">Palestrantes, mentores e organização não recebem crachá: ficam fora do “Imprimir etiquetas” abaixo. Se precisar de uma etiqueta para alguém daqui, busque o nome em “1. Encontre a pessoa”.</p>
+        <div id="listaSem"></div>
+      </section>
+
       <section class="cartao" aria-labelledby="tTodas">
         <h2 id="tTodas">Imprimir de todos os inscritos</h2>
         <div class="opcoes" role="radiogroup" aria-label="Quais etiquetas">
-          <label class="check"><input type="radio" name="quais" value="todos" checked> Todos os confirmados <small id="nTodos"></small></label>
+          <label class="check"><input type="radio" name="quais" value="todos" checked> Todos os confirmados, menos quem não recebe crachá <small id="nTodos"></small></label>
           <label class="check"><input type="radio" name="quais" value="semcheckin"> Só quem ainda não fez check-in <small id="nSem"></small></label>
         </div>
         <div class="botoes"><button type="button" id="imprimirTodas" disabled>Imprimir etiquetas</button></div>
@@ -315,6 +325,16 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 
   /* ---------- inscritos (mesma base do painel) ---------- */
   var lista = [], sel = null, modo = 'vazio';   /* modo: vazio | inscrito | nahora */
+  /* quem não recebe crachá: palestrantes e organização (por id da inscrição) e os mentores (convite MENTORCONVITE) */
+  var PALESTRANTES = ['2ed3f6db-110c-49ef-8eec-d068ff1176ce','c4481999-dfb9-4445-ab83-1590df885b27','0de34333-3248-4410-a206-34e9bd812fd2',
+    '62b941ce-9015-444d-8dcb-37abc45943ae','b299ca9c-25c0-478d-89af-3be89faefdf8','79756e73-acfe-4c7e-90ef-313c6b4214bd','1f010633-b296-4d3e-b07d-e97bceb9b72c'];
+  var ORGANIZACAO = ['180a982a-4f64-4686-bfa1-5bec49c6a7d4','42d9e9a5-a93d-409e-a808-ffd585059d26'];
+  function semCracha(i){
+    if(PALESTRANTES.indexOf(i.id) >= 0) return 'Palestrante';
+    if(ORGANIZACAO.indexOf(i.id) >= 0) return 'Organização';
+    if(i.cupom === 'MENTORCONVITE') return 'Mentor';
+    return '';
+  }
   var confirmada = function(i){ return (i.tipo === 'convidado' && i.status === 'confirmado') || (i.tipo === 'pagante' && i.status === 'pago'); };
   function api(o){
     o = o || {};
@@ -350,6 +370,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   }
   function tagsDe(i){
     var t = '';
+    if(semCracha(i)) t += '<span class="tag t-pend">Sem crachá · '+semCracha(i)+'</span>';
     if(i.presente) t += '<span class="tag t-pres">✓ Check-in feito</span>';
     if(confirmada(i)) t += i.presente ? '' : '<span class="tag t-ok">Inscrito</span>';
     else if(i.status === 'pendente') t += '<span class="tag t-pend">Aguardando pagamento</span>';
@@ -453,11 +474,19 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   /* ---------- etiquetas de todos os inscritos, de uma vez ---------- */
   function escolhidos(){
     var so = (document.querySelector('input[name=quais]:checked')||{}).value === 'semcheckin';
-    return lista.filter(function(i){ return confirmada(i) && (!so || !i.presente); })
+    return lista.filter(function(i){ return confirmada(i) && !semCracha(i) && (!so || !i.presente); })
       .sort(function(a,b){ return String(a.nome||'').localeCompare(String(b.nome||''),'pt-BR'); });
   }
   function todas(){
-    var c = lista.filter(confirmada), sem = c.filter(function(i){ return !i.presente; }).length, n = escolhidos().length;
+    var c = lista.filter(function(i){ return confirmada(i) && !semCracha(i); }), sem = c.filter(function(i){ return !i.presente; }).length, n = escolhidos().length;
+    var grupos = {Palestrante:[], 'Organização':[], Mentor:[]};
+    lista.forEach(function(i){ var g = confirmada(i) && semCracha(i); if(g) grupos[g].push(i); });
+    var total = 0;
+    $('listaSem').innerHTML = [['Palestrante','Palestrantes'],['Organização','Organização'],['Mentor','Mentores']].map(function(g){
+      var l = grupos[g[0]].sort(function(a,b){ return String(a.nome).localeCompare(String(b.nome),'pt-BR'); }); total += l.length;
+      return l.length ? '<details class="sem-grupo"'+(g[0]!=='Mentor'?' open':'')+'><summary><b>'+g[1]+'</b> ('+l.length+')</summary><ul>'+l.map(function(i){ return '<li>'+esc(i.nome)+'<small>'+esc(i.empresa||'')+'</small></li>'; }).join('')+'</ul></details>' : '';
+    }).join('');
+    $('nSemCracha').textContent = '· '+total+(total===1?' pessoa':' pessoas');
     $('nTodos').textContent = '('+c.length+')'; $('nSem').textContent = '('+sem+')';
     $('imprimirTodas').disabled = !n; $('imprimirTodas').textContent = n ? 'Imprimir '+n+(n===1?' etiqueta':' etiquetas') : 'Nenhuma etiqueta';
   }

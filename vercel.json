@@ -65,6 +65,16 @@
       "permanent": false
     },
     {
+      "source": "/consulting/programas-de-lideranca/",
+      "destination": "/consulting/",
+      "permanent": true
+    },
+    {
+      "source": "/consulting/capacitacoes-e-treinamentos/",
+      "destination": "/consulting/",
+      "permanent": true
+    },
+    {
       "source": "/credenciamento/",
       "destination": "/evento/nr1-estrategica/porta/",
       "permanent": false

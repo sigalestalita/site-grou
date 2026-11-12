@@ -41,6 +41,77 @@
 .tabela td.h::before{content:"Carga: ";color:var(--tinta-tenue)}
 }
 </style>
+<style id="mockups-clima">
+/* mockups da pesquisa (celular) e do relatório (navegador), com dados demonstrativos */
+.mk-fones{position:relative;display:flex;justify-content:center;align-items:flex-start;gap:0;padding:10px 0 20px}
+.mk-fone{position:relative;width:min(262px,44vw);aspect-ratio:9/18.6;border-radius:38px;background:#0c0d1c;padding:9px;box-shadow:0 30px 60px -24px rgba(7,3,58,.45),0 0 0 1px rgba(255,255,255,.06) inset;flex:none}
+.mk-fone+.mk-fone{margin-left:-12px;margin-top:46px;z-index:2}
+.mk-fone::before{content:"";position:absolute;left:50%;top:15px;width:74px;height:20px;border-radius:12px;background:#0c0d1c;transform:translateX(-50%);z-index:3}
+.mk-tela{position:relative;width:100%;height:100%;border-radius:30px;overflow:hidden;background:#f5f6fa;font-family:Poppins,system-ui,sans-serif;color:#0b0d2e;display:flex;flex-direction:column}
+.mk-tela *{box-sizing:border-box}
+.mk-topo{display:flex;align-items:center;justify-content:space-between;padding:34px 14px 10px;background:#fbfbfd;border-bottom:1px solid #eceef4}
+.mk-logo{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;color:#3a3d55}
+.mk-logo i{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#120573,#1b3fd6);display:block}
+.mk-pill{font-size:8.5px;font-weight:500;padding:4px 8px;border-radius:99px;background:#e9eaf1;color:#20223d}
+.mk-corpo{flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:10px}
+.mk-h{font-size:15px;font-weight:600;line-height:1.2;text-align:center;letter-spacing:-.02em;margin:14px 0 0}
+.mk-p{font-size:9px;line-height:1.5;color:#5a5d74;text-align:center;margin:0}
+.mk-chips{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.mk-chips span{font-size:8px;padding:4px 7px;border-radius:99px;background:#e9eaf1;color:#3a3d55}
+.mk-card{background:#fff;border-radius:14px;padding:13px 10px;text-align:center;box-shadow:0 8px 20px -12px rgba(7,3,58,.25);border:1px solid #eef0f5}
+.mk-card small{display:block;font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#8a8da3}
+.mk-card b{display:block;font-size:13px;margin:4px 0 5px}
+.mk-card p{font-size:8.5px;line-height:1.45;color:#5a5d74;margin:0}
+.mk-btn{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:6px;height:34px;border-radius:10px;background:#0b0d2e;color:#fff;font-size:10.5px;font-weight:600}
+.mk-prog{height:4px;border-radius:4px;background:#e6e7ee;overflow:hidden}.mk-prog i{display:block;height:100%;width:22%;background:#0b0d2e;border-radius:4px}
+.mk-cat{font-size:7.5px;letter-spacing:.2em;font-weight:600;color:#1b1f4f;margin-top:6px}
+.mk-q{font-size:12.5px;font-weight:600;line-height:1.3;letter-spacing:-.01em;margin:0}
+.mk-op{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:11px;background:#fff;border:1.5px solid #e4e6ef;font-size:9.5px;color:#2a2d48}
+.mk-op b{width:20px;height:20px;border-radius:50%;border:1.5px solid #e1e3ec;display:grid;place-items:center;font-size:8.5px;color:#5a5d74;flex:none}
+.mk-op.on{border-color:#0b0d2e;background:#f0f1f6}.mk-op.on b{background:#0b0d2e;border-color:#0b0d2e;color:#fff}
+.mk-rodape{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 16px;border-top:1px solid #eceef4;background:#fbfbfd;font-size:8.5px;color:#8a8da3}
+.mk-rodape span:last-child{padding:7px 12px;border-radius:9px;background:#0b0d2e;color:#fff;font-weight:600}
+.mk-nav{width:100%;max-width:1060px;margin:0 auto;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 40px 80px -40px rgba(7,3,58,.45),0 0 0 1px rgba(7,3,58,.06);font-family:Poppins,system-ui,sans-serif;color:#0b0d2e;text-align:left}
+.mk-nav *{box-sizing:border-box}
+.mk-barra{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#eef0f6;border-bottom:1px solid #e2e5ee}
+.mk-barra i{width:10px;height:10px;border-radius:50%;background:#d3d6e2;display:block}
+.mk-barra span{margin-left:12px;flex:1;max-width:340px;height:22px;border-radius:7px;background:#fff;font-size:10.5px;color:#8a8da3;display:flex;align-items:center;padding:0 10px;white-space:nowrap;overflow:hidden}
+.mk-rel{padding:22px 24px 26px;background:#f6f7fb;display:grid;gap:14px}
+.mk-rel-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.mk-rel-topo h4{margin:0;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.mk-rel-topo h4 small{display:block;font-size:11px;font-weight:400;color:#7a7d94;letter-spacing:0;margin-top:2px}
+.mk-abas{display:flex;gap:4px;background:#e9ebf2;border-radius:10px;padding:3px}
+.mk-abas span{font-size:10.5px;padding:6px 11px;border-radius:8px;color:#5a5d74}
+.mk-abas span.on{background:#fff;color:#0b0d2e;font-weight:600;box-shadow:0 2px 6px rgba(7,3,58,.08)}
+.mk-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mk-k{background:#fff;border-radius:12px;padding:13px 14px;border:1px solid #eceef4}
+.mk-k small{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#8a8da3}
+.mk-k b{display:block;font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1.15;margin-top:6px}
+.mk-k b em{font-style:normal;font-size:12px;font-weight:500;color:#8a8da3;letter-spacing:0}
+.mk-k p{margin:4px 0 0;font-size:10px;color:#6a6d84}
+.mk-k.dest{background:linear-gradient(135deg,#120573,#1b3fd6);border:0;color:#fff}.mk-k.dest small,.mk-k.dest p,.mk-k.dest b em{color:rgba(255,255,255,.72)}
+.mk-enps{display:flex;height:6px;border-radius:6px;overflow:hidden;margin-top:8px}.mk-enps i{display:block;height:100%}
+.mk-g2{display:grid;grid-template-columns:1.15fr .85fr;gap:10px}
+.mk-bloco{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #eceef4;min-width:0}
+.mk-bloco h5{margin:0 0 10px;font-size:11.5px;font-weight:600}
+.mk-tema{display:grid;grid-template-columns:120px 1fr 30px;align-items:center;gap:10px;font-size:10.5px;color:#3a3d55;padding:4px 0}
+.mk-tema div{height:7px;border-radius:7px;background:#eef0f5;overflow:hidden}.mk-tema div i{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,#1b3fd6,#6cd8cf)}
+.mk-tema div i.baixo{background:linear-gradient(90deg,#f0a35a,#f5c27a)}
+.mk-tema b{text-align:right;font-weight:600}
+.mk-lista{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:5px}
+.mk-lista li{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;color:#3a3d55;padding:6px 9px;border-radius:8px;background:#f3fbf9}
+.mk-lista li b{font-weight:600;color:#0f8778}
+.mk-lista.agir li{background:#fff6ec}.mk-lista.agir li b{color:#b25d10}
+.mk-dist{display:flex;height:22px;border-radius:7px;overflow:hidden;font-size:9.5px;font-weight:600;color:#fff}
+.mk-dist i{display:grid;place-items:center;font-style:normal}
+.mk-leg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:9.5px;color:#6a6d84}
+.mk-leg span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;background:var(--c)}
+.mk-com{margin:0;padding:9px 11px;border-radius:9px;background:#f5f6fa;font-size:10.5px;line-height:1.5;color:#3a3d55}
+.mk-com small{display:block;margin-top:3px;font-size:9px;color:#8a8da3}
+.mk-selo{font-size:9.5px;padding:4px 9px;border-radius:99px;background:#e8f9f6;color:#0f8778;font-weight:600}
+@media (max-width:820px){.mk-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.mk-g2{grid-template-columns:1fr}.mk-rel{padding:16px 14px 18px}.mk-tema{grid-template-columns:96px 1fr 28px}}
+@media (max-width:420px){.mk-fone{width:min(182px,46vw);border-radius:30px;padding:7px}.mk-tela{border-radius:24px}.mk-fone+.mk-fone{margin-left:-8px;margin-top:34px}.mk-abas{display:none}}
+</style>
 </head>
 <body>
 <div class="veu" aria-hidden="true"></div>
@@ -120,7 +191,7 @@
         <h1 class="h-lg" data-reveal="up" style="--d:90ms">Seu time tem <b>muito a dizer</b>.</h1>
         <p class="lead" data-reveal="up" style="--d:190ms">Perguntas certas, <b>respostas anônimas</b> e todos os resultados em um único relatório: escuta estruturada sobre clima, liderança, comunicação e cultura, transformada em um plano de ação priorizado.</p>
         <div class="hero-ctas" data-reveal="up" style="--d:280ms">
-          <a class="btn btn-primario" href="/contato/">Solicitar proposta <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></a><a class="btn btn-contorno" href="#demonstracao">Ver na prática</a>
+          <a class="btn btn-primario" href="/contato/">Solicitar proposta <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></a><a class="btn btn-contorno" href="#pesquisa">Ver a pesquisa e o relatório</a>
         </div>
         <div class="hero-selos" data-reveal="up" style="--d:380ms"><span class="hero-selo"><b>100%</b> anônimas</span><span class="hero-selo"><b>~7 min</b> em qualquer dispositivo</span><span class="hero-selo"><b>Score de clima</b> e eNPS</span></div>
       </div>
@@ -164,28 +235,33 @@
   </div>
 </section>
 
-<section class="sec alt" id="relatorio">
+<section class="sec" id="pesquisa">
   <div class="wrap">
     <div class="duo a55">
       <div data-reveal="left">
-        <span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Relatório de resultados</span>
-        <h2 class="h-lg mt-s" style="max-width:19ch">Todos os resultados <b>em um único relatório</b>.</h2>
-        <p class="lead mt-s">Incluído na aplicação, <b>pronto em 10 dias</b> após o encerramento da pesquisa.</p>
+        <span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Visão do colaborador</span>
+        <h2 class="h-lg mt-s" style="max-width:18ch">Responder leva <b>cerca de 7 minutos</b>.</h2>
+        <p class="lead mt-s">Cada pessoa recebe um link e responde no celular ou no computador, sem login e com anonimato garantido.</p>
         <ol class="lista-num mt-m">
-          <li><span><b>Panorama geral.</b> Score de clima, média geral e eNPS.</span></li>
-          <li><span><b>O que sustenta o clima.</b> As perguntas mais bem avaliadas.</span></li>
-          <li><span><b>Onde agir primeiro.</b> As perguntas com as menores médias.</span></li>
-          <li><span><b>Resultado de cada pergunta.</b> Distribuição das respostas de 1 a 5.</span></li>
-          <li><span><b>Comentários.</b> Por categoria e comentários abertos.</span></li>
+          <li><span><b>Perguntas de escala, de 1 a 5.</b> Uma por tela, com a seção e o progresso sempre à vista.</span></li>
+          <li><span><b>Objetivas, abertas e de contexto.</b> Espaço para o colaborador explicar o que poderia melhorar.</span></li>
+          <li><span><b>100% online e anônima.</b> A empresa vê os resultados consolidados, nunca a resposta de uma pessoa.</span></li>
         </ol>
       </div>
-      <div data-reveal="right" data-parallax="0.04">
-        <div class="painel"><h3>Cada pergunta, em detalhe</h3><p style="margin-bottom:26px">Média por pergunta, de 1 a 5 (dados demonstrativos)</p><div class="barras"><div><div class="barra-rot"><b>Clareza de papéis</b><span class="v">4,6</span></div><div class="barra-t"><i style="--w:92%;--d:0ms"></i></div></div><div><div class="barra-rot"><b>Confiança na liderança</b><span class="v">4,2</span></div><div class="barra-t"><i style="--w:84%;--d:110ms"></i></div></div><div><div class="barra-rot"><b>Comunicação entre áreas</b><span class="v">3,3</span></div><div class="barra-t alt"><i style="--w:66%;--d:220ms"></i></div></div><div><div class="barra-rot"><b>Reconhecimento</b><span class="v">2,9</span></div><div class="barra-t alt"><i style="--w:58%;--d:330ms"></i></div></div></div>
-          <ul class="pauta-l" style="margin-top:26px"><li>Média por pergunta</li><li>Distribuição das respostas</li><li>Recorte por categoria</li><li>Comentários abertos</li></ul>
-        </div>
-        <p class="figura-legenda">Ranking das médias, distribuição das respostas, recortes por categoria e comentários abertos, no mesmo relatório.</p>
+      <div data-reveal="right">
+        <div class="mk-fones"><div class="mk-fone" aria-hidden="true"><div class="mk-tela"><div class="mk-topo"><span class="mk-logo"><i></i>Sua empresa</span></div><div class="mk-corpo"><p class="mk-h">Pesquisa de Clima Organizacional 2026</p><p class="mk-p">Sua opinião ajuda a construir um lugar melhor para trabalhar.</p><div class="mk-chips"><span>Cerca de 7 min</span><span>Respostas anônimas</span></div><div class="mk-card"><small>Vamos começar por</small><b>A organização</b><p>Responda pensando na empresa como um todo, e não em uma pessoa específica.</p></div><div class="mk-btn">Começar <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></div></div></div></div><div class="mk-fone" aria-hidden="true"><div class="mk-tela"><div class="mk-topo"><span class="mk-logo"><i></i>Sua empresa</span><span class="mk-pill">A organização</span></div><div class="mk-corpo" style="gap:8px"><div class="mk-prog"><i></i></div><span class="mk-cat">CLIMA E RELACIONAMENTO</span><p class="mk-q">O relacionamento com a sua equipe de trabalho no dia a dia é:</p><div class="mk-op"><b>1</b>Muito ruim</div><div class="mk-op"><b>2</b>Ruim</div><div class="mk-op"><b>3</b>Regular</div><div class="mk-op on"><b>4</b>Bom</div><div class="mk-op"><b>5</b>Muito bom</div></div><div class="mk-rodape"><span>Pergunta 6</span><span>Próxima →</span></div></div></div></div>
+        <p class="figura-legenda centro">Telas da pesquisa, com dados demonstrativos.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sec alt" id="relatorio">
+  <div class="wrap">
+    <div class="sec-head centro" data-reveal="up"><span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Visão do RH · relatório de resultados</span><h2 class="h-lg">Todos os resultados <b>em um único relatório</b>.</h2><p class="lead">Online, incluído na aplicação e <b>pronto em 10 dias</b> após o encerramento da pesquisa.</p></div>
+    <div data-reveal="up"><div class="mk-nav" role="img" aria-label="Exemplo do relatório online da Pesquisa de Clima, com score de clima, eNPS, média por tema, pontos fortes, pontos de atenção, distribuição das respostas e comentários"><div class="mk-barra"><i></i><i></i><i></i><span>Relatório de clima · Sua empresa 2026</span></div><div class="mk-rel"><div class="mk-rel-topo"><h4>Panorama geral<small>Pesquisa de Clima Organizacional 2026</small></h4><div class="mk-abas"><span class="on">Panorama</span><span>Perguntas</span><span>Comentários</span></div><span class="mk-selo">Dados demonstrativos</span></div><div class="mk-kpis"><div class="mk-k dest"><small>Score de clima</small><b>78 <em>/ 100</em></b><p>Clima favorável</p></div><div class="mk-k"><small>Média geral</small><b>3,9 <em>de 5</em></b><p>32 perguntas de escala</p></div><div class="mk-k"><small>eNPS</small><b>+32</b><div class="mk-enps"><i style="width:48%;background:#12a594"></i><i style="width:36%;background:#d9dce6"></i><i style="width:16%;background:#f0a35a"></i></div><p>48% promotores · 16% detratores</p></div><div class="mk-k"><small>Participação</small><b>86%</b><p>86 de 100 colaboradores</p></div></div><div class="mk-g2"><div class="mk-bloco"><h5>Média por tema</h5><div class="mk-tema"><span>Liderança</span><div><i class="" style="width:84%"></i></div><b>4,2</b></div><div class="mk-tema"><span>Clima e relacionamento</span><div><i class="" style="width:82%"></i></div><b>4,1</b></div><div class="mk-tema"><span>Desenvolvimento</span><div><i class="" style="width:72%"></i></div><b>3,6</b></div><div class="mk-tema"><span>Comunicação</span><div><i class="baixo" style="width:66%"></i></div><b>3,3</b></div><div class="mk-tema"><span>Reconhecimento</span><div><i class="baixo" style="width:60%"></i></div><b>3,0</b></div></div><div class="mk-bloco"><h5>O que sustenta o clima</h5><ul class="mk-lista"><li>Clareza do meu papel<b>4,6</b></li><li>Respeito entre colegas<b>4,5</b></li></ul><h5>Onde agir primeiro</h5><ul class="mk-lista agir"><li>Reconhecimento pelo trabalho<b>2,9</b></li><li>Comunicação entre áreas<b>3,1</b></li></ul></div></div><div class="mk-g2"><div class="mk-bloco"><h5>Resultado de cada pergunta · “Recebo reconhecimento quando faço um bom trabalho”</h5><div class="mk-dist"><i style="width:9%;background:#e0784a">9%</i><i style="width:24%;background:#f0a35a">24%</i><i style="width:33%;background:#c9ccd9;color:#3a3d55">33%</i><i style="width:23%;background:#4fb8ae">23%</i><i style="width:11%;background:#0f8778">11%</i></div><div class="mk-leg"><span style="--c:#e0784a">1 Muito ruim</span><span style="--c:#f0a35a">2 Ruim</span><span style="--c:#c9ccd9">3 Regular</span><span style="--c:#4fb8ae">4 Bom</span><span style="--c:#0f8778">5 Muito bom</span></div></div><div class="mk-bloco" style="display:grid;gap:7px;align-content:start"><h5 style="margin:0">Comentários abertos</h5><p class="mk-com">“Gosto muito do time, mas sinto falta de feedback mais frequente.”<small>Reconhecimento</small></p><p class="mk-com">“As áreas poderiam conversar mais antes de mudar processos.”<small>Comunicação</small></p></div></div></div></div></div>
+    <p class="figura-legenda centro">Exemplo do relatório online, com dados demonstrativos.</p>
+    <div class="grade g-5 mt-g" data-stagger="80" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px"><div data-reveal="up" style="padding:14px 16px;border-radius:14px;background:var(--branco,#fff);border:1px solid var(--linha)"><b style="display:block;font-weight:500;font-size:15px;margin-bottom:4px">Panorama geral</b><span style="font-size:13.5px;color:var(--tinta-suave)">Score de clima, média geral e eNPS.</span></div><div data-reveal="up" style="padding:14px 16px;border-radius:14px;background:var(--branco,#fff);border:1px solid var(--linha)"><b style="display:block;font-weight:500;font-size:15px;margin-bottom:4px">O que sustenta o clima</b><span style="font-size:13.5px;color:var(--tinta-suave)">As perguntas mais bem avaliadas.</span></div><div data-reveal="up" style="padding:14px 16px;border-radius:14px;background:var(--branco,#fff);border:1px solid var(--linha)"><b style="display:block;font-weight:500;font-size:15px;margin-bottom:4px">Onde agir primeiro</b><span style="font-size:13.5px;color:var(--tinta-suave)">As perguntas com as menores médias.</span></div><div data-reveal="up" style="padding:14px 16px;border-radius:14px;background:var(--branco,#fff);border:1px solid var(--linha)"><b style="display:block;font-weight:500;font-size:15px;margin-bottom:4px">Resultado de cada pergunta</b><span style="font-size:13.5px;color:var(--tinta-suave)">Distribuição das respostas de 1 a 5.</span></div><div data-reveal="up" style="padding:14px 16px;border-radius:14px;background:var(--branco,#fff);border:1px solid var(--linha)"><b style="display:block;font-weight:500;font-size:15px;margin-bottom:4px">Comentários</b><span style="font-size:13.5px;color:var(--tinta-suave)">Por categoria e comentários abertos.</span></div></div>
   </div>
 </section>
 
@@ -194,17 +270,6 @@
     <div class="sec-head centro" data-reveal="up"><span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Opcional</span><h2 class="h-lg">Relatório de RH <b>com plano de ação</b>.</h2><p class="lead">Leitura executiva dos resultados feita pelas especialistas da Grou, com sugestão de plano de ação para a Diretoria e o RH.</p></div>
     <div class="grade g-4" data-stagger="100"><article class="cartao" data-reveal="up"><div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.2 8.8-2 5.4-5.4 2 2-5.4 5.4-2z"/></svg></div><h3>Leitura executiva</h3><p>Contexto, visão geral e médias por seção.</p></article><article class="cartao" data-reveal="up"><div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 20 6v6c0 5-3.4 8-8 9.2C7.4 20 4 17 4 12V6l8-3.2z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg></div><h3>Pontos fortes e críticos</h3><p>Onde preservar e onde intervir.</p></article><article class="cartao" data-reveal="up"><div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.2 1.9"/></svg></div><h3>Plano de RH priorizado</h3><p>Frentes, ações, prazos e indicadores.</p></article><article class="cartao" data-reveal="up"><div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></svg></div><h3>Plano de ação de 90 dias</h3><p>Ondas de execução, governança e KPIs.</p></article></div>
     <p class="figura-legenda centro" data-reveal="up" style="margin-top:28px">Incluído ao contratar a etapa Construção do Plano de Ação.</p>
-  </div>
-</section>
-
-<section class="sec alt" id="demonstracao">
-  <div class="wrap">
-    <div class="sec-head centro" data-reveal="up"><span class="eyebrow"><i class="ponto" aria-hidden="true"></i> Demonstração</span><h2 class="h-lg">Veja na prática <b>antes de contratar</b>.</h2><p class="lead">A experiência do colaborador e o relatório online, com dados demonstrativos.</p></div>
-    <div class="grade g-2" data-stagger="100">
-      <a class="svc" href="https://atlas.grougp.com.br/survey/grou" target="_blank" rel="noopener" data-reveal="up"><span class="kick">Pesquisa · visão do colaborador</span><h3>Responder a pesquisa demonstrativa</h3><p>Cerca de 7 minutos, anônima, em qualquer dispositivo.</p><div class="meta"><span>atlas.grougp.com.br/survey/grou</span></div><span class="go">Abrir a pesquisa <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></span></a>
-      <a class="svc" href="https://atlas.grougp.com.br/relatorio/grou" target="_blank" rel="noopener" data-reveal="up"><span class="kick">Relatório online · visão do RH</span><h3>Explorar o relatório demonstrativo</h3><p>Panorama geral, eNPS, resultado por pergunta e comentários.</p><div class="meta"><span>atlas.grougp.com.br/relatorio/grou</span><span>Acesso com senha</span></div><span class="go">Abrir o relatório <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></span></a>
-    </div>
-    <p class="figura-legenda centro" data-reveal="up" style="margin-top:28px">O relatório demonstrativo é protegido por senha. <a href="/contato/">Peça o acesso à equipe da Grou</a>.</p>
   </div>
 </section>
 

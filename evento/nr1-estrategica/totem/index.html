@@ -286,9 +286,55 @@ html.palco .btn-voltar{display:none}
   .painel-tit h2{font-size:1.7rem}
   .mapa td.cel{height:2.55rem}
 }
+
+/* ---------- descanso: o símbolo do Lumi gira até alguém tocar ---------- */
+#descanso{position:fixed;inset:0;z-index:50;display:grid;place-items:center;text-align:center;cursor:pointer;
+  background:url(/assets/evento/nr1-estrategica/totem/bg-lumi.png) center/100% 100% no-repeat,#F7F9FE;
+  opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s}
+#descanso.on{opacity:1;visibility:visible;transition:opacity .6s ease}
+.dsc-centro{display:flex;flex-direction:column;align-items:center}
+.dsc-marca{position:relative;width:min(42vmin,22rem);aspect-ratio:1;display:grid;place-items:center}
+.dsc-simbolo{position:relative;width:78%;height:auto;overflow:visible;filter:drop-shadow(0 1.4rem 2.4rem rgba(14,57,141,.22))}
+.dsc-gira{transform-box:fill-box;transform-origin:50% 50%;animation:dscGira 7s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes dscGira{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.9)}100%{transform:rotate(360deg) scale(1)}}
+.dsc-halo{position:absolute;inset:4%;border-radius:50%;border:2px solid rgba(14,57,141,.16);animation:dscHalo 3.5s ease-out infinite}
+.dsc-halo.h2{animation-delay:1.75s}
+@keyframes dscHalo{0%{transform:scale(.55);opacity:0}25%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+.dsc-nome{width:min(30vmin,15rem);height:auto;margin-top:1.2rem}
+.dsc-chamada{margin:3.2rem 0 0;font-size:clamp(1.5rem,3.4vmin,2.3rem);font-weight:700;color:var(--azul);animation:dscPisca 2.4s ease-in-out infinite}
+.dsc-sub{margin:.7rem 0 0;font-size:clamp(1rem,2vmin,1.25rem);font-weight:500;color:var(--cinza2)}
+@keyframes dscPisca{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.dsc-gira,.dsc-halo,.dsc-chamada{animation:none}}
+html.palco #descanso{display:none}
 </style>
 </head>
 <body>
+
+<!-- ============ DESCANSO: logo do Lumi girando até alguém tocar ============ -->
+<div id="descanso" class="on" role="button" tabindex="0" aria-label="Toque para começar">
+  <div class="dsc-centro">
+    <div class="dsc-marca">
+      <span class="dsc-halo" aria-hidden="true"></span><span class="dsc-halo h2" aria-hidden="true"></span>
+      <svg class="dsc-simbolo" viewBox="-4 -4 88 80" aria-hidden="true"><defs>
+<linearGradient id="dsc0_linear_2781_19758" x1="79.3253" y1="19.0654" x2="16.7954" y2="19.0654" gradientUnits="userSpaceOnUse">
+<stop offset="0.24" stop-color="#0E398D" stop-opacity="0"/>
+<stop offset="1" stop-color="#0E398D"/>
+</linearGradient>
+<linearGradient id="dsc1_linear_2781_19758" x1="17.3608" y1="0" x2="17.3608" y2="56.8898" gradientUnits="userSpaceOnUse">
+<stop offset="0.24" stop-color="#0E398D" stop-opacity="0"/>
+<stop offset="1" stop-color="#0E398D"/>
+</linearGradient>
+<linearGradient id="dsc2_linear_2781_19758" x1="24.9062" y1="61.9423" x2="67.5435" y2="19.3021" gradientUnits="userSpaceOnUse">
+<stop offset="0.24" stop-color="#0E398D" stop-opacity="0"/>
+<stop offset="1" stop-color="#0E398D"/>
+</linearGradient>
+</defs><g class="dsc-gira"><path d="M68.3875 23.4745C69.1116 21.6668 68.3819 19.5667 66.6299 18.6142C65.3097 17.9011 63.7611 18.0265 62.5996 18.8175L48.7233 27.6413L34.7188 19.8508L18.8955 11.0493C17.6477 10.4059 16.7981 9.10237 16.7981 7.60109C16.7981 5.6096 18.2966 3.96349 20.2296 3.74066C20.4831 3.71281 20.7421 3.72117 21.0012 3.74902L34.7243 5.2308L79.3281 10.0466L60.9312 34.4012L68.0142 24.143C68.1619 23.9313 68.2928 23.7085 68.3875 23.4717V23.4745Z" fill="url(#dsc0_linear_2781_19758)"/><path d="M16.7954 7.60387C16.7954 9.10515 17.6449 10.4087 18.8927 11.0521L34.716 19.8536V36.5487L34.7076 52.7146C34.8162 54.1128 34.1534 55.5222 32.8749 56.3104C31.1787 57.3577 28.9922 56.9427 27.7862 55.4135C27.6274 55.2102 27.4993 54.9874 27.3906 54.7534L22.249 44.4729L0 0L34.7215 5.2308L20.9984 3.7518C20.7421 3.72395 20.4831 3.71281 20.2269 3.74344C18.2939 3.96905 16.7954 5.61238 16.7954 7.60387Z" fill="url(#dsc1_linear_2781_19758)"/><path d="M68.3875 23.4745C68.2928 23.7113 68.1619 23.9341 68.0142 24.1458L60.9312 34.404L60.9173 34.4235L34.9694 72L22.2518 44.4701L27.3934 54.7506C27.5021 54.9818 27.6302 55.2074 27.7889 55.4108C28.995 56.9399 31.1814 57.3549 32.8777 56.3076C34.1561 55.5194 34.819 54.1128 34.7104 52.7118V36.5459L48.7205 27.6413L62.5968 18.8175C63.7583 18.0265 65.3069 17.9011 66.6272 18.6142C68.3791 19.5667 69.1089 21.6641 68.3847 23.4745H68.3875Z" fill="url(#dsc2_linear_2781_19758)"/></g></svg>
+    </div>
+    <svg class="dsc-nome" viewBox="80 4 98 46" aria-hidden="true"><image href="/assets/evento/nr1-estrategica/totem/logo-lumi.svg" width="178" height="72"/></svg>
+    <p class="dsc-chamada">Toque na tela para começar</p>
+    <p class="dsc-sub">Experimente o Lumi em 1 minuto · anônimo</p>
+  </div>
+</div>
 
 <!-- ============ INÍCIO ============ -->
 <section class="tela app ativa" id="inicio" aria-label="Início">
@@ -791,9 +837,21 @@ Qual dessas categorias de competências você gostaria de começar o seu desenvo
   var timer;
   function mexeu() {
     clearTimeout(timer);
-    if (PALCO || atual === 'inicio') return;
-    timer = setTimeout(function () { vai('inicio'); }, atual === 'painel' ? OCIOSO_PAINEL_MS : OCIOSO_MS);
+    if (PALCO) return;
+    if (atual === 'inicio') { timer = setTimeout(descansa, DESCANSO_MS); return; }
+    timer = setTimeout(descansa, atual === 'painel' ? OCIOSO_PAINEL_MS : OCIOSO_MS);
   }
+  /* ---------- descanso: logo do Lumi girando até alguém tocar ---------- */
+  var DESCANSO_MS = 45000;
+  function descansa() { if (PALCO) return; if (atual !== 'inicio') vai('inicio'); $('descanso').classList.add('on'); clearTimeout(timer); }
+  function acorda(ev) {
+    var d = $('descanso'); if (!d.classList.contains('on')) return;
+    /* o toque segue até o documento (tela cheia e wake lock do quiosque); o clique que vem depois fica no véu, que some em .6 s */
+    d.classList.remove('on'); mexeu();
+  }
+  $('descanso').addEventListener('pointerdown', acorda);
+  $('descanso').addEventListener('click', function (ev) { ev.stopPropagation(); });
+  $('descanso').addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); acorda(); } });
   ['pointerdown', 'keydown'].forEach(function (ev) { document.addEventListener(ev, mexeu, { passive: true }); });
 
   /* ---------- quiosque ---------- */
@@ -807,7 +865,7 @@ Qual dessas categorias de competências você gostaria de começar o seu desenvo
   });
   document.addEventListener('visibilitychange', function () { if (!document.hidden) travaTela(); });
 
-  if (PALCO) { document.documentElement.classList.add('palco'); vai('painel'); }
+  if (PALCO) { document.documentElement.classList.add('palco'); $('descanso').classList.remove('on'); vai('painel'); }
   if (TESTE) document.title = '[TESTE] ' + document.title;
   carrega(); envia();
 })();

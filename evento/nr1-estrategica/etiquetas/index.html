@@ -84,6 +84,8 @@ button:disabled{opacity:.45;cursor:default;filter:none}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:12px 18px;border-radius:12px;background:var(--noite);color:#fff;font-size:14px;box-shadow:0 12px 30px rgba(7,3,58,.35);z-index:5;max-width:calc(100vw - 32px)}
 @media (max-width:900px){.grade{grid-template-columns:minmax(0,1fr)}}
 
+.opcoes{display:grid;gap:8px;margin:4px 0 14px}
+.opcoes small{font-weight:500;color:var(--suave)}
 /* ===== etiqueta: 82 × 30 mm, só texto (sem QR), impressa uma embaixo da outra num rolo de 82 mm ===== */
 .e{width:82mm;height:30mm;position:relative;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 5mm;overflow:hidden;font-family:'Poppins',sans-serif;color:#07033a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .e .tx{flex:1;min-width:0}
@@ -172,11 +174,21 @@ button:disabled{opacity:.45;cursor:default;filter:none}
         <p class="legenda" id="legenda">Tamanho real: 82 × 30 mm.</p>
       </section>
 
+      <section class="cartao" aria-labelledby="tTodas">
+        <h2 id="tTodas">Imprimir de todos os inscritos</h2>
+        <div class="opcoes" role="radiogroup" aria-label="Quais etiquetas">
+          <label class="check"><input type="radio" name="quais" value="todos" checked> Todos os confirmados <small id="nTodos"></small></label>
+          <label class="check"><input type="radio" name="quais" value="semcheckin"> Só quem ainda não fez check-in <small id="nSem"></small></label>
+        </div>
+        <div class="botoes"><button type="button" id="imprimirTodas" disabled>Imprimir etiquetas</button></div>
+        <p class="vazio" style="margin-top:10px">Em ordem alfabética, uma embaixo da outra no rolo. Não faz check-in: ele continua sendo feito na hora em que a pessoa retira o crachá.</p>
+      </section>
+
       <section class="cartao fila" aria-labelledby="tFila">
         <div class="fila-cab">
           <h2 id="tFila">Fila de impressão <small id="contaFila" style="font-weight:500;color:var(--suave)"></small></h2>
           <div class="botoes">
-            <button type="button" class="mini" id="imprimirFila" disabled>Imprimir todas</button>
+            <button type="button" class="mini" id="imprimirFila" disabled>Imprimir a fila</button>
             <button type="button" class="sec mini" id="limparFila" disabled>Esvaziar</button>
           </div>
         </div>
@@ -333,6 +345,7 @@ button:disabled{opacity:.45;cursor:default;filter:none}
   function contador(){
     var c = lista.filter(confirmada);
     $('nConf').textContent = c.length; $('nPres').textContent = c.filter(function(i){ return i.presente; }).length;
+    todas();
   }
   function tagsDe(i){
     var t = '';
@@ -435,6 +448,23 @@ button:disabled{opacity:.45;cursor:default;filter:none}
       delete d.f; fila.push(d); salvaFila(); desenhaFila();
       sel = null; modo = 'vazio'; $('form').reset(); $('boxEmail').hidden = true; $('busca').value = ''; busca(); previa(); aviso(); $('busca').focus();
     });
+  });
+  /* ---------- etiquetas de todos os inscritos, de uma vez ---------- */
+  function escolhidos(){
+    var so = (document.querySelector('input[name=quais]:checked')||{}).value === 'semcheckin';
+    return lista.filter(function(i){ return confirmada(i) && (!so || !i.presente); })
+      .sort(function(a,b){ return String(a.nome||'').localeCompare(String(b.nome||''),'pt-BR'); });
+  }
+  function todas(){
+    var c = lista.filter(confirmada), sem = c.filter(function(i){ return !i.presente; }).length, n = escolhidos().length;
+    $('nTodos').textContent = '('+c.length+')'; $('nSem').textContent = '('+sem+')';
+    $('imprimirTodas').disabled = !n; $('imprimirTodas').textContent = n ? 'Imprimir '+n+(n===1?' etiqueta':' etiquetas') : 'Nenhuma etiqueta';
+  }
+  [].forEach.call(document.querySelectorAll('input[name=quais]'), function(r){ r.addEventListener('change', todas); });
+  $('imprimirTodas').addEventListener('click', function(){
+    var l = escolhidos(); if(!l.length) return;
+    var html = l.map(function(i){ var n = caixa(i.nome||''); return etq({curto: curto(n), cargo: caixa(i.cargo||''), empresa: caixa(i.empresa||'')}); }).join('');
+    imprime('<div class="u">'+html+'</div>', '@page{size:82mm 30mm;margin:0}');
   });
   $('imprimirFila').addEventListener('click', function(){ if(fila.length) imprime('<div class="u">'+fila.map(etq).join('')+'</div>', '@page{size:82mm 30mm;margin:0}'); });
   $('limparFila').addEventListener('click', function(){ if(confirm('Tirar todas as etiquetas da fila?')){ fila = []; salvaFila(); desenhaFila(); } });

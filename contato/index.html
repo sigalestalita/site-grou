@@ -93,14 +93,15 @@
     });
     function preenche(f, marcado){
       sel.innerHTML = '';
-      if (!f || !f.grupos) { campo.hidden = true; sel.disabled = true; return; }
-      var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Ainda não sei qual, quero ajuda para escolher'; sel.appendChild(o0);
+      if (!f || !f.grupos) { campo.hidden = true; sel.required = false; sel.disabled = true; return; }
+      var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Selecione'; o0.disabled = true; o0.selected = true; sel.appendChild(o0);
       f.grupos.forEach(function(g){
         var pai = sel;
         if (g[0]) { pai = document.createElement('optgroup'); pai.label = g[0]; sel.appendChild(pai); }
         g[1].forEach(function(it){ var o = document.createElement('option'); o.textContent = it[1]; o.value = it[1]; if (it[1] === marcado) o.selected = true; pai.appendChild(o); });
       });
-      sel.disabled = false; campo.hidden = false;
+      var on = document.createElement('option'); on.value = on.textContent = 'Ainda não sei qual, quero ajuda para escolher'; sel.appendChild(on);
+      sel.required = true; sel.disabled = false; campo.hidden = false;
     }
     function aplica(o){
       if (!o) { preenche(null); return; }
@@ -233,8 +234,8 @@
                 <input id="c-email" name="email" type="email" required autocomplete="email" placeholder="voce@empresa.com.br">
               </div>
               <div class="campo">
-                <label for="c-tel">WhatsApp</label>
-                <input id="c-tel" name="mobile_phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">
+                <label for="c-tel">WhatsApp ou telefone</label>
+                <input id="c-tel" name="mobile_phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">
               </div>
             </div>
             <div class="form-linha">
@@ -376,7 +377,7 @@
     var nome = v('name'), email = v('email').toLowerCase(), tel = v('mobile_phone').replace(/\D/g,'');
     if (nome.split(/\s+/).length < 2) return erro('Informe nome e sobrenome.', $('c-nome'));
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return erro('Confira o e-mail.', $('c-email'));
-    if (tel && (tel.length < 10 || tel.length > 13)) return erro('Confira o WhatsApp: DDD + número.', $('c-tel'));
+    if (tel.length < 10 || tel.length > 13) return erro('Informe o WhatsApp ou telefone com DDD.', $('c-tel'));
     if (tel.length === 10 || tel.length === 11) tel = '55' + tel;
     var frente = v('Frente'), solucao = v('solucao'), msg = v('mensagem');
     var resumo = ['Frente: ' + (frente || '-'), 'Solução: ' + (solucao || 'ainda não sabe'), tel ? 'WhatsApp: +' + tel : '', ORIGEM ? 'Veio da página: ' + ORIGEM : '']

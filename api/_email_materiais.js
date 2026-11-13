@@ -23,7 +23,7 @@ async function envia(p) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST', signal: AbortSignal.timeout(10000),
     headers: { Authorization: 'Bearer ' + chave, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: remetente(), to: [p.email], reply_to: CONTATO, subject: assunto, html: html(p.nome), text: texto(p.nome) })
+    body: JSON.stringify({ from: remetente(), to: [p.email], reply_to: 'marketing@grougp.com.br', subject: assunto, html: html(p.nome), text: texto(p.nome) })
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error('resend ' + r.status + ' ' + String(j.message || j.name || '').slice(0, 160));

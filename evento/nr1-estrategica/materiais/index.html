@@ -196,8 +196,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function(){
   /* RD Station: API de conversões. Cole aqui o token público da conta (RD Station Marketing → Integrações).
      A automação do RD, disparada por esta conversão, envia o e-mail com o link do ambiente. */
-  var RD_CHAVE = '';
+  var RD_CHAVE = '4542025c5f799c34f0f05368b3d284d6';
   var RD_CONVERSAO = 'nr1-estrategica-materiais';
+  /* enquanto a automação do RD (e-mail com o link) não estiver ligada, o link também aparece na tela */
+  var MOSTRAR_LINK = true;
   var $ = function(i){ return document.getElementById(i); };
   var t0 = Date.now();
   function cookie(n){ var m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)'); return m ? decodeURIComponent(m.pop()) : ''; }
@@ -205,7 +207,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function paraRd(d){
     if(!RD_CHAVE) return Promise.reject(new Error('sem chave'));
     var c = { conversion_identifier: RD_CONVERSAO, name: d.nome, email: d.email, mobile_phone: d.celular, personal_phone: d.celular, company_name: d.empresa, job_title: d.cargo,
-      cf_pagina_de_origem: location.href, legal_bases: [{ category: 'communications', type: 'consent', status: 'granted' }] };
+      legal_bases: [{ category: 'communications', type: 'consent', status: 'granted' }] };
     try { var r = cookie('rdtrk'); if(r) c.client_tracking_id = JSON.parse(r).id; } catch(e) {}
     var u = utms(); Object.keys(u).forEach(function(k){ c[k] = u[k]; }); if(u.utm_source) c.traffic_source = u.utm_source;
     return fetch('https://api.rd.services/platform/conversions?api_key=' + encodeURIComponent(RD_CHAVE), { method:'POST', headers:{'Content-Type':'application/json'},
@@ -234,7 +236,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if(!foiRd && s.http === 400) { b.disabled = false; b.innerHTML = 'Quero receber o acesso'; return erro(s.j.erro || 'Confira os dados.', s.j.campo); }
       try { (window.dataLayer = window.dataLayer || []).push({ event:'nr1_materiais_cadastro' }); if(window.fbq) fbq('track','Lead',{ content_name:'Materiais NR-1 Estratégica' }); } catch(e) {}
       $('okTit').textContent = 'Pronto, ' + d.nome.split(/\s+/)[0] + '!';
-      if(foiRd) $('okTxt').textContent = 'Enviamos o link do ambiente das apresentações para ' + d.email + '. Se não aparecer em alguns minutos, confira o spam.';
+      if(foiRd) { $('okTxt').textContent = 'Enviamos o link do ambiente das apresentações para ' + d.email + (MOSTRAR_LINK ? '. Se preferir, já pode abrir agora:' : '. Se não aparecer em alguns minutos, confira o spam.'); $('okLink').hidden = !MOSTRAR_LINK; }
       else { $('okTxt').textContent = 'Seu cadastro foi feito. Você já pode abrir as apresentações:'; $('okLink').hidden = false; }
       $('passoForm').hidden = true; $('passoOk').hidden = false; $('passoOk').focus();
     });

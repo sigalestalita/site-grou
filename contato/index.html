@@ -21,6 +21,96 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/grou.css?v=99539974">
+<style id="contato-frentes">
+#c-sol-campo[hidden]{display:none}
+.rotulo-campo{font-size:12.5px;letter-spacing:.04em;color:var(--tinta-tenue);font-weight:400}
+.frentes{display:flex;flex-wrap:wrap;gap:8px}
+.campo .frente{position:relative;display:inline-flex;cursor:pointer;font-size:14px;letter-spacing:0;color:var(--tinta)}
+.frente input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.frente span{display:inline-flex;align-items:center;padding:9px 15px;border-radius:999px;border:1px solid var(--linha);background:var(--branco);font-weight:400;line-height:1.2;transition:border-color .2s,background .2s,color .2s,box-shadow .2s}
+.frente:hover span{border-color:var(--ciano)}
+.frente input:checked + span{background:var(--tinta);border-color:var(--tinta);color:#fff;font-weight:500}
+.frente input:focus-visible + span{box-shadow:0 0 0 4px rgb(var(--ciano-rgb) / .25)}
+</style>
+<script id="contato-frentes-js">
+(function(){
+  var C = 'Consulting';
+  var FRENTES = [
+    { nome: 'Consulting', grupos: [
+      ['Programas de liderança', [['master-lider','Master Líder'],['lider-360','Líder 360°'],['nr1-liderancas','NR-1 aplicada às Lideranças']]],
+      ['Treinamentos e workshops', [['capacitacao-pda','Capacitação Analista Comportamental PDA'],['pda-para-lideres','PDA para Líderes'],['sensibilizacao-pda','Sensibilização de Lideranças com Foco no PDA'],['team-building','Team Building com o PDA'],['entrevista-competencias','Entrevista por Competências com o PDA'],['vendas-comportamental','Inteligência Comportamental para Vendas'],['lideranca-assertiva','Liderança Assertiva'],['pdi-com-pda','Workshop PDI com o PDA'],['devolutiva-pda','Devolutiva em Grupo com o PDA'],['comunicacao-comportamento','Comunicação e Comportamento']]],
+      ['Desenvolvimento individual', [['assessment-40','Assessment 5.0'],['mentoria-comportamental','Mentoria Comportamental'],['devolutiva-individual','Devolutiva Individual'],['pdi-individual','PDI para Desenvolvimento Individual']]]
+    ]},
+    { nome: 'Tecnologias', grupos: [[null, [['pda-assessment','PDA Assessment'],['feedback-360','Feedback 360º'],['pesquisa-de-clima','Pesquisa de Clima'],['dilemas-de-gestao','Dilemas de Gestão'],['questionario-de-resiliencia','Questionário de Resiliência']]]] },
+    { nome: 'NR-1 e saúde mental', grupos: [[null, [['lumi','Diagnóstico NR-1 e saúde mental (Lumi)'],['nr1-liderancas','NR-1 aplicada às Lideranças'],['pesquisa-de-clima','Pesquisa de Clima']]]] },
+    { nome: 'Coaching' },
+    { nome: 'R&S e Hunting', grupos: [[null, [['recrutamento','Recrutamento e seleção'],['hunting','Hunting de executivos']]]] },
+    { nome: 'Academy' },
+    { nome: 'Ainda não sei', titulo: 'Ainda não sei, quero um diagnóstico' }
+  ];
+  /* página de origem (ou ?interesse=) → frente e solução já marcadas */
+  var GROU_SKILLS = { 'workshops': [C,''], 'programa-de-desenvolvimento': [C,'Liderança Assertiva'], 'mentorias-e-assessment': [C,'Assessment 5.0'], 'devolutivas': [C,'Devolutiva Individual'], 'certificacoes-e-capacitacoes': [C,'Capacitação Analista Comportamental PDA'] };
+  function porSlug(nomeFrente, slug){
+    var f = FRENTES.filter(function(x){ return x.nome === nomeFrente; })[0], achou = '';
+    (f && f.grupos || []).forEach(function(g){ g[1].forEach(function(it){ if(it[0] === slug) achou = it[1]; }); });
+    return achou;
+  }
+  function origem(){
+    var q = new URLSearchParams(location.search).get('interesse') || '', cam = '';
+    try { var r = new URL(document.referrer); if (r.host === location.host) cam = r.pathname; } catch(e) {}
+    var m;
+    if (q) {
+      if (q === 'nr1' || q === 'lumi') return ['NR-1 e saúde mental', q === 'lumi' ? porSlug('NR-1 e saúde mental','lumi') : ''];
+      var achou = null;
+      FRENTES.forEach(function(f){ if(!achou && porSlug(f.nome, q)) achou = [f.nome, porSlug(f.nome, q)]; });
+      if (achou) return achou;
+    }
+    if ((m = cam.match(/^\/consulting\/([^/]+)/))) return [C, porSlug(C, m[1])];
+    if (/^\/consulting\/?$/.test(cam)) return [C, ''];
+    if ((m = cam.match(/^\/tecnologias\/([^/]+)/))) return ['Tecnologias', porSlug('Tecnologias', m[1])];
+    if (/^\/tecnologias\/?$/.test(cam)) return ['Tecnologias', ''];
+    if ((m = cam.match(/^\/grou-skills\/([^/]+)/)) && GROU_SKILLS[m[1]]) return GROU_SKILLS[m[1]];
+    if (/^\/grou-skills\/?$/.test(cam)) return [C, ''];
+    if (/^\/coaching\//.test(cam)) return ['Coaching', ''];
+    if (/^\/academy\//.test(cam)) return ['Academy', ''];
+    if (/^\/recrutamento-e-selecao\//.test(cam)) return ['R&S e Hunting', ''];
+    if (/^\/evento\/nr1/.test(cam)) return ['NR-1 e saúde mental', ''];
+    return null;
+  }
+  function monta(){
+    var box = document.getElementById('c-frentes'), campo = document.getElementById('c-sol-campo'), sel = document.getElementById('c-solucao');
+    if (!box) return;
+    FRENTES.forEach(function(f, i){
+      var l = document.createElement('label'); l.className = 'frente';
+      var r = document.createElement('input'); r.type = 'radio'; r.name = 'Frente'; r.value = f.titulo || f.nome; if (i === 0) r.required = true;
+      var sp = document.createElement('span'); sp.textContent = f.nome;
+      l.appendChild(r); l.appendChild(sp); box.appendChild(l);
+      r.addEventListener('change', function(){ preenche(f, ''); });
+    });
+    function preenche(f, marcado){
+      sel.innerHTML = '';
+      if (!f || !f.grupos) { campo.hidden = true; sel.disabled = true; return; }
+      var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Ainda não sei qual, quero ajuda para escolher'; sel.appendChild(o0);
+      f.grupos.forEach(function(g){
+        var pai = sel;
+        if (g[0]) { pai = document.createElement('optgroup'); pai.label = g[0]; sel.appendChild(pai); }
+        g[1].forEach(function(it){ var o = document.createElement('option'); o.textContent = it[1]; o.value = it[1]; if (it[1] === marcado) o.selected = true; pai.appendChild(o); });
+      });
+      sel.disabled = false; campo.hidden = false;
+    }
+    function aplica(o){
+      if (!o) { preenche(null); return; }
+      var f = FRENTES.filter(function(x){ return x.nome === o[0]; })[0];
+      var r = box.querySelector('input[value="' + (f.titulo || f.nome).replace(/"/g,'') + '"]'); if (r) r.checked = true;
+      preenche(f, o[1]);
+    }
+    var inicial = origem(); aplica(inicial);
+    var form = box.closest('form');
+    if (form) form.addEventListener('reset', function(){ setTimeout(function(){ aplica(inicial); }, 0); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', monta); else monta();
+})();
+</script>
 </head>
 <body>
 <div class="veu" aria-hidden="true"></div>
@@ -144,17 +234,12 @@
               </div>
             </div>
             <div class="campo">
-              <label for="c-interesse">Sobre o que você quer falar</label>
-              <select id="c-interesse" name="Interesse">
-                <option>PDA Assessment</option>
-                <option>Feedback 360º</option>
-                <option>Dilemas de Gestão</option>
-                <option>Questionário de Resiliência</option>
-                <option>Capacitação Analista Comportamental PDA</option>
-                <option>Workshops e programas de desenvolvimento</option>
-                <option>Mentorias, Assessment e devolutivas</option>
-                <option>Ainda não sei — quero um diagnóstico</option>
-              </select>
+              <span class="rotulo-campo" id="c-frente-rot">Sobre o que você quer falar</span>
+              <div class="frentes" role="radiogroup" aria-labelledby="c-frente-rot" id="c-frentes"></div>
+            </div>
+            <div class="campo" id="c-sol-campo" hidden>
+              <label for="c-solucao">Qual solução?</label>
+              <select id="c-solucao" name="Solução"></select>
             </div>
             <div class="campo">
               <label for="c-msg">Contexto (opcional)</label>

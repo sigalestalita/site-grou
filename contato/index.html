@@ -23,6 +23,10 @@
 <link rel="stylesheet" href="/assets/css/grou.css?v=99539974">
 <style id="contato-frentes">
 #c-sol-campo[hidden]{display:none}
+.form-erro{margin:0;font-size:13.5px;color:#c0392b}
+.campo [aria-invalid="true"]{border-color:#c0392b}
+.campo select:invalid{color:var(--tinta-tenue)}
+.campo select option{color:var(--tinta)}
 .rotulo-campo{font-size:12.5px;letter-spacing:.04em;color:var(--tinta-tenue);font-weight:400}
 .frentes{display:flex;flex-wrap:wrap;gap:8px}
 .campo .frente{position:relative;display:inline-flex;cursor:pointer;font-size:14px;letter-spacing:0;color:var(--tinta)}
@@ -210,27 +214,47 @@
       <div class="hero-visual" data-reveal="right" style="--d:240ms;width:100%">
         <div class="painel claro" style="max-width:none">
           <h3>Solicitar demonstração</h3>
-          <p style="margin-bottom:24px;font-size:14px">Leva menos de um minuto. Retornamos em até um dia útil.</p>
+          <p style="margin-bottom:24px;font-size:14px">Leva cerca de um minuto. Retornamos em até um dia útil.</p>
 
-          <form class="form" data-email="atendimento@grougp.com.br" data-assunto="Solicitação de demonstração pelo site" novalidate>
+          <form class="form" id="form-contato" novalidate>
             <div class="form-linha">
               <div class="campo">
                 <label for="c-nome">Nome</label>
-                <input id="c-nome" name="Nome" type="text" required autocomplete="name" placeholder="Seu nome completo">
+                <input id="c-nome" name="name" type="text" required autocomplete="name" placeholder="Seu nome completo">
               </div>
               <div class="campo">
                 <label for="c-empresa">Empresa</label>
-                <input id="c-empresa" name="Empresa" type="text" required autocomplete="organization" placeholder="Nome da empresa">
+                <input id="c-empresa" name="company" type="text" required autocomplete="organization" placeholder="Nome da empresa">
               </div>
             </div>
             <div class="form-linha">
               <div class="campo">
                 <label for="c-email">E-mail corporativo</label>
-                <input id="c-email" name="E-mail" type="email" required autocomplete="email" placeholder="voce@empresa.com.br">
+                <input id="c-email" name="email" type="email" required autocomplete="email" placeholder="voce@empresa.com.br">
               </div>
               <div class="campo">
-                <label for="c-tel">Telefone</label>
-                <input id="c-tel" name="Telefone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000">
+                <label for="c-tel">WhatsApp</label>
+                <input id="c-tel" name="mobile_phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">
+              </div>
+            </div>
+            <div class="form-linha">
+              <div class="campo">
+                <label for="c-atuacao">Onde você atua?</label>
+                <select id="c-atuacao" name="cf_mkt_area_de_atuacao" required><option value="" disabled selected>Selecione</option><option value="Atuo em uma consultoria">Atuo em uma consultoria</option><option value="Atuo em uma empresa">Atuo em uma empresa</option><option value="Sou pessoa física">Sou pessoa física</option></select>
+              </div>
+              <div class="campo">
+                <label for="c-porte">Porte da empresa</label>
+                <select id="c-porte" name="cf_grou_porte" required><option value="" disabled selected>Selecione</option><option value="01">01</option><option value="02 - 10">02 - 10</option><option value="11 - 20">11 - 20</option><option value="21 - 50">21 - 50</option><option value="51 - 100">51 - 100</option><option value="101 - 200">101 - 200</option><option value="201 - 500">201 - 500</option><option value="501 - 2.000">501 - 2.000</option><option value="2.001 - 5.000">2.001 - 5.000</option><option value="5.001 - 10.000">5.001 - 10.000</option><option value="10.001 - 20.000">10.001 - 20.000</option><option value="Acima de 20.001">Acima de 20.001</option><option value="Consultoria">Consultoria</option><option value="Pessoa física">Pessoa física</option></select>
+              </div>
+            </div>
+            <div class="form-linha">
+              <div class="campo">
+                <label for="c-cargo">Cargo</label>
+                <select id="c-cargo" name="cf_grou_cargo" required><option value="" disabled selected>Selecione</option><option value="Analista">Analista</option><option value="Assistente">Assistente</option><option value="Gerente/Coordenador">Gerente/Coordenador</option><option value="Supervisor">Supervisor</option><option value="CEO">CEO</option><option value="Founder">Founder</option><option value="Co-founder">Co-founder</option><option value="Diretor (C-level)">Diretor (C-level)</option><option value="Consultor independente">Consultor independente</option><option value="Consultor interno">Consultor interno</option><option value="Business Partner">Business Partner</option><option value="Talent acquisition">Talent acquisition</option><option value="Estudante">Estudante</option><option value="Outro">Outro</option><option value="Vice presidente">Vice presidente</option><option value="Presidente">Presidente</option><option value="Especialista">Especialista</option><option value="Head">Head</option></select>
+              </div>
+              <div class="campo">
+                <label for="c-depto">Departamento</label>
+                <select id="c-depto" name="cf_grou_departamento" required><option value="" disabled selected>Selecione</option><option value="Recursos Humanos">Recursos Humanos</option><option value="Desenvolvimento de pessoas">Desenvolvimento de pessoas</option><option value="Treinamento e Desenvolvimento">Treinamento e Desenvolvimento</option><option value="Atração &amp; Seleção">Atração &amp; Seleção</option><option value="Administrativo">Administrativo</option><option value="Departamento Pessoal">Departamento Pessoal</option><option value="Financeiro/contábil">Financeiro/contábil</option><option value="Suporte">Suporte</option><option value="Marketing">Marketing</option><option value="Tecnologia">Tecnologia</option><option value="Vendas">Vendas</option><option value="Compras">Compras</option><option value="Comercial">Comercial</option><option value="Inovação">Inovação</option><option value="Operações">Operações</option><option value="Outro">Outro</option><option value="Dados/People Analytics">Dados/People Analytics</option><option value="Employer Branding">Employer Branding</option></select>
               </div>
             </div>
             <div class="campo">
@@ -239,20 +263,21 @@
             </div>
             <div class="campo" id="c-sol-campo" hidden>
               <label for="c-solucao">Qual solução?</label>
-              <select id="c-solucao" name="Solução"></select>
+              <select id="c-solucao" name="solucao"></select>
             </div>
             <div class="campo">
-              <label for="c-msg">Contexto (opcional)</label>
-              <textarea id="c-msg" name="Mensagem" placeholder="Tamanho do time, momento da empresa, o que está travando hoje…"></textarea>
+              <label for="c-msg">Como podemos te ajudar? (opcional)</label>
+              <textarea id="c-msg" name="mensagem" placeholder="Tamanho do time, momento da empresa, o que está travando hoje…"></textarea>
             </div>
-            <button class="btn btn-primario" type="submit" style="width:100%;margin-top:6px">Enviar solicitação <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></button>
+            <input type="text" name="site" id="c-site" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+            <p class="form-erro" id="c-erro" role="alert" hidden></p>
+            <button class="btn btn-primario" id="c-enviar" type="submit" style="width:100%;margin-top:6px">Enviar solicitação <svg class="seta-btn" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h11"/><path d="M9 3.5 13.5 8 9 12.5"/></svg></button>
             <p class="form-nota">
               Ao enviar, você concorda com a nossa
               <a href="https://conteudo.grougp.com.br/politica-de-privacidade-grou" target="_blank" rel="noopener">política de privacidade</a>.
-              O formulário abre o seu aplicativo de e-mail com a mensagem já preenchida.
             </p>
           </form>
-          <div class="form-ok"><span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6.3 4.7 9 10 3.4"/></svg></span><span>Tudo certo. Seu aplicativo de e-mail deve abrir com a mensagem pronta — é só enviar. Se não abrir, escreva direto para <b>atendimento@grougp.com.br</b>.</span></div>
+          <div class="form-ok"><span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6.3 4.7 9 10 3.4"/></svg></span><span id="c-ok-txt">Recebemos o seu pedido. Um especialista da Grou responde em até um dia útil.</span></div>
         </div>
       </div>
     </div>
@@ -325,5 +350,66 @@
 </a>
 
 <script src="/assets/js/grou.js?v=235d5524" defer></script>
+<script id="contato-rd-js">
+/* Formulário de contato → RD Station (mesma conversão do formulário "grou-site-home").
+   Campos que o formulário do RD não tem (WhatsApp, frente, solução, página de origem) vão no telefone,
+   nas tags e no campo "Como podemos te ajudar?". Se o RD não responder, cai no e-mail como antes. */
+(function(){
+  var RD_CHAVE = '4542025c5f799c34f0f05368b3d284d6', RD_CONVERSAO = 'grou-site-home', DESTINO = 'atendimento@grougp.com.br';
+  var t0 = Date.now();
+  function $(id){ return document.getElementById(id); }
+  function slug(v){ return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60); }
+  function cookie(n){ var m = document.cookie.match('(?:^|; )' + n + '=([^;]*)'); return m ? decodeURIComponent(m[1]) : ''; }
+  function origem(){ try { var r = new URL(document.referrer); if (r.host === location.host) return r.pathname; } catch(e) {} return ''; }
+  function utm(k){ var v = new URLSearchParams(location.search).get(k); if (v) { try { sessionStorage.setItem('g_' + k, v); } catch(e) {} return v; } try { return sessionStorage.getItem('g_' + k) || ''; } catch(e) { return ''; } }
+  var ORIGEM = origem(), U = { s: utm('utm_source'), m: utm('utm_medium'), c: utm('utm_campaign') };
+  function erro(msg, campo){ var e = $('c-erro'); e.textContent = msg; e.hidden = false; if (campo) { campo.setAttribute('aria-invalid','true'); campo.focus(); } }
+  function mostraOk(txt){ var f = $('form-contato'), ok = f.parentElement.querySelector('.form-ok'); if (txt) $('c-ok-txt').innerHTML = txt; f.hidden = true; if (ok) { ok.classList.add('visivel'); ok.setAttribute('tabindex','-1'); ok.focus(); } }
+  var f = $('form-contato'); if (!f) return;
+  f.addEventListener('input', function(ev){ ev.target.removeAttribute && ev.target.removeAttribute('aria-invalid'); $('c-erro').hidden = true; });
+  f.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if ($('c-site').value || Date.now() - t0 < 2500) return;
+    $('c-erro').hidden = true;
+    if (!f.reportValidity()) return;
+    var d = new FormData(f), v = function(k){ return String(d.get(k) || '').trim(); };
+    var nome = v('name'), email = v('email').toLowerCase(), tel = v('mobile_phone').replace(/\D/g,'');
+    if (nome.split(/\s+/).length < 2) return erro('Informe nome e sobrenome.', $('c-nome'));
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return erro('Confira o e-mail.', $('c-email'));
+    if (tel && (tel.length < 10 || tel.length > 13)) return erro('Confira o WhatsApp: DDD + número.', $('c-tel'));
+    if (tel.length === 10 || tel.length === 11) tel = '55' + tel;
+    var frente = v('Frente'), solucao = v('solucao'), msg = v('mensagem');
+    var resumo = ['Frente: ' + (frente || '-'), 'Solução: ' + (solucao || 'ainda não sabe'), tel ? 'WhatsApp: +' + tel : '', ORIGEM ? 'Veio da página: ' + ORIGEM : '']
+      .filter(Boolean).join(' | ') + (msg ? ' || Mensagem: ' + msg : '');
+    var carga = {
+      conversion_identifier: RD_CONVERSAO, name: nome, email: email, company_name: v('company'),
+      cf_mkt_area_de_atuacao: v('cf_mkt_area_de_atuacao'), cf_grou_porte: v('cf_grou_porte'),
+      cf_grou_cargo: v('cf_grou_cargo'), cf_grou_departamento: v('cf_grou_departamento'),
+      cf_self_guru_como_podemos_te_ajudar: resumo.slice(0, 1000),
+      tags: ['site-contato', frente && 'frente-' + slug(frente), solucao && slug(solucao)].filter(Boolean)
+    };
+    if (tel) { carga.mobile_phone = '+' + tel; carga.personal_phone = '+' + tel; }
+    if (U.s) carga.traffic_source = U.s; if (U.m) carga.traffic_medium = U.m; if (U.c) carga.traffic_campaign = U.c;
+    try { var r = cookie('rdtrk'); if (r) carga.client_tracking_id = JSON.parse(r).id; } catch(e) {}
+    var b = $('c-enviar'), rotulo = b.innerHTML; b.disabled = true; b.textContent = 'Enviando…';
+    fetch('https://api.rd.services/platform/conversions?api_key=' + encodeURIComponent(RD_CHAVE), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event_type: 'CONVERSION', event_family: 'CDP', payload: carga })
+    }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return true; })
+      .catch(function(){ return false; })
+      .then(function(foi){
+        try { (window.dataLayer = window.dataLayer || []).push({ event: 'grou_contato', frente: frente, solucao: solucao, rd: foi }); if (window.fbq) fbq('track', 'Lead', { content_name: 'Contato Grou', content_category: frente }); } catch(e) {}
+        if (foi) return mostraOk();
+        /* plano B: abre o e-mail já preenchido */
+        var linhas = ['Nome: ' + nome, 'Empresa: ' + v('company'), 'E-mail: ' + email, tel ? 'WhatsApp: +' + tel : '',
+          'Onde atua: ' + v('cf_mkt_area_de_atuacao'), 'Porte: ' + v('cf_grou_porte'), 'Cargo: ' + v('cf_grou_cargo'), 'Departamento: ' + v('cf_grou_departamento'),
+          'Frente: ' + frente, 'Solução: ' + (solucao || 'ainda não sabe'), ORIGEM ? 'Página de origem: ' + ORIGEM : '', msg ? 'Mensagem: ' + msg : ''].filter(Boolean);
+        location.href = 'mailto:' + DESTINO + '?subject=' + encodeURIComponent('Solicitação de demonstração pelo site') + '&body=' + encodeURIComponent(linhas.join('\n'));
+        b.disabled = false; b.innerHTML = rotulo;
+        mostraOk('Seu aplicativo de e-mail deve abrir com a mensagem pronta, é só enviar. Se não abrir, escreva para <b>' + DESTINO + '</b> ou chame no WhatsApp <b>(51) 99189-2049</b>.');
+      });
+  });
+})();
+</script>
 </body>
 </html>

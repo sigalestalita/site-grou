@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="/assets/css/grou.css?v=99539974">
 <style id="contato-frentes">
 #c-sol-campo[hidden]{display:none}
+.form-ok.aviso{display:flex}
 .form-erro{margin:0;font-size:13.5px;color:#c0392b}
 .campo [aria-invalid="true"]{border-color:#c0392b}
 .campo select:invalid{color:var(--tinta-tenue)}
@@ -116,6 +117,23 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', monta); else monta();
 })();
 </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '570597033128492');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=570597033128492&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 <div class="veu" aria-hidden="true"></div>
@@ -365,7 +383,8 @@
   function utm(k){ var v = new URLSearchParams(location.search).get(k); if (v) { try { sessionStorage.setItem('g_' + k, v); } catch(e) {} return v; } try { return sessionStorage.getItem('g_' + k) || ''; } catch(e) { return ''; } }
   var ORIGEM = origem(), U = { s: utm('utm_source'), m: utm('utm_medium'), c: utm('utm_campaign') };
   function erro(msg, campo){ var e = $('c-erro'); e.textContent = msg; e.hidden = false; if (campo) { campo.setAttribute('aria-invalid','true'); campo.focus(); } }
-  function mostraOk(txt){ var f = $('form-contato'), ok = f.parentElement.querySelector('.form-ok'); if (txt) $('c-ok-txt').innerHTML = txt; f.hidden = true; if (ok) { ok.classList.add('visivel'); ok.setAttribute('tabindex','-1'); ok.focus(); } }
+  /* sucesso ganha .visivel (é o que dispara o Lead do Meta Pixel); o plano B por e-mail usa .aviso e não conta como Lead */
+  function mostraOk(txt){ var f = $('form-contato'), ok = f.parentElement.querySelector('.form-ok'); if (txt) $('c-ok-txt').innerHTML = txt; f.hidden = true; if (ok) { ok.classList.add(txt ? 'aviso' : 'visivel'); ok.setAttribute('tabindex','-1'); ok.focus(); } }
   var f = $('form-contato'); if (!f) return;
   f.addEventListener('input', function(ev){ ev.target.removeAttribute && ev.target.removeAttribute('aria-invalid'); $('c-erro').hidden = true; });
   f.addEventListener('submit', function(ev){
@@ -399,7 +418,7 @@
     }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return true; })
       .catch(function(){ return false; })
       .then(function(foi){
-        try { (window.dataLayer = window.dataLayer || []).push({ event: 'grou_contato', frente: frente, solucao: solucao, rd: foi }); if (window.fbq) fbq('track', 'Lead', { content_name: 'Contato Grou', content_category: frente }); } catch(e) {}
+        try { (window.dataLayer = window.dataLayer || []).push({ event: 'grou_contato', frente: frente, solucao: solucao, rd: foi }); } catch(e) {}
         if (foi) return mostraOk();
         /* plano B: abre o e-mail já preenchido */
         var linhas = ['Nome: ' + nome, 'Empresa: ' + v('company'), 'E-mail: ' + email, tel ? 'WhatsApp: +' + tel : '',
@@ -412,5 +431,6 @@
   });
 })();
 </script>
+<script src="/assets/js/meta-eventos.js?v=1"></script>
 </body>
 </html>

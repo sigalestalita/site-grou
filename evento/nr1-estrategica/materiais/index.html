@@ -214,7 +214,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       body: JSON.stringify({ event_type:'CONVERSION', event_family:'CDP', payload:c }) }).then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); });
   }
   function paraSite(d){
-    return fetch('/api/lead', { method:'POST', headers:{'Content-Type':'application/json'},
+    return fetch('/api/lead/', { method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ nome:d.nome, email:d.email, celular:d.celular, empresa:d.empresa, origem:'nr1-materiais', interesse:'materiais-nr1', utm: utms() }) })
       .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { http:r.status, j:j }; }); });
   }
@@ -233,10 +233,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var rd = paraRd(d).then(function(){ return true; }, function(){ return false; });
     Promise.all([site, rd]).then(function(r){
       var s = r[0], foiRd = r[1];
-      if(!foiRd && s.http === 400) { b.disabled = false; b.innerHTML = 'Quero receber o acesso'; return erro(s.j.erro || 'Confira os dados.', s.j.campo); }
+      if(s.http === 400) { b.disabled = false; b.innerHTML = 'Quero receber o acesso'; return erro(s.j.erro || 'Confira os dados.', s.j.campo); }
       try { (window.dataLayer = window.dataLayer || []).push({ event:'nr1_materiais_cadastro' }); if(window.fbq) fbq('track','Lead',{ content_name:'Materiais NR-1 Estratégica' }); } catch(e) {}
       $('okTit').textContent = 'Pronto, ' + d.nome.split(/\s+/)[0] + '!';
-      if(foiRd) { $('okTxt').textContent = 'Enviamos o link do ambiente das apresentações para ' + d.email + (MOSTRAR_LINK ? '. Se preferir, já pode abrir agora:' : '. Se não aparecer em alguns minutos, confira o spam.'); $('okLink').hidden = !MOSTRAR_LINK; }
+      if(s.j && s.j.email) { $('okTxt').textContent = 'Enviamos o link do ambiente das apresentações para ' + d.email + (MOSTRAR_LINK ? '. Se preferir, já pode abrir agora:' : '. Se não aparecer em alguns minutos, confira o spam.'); $('okLink').hidden = !MOSTRAR_LINK; }
       else { $('okTxt').textContent = 'Seu cadastro foi feito. Você já pode abrir as apresentações:'; $('okLink').hidden = false; }
       $('passoForm').hidden = true; $('passoOk').hidden = false; $('passoOk').focus();
     });

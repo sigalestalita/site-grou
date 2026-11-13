@@ -1,5 +1,6 @@
 const c = require('./_comum');
 const db = require('./_db');
+const acessoMateriais = require('./_email_materiais');
 
 const limpa = (v, max) => String(v || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max || 120);
 
@@ -22,14 +23,20 @@ module.exports = async (req, res) => {
   const origem = /^[a-z0-9-]{2,40}$/.test(String(b.origem || '')) ? b.origem : 'site';
   const interesse = /^[a-z0-9-]{2,40}$/.test(String(b.interesse || '')) ? b.interesse : 'demo-pda';
   const u = b.utm || {};
+  let gravou = false, enviou = false;
   try {
     await db.gravaLead({
       origem, interesse, nome, email, celular, empresa, aceite: true,
       utm_source: limpa(u.utm_source, 60) || null, utm_medium: limpa(u.utm_medium, 60) || null, utm_campaign: limpa(u.utm_campaign, 80) || null
     });
-    c.responde(res, 200, { ok: true });
+    gravou = true;
   } catch (e) {
     console.error('lead:', e.message);
-    c.responde(res, 502, { erro: 'Não foi possível registrar agora.' });
   }
+  /* cadastro na página de materiais do NR-1 Estratégica: o link do ambiente sai na hora, pelo Resend */
+  if (origem === 'nr1-materiais') {
+    try { await acessoMateriais.envia({ nome, email }); enviou = true; } catch (e) { console.error('lead e-mail materiais:', e.message); }
+  }
+  if (!gravou && !enviou) return c.responde(res, 502, { erro: 'Não foi possível registrar agora.' });
+  c.responde(res, 200, { ok: true, email: enviou });
 };

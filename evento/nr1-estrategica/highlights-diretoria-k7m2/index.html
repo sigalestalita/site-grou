@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NR-1 Estratégica · Highlights</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B0838">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#05031f;overflow:hidden;-webkit-text-size-adjust:100%}
+#web-palco{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#tela{position:relative;width:1920px;height:1080px;transform-origin:center center;flex:none;overflow:hidden;background:#0B0838;box-shadow:0 30px 90px rgba(0,0,0,.5)}
+#tela>section{position:absolute;left:0;top:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden;display:none!important}
+#tela>section.ativo{display:block!important}
+#tela>section.ativo.conteudo,#tela>section.ativo.flx{display:flex!important}
+:where(#tela section) :where(h1,h2,h3,p,ul){margin:0}
+:where(#tela section) h1{font-size:96px;font-weight:600}:where(#tela section) h2{font-size:64px;font-weight:600}:where(#tela section) h3{font-size:44px;font-weight:600}
+:where(#tela section) p{font-size:32px}
+:where(#tela section) img{display:block}
+.rodape .pg::after{content:attr(data-pg)!important}
+/* barra de navegação */
+#nav{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;padding:10px max(16px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-right));font:500 13px Inter,Arial,sans-serif;color:#C9C7E6;background:linear-gradient(0deg,rgba(5,3,31,.85),rgba(5,3,31,0));opacity:0;transition:opacity .3s}
+body:hover #nav,#nav:focus-within,body.toque #nav{opacity:1}
+#nav button{font:inherit;color:#F4F3FF;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px 13px;cursor:pointer}
+#nav button:hover{background:rgba(255,255,255,.18)}
+#barra{flex:1;height:4px;background:rgba(255,255,255,.14);border-radius:4px;overflow:hidden}
+#barra i{display:block;height:100%;background:#6CD8CF;width:0;transition:width .35s}
+#cont{min-width:62px;text-align:right;font-variant-numeric:tabular-nums}
+@media print{#nav{display:none}}
+</style>
+<style>
+:root {
+  --navy: #0B0838;
+  --navy2: #17124F;
+  --claro: #F4F5FA;
+  --papel: #FBFBF8;
+  --tinta: #0B0838;
+  --texto: #3A3858;
+  --suave: #5E5C7A;
+  --teal: #6CD8CF;
+  --teal-esc: #0B7468;
+  --roxo: #120573;
+  --lumi: #81CC39;
+  --linha: #DCDBEA;
+  --claro-txt: #C9C7E6;
+  --branco: #FBFBFE;
+}
+
+section { font-family: 'Inter', Arial, sans-serif; counter-increment: pag; }
+section.escuro { background: var(--navy); color: var(--claro-txt); }
+section.claro { background: var(--claro); color: var(--texto); }
+section.papel { background: var(--papel); color: var(--texto); }
+section.roxo { background: var(--roxo); color: #E6E4FA; }
+section.conteudo { padding: 128px 128px 160px; display: flex; flex-direction: column; gap: 44px; }
+
+h1, h2, h3 { font-family: 'Poppins', Arial, sans-serif; }
+.eyebrow { font-family: 'Poppins', Arial, sans-serif; font-size: 24px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--teal-esc); }
+.escuro .eyebrow, .roxo .eyebrow { color: var(--teal); }
+.cab { display: flex; flex-direction: column; gap: 14px; }
+.titulo { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; color: var(--tinta); }
+.escuro .titulo, .roxo .titulo { color: #F4F3FF; }
+.txt { font-size: 28px; line-height: 1.45; }
+.txt-p { font-size: 24px; line-height: 1.45; }
+.forte { color: var(--tinta); font-weight: 600; }
+.escuro .forte, .roxo .forte { color: #F4F3FF; }
+
+.rodape { position: absolute; left: 128px; bottom: 64px; width: 1664px; display: flex; justify-content: space-between; align-items: center; }
+.rodape p { font-size: 24px; color: var(--suave); }
+.escuro .rodape p, .roxo .rodape p { color: #8E8BB8; }
+.rodape .pg::after { content: counter(pag); }
+
+/* cartões e números */
+.cards3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.card { background: var(--branco); border: 1px solid var(--linha); border-radius: 24px; padding: 36px 36px 32px; display: flex; flex-direction: column; gap: 10px; }
+.escuro .card { background: var(--navy2); border-color: #2C2768; }
+.num { font-family: 'Poppins', Arial, sans-serif; font-size: 96px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; color: var(--roxo); }
+.escuro .num { color: var(--teal); }
+.num.lumi { color: var(--lumi); }
+.rot { font-size: 28px; line-height: 1.35; color: var(--texto); }
+.escuro .rot { color: var(--claro-txt); }
+.rot b { color: var(--tinta); }
+.escuro .rot b { color: #F4F3FF; }
+
+/* pílulas */
+.pilulas { display: flex; flex-wrap: wrap; gap: 14px; }
+.pilula { font-size: 26px; padding: 12px 22px; border-radius: 999px; background: var(--navy2); color: #E6E4FA; border: 1px solid #2C2768; }
+
+/* imagens de tela */
+.tela { border-radius: 18px; border: 1px solid var(--linha); background: var(--branco); box-shadow: 0 24px 60px rgba(11, 8, 56, .18); }
+.escuro .tela { border-color: #2C2768; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+
+/* listas de entregas */
+.itens { display: flex; flex-direction: column; gap: 0; }
+.item { display: flex; gap: 20px; align-items: flex-start; padding: 18px 0; border-top: 1px solid var(--linha); }
+.escuro .item { border-top-color: #2C2768; }
+.item .marcador { font-family: 'Poppins', Arial, sans-serif; font-size: 24px; font-weight: 600; color: var(--teal-esc); min-width: 44px; }
+.escuro .item .marcador { color: var(--teal); }
+.item p { font-size: 26px; line-height: 1.4; }
+
+/* movimento: o estado final é a regra normal */
+.sobe { animation: sobe .7s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 110ms); }
+@keyframes sobe { from { opacity: 0; transform: translateY(28px); } }
+.surge { animation: surge .9s ease both; animation-delay: calc(var(--i, 0) * 110ms); }
+@keyframes surge { from { opacity: 0; } }
+.cresce { animation: cresce .8s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 90ms); transform-origin: bottom; }
+@keyframes cresce { from { opacity: 0; transform: scaleY(.2); } }
+.estica { animation: estica .9s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 90ms); transform-origin: left; }
+@keyframes estica { from { opacity: 0; transform: scaleX(.1); } }
+
+/* números que contam ao entrar */
+@property --n { syntax: '<integer>'; inherits: false; initial-value: 0 }
+@keyframes count { from { --n: 0 } }
+.n { animation: count 1.2s ease-out both }
+
+/* marcadores de data/número nunca quebram */
+.item .marcador { white-space: nowrap; flex: none; }
+
+/* aberturas de seção */
+section.divisor { background: var(--navy); color: var(--claro-txt); padding: 0; }
+.divisor .fundo { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; opacity: .35; }
+.divisor .veu { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: linear-gradient(90deg, rgba(11,8,56,.97) 0%, rgba(11,8,56,.86) 50%, rgba(11,8,56,.55) 100%); }
+.divisor .sec-num { position: absolute; left: 112px; top: 150px; width: 900px; font-family: 'Poppins', Arial, sans-serif; font-size: 360px; font-weight: 700; line-height: 1; letter-spacing: -0.05em; color: #6CD8CF; }
+.divisor .sec-tit { position: absolute; left: 128px; top: 560px; width: 1500px; font-family: 'Poppins', Arial, sans-serif; font-size: 104px; font-weight: 600; line-height: 1.04; letter-spacing: -0.03em; color: #F4F3FF; }
+.divisor .sec-sub { position: absolute; left: 128px; top: 800px; width: 1400px; font-size: 32px; line-height: 1.45; color: #C9C7E6; }
+.divisor .sec-linha { position: absolute; left: 128px; top: 540px; width: 160px; height: 6px; border-radius: 3px; background: #6CD8CF; }
+.amplia { animation: amplia 1s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 120ms); }
+@keyframes amplia { from { opacity: 0; transform: scale(.82) translateY(30px); } }
+.entra { animation: entra .9s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 120ms); }
+@keyframes entra { from { opacity: 0; transform: translateX(-60px); } }
+
+</style>
+</head>
+<body>
+<div id="web-palco"><div id="tela">
+<section id="capa" class="escuro" style="padding:0" data-transition="fade">
+<img src="img/poster.jpg" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;opacity:.55">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg, rgba(11,8,56,.96) 0%, rgba(11,8,56,.82) 46%, rgba(11,8,56,.35) 100%)"></div>
+<p class="eyebrow surge" style="position:absolute;left:128px;top:150px;width:1300px;--i:0">Relatório para a diretoria · 13.11.2026</p>
+<img class="sobe" src="img/nr1-logo.png" alt="NR-1 Estratégica" style="position:absolute;left:112px;top:250px;width:820px;height:278px;object-fit:contain;--i:1">
+<h1 class="sobe" style="position:absolute;left:128px;top:600px;width:1300px;font-size:96px;font-weight:600;line-height:1.05;letter-spacing:-0.02em;color:#F4F3FF;--i:2">Highlights do evento</h1>
+<p class="sobe" style="position:absolute;left:128px;top:730px;width:1300px;font-size:32px;line-height:1.4;color:#C9C7E6;--i:3">12 de novembro de 2026 · Instituto Caldeira · Porto Alegre</p>
+<p class="surge" style="position:absolute;left:128px;top:880px;width:1300px;font-size:26px;color:#8E8BB8;--i:5">Realização Grou · palco do lançamento do Lumi</p>
+
+</section>
+<section id="div1" class="divisor" data-transition="fade">
+<img class="fundo surge" src="img/poster.jpg" alt="" style="--i:0">
+<div class="veu"></div>
+<p class="sec-num amplia" style="--i:1">01</p>
+<div class="sec-linha entra" style="--i:2"></div>
+<h2 class="sec-tit entra" style="--i:3">O evento<br>em números</h2>
+<p class="sec-sub surge" style="--i:5">Inscrições, presença, canais e quem estava na sala.</p>
+
+</section>
+<section id="numeros" class="claro conteudo">
+<div class="cab">
+<p class="eyebrow">O evento em números</p>
+<h2 class="titulo">Uma tarde, uma sala cheia e um lançamento</h2>
+</div>
+<div class="cards3">
+<div class="card sobe" style="--i:0"><p class="num n">247</p><p class="rot"><b>inscrições</b> confirmadas, com sold out duas vezes</p></div>
+<div class="card sobe" style="--i:1"><p class="num n">175</p><p class="rot"><b>participantes presentes</b>, além do time Grou</p></div>
+<div class="card sobe" style="--i:2"><p class="num">~140</p><p class="rot"><b>organizações</b> diferentes na lista de inscritos</p></div>
+<div class="card sobe" style="--i:3"><p class="num n">9</p><p class="rot"><b>falas no palco</b>, com duas juízas do Trabalho</p></div>
+<div class="card sobe" style="--i:4"><p class="num n">12</p><p class="rot"><b>apoiadores</b>, quatro deles com vídeo no telão</p></div>
+<div class="card sobe" style="--i:5"><p class="num lumi n">1</p><p class="rot"><b>lançamento</b>: o Lumi chegou ao mercado no palco</p></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>01</b> O evento em números</p><p class="pg"></p></div>
+
+</section>
+<section id="presenca" class="flx roxo" style="padding:128px;display:flex;flex-direction:column;justify-content:center;gap:28px" data-transition="fade">
+<p class="eyebrow surge" style="--i:0">Presença</p>
+<p class="sobe n" style="font-family:'Poppins',Arial,sans-serif;font-size:300px;font-weight:600;line-height:.9;letter-spacing:-0.04em;color:#6CD8CF;--i:1">175</p>
+<h2 class="titulo sobe" style="width:1400px;--i:2">pessoas na sala, além do time Grou</h2>
+<p class="txt sobe" style="width:1300px;color:#D6D3F5;--i:3">Cerca de <b style="color:#F4F3FF">3 em cada 4 inscritos</b> de fora da Grou estiveram no Instituto Caldeira: 175 de 227 pessoas.</p>
+
+</section>
+<section id="inscricoes" class="papel conteudo">
+<div class="cab">
+<p class="eyebrow">Ritmo das inscrições</p>
+<h2 class="titulo">As inscrições aceleraram na reta final</h2>
+</div>
+<div style="display:flex;gap:72px;align-items:flex-end;flex:1">
+<div style="display:flex;gap:28px;align-items:flex-end;width:980px">
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:1"><p style="font-size:32px;font-weight:600;color:#0B0838">7</p><div class="cresce" style="width:100%;height:31px;background:#C9C7E6;border-radius:10px 10px 0 0;--i:0"></div><p style="font-size:24px;color:#5E5C7A">05–11/10</p></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:1"><p style="font-size:32px;font-weight:600;color:#0B0838">12</p><div class="cresce" style="width:100%;height:53px;background:#C9C7E6;border-radius:10px 10px 0 0;--i:1"></div><p style="font-size:24px;color:#5E5C7A">12–18/10</p></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:1"><p style="font-size:32px;font-weight:600;color:#0B0838">38</p><div class="cresce" style="width:100%;height:167px;background:#9E9AD6;border-radius:10px 10px 0 0;--i:2"></div><p style="font-size:24px;color:#5E5C7A">19–25/10</p></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:1"><p style="font-size:32px;font-weight:600;color:#0B0838">37</p><div class="cresce" style="width:100%;height:163px;background:#9E9AD6;border-radius:10px 10px 0 0;--i:3"></div><p style="font-size:24px;color:#5E5C7A">26/10–01/11</p></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:1"><p style="font-size:32px;font-weight:600;color:#0B0838">53</p><div class="cresce" style="width:100%;height:233px;background:#5B53C2;border-radius:10px 10px 0 0;--i:4"></div><p style="font-size:24px;color:#5E5C7A">02–08/11</p></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex:1"><p style="font-size:32px;font-weight:600;color:#120573">100</p><div class="cresce" style="width:100%;height:440px;background:#120573;border-radius:10px 10px 0 0;--i:5"></div><p style="font-size:24px;color:#0B0838;font-weight:600">09–12/11</p></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:22px;flex:1">
+<div class="card sobe" style="--i:2;padding:28px 30px"><p class="forte" style="font-size:36px;font-family:'Poppins',Arial,sans-serif">40% na última semana</p><p class="txt-p">100 das 247 inscrições vieram de 09/11 até o dia do evento.</p></div>
+<div class="card sobe" style="--i:3;padding:28px 30px"><p class="forte" style="font-size:36px;font-family:'Poppins',Arial,sans-serif">45 num só dia</p><p class="txt-p">O pico foi 09/11, dia do e-mail “Falta pouco” com o Guia do Inscrito.</p></div>
+<div class="card sobe" style="--i:4;padding:28px 30px"><p class="forte" style="font-size:36px;font-family:'Poppins',Arial,sans-serif">Sold out duas vezes</p><p class="txt-p">Em 10/11 e, depois de reabrir, de novo em 11/11.</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>01</b> O evento em números</p><p class="pg"></p></div>
+
+</section>
+<section id="canais" class="claro conteudo">
+<div class="cab">
+<p class="eyebrow">Canais de inscrição</p>
+<h2 class="titulo">Parceiros e o próprio time trouxeram 72% do público</h2>
+</div>
+<div style="display:flex;gap:56px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:22px;width:1120px">
+<div style="display:flex;align-items:center;gap:24px"><p style="width:400px;font-size:26px;line-height:1.3;color:#0B0838">Parceiros e apoiadores</p><div class="estica" style="width:520px;height:44px;background:#120573;border-radius:10px;--i:0"></div><p style="font-size:28px;font-weight:600;color:#0B0838;white-space:nowrap">90 · 36%</p></div>
+<div style="display:flex;align-items:center;gap:24px"><p style="width:400px;font-size:26px;line-height:1.3;color:#0B0838">Time Grou como embaixador</p><div class="estica" style="width:508px;height:44px;background:#120573;border-radius:10px;--i:1"></div><p style="font-size:28px;font-weight:600;color:#0B0838;white-space:nowrap">88 · 36%</p></div>
+<div style="display:flex;align-items:center;gap:24px"><p style="width:400px;font-size:26px;line-height:1.3;color:#0B0838">Convites diretos da Grou</p><div class="estica" style="width:179px;height:44px;background:#5B53C2;border-radius:10px;--i:2"></div><p style="font-size:28px;font-weight:600;color:#0B0838;white-space:nowrap">31 · 13%</p></div>
+<div style="display:flex;align-items:center;gap:24px"><p style="width:400px;font-size:26px;line-height:1.3;color:#0B0838">Mentores convidados</p><div class="estica" style="width:179px;height:44px;background:#5B53C2;border-radius:10px;--i:3"></div><p style="font-size:28px;font-weight:600;color:#0B0838;white-space:nowrap">31 · 13%</p></div>
+<div style="display:flex;align-items:center;gap:24px"><p style="width:400px;font-size:26px;line-height:1.3;color:#0B0838">Ingresso sem cupom</p><div class="estica" style="width:23px;height:44px;background:#9E9AD6;border-radius:10px;--i:4"></div><p style="font-size:28px;font-weight:600;color:#0B0838;white-space:nowrap">4 · 2%</p></div>
+<div style="display:flex;align-items:center;gap:24px"><p style="width:400px;font-size:26px;line-height:1.3;color:#0B0838">Inscrição na porta</p><div class="estica" style="width:17px;height:44px;background:#9E9AD6;border-radius:10px;--i:5"></div><p style="font-size:28px;font-weight:600;color:#0B0838;white-space:nowrap">3 · 1%</p></div>
+<p class="txt-p" style="color:#5E5C7A;margin-top:8px">18 cupons diferentes, um por canal e por embaixador: cada inscrição tem origem conhecida.</p>
+</div>
+<div class="card sobe" style="flex:1;--i:3;background:#0B0838;border-color:#0B0838;padding:40px 36px">
+<p class="eyebrow" style="color:#6CD8CF">Receita de ingressos</p>
+<p style="font-family:'Poppins',Arial,sans-serif;font-size:60px;font-weight:600;line-height:1.05;color:#F4F3FF;white-space:nowrap">R$ 2.863,50</p>
+<p class="txt-p" style="color:#C9C7E6">19 ingressos pagos, 15 deles com 50% de desconto. Pix, cartão e boleto pelo checkout do site.</p>
+<p class="txt-p" style="color:#C9C7E6;border-top:1px solid #2C2768;padding-top:18px"><b style="color:#F4F3FF">92% das inscrições foram convites:</b> o evento foi, antes de tudo, relacionamento.</p>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>01</b> O evento em números</p><p class="pg"></p></div>
+
+</section>
+<section id="publico" class="escuro conteudo">
+<div class="cab">
+<p class="eyebrow">Quem estava na sala</p>
+<h2 class="titulo">~140 organizações, da indústria à Justiça do Trabalho</h2>
+</div>
+<div class="pilulas surge" style="--i:1">
+<p class="pilula">Sicredi</p><p class="pilula">Unimed Porto Alegre</p><p class="pilula">Hospital de Clínicas de Porto Alegre</p><p class="pilula">TCE-RS</p><p class="pilula">Sistema FIERGS</p><p class="pilula">CMPC Celulose</p><p class="pilula">Fruki Bebidas</p><p class="pilula">Sport Club Internacional</p><p class="pilula">Midea Carrier</p><p class="pilula">Unicred</p><p class="pilula">Cresol</p><p class="pilula">Rede Marista</p><p class="pilula">PUCRS Carreiras</p><p class="pilula">Unisinos</p><p class="pilula">Universidade Feevale</p><p class="pilula">Dufrio</p><p class="pilula">Hertz Farmacêutica</p><p class="pilula">Irani</p><p class="pilula">SLC Máquinas</p><p class="pilula">Quero-Quero Agro</p><p class="pilula">Grupo Sabemi</p><p class="pilula">Banco Topázio</p><p class="pilula">LHH</p><p class="pilula">Aon</p><p class="pilula">Appmax</p><p class="pilula">Loadsmart</p><p class="pilula">Alibem Alimentos</p><p class="pilula">WSAudiology</p><p class="pilula">Junior Achievement RS</p><p class="pilula">Vara do Trabalho de Bagé</p>
+</div>
+<p class="txt sobe" style="width:1500px;--i:3">RH, lideranças, saúde ocupacional, segurança do trabalho e jurídico: <span class="forte">as áreas que respondem pela NR-1 dentro das empresas</span>, na mesma sala.</p>
+<div class="rodape"><p>NR-1 Estratégica · <b>01</b> O evento em números</p><p class="pg"></p></div>
+
+</section>
+<section id="div2" class="divisor" data-transition="fade">
+<img class="fundo surge" src="img/filme-cafe.jpg" alt="" style="--i:0">
+<div class="veu"></div>
+<p class="sec-num amplia" style="--i:1">02</p>
+<div class="sec-linha entra" style="--i:2"></div>
+<h2 class="sec-tit entra" style="--i:3">Palco e<br>lançamento</h2>
+<p class="sec-sub surge" style="--i:5">As 9 falas, o soft launch do Lumi, os vídeos, os apoiadores e a marca no espaço.</p>
+
+</section>
+<section id="palco" class="claro conteudo" data-transition="fade">
+<div class="cab">
+<p class="eyebrow">No palco · abertura com Mariana Uebel</p>
+<h2 class="titulo">9 falas, da lei ao lançamento</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:0"><img src="img/p-amanda-zica.jpg" alt="Amanda Zica" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Comportamento e risco físico: o case Suzano</p><p style="font-size:24px;color:#5E5C7A">Amanda Zica e Luciana Masiero</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:1"><img src="img/p-fernanda-woodhead.jpg" alt="Fernanda Woodhead" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">NR-1: o que muda e o que a lei exige?</p><p style="font-size:24px;color:#5E5C7A">Fernanda Woodhead, juíza</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:2"><img src="img/p-carolina-fuhrmeister.jpg" alt="Carolina Fuhrmeister" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Performance sustentável começa com saúde mental</p><p style="font-size:24px;color:#5E5C7A">Carolina Fuhrmeister</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;background:#0B0838;border-color:#0B0838;--i:3"><img src="img/p-bruna-salazar.jpg" alt="Bruna Salazar" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#81CC39">Com vocês, Lumi: soft launch</p><p style="font-size:24px;color:#C9C7E6">Fernanda Fuhrmeister e Bruna Salazar</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:4"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Junior Achievement RS</p><p style="font-size:24px;color:#5E5C7A">Elaine, JA RS</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:5"><img src="img/p-alessandra-becker.jpg" alt="Alessandra Becker" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Segurança psicológica e risco psicossocial</p><p style="font-size:24px;color:#5E5C7A">Alessandra Becker</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:6"><img src="img/p-tamy-freitas.jpg" alt="Tamy Freitas" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Dados, RH estratégico e saúde mental</p><p style="font-size:24px;color:#5E5C7A">Tamy Freitas</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:7"><img src="img/p-bruna-salazar.jpg" alt="Bruna Salazar" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Ressignificando o trabalho após três burnouts</p><p style="font-size:24px;color:#5E5C7A">Bruna Salazar</p></div></div>
+<div class="card sobe" style="flex-direction:row;gap:20px;align-items:center;padding:20px 24px;--i:8"><img src="img/p-camila-leal-lima.jpg" alt="Camila Leal Lima" style="width:96px;height:96px;border-radius:48px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:4px;flex:1"><p style="font-size:24px;font-weight:600;line-height:1.25;color:#0B0838">Quando o adoecimento mental chega à Justiça</p><p style="font-size:24px;color:#5E5C7A">Camila Leal Lima, juíza</p></div></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>02</b> Palco e lançamento</p><p class="pg"></p></div>
+
+</section>
+<section id="lumi" class="escuro conteudo">
+<div class="cab">
+<p class="eyebrow" style="color:#81CC39">Soft launch</p>
+<h2 class="titulo">O Lumi chegou ao mercado no palco do evento</h2>
+</div>
+<div style="display:flex;gap:56px;align-items:flex-start">
+<div style="position:relative;width:1000px;height:600px">
+<img class="tela surge" src="img/deck-lumi.jpg" alt="Abertura da apresentação Com vocês, Lumi" style="position:absolute;left:0;top:0;width:880px;height:495px;object-fit:cover;--i:1">
+<img class="tela sobe" src="img/totem.jpg" alt="Tela inicial do totem do Lumi com QR codes do site e do Instagram" style="position:absolute;left:700px;top:150px;width:300px;height:375px;object-fit:cover;--i:3">
+</div>
+<div class="itens" style="flex:1">
+<div class="item sobe" style="--i:2"><p class="marcador">01</p><p>“Com vocês, Lumi”: Fernanda Fuhrmeister chamou a Bruna Salazar ao palco para apresentar a plataforma.</p></div>
+<div class="item sobe" style="--i:3"><p class="marcador">02</p><p>Totem interativo: o público experimentou o check-in emocional do app, de forma anônima.</p></div>
+<div class="item sobe" style="--i:4"><p class="marcador">03</p><p>QR codes do site e do Instagram no totem, no fim da apresentação e nas telas.</p></div>
+<div class="item sobe" style="--i:5"><p class="marcador">04</p><p>Pós-evento: WhatsApp da Bruna em 16/11 e remarketing por 30 dias.</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>02</b> Palco e lançamento</p><p class="pg"></p></div>
+
+</section>
+<section id="lumipronto" class="claro conteudo">
+<div class="cab">
+<p class="eyebrow" style="color:#3F7A0E">Por trás do lançamento</p>
+<h2 class="titulo">O Lumi chegou ao palco pronto por inteiro</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="position:relative;width:960px;height:600px">
+<img class="tela surge" src="img/site-lumi.jpg" alt="Site novo do Lumi, applumi.io" style="position:absolute;left:0;top:0;width:860px;height:484px;object-fit:cover;--i:1">
+<img class="tela sobe" src="img/capas-fotos.jpg" alt="Novas capas com foto das trilhas do app do Lumi" style="position:absolute;left:560px;top:230px;width:420px;height:357px;object-fit:cover;--i:3">
+</div>
+<div class="itens" style="flex:1">
+<div class="item sobe" style="--i:2"><p class="marcador">01</p><p><span class="forte">Site refeito</span>, com a história do filme e as narrativas do app e do painel.</p></div>
+<div class="item sobe" style="--i:3"><p class="marcador">02</p><p><span class="forte">App e painéis</span> ajustados à exaustão para estarem adequados à NR-1 no dia.</p></div>
+<div class="item sobe" style="--i:4"><p class="marcador">03</p><p><span class="forte">Trilhas reeditadas</span>: revisão das aulas e capas novas com foto.</p></div>
+<div class="item sobe" style="--i:5"><p class="marcador">04</p><p><span class="forte">Time preparado</span>: cartão com o discurso do Lumi para quem atendeu no evento.</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>02</b> Palco e lançamento</p><p class="pg"></p></div>
+
+</section>
+<section id="videos" class="escuro conteudo" data-transition="fade">
+<div class="cab">
+<p class="eyebrow">Vídeos produzidos</p>
+<h2 class="titulo">Do filme de lançamento aos reels</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:flex-start">
+<div class="sobe" style="display:flex;flex-direction:column;gap:16px;width:860px;--i:1">
+<img class="tela" src="img/filme-cafe.jpg" alt="Cena do filme de lançamento do Lumi" style="width:860px;height:484px;object-fit:cover">
+<h3 style="font-size:36px;font-weight:600;color:#81CC39">Filme de lançamento do Lumi · 2min24</h3>
+<p class="txt-p">Encerrou o soft launch no telão, com versões legendada e sem legenda.</p>
+</div>
+<div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:24px 24px">
+<div class="sobe" style="display:flex;flex-direction:column;gap:10px;--i:2"><img class="tela" src="img/mentores.jpg" alt="Mosaico de mentores do Lumi" style="width:370px;height:208px;object-fit:cover"><p class="txt-p forte">Mentores do Lumi&nbsp;</p><p style="font-size:24px;color:#8E8BB8">27 mentores num agradecimento</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:10px;--i:3"><img class="tela" src="img/capa-evento.jpg" alt="Capa do vídeo dos apoiadores" style="width:370px;height:208px;object-fit:cover"><p class="txt-p forte">Apoiadores&nbsp;</p><p style="font-size:24px;color:#8E8BB8">As 12 marcas nas telas</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:10px;--i:4"><img class="tela" src="img/reel.jpg" alt="Capa do reel de divulgação do evento" style="width:370px;height:208px;object-fit:cover"><p class="txt-p forte">Reels do evento</p><p style="font-size:24px;color:#8E8BB8">Divulgação das inscrições</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:10px;--i:5"><img class="tela" src="img/eco.jpg" alt="Cena do vídeo do ecossistema Grou" style="width:370px;height:208px;object-fit:cover"><p class="txt-p forte">Ecossistema Grou · Série</p><p style="font-size:24px;color:#8E8BB8">Edição com legendas</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>02</b> Palco e lançamento</p><p class="pg"></p></div>
+
+</section>
+<section id="apoiadores" class="escuro conteudo">
+<div class="cab">
+<p class="eyebrow">Apoiadores</p>
+<h2 class="titulo">12 apoiadores, três com vídeo no telão</h2>
+</div>
+<div class="surge" style="display:grid;grid-template-columns:repeat(6, 1fr);gap:18px;--i:1">
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-raio.svg" alt="Raiô Benefícios" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-ja-rs.png" alt="Junior Achievement RS" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-reali.png" alt="Reali" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-cafe.png" alt="Café do Mercado" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-du99.png" alt="DU99" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-ilmj.png" alt="I Love My Job" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-vt.png" alt="VT Soluções" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-fluidstate.png" alt="Fluid State" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-produtive.svg" alt="Produtive" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-leadedu.svg" alt="LEADedu" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-psa.png" alt="PSA Palestras" style="width:200px;height:72px;object-fit:contain"></div>
+<div style="background:#17124F;border:1px solid #2C2768;border-radius:18px;height:112px;display:flex;align-items:center;justify-content:center;padding:22px"><img src="img/a-mimos.png" alt="Mimos Corporativos" style="width:200px;height:72px;object-fit:contain"></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div class="card sobe" style="--i:3"><h3 style="font-size:32px;font-weight:600;color:#F4F3FF">Vídeos no telão</h3><p class="txt-p">I Love My Job, depois da fala da juíza Fernanda Woodhead; VT Soluções, antes do lançamento do Lumi; DU99, antes da Tamy.</p></div>
+<div class="card sobe" style="--i:4"><h3 style="font-size:32px;font-weight:600;color:#F4F3FF">Agradecimento em vídeo</h3><p class="txt-p">Um vídeo com as 12 marcas rodou nas telas, e a I Love My Job ganhou tela com o QR dos cursos.</p></div>
+<div class="card sobe" style="--i:5"><h3 style="font-size:32px;font-weight:600;color:#F4F3FF">Presença no site</h3><p class="txt-p">Logos na página do evento desde a divulgação, com 90 inscrições vindas do cupom de parceiros.</p></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>02</b> Palco e lançamento</p><p class="pg"></p></div>
+
+</section>
+<section id="marca" class="papel conteudo">
+<div class="cab">
+<p class="eyebrow">Marca no espaço</p>
+<h2 class="titulo">Brindes, sinalização e peças impressas</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px 28px">
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:0"><img class="tela" src="img/ecobag.jpg" alt="Ecobag do Lumi, frente e verso" style="width:536px;height:240px;object-fit:cover"><p class="txt-p forte">Ecobag do Lumi</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:1"><img class="tela" src="img/cam-lumi.jpg" alt="Camiseta do Lumi, frente e costas" style="width:536px;height:240px;object-fit:cover"><p class="txt-p forte">Camiseta do Lumi</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:2"><img class="tela" src="img/cam-grou.jpg" alt="Camiseta da Grou, frente e costas" style="width:536px;height:240px;object-fit:cover"><p class="txt-p forte">Camiseta da Grou</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:3"><img class="tela" src="img/banner.jpg" alt="Banner de entrada da Grou na porta da sala" style="width:536px;height:240px;object-fit:cover"><p class="txt-p forte">Banner de entrada</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:4"><img class="tela" src="img/fichas.jpg" alt="Fichas das palestrantes em A5" style="width:536px;height:240px;object-fit:cover"><p class="txt-p forte">Fichas das palestrantes</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:5"><img class="tela" src="img/mesa.jpg" alt="Display de mesa com QR para inscrição na porta" style="width:536px;height:240px;object-fit:cover"><p class="txt-p forte">Display de inscrição na porta</p></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>02</b> Palco e lançamento</p><p class="pg"></p></div>
+
+</section>
+<section id="div3" class="divisor" data-transition="fade">
+<img class="fundo surge" src="img/site-evento.jpg" alt="" style="--i:0">
+<div class="veu"></div>
+<p class="sec-num amplia" style="--i:1">03</p>
+<div class="sec-linha entra" style="--i:2"></div>
+<h2 class="sec-tit entra" style="--i:3">Tudo o que<br>fizemos</h2>
+<p class="sec-sub surge" style="--i:5">Antes, no dia e depois: site, credenciamento, redes, e-mails, WhatsApp e certificado.</p>
+
+</section>
+<section id="antes" class="claro conteudo" data-transition="fade">
+<div class="cab">
+<p class="eyebrow">Antes do evento</p>
+<h2 class="titulo">Do convite à porta, tudo rodou em casa</h2>
+</div>
+<div style="display:flex;gap:56px;align-items:flex-start">
+<img class="tela surge" src="img/site-evento.jpg" alt="Página do evento NR-1 Estratégica com sold out" style="width:820px;height:461px;object-fit:cover;--i:1">
+<div class="itens" style="flex:1">
+<div class="item sobe" style="--i:2"><p class="marcador">01</p><p><span class="forte">Site do evento</span> com programação, palestrantes, apoiadores e checkout próprio com Pix, cartão e boleto.</p></div>
+<div class="item sobe" style="--i:3"><p class="marcador">02</p><p><span class="forte">Painel de gestão</span> com inscrições, pagamentos, entregas de e-mail e etiquetas em tempo real.</p></div>
+<div class="item sobe" style="--i:4"><p class="marcador">03</p><p><span class="forte">573 e-mails</span>: 253 confirmações, 239 “Falta pouco” com o Guia do Inscrito e 81 avisos de sala.</p></div>
+<div class="item sobe" style="--i:5"><p class="marcador">04</p><p><span class="forte">Medição</span> com Google Tag Manager e Pixel da Meta em cada etapa da compra.</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="nodia" class="papel conteudo">
+<div class="cab">
+<p class="eyebrow">No dia</p>
+<h2 class="titulo">Credenciamento, telas e palco afinados</h2>
+</div>
+<div style="display:flex;gap:56px;align-items:flex-start">
+<div class="itens" style="width:820px">
+<div class="item sobe" style="--i:1"><p class="marcador">01</p><p><span class="forte">Etiquetas de crachá</span> de 82 × 30 mm impressas na hora, ligadas à lista de inscritos.</p></div>
+<div class="item sobe" style="--i:2"><p class="marcador">02</p><p><span class="forte">Inscrição na porta</span> por QR code, entrando direto no painel.</p></div>
+<div class="item sobe" style="--i:3"><p class="marcador">03</p><p><span class="forte">Roteiro das telas</span> para o operador: cada fala, vídeo de parceiro e arquivo na ordem.</p></div>
+<div class="item sobe" style="--i:4"><p class="marcador">04</p><p><span class="forte">Apresentações em página web</span>: juíza Fernanda Woodhead, lançamento do Lumi e a fala da Bruna.</p></div>
+<div class="item sobe" style="--i:5"><p class="marcador">05</p><p><span class="forte">Slide com QR</span> do Instagram da Grou e do Lumi, e o totem do Lumi no espaço.</p></div>
+</div>
+<div style="position:relative;width:788px;height:560px">
+<img class="tela surge" src="img/roteiro-tv.jpg" alt="Roteiro das telas para o operador" style="position:absolute;left:0;top:0;width:640px;height:360px;object-fit:cover;--i:2">
+<img class="tela sobe" src="img/10-instagram-grou-e-lumi.jpg" alt="Slide com os QR codes do Instagram da Grou e do Lumi" style="position:absolute;left:268px;top:262px;width:520px;height:293px;object-fit:cover;--i:4">
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="redes" class="escuro conteudo">
+<div class="cab">
+<p class="eyebrow">Redes sociais · @grou_gp</p>
+<h2 class="titulo">O evento ao vivo no Instagram da Grou</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<img class="tela surge" src="img/ig-grou.jpg" alt="Perfil @grou_gp no Instagram com os posts do evento" style="width:420px;height:382px;object-fit:cover;--i:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:36px">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px">
+<div class="sobe" style="--i:2"><p class="num n" style="font-size:64px">10</p><p class="rot" style="font-size:24px">posts: 8 no dia e 2 no dia seguinte</p></div>
+<div class="sobe" style="--i:3"><p class="num" style="font-size:64px">14.208</p><p class="rot" style="font-size:24px">visualizações, sem impulsionamento</p></div>
+<div class="sobe" style="--i:4"><p class="num n" style="font-size:64px">31</p><p class="rot" style="font-size:24px">stories: 6 próprios e 25 repostados</p></div>
+<div class="sobe" style="--i:5"><p class="num" style="font-size:64px">+79</p><p class="rot" style="font-size:24px">seguidores com o evento</p></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:6">
+<h3 style="font-size:28px;font-weight:600;color:#F4F3FF">Como os posts saíram</h3>
+<div style="display:flex;justify-content:space-between;gap:16px;border-top:1px solid #2C2768;padding-top:12px"><p style="font-size:24px">Pré-evento, em tempo real</p><p style="font-size:24px;color:#6CD8CF;white-space:nowrap">2 reels</p></div>
+<div style="display:flex;justify-content:space-between;gap:16px;border-top:1px solid #2C2768;padding-top:12px"><p style="font-size:24px">Pós-palestras, em tempo real</p><p style="font-size:24px;color:#6CD8CF;white-space:nowrap">4 reels + 2 carrosséis</p></div>
+<div style="display:flex;justify-content:space-between;gap:16px;border-top:1px solid #2C2768;padding-top:12px"><p style="font-size:24px">Dia seguinte (13/11)</p><p style="font-size:24px;color:#6CD8CF;white-space:nowrap">2 reels</p></div>
+<div style="display:flex;justify-content:space-between;gap:16px;border-top:1px solid #2C2768;padding-top:12px"><p style="font-size:24px">Stories repostados</p><p style="font-size:24px;color:#6CD8CF;white-space:nowrap">17 em 12/11 · 8 em 13/11</p></div>
+</div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:10px;--i:7">
+<h3 style="font-size:28px;font-weight:600;color:#F4F3FF">16 seguidores vindos direto dos posts</h3>
+<div style="display:flex;align-items:center;gap:14px"><p style="width:250px;font-size:24px">Fernanda Woodhead</p><div class="estica" style="width:210px;height:22px;border-radius:6px;background:#6CD8CF;--i:8"></div><p style="font-size:24px;font-weight:600;color:#F4F3FF">7</p></div>
+<div style="display:flex;align-items:center;gap:14px"><p style="width:250px;font-size:24px">Tamy Freitas</p><div class="estica" style="width:90px;height:22px;border-radius:6px;background:#6CD8CF;--i:9"></div><p style="font-size:24px;font-weight:600;color:#F4F3FF">3</p></div>
+<div style="display:flex;align-items:center;gap:14px"><p style="width:250px;font-size:24px">Expectativa</p><div class="estica" style="width:60px;height:22px;border-radius:6px;background:#5B53C2;--i:10"></div><p style="font-size:24px;font-weight:600;color:#F4F3FF">2</p></div>
+<div style="display:flex;align-items:center;gap:14px"><p style="width:250px;font-size:24px">Outros 4 posts</p><div class="estica" style="width:30px;height:22px;border-radius:6px;background:#5B53C2;--i:11"></div><p style="font-size:24px;font-weight:600;color:#F4F3FF">1 cada</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="redeslumi" class="escuro conteudo">
+<div class="cab">
+<p class="eyebrow" style="color:#81CC39">Redes sociais · @app.lumi.io</p>
+<h2 class="titulo">O lançamento trouxe público novo para o Lumi</h2>
+</div>
+<div style="display:flex;gap:64px;align-items:flex-start">
+<img class="tela surge" src="img/ig-lumi.jpg" alt="Perfil @app.lumi.io no Instagram com os posts do evento" style="width:640px;height:582px;object-fit:cover;--i:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:40px;padding-top:12px">
+<div class="sobe" style="--i:2"><p class="num lumi">~400</p><p class="rot">seguidores ganhos no perfil do Lumi</p></div>
+<div class="sobe" style="--i:3"><p class="num lumi">+350</p><p class="rot">só na reta final do evento</p></div>
+<div class="sobe" style="--i:4"><p class="num lumi">+50</p><p class="rot">vindos do próprio evento</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="pos" class="escuro conteudo" data-transition="fade">
+<div class="cab">
+<p class="eyebrow">Pós-evento · 13/11</p>
+<h2 class="titulo">No dia seguinte, tudo o que foi prometido já tinha chegado</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;width:940px">
+<div class="card sobe" style="--i:1;padding:30px 32px"><p class="num n" style="font-size:80px">241</p><p class="rot">e-mails de agradecimento, <b>231 entregues</b> na primeira hora</p></div>
+<div class="card sobe" style="--i:2;padding:30px 32px"><p class="num n" style="font-size:80px">181</p><p class="rot">WhatsApps da Grou com o link das apresentações</p></div>
+<div class="card sobe" style="--i:3;padding:30px 32px"><p class="num n" style="font-size:80px">9</p><p class="rot">apresentações num ambiente com <b>cadastro ligado ao CRM</b></p></div>
+<div class="card sobe" style="--i:4;padding:30px 32px"><p class="num n" style="font-size:80px">7</p><p class="rot">cadastros nos <b>primeiros 5 minutos</b> depois do e-mail</p></div>
+</div>
+<div style="position:relative;flex:1;height:520px">
+<img class="tela surge" src="img/materiais.jpg" alt="Página de materiais com formulário de cadastro" style="position:absolute;left:0;top:0;width:676px;height:380px;object-fit:cover;--i:2">
+<img class="tela sobe" src="img/email-obrigado.jpg" alt="E-mail de agradecimento com o banner Obrigada por ter feito parte" style="position:absolute;left:356px;top:160px;width:320px;height:360px;object-fit:cover;--i:4">
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="certificado" class="claro conteudo" data-transition="fade">
+<div class="cab">
+<p class="eyebrow">Certificado de participação</p>
+<h2 class="titulo">Certificado validado pela inscrição</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="position:relative;width:1000px;height:600px">
+<img class="tela surge" src="img/cert-lp.jpg" alt="Página do certificado com o campo de e-mail da inscrição" style="position:absolute;left:0;top:0;width:740px;height:488px;object-fit:cover;--i:1">
+<img class="tela amplia" src="img/cert-real.jpg" alt="Certificado de participação em A4 na horizontal" style="position:absolute;left:380px;top:170px;width:620px;height:439px;object-fit:cover;--i:3">
+</div>
+<div class="itens" style="flex:1">
+<div class="item sobe" style="--i:2"><p class="marcador">01</p><p><span class="forte">Página própria</span>: a pessoa digita o e-mail e só inscrições confirmadas geram o certificado.</p></div>
+<div class="item sobe" style="--i:3"><p class="marcador">02</p><p><span class="forte">A4 na horizontal</span>, 5 horas, temas da tarde e assinaturas da Grou.</p></div>
+<div class="item sobe" style="--i:4"><p class="marcador">03</p><p><span class="forte">Código e QR</span> que confirmam a validade em uma página pública.</p></div>
+<div class="item sobe" style="--i:5"><p class="marcador">04</p><p><span class="forte">PDF, impressão e LinkedIn</span>, com disparo na segunda à tarde.</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="disparos" class="claro conteudo">
+<div class="cab">
+<p class="eyebrow">Disparos de e-mail</p>
+<h2 class="titulo">Um e-mail para cada etapa</h2>
+</div>
+<img class="surge" src="img/mock-emails-s2.png" alt="Cinco celulares com os e-mails de confirmação de vaga, Falta pouco, agradecimento, acesso aos materiais e certificado" style="width:1450px;height:626px;object-fit:contain;align-self:center;--i:1">
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos · também: 81 avisos de troca de sala</p><p class="pg"></p></div>
+
+</section>
+<section id="whats" class="papel conteudo">
+<div class="cab">
+<p class="eyebrow">Disparos de WhatsApp</p>
+<h2 class="titulo">Duas vozes, uma sequência</h2>
+</div>
+<div style="display:flex;gap:56px;align-items:flex-start">
+<img class="surge" src="img/mock-whats-s2.png" alt="Três celulares com as mensagens de WhatsApp da Grou, da Bruna do Lumi e do certificado" style="width:760px;height:528px;object-fit:contain;--i:1">
+<div class="itens" style="flex:1">
+<div class="item sobe" style="--i:2"><p class="marcador">13/11</p><p><span class="forte">Grou agradece</span> e entrega as apresentações, com o contato da Bruna. 181 pessoas, pelo número do evento.</p></div>
+<div class="item sobe" style="--i:3"><p class="marcador">16/11 · manhã</p><p><span class="forte">Bruna, do Lumi</span>, agradece em nome próprio e abre a agenda dela. Mesmos 181 contatos.</p></div>
+<div class="item sobe" style="--i:4"><p class="marcador">16/11 · tarde</p><p><span class="forte">Grou envia o certificado</span>, gerado com o e-mail da inscrição.</p></div>
+<div class="item sobe" style="--i:5"><p class="marcador">→</p><p>Central de envio com um botão por pessoa e a mensagem pronta.</p></div>
+</div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="galeria" class="claro conteudo">
+<div class="cab">
+<p class="eyebrow">Galeria</p>
+<h2 class="titulo">O que foi produzido, em telas</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:22px 24px">
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:0"><img class="tela" src="img/site-evento.jpg" alt="Site do evento" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Site do evento</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:1"><img class="tela" src="img/site-quem-fala.jpg" alt="Seção Quem vai estar no palco" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Quem fala</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:2"><img class="tela" src="img/guia.jpg" alt="Guia do Inscrito" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Guia do Inscrito</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:3"><img class="tela" src="img/topo-falta-pouco.jpg" alt="Banner do e-mail Falta pouco" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">E-mails do evento</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:4"><img class="tela" src="img/deck-woodhead.jpg" alt="Apresentação web da juíza Fernanda Woodhead" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Apresentações web</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:5"><img class="tela" src="img/capa-evento.jpg" alt="Capa 16:9 para as TVs" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Capa das TVs</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:6"><img class="tela" src="img/ilmj-qr-cursos.jpg" alt="Tela da I Love My Job com QR dos cursos" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Telas de parceiros</p></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:12px;--i:7"><img class="tela" src="img/ambiente.jpg" alt="Ambiente com as apresentações para baixar" style="width:398px;height:224px;object-fit:cover"><p class="txt-p forte">Ambiente de materiais</p></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="inventario" class="papel conteudo">
+<div class="cab">
+<p class="eyebrow">Inventário completo</p>
+<h2 class="titulo">Tudo o que foi entregue, do começo ao fim</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px">
+<div class="card sobe" style="--i:0;gap:14px;padding:30px 28px"><h3 style="font-size:32px;font-weight:600;color:#0B7468">Antes</h3>
+<ul style="font-size:24px;line-height:1.3;color:#3A3858;padding-left:26px;display:flex;flex-direction:column;gap:8px">
+<li>Site e checkout próprio</li>
+<li>Painel de gestão</li>
+<li>18 cupons rastreáveis</li>
+<li>Confirmação de vaga</li>
+<li>“Falta pouco” e Guia</li>
+<li>Aviso de sala</li>
+<li>Reels de divulgação</li>
+<li>GTM e Pixel da Meta</li>
+</ul></div>
+<div class="card sobe" style="--i:1;gap:14px;padding:30px 28px"><h3 style="font-size:32px;font-weight:600;color:#120573">No dia</h3>
+<ul style="font-size:24px;line-height:1.3;color:#3A3858;padding-left:26px;display:flex;flex-direction:column;gap:8px">
+<li>Etiquetas 82 × 30 mm</li>
+<li>Inscrição por QR</li>
+<li>Roteiro das telas</li>
+<li>Banner e display</li>
+<li>Fichas das palestrantes</li>
+<li>Vídeos dos parceiros</li>
+<li>Vídeo dos apoiadores</li>
+<li>10 posts e 31 stories</li>
+</ul></div>
+<div class="card sobe" style="--i:2;gap:14px;padding:30px 28px"><h3 style="font-size:32px;font-weight:600;color:#0B0838">Depois</h3>
+<ul style="font-size:24px;line-height:1.3;color:#3A3858;padding-left:26px;display:flex;flex-direction:column;gap:8px">
+<li>E-mail de agradecimento</li>
+<li>WhatsApp da Grou</li>
+<li>Página de materiais</li>
+<li>RD e e-mail de acesso</li>
+<li>Contato do site no RD</li>
+<li>WhatsApp do Lumi</li>
+<li>Remarketing</li>
+<li>Lista para o CRM</li>
+</ul></div>
+<div class="card sobe" style="--i:3;gap:14px;padding:30px 28px;background:#0B0838;border-color:#0B0838"><h3 style="font-size:32px;font-weight:600;color:#81CC39">Lumi</h3>
+<ul style="font-size:24px;line-height:1.3;color:#C9C7E6;padding-left:26px;display:flex;flex-direction:column;gap:8px">
+<li>Site refeito</li>
+<li>Ajustes no app e painéis</li>
+<li>Trilhas reeditadas</li>
+<li>Filme de lançamento</li>
+<li>Vídeo dos mentores</li>
+<li>Deck “Com vocês, Lumi”</li>
+<li>Totem interativo</li>
+<li>Ecobags e camisetas</li>
+</ul></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>03</b> Tudo o que fizemos</p><p class="pg"></p></div>
+
+</section>
+<section id="div4" class="divisor" data-transition="fade">
+<img class="fundo surge" src="img/poster.jpg" alt="" style="--i:0">
+<div class="veu"></div>
+<p class="sec-num amplia" style="--i:1">04</p>
+<div class="sec-linha entra" style="--i:2"></div>
+<h2 class="sec-tit entra" style="--i:3">Próximos<br>passos</h2>
+<p class="sec-sub surge" style="--i:5">Cinco semanas para transformar público em negócio, e o que levamos para a próxima edição.</p>
+
+</section>
+<section id="proximas" class="escuro conteudo" data-transition="fade">
+<div class="cab">
+<p class="eyebrow">Próximas semanas</p>
+<h2 class="titulo">Cinco semanas para transformar público em negócio</h2>
+</div>
+<div style="position:relative;display:grid;grid-template-columns:repeat(5, 1fr);gap:20px">
+<div class="surge" style="position:absolute;left:0;top:15px;width:1664px;height:2px;background:#2C2768;--i:0"></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:14px;--i:1"><div style="width:32px;height:32px;border-radius:16px;background:#6CD8CF"></div><p style="font-size:24px;font-weight:600;color:#6CD8CF">Feito · 13/11</p><h3 style="font-size:32px;font-weight:600;color:#F4F3FF;line-height:1.2">Agradecer e entregar</h3><ul style="font-size:24px;line-height:1.35;color:#C9C7E6;padding-left:26px;display:flex;flex-direction:column;gap:6px"><li>E-mail para 241</li><li>WhatsApp para 181</li><li>Materiais + RD</li><li>Contato no RD</li></ul></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:14px;--i:2"><div style="width:32px;height:32px;border-radius:16px;background:#F4F3FF"></div><p style="font-size:24px;font-weight:600;color:#F4F3FF">16 a 20/11</p><h3 style="font-size:32px;font-weight:600;color:#F4F3FF;line-height:1.2">Fechar o ciclo e medir</h3><ul style="font-size:24px;line-height:1.35;color:#C9C7E6;padding-left:26px;display:flex;flex-direction:column;gap:6px"><li>WhatsApp do Lumi</li><li>Certificados</li><li>Remarketing no ar</li><li>Pesquisa de satisfação</li><li>Highlights nas redes</li><li>Triagem de leads</li></ul></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:14px;--i:3"><div style="width:32px;height:32px;border-radius:16px;background:#17124F;border:2px solid #8E8BB8"></div><p style="font-size:24px;font-weight:600;color:#8E8BB8">23 a 27/11</p><h3 style="font-size:32px;font-weight:600;color:#F4F3FF;line-height:1.2">Conteúdo vira autoridade</h3><ul style="font-size:24px;line-height:1.35;color:#C9C7E6;padding-left:26px;display:flex;flex-direction:column;gap:6px"><li>Artigo do evento</li><li>Checklist NR-1</li><li>Convite: demo do Lumi</li></ul></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:14px;--i:4"><div style="width:32px;height:32px;border-radius:16px;background:#17124F;border:2px solid #8E8BB8"></div><p style="font-size:24px;font-weight:600;color:#8E8BB8">30/11 a 04/12</p><h3 style="font-size:32px;font-weight:600;color:#F4F3FF;line-height:1.2">Interesse vira conversa</h3><ul style="font-size:24px;line-height:1.35;color:#C9C7E6;padding-left:26px;display:flex;flex-direction:column;gap:6px"><li>Demo ao vivo do Lumi</li><li>Propostas Grou + Lumi</li><li>Relatório de resultados</li></ul></div>
+<div class="sobe" style="display:flex;flex-direction:column;gap:14px;--i:5"><div style="width:32px;height:32px;border-radius:16px;background:#17124F;border:2px solid #8E8BB8"></div><p style="font-size:24px;font-weight:600;color:#8E8BB8">07 a 13/12</p><h3 style="font-size:32px;font-weight:600;color:#F4F3FF;line-height:1.2">Fechar e abrir o próximo</h3><ul style="font-size:24px;line-height:1.35;color:#C9C7E6;padding-left:26px;display:flex;flex-direction:column;gap:6px"><li>Lista da próxima edição</li><li>Conversa com apoiadores</li><li>Balanço do remarketing</li></ul></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>04</b> Próximos passos</p><p class="pg"></p></div>
+
+</section>
+<section id="aprendizados" class="claro conteudo">
+<div class="cab">
+<p class="eyebrow" style="transform:translate(0, 149px)">Aprendizados</p>
+<h2 class="titulo" style="transform:translate(0, 149px)">O que levamos para a próxima edição</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div class="card sobe" style="--i:0;translate:0 149px"><h3 style="font-size:36px;font-weight:600;color:#0B0838">Convite é o motor</h3><p class="txt-p">92% das inscrições vieram por convite, e parceiros mais embaixadores do time somaram 72%. O cupom por pessoa mostrou quem traz público: dá para repetir e premiar.</p></div>
+<div class="card sobe" style="--i:1;translate:0 149px"><h3 style="font-size:36px;font-weight:600;color:#0B0838">A reta final decide</h3><p class="txt-p">40% das inscrições chegaram na última semana, com pico no dia do “Falta pouco”. A cadência de lembretes deve ser planejada desde o lançamento.</p></div>
+<div class="card sobe" style="--i:3;translate:0 149px"><h3 style="font-size:36px;font-weight:600;color:#0B0838">Conteúdo segue gerando leads</h3><p class="txt-p">Com as 9 apresentações atrás de um cadastro ligado ao CRM, o evento continua captando contatos depois do dia, e cada lead chega com a origem.</p></div>
+</div>
+<div class="rodape"><p>NR-1 Estratégica · <b>04</b> Próximos passos</p><p class="pg"></p></div>
+
+</section>
+<section id="fecho" class="escuro" style="padding:0">
+<img src="img/poster.jpg" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;opacity:.4">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(180deg, rgba(11,8,56,.7) 0%, rgba(11,8,56,.95) 100%)"></div>
+<img class="surge" src="img/nr1-logo.png" alt="NR-1 Estratégica" style="position:absolute;left:660px;top:150px;width:600px;height:203px;object-fit:contain;--i:0">
+<h2 class="sobe" style="position:absolute;left:228px;top:420px;width:1464px;text-align:center;font-size:120px;font-weight:600;line-height:1.02;letter-spacing:-0.03em;color:#F4F3FF;--i:1">Obrigada por ter <span style="color:#6CD8CF">feito parte!</span></h2>
+<p class="sobe" style="position:absolute;left:328px;top:720px;width:1264px;text-align:center;font-size:32px;line-height:1.45;color:#C9C7E6;--i:2">Do convite ao pós-evento, o NR-1 Estratégica foi feito em casa, pelo time Grou.</p>
+<p class="surge" style="position:absolute;left:328px;top:880px;width:1264px;text-align:center;font-size:24px;color:#8E8BB8;--i:4">grougp.com/evento/nr1-estrategica · 12.11.2026 · Instituto Caldeira</p>
+
+</section>
+</div></div>
+<nav id="nav" aria-label="Navegação dos slides">
+<button type="button" id="ant" aria-label="Slide anterior">←</button>
+<button type="button" id="prox" aria-label="Próximo slide">→</button>
+<div id="barra"><i></i></div>
+<span id="cont"></span>
+<button type="button" id="cheia">Tela cheia</button>
+</nav>
+<script>
+(function(){
+  var tela = document.getElementById('tela'), sl = Array.prototype.slice.call(tela.children), atual = -1;
+  sl.forEach(function(s, i){ var p = s.querySelector('.rodape .pg'); if (p) p.setAttribute('data-pg', i + 1); });
+  function escala(){ var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080); tela.style.transform = 'scale(' + s + ')'; }
+  window.addEventListener('resize', escala); escala();
+  function conta(el){
+    var alvo = parseInt(el.textContent.replace(/\D/g, ''), 10); if (!alvo) return;
+    var t0 = performance.now(), dur = 1200;
+    (function passo(t){ var k = Math.min(1, (t - t0) / dur); k = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(alvo * k); if (k < 1) requestAnimationFrame(passo); else el.textContent = alvo; })(t0);
+  }
+  function vai(i){
+    i = Math.max(0, Math.min(sl.length - 1, i)); if (i === atual) return;
+    if (atual >= 0) sl[atual].classList.remove('ativo');
+    atual = i; var s = sl[i]; s.classList.add('ativo');
+    s.querySelectorAll('.n').forEach(conta);
+    document.querySelector('#barra i').style.width = ((i + 1) / sl.length * 100) + '%';
+    document.getElementById('cont').textContent = (i + 1) + ' / ' + sl.length;
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch(e) {}
+  }
+  var ini = parseInt((location.hash || '').slice(1), 10); vai(ini ? ini - 1 : 0);
+  document.getElementById('ant').onclick = function(){ vai(atual - 1); };
+  document.getElementById('prox').onclick = function(){ vai(atual + 1); };
+  document.getElementById('cheia').onclick = function(){ var d = document.documentElement; if (!document.fullscreenElement) { (d.requestFullscreen || d.webkitRequestFullscreen || function(){}).call(d); } else { document.exitFullscreen(); } };
+  document.addEventListener('keydown', function(e){
+    if (['ArrowRight','PageDown',' ','Enter'].indexOf(e.key) >= 0) { e.preventDefault(); vai(atual + 1); }
+    else if (['ArrowLeft','PageUp','Backspace'].indexOf(e.key) >= 0) { e.preventDefault(); vai(atual - 1); }
+    else if (e.key === 'Home') vai(0); else if (e.key === 'End') vai(sl.length - 1);
+    else if (e.key === 'f' || e.key === 'F') document.getElementById('cheia').click();
+  });
+  document.getElementById('web-palco').addEventListener('click', function(e){ vai(e.clientX > window.innerWidth / 3 ? atual + 1 : atual - 1); });
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; document.body.classList.add('toque'); }, { passive: true });
+  document.addEventListener('touchend', function(e){ if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) vai(dx < 0 ? atual + 1 : atual - 1); x0 = null; });
+  window.addEventListener('hashchange', function(){ var n = parseInt(location.hash.slice(1), 10); if (n) vai(n - 1); });
+})();
+</script>
+</body>
+</html>

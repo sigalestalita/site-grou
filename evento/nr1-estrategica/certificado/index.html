@@ -73,6 +73,18 @@ input[aria-invalid=true]{border-color:#c0392b}
 .btn-s{background:#fff;color:var(--navy2);border:1px solid var(--linha)}
 .btn-t{background:var(--teal);color:#fff}
 .erro{margin-top:12px;font-size:13.5px;color:#b3261e;line-height:1.5}
+/* nota do evento (NPS) */
+.nps{border:0;margin:0 0 20px;padding:0;min-width:0}
+.nps legend{font-size:13px;font-weight:500;color:var(--texto);line-height:1.45;margin-bottom:10px;padding:0}
+.nps .notas{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
+.nps input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.nps .notas label{margin:0;display:flex;align-items:center;justify-content:center;height:40px;border-radius:10px;border:1px solid var(--linha);background:var(--fundo);font-size:14px;font-weight:600;color:var(--tinta);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s;user-select:none}
+.nps .notas label:hover{border-color:var(--teal);background:#fff}
+.nps input:focus-visible+label{outline:none;box-shadow:0 0 0 4px rgba(18,165,148,.22);border-color:var(--teal)}
+.nps .notas input:checked+label,.nps .notas input:checked+label:hover{background:var(--navy2);border-color:var(--navy2);color:#fff;transform:translateY(-1px);box-shadow:0 6px 14px rgba(18,5,115,.25)}
+.nps .escala-txt{display:flex;justify-content:space-between;gap:10px;margin-top:7px;font-size:11.5px;color:var(--suave)}
+.nps[aria-invalid=true] .notas label{border-color:#c0392b}
+@media (max-width:380px){.nps .notas{gap:3px}.nps .notas label{height:36px;font-size:13px;border-radius:8px}}
 .ajuda{margin-top:16px;font-size:13px;color:var(--suave);line-height:1.55}
 .ajuda a{color:var(--navy2);font-weight:600}
 /* resultado */
@@ -168,7 +180,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <form class="cartao" id="form" novalidate>
         <h2>Gerar certificado</h2>
-        <p class="d">Use o mesmo e-mail da sua inscrição no evento.</p>
+        <p class="d">Conte como foi o evento e use o mesmo e-mail da sua inscrição.</p>
+        <fieldset class="nps" id="nps">
+          <legend>De 0 a 10, o quanto você recomendaria o NR-1 Estratégica a um colega?</legend>
+          <div class="notas"><input type="radio" name="nps" id="nps0" value="0"><label for="nps0">0</label><input type="radio" name="nps" id="nps1" value="1"><label for="nps1">1</label><input type="radio" name="nps" id="nps2" value="2"><label for="nps2">2</label><input type="radio" name="nps" id="nps3" value="3"><label for="nps3">3</label><input type="radio" name="nps" id="nps4" value="4"><label for="nps4">4</label><input type="radio" name="nps" id="nps5" value="5"><label for="nps5">5</label><input type="radio" name="nps" id="nps6" value="6"><label for="nps6">6</label><input type="radio" name="nps" id="nps7" value="7"><label for="nps7">7</label><input type="radio" name="nps" id="nps8" value="8"><label for="nps8">8</label><input type="radio" name="nps" id="nps9" value="9"><label for="nps9">9</label><input type="radio" name="nps" id="nps10" value="10"><label for="nps10">10</label></div>
+          <div class="escala-txt" aria-hidden="true"><span>Nada provável</span><span>Muito provável</span></div>
+        </fieldset>
         <label for="email">E-mail da inscrição</label>
         <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@empresa.com.br">
         <button class="btn btn-p" id="gerar" type="submit">Gerar meu certificado</button>
@@ -293,25 +310,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   window.addEventListener('resize', escala);
 
-  function erro(msg){ var e = $('erro'); e.textContent = msg; e.hidden = false; $('email').setAttribute('aria-invalid','true'); $('email').focus(); }
+  function erro(msg, campo){
+    var e = $('erro'); e.textContent = msg; e.hidden = false;
+    if (campo === 'nps') { $('nps').setAttribute('aria-invalid','true'); var r = document.querySelector('input[name=nps]:checked') || $('nps0'); r.focus(); }
+    else { $('email').setAttribute('aria-invalid','true'); $('email').focus(); }
+  }
+  function notaEscolhida(){ var r = document.querySelector('input[name=nps]:checked'); return r ? Number(r.value) : null; }
   $('email').addEventListener('input', function(){ $('erro').hidden = true; $('email').removeAttribute('aria-invalid'); });
+  document.querySelectorAll('input[name=nps]').forEach(function(r){ r.addEventListener('change', function(){ $('nps').removeAttribute('aria-invalid'); if ($('nps').dataset.erro) { $('erro').hidden = true; delete $('nps').dataset.erro; } }); });
   $('form').addEventListener('submit', function(ev){
     ev.preventDefault();
+    var nota = notaEscolhida();
+    if (nota === null) { $('nps').dataset.erro = '1'; return erro('Escolha uma nota de 0 a 10 para o evento.', 'nps'); }
     var email = $('email').value.trim().toLowerCase();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return erro('Confira o e-mail digitado.');
     var b = $('gerar'); b.disabled = true; b.textContent = 'Procurando sua inscrição…';
-    fetch('/api/certificado/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email }) })
+    fetch('/api/certificado/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, nps: nota }) })
       .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
       .then(function(x){
         b.disabled = false; b.textContent = 'Gerar meu certificado';
-        if (!x.ok || !x.j.nome) return erro(x.j.erro || 'Não foi possível gerar agora. Tente de novo em instantes.');
+        if (!x.ok || !x.j.nome) return erro(x.j.erro || 'Não foi possível gerar agora. Tente de novo em instantes.', x.j.campo);
+        try { (window.dataLayer = window.dataLayer || []).push({ event: 'nr1_nota_evento', nota: nota }); } catch(e) {}
         mostra(x.j);
       })
       .catch(function(){ b.disabled = false; b.textContent = 'Gerar meu certificado'; erro('Sem conexão. Tente de novo em instantes.'); });
   });
 
   $('imprimir').addEventListener('click', function(){ window.print(); });
-  $('outro').addEventListener('click', function(){ $('res').hidden = true; $('email').value = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); $('email').focus(); });
+  $('outro').addEventListener('click', function(){ $('res').hidden = true; $('email').value = ''; document.querySelectorAll('input[name=nps]').forEach(function(r){ r.checked = false; }); window.scrollTo({ top: 0, behavior: 'smooth' }); $('email').focus(); });
 
   /* PDF: desenha o certificado em tamanho real (fora da tela) e grava A4 paisagem */
   function carrega(src){ return new Promise(function(ok, falha){ var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = falha; document.head.appendChild(s); }); }

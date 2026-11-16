@@ -23,7 +23,34 @@
 <link rel="stylesheet" href="/assets/css/grou.css?v=99539974">
 <style id="contato-frentes">
 #c-sol-campo[hidden]{display:none}
-.form-ok.aviso{display:flex}
+#form-contato[hidden]{display:none}
+/* aviso (plano B por e-mail): a caixinha de sempre, abaixo do formulário */
+.form-ok.aviso{display:flex;margin-top:16px}
+.form-ok .ok-icone{flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-top:2px}
+.form-ok .ok-icone svg{width:100%;height:100%;stroke-width:1.6}
+.form-ok .ok-corpo p{margin:0;font-size:inherit;line-height:inherit}
+.form-ok .ok-titulo,.form-ok .ok-video,.form-ok .ok-eyebrow{display:none}
+/* sucesso: o cartão inteiro vira a confirmação (o .visivel também dispara o Lead do Meta Pixel) */
+.painel.enviado > :not(.form-ok){display:none}
+.form-ok.visivel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;background:none;border:0;border-radius:0;padding:clamp(8px,2vw,18px) 0 4px;color:var(--tinta-suave);animation:ok-entra .6s var(--mola) both}
+.form-ok.visivel .ok-icone{width:68px;height:68px;margin:0 0 22px;border-radius:50%;background:var(--ciano-fundo);color:var(--ciano-forte);box-shadow:0 0 0 8px rgb(var(--ciano-rgb) / .14),0 14px 32px rgb(var(--ciano-rgb) / .35)}
+.form-ok.visivel .ok-icone svg{width:30px;height:30px;stroke-width:1.5;stroke-dasharray:14;stroke-dashoffset:14;animation:ok-traco .5s .25s var(--suave) forwards}
+.form-ok.visivel .ok-eyebrow{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--ciano-texto);margin-bottom:10px}
+.form-ok.visivel .ok-titulo{display:block;font-size:clamp(24px,3vw,32px);font-weight:300;letter-spacing:-.025em;line-height:1.12;color:var(--tinta);margin:0 0 12px}
+.form-ok.visivel .ok-titulo b{font-weight:600}
+.form-ok.visivel .ok-titulo:focus{outline:none}
+.form-ok.visivel .ok-titulo:focus-visible{outline:2px solid var(--ciano-forte);outline-offset:4px}
+.form-ok.visivel .ok-corpo{width:100%}
+.form-ok.visivel .ok-corpo p{font-size:15px;line-height:1.65;max-width:38ch;margin:0 auto}
+.form-ok.visivel .ok-video:not([hidden]){display:block;width:100%;margin:clamp(26px,3vw,34px) 0 0;padding-top:clamp(22px,3vw,28px);border-top:1px solid var(--linha);text-align:left}
+.ok-video figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:14px;font-size:14px;line-height:1.4;color:var(--tinta-suave)}
+.ok-video figcaption b{font-weight:500;color:var(--tinta)}
+.ok-video .ok-tag{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--ciano-texto);background:var(--ciano-fundo);border:1px solid rgb(var(--ciano-rgb) / .5);border-radius:999px;padding:4px 10px}
+.ok-quadro{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--azul-noite);box-shadow:var(--sombra-m)}
+.ok-quadro iframe,.ok-quadro video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;max-width:none}
+@keyframes ok-entra{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ok-traco{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.form-ok.visivel{animation:none}.form-ok.visivel .ok-icone svg{animation:none;stroke-dashoffset:0}}
 .form-erro{margin:0;font-size:13.5px;color:#c0392b}
 .campo [aria-invalid="true"]{border-color:#c0392b}
 .campo select:invalid{color:var(--tinta-tenue)}
@@ -296,7 +323,21 @@ src="https://www.facebook.com/tr?id=570597033128492&ev=PageView&noscript=1"
               <a href="https://conteudo.grougp.com.br/politica-de-privacidade-grou" target="_blank" rel="noopener">política de privacidade</a>.
             </p>
           </form>
-          <div class="form-ok"><span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6.3 4.7 9 10 3.4"/></svg></span><span id="c-ok-txt">Recebemos o seu pedido. Um especialista da Grou responde em até um dia útil.</span></div>
+          <div class="form-ok" id="c-ok" role="status" aria-live="polite">
+            <span class="ok-icone" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.3 4.7 9 10 3.4"/></svg></span>
+            <div class="ok-corpo">
+              <span class="ok-eyebrow">Solicitação enviada</span>
+              <h3 class="ok-titulo" id="c-ok-tit" tabindex="-1">Recebemos o <b>seu pedido</b>.</h3>
+              <p id="c-ok-txt">Um especialista da Grou responde em até um dia útil.</p>
+              <!-- Vídeo de introdução do PDA (Grou Academy), mostrado só depois do envio com sucesso.
+                   Para ativar, coloque o link em data-video: YouTube (watch, youtu.be, shorts, embed ou só o ID),
+                   Vimeo ou um arquivo .mp4/.webm. Vazio, o bloco não aparece. -->
+              <figure class="ok-video" id="c-ok-video" data-video="" hidden>
+                <figcaption><span class="ok-tag">Grou Academy</span><span>Enquanto isso, <b>conheça o PDA</b> em poucos minutos.</span></figcaption>
+                <div class="ok-quadro"></div>
+              </figure>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -384,7 +425,47 @@ src="https://www.facebook.com/tr?id=570597033128492&ev=PageView&noscript=1"
   var ORIGEM = origem(), U = { s: utm('utm_source'), m: utm('utm_medium'), c: utm('utm_campaign') };
   function erro(msg, campo){ var e = $('c-erro'); e.textContent = msg; e.hidden = false; if (campo) { campo.setAttribute('aria-invalid','true'); campo.focus(); } }
   /* sucesso ganha .visivel (é o que dispara o Lead do Meta Pixel); o plano B por e-mail usa .aviso e não conta como Lead */
-  function mostraOk(txt){ var f = $('form-contato'), ok = f.parentElement.querySelector('.form-ok'); if (txt) $('c-ok-txt').innerHTML = txt; f.hidden = true; if (ok) { ok.classList.add(txt ? 'aviso' : 'visivel'); ok.setAttribute('tabindex','-1'); ok.focus(); } }
+  function mostraOk(txt){
+    var f = $('form-contato'), ok = $('c-ok'); if (!ok) return;
+    var p = $('c-ok-txt'); if (!p.hasAttribute('data-ok')) p.setAttribute('data-ok', p.innerHTML);
+    if (txt) { p.innerHTML = txt; ok.classList.add('aviso'); return; }
+    p.innerHTML = p.getAttribute('data-ok');
+    /* sucesso: some o formulário (e o título do cartão) e fica só a confirmação, com o vídeo do PDA se houver */
+    var painel = ok.parentElement, tit = $('c-ok-tit');
+    f.hidden = true; if (painel) painel.classList.add('enviado');
+    ok.classList.remove('aviso'); ok.classList.add('visivel');
+    montaVideo($('c-ok-video'));
+    if (tit) tit.focus({ preventScroll: true });
+    /* no celular o formulário é longo: traz o cartão para a tela, logo abaixo do menu fixo */
+    var cab = document.querySelector('header.topo'), topo = ((cab && cab.offsetHeight) || 68) + 16;
+    var r = (painel || ok).getBoundingClientRect();
+    if (r.top < topo || r.top > window.innerHeight * .5) {
+      var suave = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+      window.scrollTo({ top: Math.max(0, r.top + window.scrollY - topo), behavior: suave ? 'smooth' : 'auto' });
+    }
+  }
+  /* vídeo de introdução do PDA: o link fica em data-video no HTML; vazio = bloco escondido */
+  function montaVideo(fig){
+    if (!fig) return;
+    var u = (fig.getAttribute('data-video') || '').trim(), quadro = fig.querySelector('.ok-quadro'), el, m;
+    if (!u || !quadro || quadro.firstChild) return;
+    if ((m = u.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/)) || (m = u.match(/^([\w-]{11})$/))) {
+      el = document.createElement('iframe');
+      el.src = 'https://www.youtube-nocookie.com/embed/' + m[1] + '?rel=0&modestbranding=1&playsinline=1';
+    } else if ((m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/))) {
+      el = document.createElement('iframe');
+      el.src = 'https://player.vimeo.com/video/' + m[1] + '?dnt=1&title=0&byline=0';
+    } else if (/\.(mp4|webm)(\?|#|$)/i.test(u)) {
+      el = document.createElement('video');
+      el.src = u; el.controls = true; el.preload = 'metadata'; el.setAttribute('playsinline', '');
+    } else return;
+    if (el.tagName === 'IFRAME') {
+      el.title = 'Introdução ao PDA · Grou Academy'; el.loading = 'lazy';
+      el.allow = 'accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+      el.setAttribute('allowfullscreen', ''); el.referrerPolicy = 'strict-origin-when-cross-origin';
+    } else el.setAttribute('aria-label', 'Introdução ao PDA · Grou Academy');
+    quadro.appendChild(el); fig.hidden = false;
+  }
   var f = $('form-contato'); if (!f) return;
   f.addEventListener('input', function(ev){ ev.target.removeAttribute && ev.target.removeAttribute('aria-invalid'); $('c-erro').hidden = true; });
   f.addEventListener('submit', function(ev){

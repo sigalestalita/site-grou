@@ -100,6 +100,26 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tag--0{background:var(--cinza-f);color:var(--tinta-2)}
 .barra{display:block;height:5px;border-radius:3px;background:var(--cinza-f);margin-top:5px;min-width:60px;overflow:hidden}
 .barra i{display:block;height:100%;background:linear-gradient(90deg,var(--eletrico),var(--ciano));border-radius:3px}
+/* avaliação do evento (NPS) */
+.nps-top{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:12px}
+.nps-top div{padding:14px;border-radius:14px;background:var(--nevoa)}
+.nps-top b{display:block;font-family:var(--ft);font-size:22px;font-weight:600;color:var(--noite);line-height:1.2}
+.nps-top span{font-size:12px;color:var(--tinta-2)}
+.nps-top .nps-score{background:var(--noite)}
+.nps-top .nps-score b{color:#fff;font-size:30px}
+.nps-top .nps-score span{color:#c9c6f0}
+.nps-mix{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--cinza-f);margin:16px 0 6px}
+.nps-mix i{display:block;height:100%}
+.nps-leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--tinta-2)}
+.nps-leg span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:0;background:var(--c)}
+.nps-dist{display:grid;grid-template-columns:repeat(11,1fr);gap:6px;align-items:end;height:120px;margin:18px 0 4px}
+.nps-dist div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:4px}
+.nps-dist i{display:block;width:100%;max-width:38px;border-radius:6px 6px 2px 2px;min-height:2px}
+.nps-dist small{font-size:11px;color:var(--tinta-2);font-weight:600}
+.nps-eixo{display:grid;grid-template-columns:repeat(11,1fr);gap:6px;text-align:center;font-size:11.5px;color:var(--tinta-3);border-top:1.5px solid var(--linha);padding-top:5px}
+.nota{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:26px;padding:0 8px;border-radius:8px;font-family:var(--ft);font-weight:600;font-size:13px}
+.nota--p{background:var(--verde-f);color:var(--verde)} .nota--n{background:#fff4d6;color:#8a6200} .nota--d{background:var(--verm-f);color:var(--verm)}
+@media (max-width:820px){.nps-top{grid-template-columns:1fr 1fr}}
 .pgto{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .pgto div{padding:14px;border-radius:14px;background:var(--nevoa)}
 .pgto b{display:block;font-family:var(--ft);font-size:20px;font-weight:600;color:var(--noite)}
@@ -214,6 +234,13 @@ select{width:auto;min-width:170px}
       <h2>Forma de pagamento</h2>
       <p class="sub">Só pagantes com pagamento confirmado.</p>
       <div class="pgto" id="pgto"></div>
+    </section>
+
+    <section class="card lista" id="cardNps">
+      <h2>Avaliação do evento (NPS) <span id="contaNps" style="font-weight:400;color:var(--tinta-3)"></span></h2>
+      <p class="sub">Nota de 0 a 10 que cada participante dá ao gerar o certificado ("o quanto recomendaria o evento a um colega"). Promotores: 9 e 10 · neutros: 7 e 8 · detratores: 0 a 6. NPS = % promotores − % detratores.</p>
+      <div id="npsCorpo"></div>
+      <p class="vazio" id="vazioNps" hidden>Ninguém deu nota ainda. As notas chegam quando os participantes geram o certificado.</p>
     </section>
 
     <section class="card prob" id="cardEntregas" hidden>
@@ -538,8 +565,54 @@ select{width:auto;min-width:170px}
     }).join('');
   }
 
+  /* avaliação do evento: notas de 0 a 10 dadas ao gerar o certificado */
+  var COR_NPS = { p: '#12a594', n: '#e0a100', d: '#b3283c' };
+  var faixaNps = function (n) { return n >= 9 ? 'p' : n >= 7 ? 'n' : 'd'; };
+  function renderNps() {
+    var R = estado.dados.inscritos.filter(function (i) { return i.nps !== null && i.nps !== undefined && i.nps !== ''; });
+    $('contaNps').textContent = R.length ? '(' + R.length + (R.length === 1 ? ' resposta)' : ' respostas)') : '';
+    $('vazioNps').hidden = R.length > 0;
+    if (!R.length) { $('npsCorpo').innerHTML = ''; return; }
+    var conta = { p: 0, n: 0, d: 0 }, dist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], soma = 0;
+    R.forEach(function (i) { var n = Number(i.nps); conta[faixaNps(n)]++; dist[n]++; soma += n; });
+    var pct = function (x) { return Math.round(x * 100 / R.length); };
+    var score = Math.round((conta.p - conta.d) * 100 / R.length);
+    var presentes = estado.dados.inscritos.filter(function (i) { return confirmada(i) && i.presente; }).length;
+    var maxD = Math.max.apply(null, dist.concat([1]));
+    var top = '<div class="nps-top">' +
+      '<div class="nps-score"><b>' + (score > 0 ? '+' : '') + score + '</b><span>NPS do evento</span></div>' +
+      '<div><b>' + (soma / R.length).toFixed(1).replace('.', ',') + '</b><span>Nota média</span></div>' +
+      '<div><b>' + R.length + '</b><span>Respostas' + (presentes ? ' · ' + Math.round(R.length * 100 / presentes) + '% dos ' + presentes + ' presentes' : '') + '</span></div>' +
+      '<div><b>' + conta.p + ' · ' + conta.n + ' · ' + conta.d + '</b><span>Promotores · neutros · detratores</span></div></div>';
+    var mix = '<div class="nps-mix">' + ['p', 'n', 'd'].map(function (k) { return conta[k] ? '<i style="width:' + (conta[k] * 100 / R.length) + '%;background:' + COR_NPS[k] + '"></i>' : ''; }).join('') + '</div>' +
+      '<div class="nps-leg"><span style="--c:' + COR_NPS.p + '">Promotores ' + pct(conta.p) + '%</span><span style="--c:' + COR_NPS.n + '">Neutros ' + pct(conta.n) + '%</span><span style="--c:' + COR_NPS.d + '">Detratores ' + pct(conta.d) + '%</span></div>';
+    var barras = '<div class="nps-dist" aria-label="Quantas pessoas deram cada nota">' + dist.map(function (q, n) {
+      return '<div title="Nota ' + n + ': ' + q + (q === 1 ? ' pessoa' : ' pessoas') + '">' + (q ? '<small>' + q + '</small>' : '') + '<i style="height:' + (q ? Math.max(4, q * 100 / maxD) : 0) + '%;background:' + COR_NPS[faixaNps(n)] + '"></i></div>';
+    }).join('') + '</div><div class="nps-eixo">' + dist.map(function (q, n) { return '<span>' + n + '</span>'; }).join('') + '</div>';
+    var ord = R.slice().sort(function (a, b) { return String(b.nps_em || '').localeCompare(String(a.nps_em || '')); });
+    var tabela = '<div class="filtros" style="margin-top:20px"><button class="btn btn--leve" type="button" id="btnCsvNps">Baixar CSV das notas</button></div>' +
+      '<div class="rolagem"><table><thead><tr><th>Quando</th><th>Pessoa</th><th>Contato</th><th class="n">Nota</th></tr></thead><tbody>' +
+      ord.map(function (i) {
+        var n = Number(i.nps);
+        return '<tr><td style="white-space:nowrap">' + esc(i.nps_em ? data(i.nps_em) : '—') + '</td>' +
+          '<td class="pessoa"><b>' + esc(i.nome) + '</b><span>' + esc([i.cargo, i.empresa].filter(Boolean).join(' · ')) + '</span></td>' +
+          '<td class="contato"><span>' + esc(i.email) + '</span></td>' +
+          '<td class="n"><span class="nota nota--' + faixaNps(n) + '">' + n + '</span></td></tr>';
+      }).join('') + '</tbody></table></div>';
+    $('npsCorpo').innerHTML = top + mix + barras + tabela;
+    $('btnCsvNps').addEventListener('click', function () { csvNps(ord); });
+  }
+  function csvNps(L) {
+    var cel = function (v) { v = String(v == null ? '' : v); if (/^[=+\-@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+    var ROT = { p: 'Promotor', n: 'Neutro', d: 'Detrator' };
+    var linhas = L.map(function (i) { return [i.nps_em ? data(i.nps_em) : '', i.nome, i.email, i.empresa, i.cargo, i.nps, ROT[faixaNps(Number(i.nps))]].map(cel).join(';'); });
+    var csv = '\ufeff' + ['Quando', 'Nome', 'E-mail', 'Empresa', 'Cargo', 'Nota', 'Grupo'].map(cel).join(';') + '\n' + linhas.join('\n');
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'nr1-estrategica-notas.csv';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  }
+
   function renderTudo() {
-    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderEntregas(); renderLista(); renderLeads(); renderEmail();
+    renderKpis(); renderGrupos(); renderCupons(); renderPgto(); renderEntregas(); renderLista(); renderLeads(); renderEmail(); renderNps();
     $('selo').hidden = estado.dados.ambiente !== 'sandbox';
     $('atualizado').textContent = 'Atualizado às ' + new Date(estado.dados.geradoEm).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }

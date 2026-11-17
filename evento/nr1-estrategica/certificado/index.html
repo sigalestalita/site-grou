@@ -95,6 +95,20 @@ input[aria-invalid=true]{border-color:#c0392b}
 .acoes{display:flex;flex-wrap:wrap;gap:10px}
 .palco{background:#e9eaf3;border-radius:22px;padding:clamp(12px,3vw,34px);overflow:hidden}
 .escala{transform-origin:top left}
+.btn-li{background:#0a66c2;color:#fff;box-shadow:0 10px 24px rgba(10,102,194,.25)}
+.btn-li:hover{transform:translateY(-1px)}
+.btn-li[disabled]{opacity:.7;cursor:wait}
+.btn-li svg{width:18px;height:18px;flex:none}
+.post{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:start;background:#fff;border:1px solid var(--linha);border-radius:18px;padding:20px 22px;margin-bottom:18px}
+.post label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.post textarea{width:100%;min-width:0;font:inherit;font-size:14px;line-height:1.55;color:var(--tinta);border:1px solid var(--linha);border-radius:12px;padding:12px 14px;background:var(--fundo);resize:vertical}
+.post textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(18,165,148,.16);background:#fff}
+.post .lado-b{display:flex;flex-direction:column;gap:10px;width:290px}
+.post .lado-b .btn{white-space:nowrap}
+.post .lado-b .btn{width:100%}
+.post .dica{font-size:12.5px;line-height:1.5;color:var(--suave)}
+.post .dica.ok{color:var(--teal)}
+@media (max-width:760px){.post{grid-template-columns:1fr}.post .lado-b{width:auto}}
 .verif{max-width:640px;margin:-28px auto 0;position:relative;z-index:2;background:#fff;border-radius:20px;padding:26px 28px;box-shadow:0 20px 50px rgba(7,3,58,.18);display:flex;gap:18px;align-items:flex-start}
 .verif .ic{flex:none;width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;background:var(--teal)}
 .verif.nao .ic{background:#b3261e}
@@ -204,10 +218,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="acoes">
       <button class="btn btn-p" id="baixar" type="button" style="width:auto;margin:0">Baixar PDF</button>
       <button class="btn btn-s" id="imprimir" type="button">Imprimir</button>
-      <a class="btn btn-t" id="linkedin" href="#" target="_blank" rel="noopener">Adicionar ao LinkedIn</a>
+      <a class="btn btn-t" id="linkedin" href="#" target="_blank" rel="noopener">Adicionar ao perfil do LinkedIn</a>
       <button class="btn btn-s" id="outro" type="button">Gerar outro</button>
     </div>
   </div>
+  <section class="post" aria-label="Compartilhar no LinkedIn">
+    <div><label for="postTxt">Texto do post · pode editar</label><textarea id="postTxt" rows="9"></textarea></div>
+    <div class="lado-b">
+      <button class="btn btn-li" id="compartilhar" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Compartilhar no LinkedIn</button>
+      <button class="btn btn-s" id="copiar" type="button">Copiar texto</button>
+      <p class="dica" id="dica">O post abre com este texto e a imagem do seu certificado. É só revisar e publicar.</p>
+    </div>
+  </section>
   <div class="palco" id="palco"><div class="escala" id="escala"></div></div>
 </main>
 
@@ -305,6 +327,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       + '&certUrl=' + encodeURIComponent(BASE + '?codigo=' + d.codigo)
       + '&certId=' + encodeURIComponent(d.codigo);
     $('linkedin').href = li;
+    $('postTxt').value = textoPost(d);
+    $('dica').className = 'dica'; $('dica').textContent = 'O post abre com este texto e a imagem do seu certificado. É só revisar e publicar.';
+    preparaImagem(d);
     $('res').scrollIntoView({ behavior: 'smooth', block: 'start' });
     try { (window.dataLayer = window.dataLayer || []).push({ event: 'nr1_certificado_gerado' }); } catch(e) {}
   }
@@ -331,6 +356,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         b.disabled = false; b.textContent = 'Gerar meu certificado';
         if (!x.ok || !x.j.nome) return erro(x.j.erro || 'Não foi possível gerar agora. Tente de novo em instantes.', x.j.campo);
         try { (window.dataLayer = window.dataLayer || []).push({ event: 'nr1_nota_evento', nota: nota }); } catch(e) {}
+        x.j.email = email;
         mostra(x.j);
       })
       .catch(function(){ b.disabled = false; b.textContent = 'Gerar meu certificado'; erro('Sem conexão. Tente de novo em instantes.'); });
@@ -362,6 +388,88 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       })
       .catch(function(){ window.print(); })
       .then(function(){ palcoPdf.remove(); b.disabled = false; b.textContent = rot; });
+  });
+
+  /* ===== compartilhar no LinkedIn =====
+     celular: abre a folha de compartilhar com a imagem do certificado (escolhe o app do LinkedIn);
+     computador: guarda a imagem no servidor e abre o post do LinkedIn com o texto e o link da página
+     do certificado, cuja prévia é a imagem do certificado da pessoa. */
+  var preparo = null;
+  function paginaDe(d){ return BASE + 'c/' + d.codigo + '/'; }
+  function textoPost(d){
+    return 'Participei do NR-1 Estratégica: transformando risco em performance, realizado pela Grou no Instituto Caldeira, em Porto Alegre.\n\n'
+      + 'Foram 5 horas sobre o que a NR-1 passa a exigir das empresas, riscos psicossociais, saúde mental, segurança psicológica e o papel do RH estratégico nessa agenda.\n\n'
+      + 'Saio com novas referências para levar ao dia a dia. Agradeço à Grou e a todos os palestrantes pela troca!\n\n'
+      + '#NR1 #SaúdeMental #RiscosPsicossociais #GestãoDePessoas #RH\n\n'
+      + 'Meu certificado: ' + paginaDe(d);
+  }
+  function libsCanvas(){
+    return window.html2canvas ? Promise.resolve() : carrega('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+  }
+  function preparaImagem(d){
+    var palco = document.createElement('div');
+    palco.style.cssText = 'position:fixed;left:-4000px;top:0;';
+    document.body.appendChild(palco);
+    var c = monta(palco, d);
+    var r = { arquivo: null, enviado: null };
+    preparo = r;
+    r.pronto = libsCanvas().then(function(){ return document.fonts ? document.fonts.ready : null; })
+      .then(function(){ ajustaNome(c); c.style.boxShadow = 'none'; return window.html2canvas(c, { scale: 2, useCORS: true, backgroundColor: '#fcfcf9' }); })
+      .then(function(cv){
+        palco.remove();
+        /* prévia do link (1200 × 627): o certificado inteiro sobre o azul do evento */
+        var o = document.createElement('canvas'); o.width = 1200; o.height = 627;
+        var g = o.getContext('2d'), gr = g.createLinearGradient(0, 0, 1200, 627);
+        gr.addColorStop(0, '#120573'); gr.addColorStop(1, '#07033a');
+        g.fillStyle = gr; g.fillRect(0, 0, 1200, 627);
+        var h = 563, w = Math.round(h * cv.width / cv.height), x = Math.round((1200 - w) / 2), y = 32;
+        g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 40; g.shadowOffsetY = 14;
+        g.drawImage(cv, x, y, w, h);
+        r.enviado = fetch('/api/certificado/', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ acao: 'imagem', email: d.email, codigo: d.codigo, imagem: o.toDataURL('image/jpeg', 0.9) }) })
+          .then(function(x){ return x.ok; }).catch(function(){ return false; });
+        return new Promise(function(ok){ cv.toBlob(function(b){
+          if (b) { try { r.arquivo = new File([b], 'Certificado NR-1 Estrategica.jpg', { type: 'image/jpeg' }); } catch(e) {} }
+          ok();
+        }, 'image/jpeg', 0.92); });
+      })
+      .catch(function(){ palco.remove(); });
+  }
+  function copia(txt){
+    try { return navigator.clipboard.writeText(txt).then(function(){ return true; }, function(){ return false; }); }
+    catch(e) { return Promise.resolve(false); }
+  }
+  var celular = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  $('copiar').addEventListener('click', function(){
+    var t = $('postTxt').value;
+    copia(t).then(function(ok){
+      if (!ok) { $('postTxt').focus(); $('postTxt').select(); }
+      $('dica').className = 'dica ok'; $('dica').textContent = ok ? 'Texto copiado.' : 'Texto selecionado: copie com Ctrl+C (ou segure e copie, no celular).';
+    });
+  });
+  $('compartilhar').addEventListener('click', function(){
+    if (!atual) return;
+    var t = $('postTxt').value, b = this;
+    copia(t);
+    try { (window.dataLayer = window.dataLayer || []).push({ event: 'nr1_certificado_linkedin' }); } catch(e) {}
+    /* celular com a imagem já pronta: folha de compartilhar do sistema (precisa ser chamada direto do toque) */
+    if (celular && preparo && preparo.arquivo && navigator.canShare && navigator.canShare({ files: [preparo.arquivo] })) {
+      navigator.share({ files: [preparo.arquivo], text: t, title: 'Certificado NR-1 Estratégica' })
+        .then(function(){ $('dica').className = 'dica ok'; $('dica').textContent = 'Se o LinkedIn não trouxer o texto, ele já está copiado: é só colar no post.'; })
+        .catch(function(){});
+      return;
+    }
+    var url = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(t);
+    var jan = window.open('', '_blank');
+    if (jan) { try { jan.opener = null; jan.document.title = 'Abrindo o LinkedIn…'; jan.document.body.innerHTML = '<p style="font-family:system-ui,sans-serif;padding:40px;color:#3c3a5c">Preparando a imagem do seu certificado…</p>'; } catch(e) {} }
+    var rot = b.innerHTML; b.disabled = true;
+    var espera = preparo ? preparo.pronto.then(function(){ return preparo.enviado; }) : Promise.resolve(false);
+    var limite = new Promise(function(ok){ setTimeout(function(){ ok(false); }, 12000); });
+    Promise.race([espera, limite]).then(function(){
+      b.disabled = false; b.innerHTML = rot;
+      if (jan && !jan.closed) jan.location.href = url; else location.href = url;
+      $('dica').className = 'dica ok'; $('dica').textContent = 'O texto também foi copiado, caso precise colar.';
+    });
   });
 
   /* verificação: ?codigo=NR1-XXXX-XXXX */

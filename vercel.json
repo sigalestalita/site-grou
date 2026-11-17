@@ -51,6 +51,10 @@
     {
       "source": "/gestao/nr1/",
       "destination": "/api/painel"
+    },
+    {
+      "source": "/evento/nr1-estrategica/certificado/c/:codigo/",
+      "destination": "/api/certificado?pagina=:codigo"
     }
   ],
   "functions": {

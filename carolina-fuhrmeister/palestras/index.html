@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Palestras · Carolina Fuhrmeister · Grou</title>
+<meta name="description" content="Palestras de Carolina Fuhrmeister, psicóloga, CRO e cofundadora da Grou: saúde mental e NR-1, liderança, gestão comportamental, talentos, vendas e equilíbrio.">
+<link rel="canonical" href="https://www.grougp.com/carolina-fuhrmeister/palestras/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grou">
+<meta property="og:title" content="Palestras · Carolina Fuhrmeister">
+<meta property="og:description" content="Gente e resultado na mesma frase. Seis palestras para o seu evento.">
+<meta property="og:url" content="https://www.grougp.com/carolina-fuhrmeister/palestras/">
+<meta property="og:image" content="https://www.grougp.com/carolina-fuhrmeister/palestras/img/capa-og.jpg">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#07033a">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/icone-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/icone-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#07033A;overflow:hidden;-webkit-font-smoothing:antialiased}
+body.empilhado{overflow:auto;height:auto}
+#palco{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#trilho{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center}
+#trilho>section{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:none}
+#trilho>section.ativo{display:block}
+body.empilhado #palco{position:static;display:block}
+body.empilhado #trilho{transform-origin:top left}
+body.empilhado #trilho>section{display:block;position:absolute;inset:auto;left:0}
+section.pausado *{animation-play-state:paused!important}
+:root{--nevoa:#F7F8FC;--branco:#FFFFFF;--tinta:#0C0A2E;--tinta2:#4A4D63;--fio:#DCE1EE;--royal:#120573;--noite:#07033A;--ciano:#6CD8CF;--ciano-texto:#0F8778;--claro:#F4F6FB;--claro2:#C3CAE0}
+p,h1,h2,h3{margin:0}
+section{font-family:Poppins,Arial,sans-serif;color:var(--tinta);background:linear-gradient(180deg,#F8F9FC 0%,#EEF1F8 100%);padding:150px 128px 160px;box-sizing:border-box}
+section.escuro{background:linear-gradient(150deg,#07033A 0%,#05093F 60%,#0B1A5C 100%);color:var(--claro)}
+h1{font-size:124px;font-weight:300;line-height:1.02;letter-spacing:-3px}
+h2{font-size:60px;font-weight:300;line-height:1.14;letter-spacing:-1.5px}
+h3{font-size:30px;font-weight:500;line-height:1.3;letter-spacing:-0.3px}
+.rotulo{font-family:Montserrat,Arial,sans-serif;font-size:24px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--ciano-texto)}
+.escuro .rotulo{color:var(--ciano)}
+.destaque{color:var(--ciano-texto)}
+.escuro .destaque{color:var(--ciano)}
+.texto{font-size:26px;line-height:1.55;font-weight:300;color:var(--tinta2)}
+.escuro .texto{color:var(--claro2)}
+.num{font-size:56px;font-weight:200;line-height:1;color:var(--ciano-texto);letter-spacing:-1px}
+.escuro .num{color:var(--ciano)}
+.fio{width:72px;height:2px;background:var(--ciano-texto)}
+.escuro .fio{background:var(--ciano)}
+.coluna{border-top:1px solid var(--fio);padding-top:32px;display:flex;flex-direction:column;gap:16px}
+.escuro .coluna{border-top:1px solid rgba(244,246,251,0.22)}
+.linha-item{border-top:1px solid var(--fio);padding-top:16px;display:flex;gap:28px;align-items:flex-start}
+.escuro .linha-item{border-top:1px solid rgba(244,246,251,0.22)}
+.mini{font-family:Montserrat,Arial,sans-serif;font-size:24px;font-weight:600;letter-spacing:2px;color:var(--ciano-texto);width:48px;flex-shrink:0;padding-top:3px}
+.escuro .mini{color:var(--ciano)}
+.rodape{position:absolute;left:128px;top:992px;width:1664px;display:flex;justify-content:space-between;animation:surge 1.2s 0.6s both}
+.rod{font-family:Montserrat,Arial,sans-serif;font-size:24px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--tinta2)}
+.escuro .rod{color:var(--claro2)}
+.sangra{position:absolute;top:0px;height:1080px;overflow:hidden}
+.foto-s{object-fit:cover;animation:zoom 10s cubic-bezier(0.2,0.6,0.2,1) both}
+.foto{object-fit:cover;border-radius:6px}
+.sobe{animation:sobe 0.9s cubic-bezier(0.2,0.7,0.2,1) both;animation-delay:calc(var(--i,0) * 110ms)}
+.surge{animation:surge 1.2s ease both;animation-delay:calc(var(--i,0) * 110ms)}
+.desliza{animation:desliza 60s linear infinite}
+@keyframes sobe{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0px)}}
+@keyframes surge{from{opacity:0}to{opacity:1}}
+@keyframes zoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+@keyframes desliza{from{transform:translateX(0px)}to{transform:translateX(-2640px)}}
+
+#controles{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));transition:opacity .4s ease;display:flex;gap:8px;align-items:center;z-index:5;font-family:Montserrat,Arial,sans-serif}
+#controles button{width:44px;height:44px;border-radius:22px;border:1px solid rgba(255,255,255,.25);background:rgba(7,3,58,.55);color:#F4F6FB;font-size:18px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center}
+#controles button:hover{background:rgba(18,5,115,.8)}
+#controles button:focus-visible{outline:2px solid #6CD8CF;outline-offset:2px}
+#aviso{display:none}
+body.empilhado #aviso{display:block;position:sticky;top:0;z-index:6;background:#07033A;color:#C3CAE0;font:500 13px/1.4 Montserrat,Arial,sans-serif;letter-spacing:1px;text-align:center;padding:10px max(16px,env(safe-area-inset-left))}
+#x{color:#F4F6FB;font-size:13px;letter-spacing:2px;padding:0 6px;background:rgba(7,3,58,.55);border-radius:14px;line-height:28px;min-width:64px;text-align:center}
+#barra{position:fixed;left:0;top:0;height:3px;background:#6CD8CF;transition:width .4s ease;z-index:5}
+#controles.oculto{opacity:0;pointer-events:none}
+body.empilhado #controles,body.empilhado #barra{display:none}
+</style>
+</head>
+<body>
+<div id="barra"></div>
+<p id="aviso" style="margin:0">Gire o celular para ver a apresentação em tela cheia.</p>
+<main id="palco" aria-label="Apresentação: Palestras de Carolina Fuhrmeister">
+<div id="trilho">
+<section id="capa" class="escuro" data-transition="fade">
+<div class="sangra" style="left:1000px;width:920px"><img class="foto-s" style="width:920px;height:1080px" src="img/carol-painel.webp" alt="Carolina Fuhrmeister sentada no palco, com microfone"></div>
+<svg style="position:absolute;left:1000px;top:0px" width="420" height="1080" viewBox="0 0 420 1080" aria-label=""><defs><linearGradient id="v1000" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#07033A" stop-opacity="1"/><stop offset="1" stop-color="#07033A" stop-opacity="0"/></linearGradient></defs><rect width="420" height="1080" fill="url(#v1000)"/></svg>
+<div style="width:900px;display:flex;flex-direction:column;gap:36px;margin-top:90px">
+<p class="sobe rotulo" style="--i:0">Palestras · Grou</p>
+<h1 class="sobe" style="--i:1;color:#FFFFFF">Carolina<br>Fuhrmeister</h1>
+<div class="sobe fio" style="--i:2"></div>
+<p class="sobe" style="--i:3;font-size:44px;font-weight:300;line-height:1.3;color:#FFFFFF">Gente e resultado<br><span class="destaque">na mesma frase.</span></p>
+<p class="sobe texto" style="--i:4;font-size:28px">Psicóloga, CRO e cofundadora da Grou.</p>
+</div>
+<img class="surge" style="position:absolute;left:128px;top:892px;width:140px;height:60px;--i:6" src="img/grou-logo-claro.svg" alt="Grou">
+</section>
+<section id="quem">
+<div class="sangra" style="left:0px;width:760px"><img class="foto-s" style="width:760px;height:1080px" src="img/retrato-quem.webp" alt="Carolina Fuhrmeister palestrando com microfone"></div>
+<div style="margin-left:752px;width:912px;display:flex;flex-direction:column;gap:28px">
+<p class="sobe rotulo" style="--i:0">Quem fala</p>
+<h2 class="sobe" style="--i:1">Psicóloga de formação,<br><span class="destaque">empresária por vocação.</span></h2>
+<p class="sobe texto" style="--i:2">Cofundadora da Grou, empresa de gestão de pessoas e desenvolvimento humano. Dinâmica e impaciente, mas com serenidade no coração: equilibra empresa, família e saúde mental, e leva essa vivência para o palco.</p>
+<div class="sobe" style="--i:3;display:grid;grid-template-columns:1fr 1fr;gap:0px 40px;margin-top:8px">
+<div style="border-top:1px solid #DCE1EE;padding:14px 0px 14px"><p style="font-size:24px;line-height:1.35;font-weight:400;color:#0C0A2E">Cofundadora e CRO da Grou</p></div><div style="border-top:1px solid #DCE1EE;padding:14px 0px 14px"><p style="font-size:24px;line-height:1.35;font-weight:400;color:#0C0A2E">Conselheira da I Love My Job</p></div><div style="border-top:1px solid #DCE1EE;padding:14px 0px 14px"><p style="font-size:24px;line-height:1.35;font-weight:400;color:#0C0A2E">Curso de negociação em Harvard</p></div><div style="border-top:1px solid #DCE1EE;padding:14px 0px 14px"><p style="font-size:24px;line-height:1.35;font-weight:400;color:#0C0A2E">Conselho e diretoria do Fórum da Liberdade (IEE)</p></div><div style="border-top:1px solid #DCE1EE;padding:14px 0px 14px"><p style="font-size:24px;line-height:1.35;font-weight:400;color:#0C0A2E">CEO da Self Guru e Lumi</p></div><div style="border-top:1px solid #DCE1EE;padding:14px 0px 14px"><p style="font-size:24px;line-height:1.35;font-weight:400;color:#0C0A2E">Membro do G4 Club</p></div>
+</div>
+</div>
+<div class="rodape" style="left:880px;width:912px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">02 / 15</p></div>
+</section>
+<section id="porque">
+<p class="sobe rotulo" style="--i:0">Por que ela</p>
+<h2 class="sobe" style="--i:1;margin-top:28px;width:1300px;font-size:68px">Fala de gente com a régua de quem <span class="destaque">responde por receita.</span></h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:64px;margin-top:110px">
+<div class="coluna sobe" style="--i:2"><p class="num">01</p><h3>Psicologia</h3><p class="texto">Comportamento humano, neurociência e saúde mental com base científica, sem discurso de autoajuda.</p></div><div class="coluna sobe" style="--i:3"><p class="num">02</p><h3>Receita</h3><p class="texto">Como CRO da Grou, vive meta, funil e métrica. Liga o cuidado com as pessoas ao resultado do negócio.</p></div><div class="coluna sobe" style="--i:4"><p class="num">03</p><h3>Estrada</h3><p class="texto">Empreendeu, vendeu um negócio, viveu uma aquisição e senta em conselho. Fala do que viveu.</p></div>
+</div>
+<div class="rodape"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">03 / 15</p></div>
+</section>
+<section id="palcos" class="escuro">
+<p class="sobe rotulo" style="--i:0">Onde ela já falou</p>
+<h2 class="sobe" style="--i:1;margin-top:28px;color:#FFFFFF">Palcos de RH, vendas e gestão.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px 40px;margin-top:64px">
+<div class="surge" style="--i:2;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px" src="img/rd-summit-palco.webp" alt="Carolina no palco do RD Summit"><p class="rod" style="color:#C3CAE0">RD Summit</p></div><div class="surge" style="--i:3;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px" src="img/rh-summit.webp" alt="Arte de divulgação de Carolina no RH Summit"><p class="rod" style="color:#C3CAE0">RH Summit</p></div><div class="surge" style="--i:4;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px" src="img/amcham.webp" alt="Carolina palestrando na AMCHAM"><p class="rod" style="color:#C3CAE0">AMCHAM</p></div><div class="surge" style="--i:5;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px" src="img/hr-first.webp" alt="Carolina no palco do HR First"><p class="rod" style="color:#C3CAE0">HR First</p></div><div class="surge" style="--i:6;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px;object-position:50% 0%" src="img/c-summit.webp" alt="Arte do C Summit com Carolina Fuhrmeister e Mariana Uebel"><p class="rod" style="color:#C3CAE0">C Summit</p></div><div class="surge" style="--i:7;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px;object-position:50% 100%" src="img/g4-talks.webp" alt="Arte do G4 Talks sobre estratégias de talentos"><p class="rod" style="color:#C3CAE0">G4 Talks</p></div><div class="surge" style="--i:8;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px" src="img/carol-sales-sprint-sala.webp" alt="Carolina falando para a plateia do Sales Sprint"><p class="rod" style="color:#C3CAE0">Sales Sprint</p></div><div class="surge" style="--i:9;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:386px;height:206px;object-position:50% 31.562%" src="img/carol-palco-saude-mental.webp" alt="Carolina no palco do NR-1 Estratégica"><p class="rod" style="color:#C3CAE0">NR-1 Estratégica</p></div>
+</div>
+<div class="rodape"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">04 / 15</p></div>
+</section>
+<section id="citacao" class="escuro">
+<div class="sangra" style="left:0px;width:820px"><img class="foto-s" style="width:820px;height:1080px;object-position:50% 31.562%" src="img/carol-palco-saude-mental.webp" alt="Carolina no palco do NR-1 Estratégica, com o telão da palestra de saúde mental"></div>
+<svg style="position:absolute;left:560px;top:0px" width="260" height="1080" viewBox="0 0 260 1080" aria-label=""><defs><linearGradient id="v560" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#07033A" stop-opacity="0"/><stop offset="1" stop-color="#07033A" stop-opacity="1"/></linearGradient></defs><rect width="260" height="1080" fill="url(#v560)"/></svg>
+<div style="margin-left:832px;width:832px;display:flex;flex-direction:column;gap:40px;margin-top:150px">
+<div class="sobe fio" style="--i:0"></div>
+<p class="sobe" style="--i:1;font-size:62px;font-weight:300;line-height:1.25;letter-spacing:-1px;color:#FFFFFF">“Não se pode exigir criatividade de um cérebro <span class="destaque">ocupado em se proteger.</span>”</p>
+<div class="sobe" style="--i:2;display:flex;flex-direction:column;gap:10px"><p class="rotulo">Carolina Fuhrmeister</p><p class="texto">Na palestra Performance sustentável começa com saúde mental</p></div>
+</div>
+<div class="rodape" style="left:960px;width:832px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">05 / 15</p></div>
+</section>
+<section id="menu">
+<p class="sobe rotulo" style="--i:0">As palestras</p>
+<h2 class="sobe" style="--i:1;margin-top:28px">Seis palestras <span class="destaque">para o seu evento.</span></h2>
+<div class="surge" style="--i:2;position:absolute;left:0px;top:390px;width:1920px;height:560px;overflow:hidden"><div class="desliza" style="display:flex;gap:40px;padding-left:128px;width:5408px">
+<div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px;object-position:50% 31.562%" src="img/carol-palco-saude-mental.webp" alt="Carolina no palco do NR-1 Estratégica"><p class="rotulo" style="margin-top:8px">01</p><h3>Performance sustentável começa com saúde mental</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">RH, SESMT, lideranças e C-level</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/hr-first.webp" alt="Carolina no palco do HR First"><p class="rotulo" style="margin-top:8px">02</p><h3>O líder e a dimensão humana do resultado</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Gestores e programas de liderança</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/rd-summit-palco.webp" alt="Carolina no palco do RD Summit"><p class="rotulo" style="margin-top:8px">03</p><h3>Dados, pessoas e performance no C-level</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">CEOs, diretoria, conselhos e RH estratégico</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/amcham.webp" alt="Carolina palestrando na AMCHAM"><p class="rotulo" style="margin-top:8px">04</p><h3>Contratar e engajar quem você precisa</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Founders, gestores e times de recrutamento</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/carol-sales-sprint-sala.webp" alt="Carolina falando para a plateia do Sales Sprint"><p class="rotulo" style="margin-top:8px">05</p><h3>Vender é entender gente</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Times comerciais e lideranças de receita</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/carol-palco-led.webp" alt="Carolina em um palco com telão colorido"><p class="rotulo" style="margin-top:8px">06</p><h3>Equilibrista: carreira, família e saúde mental</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Convenções, SIPAT e eventos de encerramento</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px;object-position:50% 31.562%" src="img/carol-palco-saude-mental.webp" alt=""><p class="rotulo" style="margin-top:8px">01</p><h3>Performance sustentável começa com saúde mental</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">RH, SESMT, lideranças e C-level</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/hr-first.webp" alt=""><p class="rotulo" style="margin-top:8px">02</p><h3>O líder e a dimensão humana do resultado</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Gestores e programas de liderança</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/rd-summit-palco.webp" alt=""><p class="rotulo" style="margin-top:8px">03</p><h3>Dados, pessoas e performance no C-level</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">CEOs, diretoria, conselhos e RH estratégico</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/amcham.webp" alt=""><p class="rotulo" style="margin-top:8px">04</p><h3>Contratar e engajar quem você precisa</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Founders, gestores e times de recrutamento</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/carol-sales-sprint-sala.webp" alt=""><p class="rotulo" style="margin-top:8px">05</p><h3>Vender é entender gente</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Times comerciais e lideranças de receita</p></div><div style="width:400px;flex-shrink:0;display:flex;flex-direction:column;gap:14px"><img class="foto" style="width:400px;height:270px" src="img/carol-palco-led.webp" alt=""><p class="rotulo" style="margin-top:8px">06</p><h3>Equilibrista: carreira, família e saúde mental</h3><p style="font-size:24px;line-height:1.4;font-weight:300;color:#4A4D63">Convenções, SIPAT e eventos de encerramento</p></div>
+</div></div>
+<div class="rodape"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">06 / 15</p></div>
+</section>
+<section id="p1-saude-mental">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px;object-position:62% 50%" src="img/carol-palco-saude-mental.webp" alt="Carolina no palco do NR-1 Estratégica"></div>
+<div style="width:920px;display:flex;flex-direction:column;gap:26px">
+<p class="sobe rotulo" style="--i:0">Palestra 01 · NR-1 · Saúde mental</p>
+<h2 class="sobe" style="--i:1;font-size:58px">Performance sustentável começa com <span class="destaque">saúde mental</span></h2>
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+<div class="linha-item sobe" style="--i:2"><p class="mini">01</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">A NR-1 como ganho, não como custo</h3><p class="texto" style="font-size:24px;line-height:1.45">Como mostrar o ganho invisível de incluir os riscos psicossociais na gestão.</p></div></div><div class="linha-item sobe" style="--i:3"><p class="mini">02</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Por que a pressão derruba a performance</h3><p class="texto" style="font-size:24px;line-height:1.45">O sistema de alarme do cérebro: sob ameaça, raciocínio, criatividade e autoeficácia caem.</p></div></div><div class="linha-item sobe" style="--i:4"><p class="mini">03</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">De quem é a responsabilidade</h3><p class="texto" style="font-size:24px;line-height:1.45">O papel da empresa, do indivíduo e da liderança, com dados da McKinsey e da Gallup.</p></div></div>
+</div>
+<div class="sobe" style="--i:5;display:flex;gap:28px;align-items:baseline;margin-top:10px"><p class="rotulo" style="width:200px;flex-shrink:0">Para quem</p><p class="texto" style="font-size:24px;width:690px">RH, SESMT, lideranças e C-level de empresas que estão se adequando à NR-1.</p></div>
+</div>
+<div class="rodape" style="left:128px;width:920px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">07 / 15</p></div>
+</section>
+<section id="p2-lideranca">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px;object-position:45% 50%" src="img/hr-first.webp" alt="Carolina no palco do HR First"></div>
+<div style="width:920px;display:flex;flex-direction:column;gap:26px">
+<p class="sobe rotulo" style="--i:0">Palestra 02 · Liderança</p>
+<h2 class="sobe" style="--i:1;font-size:58px">O líder e a dimensão <span class="destaque">humana do resultado</span></h2>
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+<div class="linha-item sobe" style="--i:2"><p class="mini">01</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">O peso do gestor no engajamento</h3><p class="texto" style="font-size:24px;line-height:1.45">70% da variação do engajamento das equipes pode ser atribuída ao gestor (Gallup, 2025).</p></div></div><div class="linha-item sobe" style="--i:3"><p class="mini">02</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Acolher sem invadir</h3><p class="texto" style="font-size:24px;line-height:1.45">Reconhecer sinais de sofrimento, orientar sem diagnosticar e encaminhar quando necessário.</p></div></div><div class="linha-item sobe" style="--i:4"><p class="mini">03</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Cuidar de quem cuida</h3><p class="texto" style="font-size:24px;line-height:1.45">Por que um líder esgotado não sustenta um time saudável, e o que a empresa precisa oferecer.</p></div></div>
+</div>
+<div class="sobe" style="--i:5;display:flex;gap:28px;align-items:baseline;margin-top:10px"><p class="rotulo" style="width:200px;flex-shrink:0">Para quem</p><p class="texto" style="font-size:24px;width:690px">Gestores, coordenadores e programas de desenvolvimento de lideranças.</p></div>
+</div>
+<div class="rodape" style="left:128px;width:920px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">08 / 15</p></div>
+</section>
+<section id="p3-c-level">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px;object-position:30% 50%" src="img/rd-summit-palco.webp" alt="Carolina no palco do RD Summit, ao lado de um telão sobre transformar dados em resultados"></div>
+<div style="width:920px;display:flex;flex-direction:column;gap:26px">
+<p class="sobe rotulo" style="--i:0">Palestra 03 · Gestão comportamental</p>
+<h2 class="sobe" style="--i:1;font-size:58px">Dados, pessoas e performance: <span class="destaque">o papel do C-level</span></h2>
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+<div class="linha-item sobe" style="--i:2"><p class="mini">01</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Comportamento também é dado</h3><p class="texto" style="font-size:24px;line-height:1.45">Usar avaliações comportamentais para decidir sobre gente com a mesma régua das decisões de negócio.</p></div></div><div class="linha-item sobe" style="--i:3"><p class="mini">02</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Cultura começa no topo</h3><p class="texto" style="font-size:24px;line-height:1.45">O que a diretoria sinaliza, sem perceber, sobre erro, segurança e desempenho.</p></div></div><div class="linha-item sobe" style="--i:4"><p class="mini">03</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Do indicador à conversa</h3><p class="texto" style="font-size:24px;line-height:1.45">Como transformar dados de pessoas em ações de liderança e resultado de valor.</p></div></div>
+</div>
+<div class="sobe" style="--i:5;display:flex;gap:28px;align-items:baseline;margin-top:10px"><p class="rotulo" style="width:200px;flex-shrink:0">Para quem</p><p class="texto" style="font-size:24px;width:690px">CEOs, diretoria, conselhos e RH estratégico.</p></div>
+</div>
+<div class="rodape" style="left:128px;width:920px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">09 / 15</p></div>
+</section>
+<section id="p4-talentos">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px;object-position:60% 50%" src="img/amcham.webp" alt="Carolina palestrando na AMCHAM"></div>
+<div style="width:920px;display:flex;flex-direction:column;gap:26px">
+<p class="sobe rotulo" style="--i:0">Palestra 04 · Talentos</p>
+<h2 class="sobe" style="--i:1;font-size:58px">Contratar e engajar <span class="destaque">quem você precisa</span></h2>
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+<div class="linha-item sobe" style="--i:2"><p class="mini">01</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Contratar por comportamento</h3><p class="texto" style="font-size:24px;line-height:1.45">Desenhar o perfil da vaga e avaliar o encaixe comportamental, além do currículo.</p></div></div><div class="linha-item sobe" style="--i:3"><p class="mini">02</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Engajar desde o primeiro dia</h3><p class="texto" style="font-size:24px;line-height:1.45">Integração e liderança próxima como fatores de retenção.</p></div></div><div class="linha-item sobe" style="--i:4"><p class="mini">03</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Errou na contratação? Aja cedo</h3><p class="texto" style="font-size:24px;line-height:1.45">Os sinais de desalinhamento e o que fazer antes de perder a pessoa, ou o resultado.</p></div></div>
+</div>
+<div class="sobe" style="--i:5;display:flex;gap:28px;align-items:baseline;margin-top:10px"><p class="rotulo" style="width:200px;flex-shrink:0">Para quem</p><p class="texto" style="font-size:24px;width:690px">Founders, gestores que contratam e times de RH e recrutamento.</p></div>
+</div>
+<div class="rodape" style="left:128px;width:920px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">10 / 15</p></div>
+</section>
+<section id="p5-vendas">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px" src="img/carol-sales-sprint-perfil.webp" alt="Carolina de perfil, com microfone, no Sales Sprint"></div>
+<div style="width:920px;display:flex;flex-direction:column;gap:26px">
+<p class="sobe rotulo" style="--i:0">Palestra 05 · Vendas</p>
+<h2 class="sobe" style="--i:1;font-size:58px">Vender é <span class="destaque">entender gente</span></h2>
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+<div class="linha-item sobe" style="--i:2"><p class="mini">01</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">O perfil certo em cada etapa</h3><p class="texto" style="font-size:24px;line-height:1.45">Pré-vendas, fechamento, sucesso do cliente e gestão comercial pedem perfis diferentes.</p></div></div><div class="linha-item sobe" style="--i:3"><p class="mini">02</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Máquina de vendas com gente dentro</h3><p class="texto" style="font-size:24px;line-height:1.45">Métrica, rotina e liderança, na visão de quem estruturou a área comercial da Grou como CRO.</p></div></div><div class="linha-item sobe" style="--i:4"><p class="mini">03</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Ler o cliente para negociar melhor</h3><p class="texto" style="font-size:24px;line-height:1.45">Comportamento do comprador e técnicas de negociação, com o que ela aprendeu em Harvard.</p></div></div>
+</div>
+<div class="sobe" style="--i:5;display:flex;gap:28px;align-items:baseline;margin-top:10px"><p class="rotulo" style="width:200px;flex-shrink:0">Para quem</p><p class="texto" style="font-size:24px;width:690px">Times comerciais, gestores de vendas e lideranças de receita.</p></div>
+</div>
+<div class="rodape" style="left:128px;width:920px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">11 / 15</p></div>
+</section>
+<section id="p6-equilibrista">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px;object-position:48% 50%" src="img/carol-palco-led.webp" alt="Carolina em um palco com telão colorido"></div>
+<div style="width:920px;display:flex;flex-direction:column;gap:26px">
+<p class="sobe rotulo" style="--i:0">Palestra 06 · Inspiração</p>
+<h2 class="sobe" style="--i:1;font-size:58px">Equilibrista: carreira, <span class="destaque">família e saúde mental</span></h2>
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+<div class="linha-item sobe" style="--i:2"><p class="mini">01</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Coragem para começar e recomeçar</h3><p class="texto" style="font-size:24px;line-height:1.45">Da primeira loja ao conselho de empresa: o que ela aprendeu empreendendo e se reinventando.</p></div></div><div class="linha-item sobe" style="--i:3"><p class="mini">02</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Autocuidado é responsabilidade</h3><p class="texto" style="font-size:24px;line-height:1.45">Autoconhecimento, limites e hábitos para sustentar uma carreira de alta exigência.</p></div></div><div class="linha-item sobe" style="--i:4"><p class="mini">03</p><div style="display:flex;flex-direction:column;gap:4px;width:840px"><h3 style="font-size:28px">Equilíbrio possível, não perfeito</h3><p class="texto" style="font-size:24px;line-height:1.45">Conciliar empresa, filhos, saúde e propósito sem fingir que é fácil.</p></div></div>
+</div>
+<div class="sobe" style="--i:5;display:flex;gap:28px;align-items:baseline;margin-top:10px"><p class="rotulo" style="width:200px;flex-shrink:0">Para quem</p><p class="texto" style="font-size:24px;width:690px">Convenções, encontros de liderança, semana da mulher, SIPAT e eventos de encerramento.</p></div>
+</div>
+<div class="rodape" style="left:128px;width:920px"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">12 / 15</p></div>
+</section>
+<section id="formatos" class="escuro">
+<p class="sobe rotulo" style="--i:0">Formatos</p>
+<h2 class="sobe" style="--i:1;margin-top:28px;color:#FFFFFF">Do palco ao <span class="destaque">programa de liderança.</span></h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:48px;margin-top:100px">
+<div class="coluna sobe" style="--i:2"><p class="num">01</p><h3 style="color:#FFFFFF">Keynote</h3><p class="rotulo" style="letter-spacing:2px">45 a 60 min</p><p class="texto" style="font-size:24px">Palestra de abertura ou encerramento, para plateias de qualquer tamanho.</p></div><div class="coluna sobe" style="--i:3"><p class="num">02</p><h3 style="color:#FFFFFF">Talk e painel</h3><p class="rotulo" style="letter-spacing:2px">30 a 90 min</p><p class="texto" style="font-size:24px">Conversa com mediação e perguntas do público.</p></div><div class="coluna sobe" style="--i:4"><p class="num">03</p><h3 style="color:#FFFFFF">Workshop</h3><p class="rotulo" style="letter-spacing:2px">3 a 4 h</p><p class="texto" style="font-size:24px">Para lideranças: casos reais, prática e plano de ação.</p></div><div class="coluna sobe" style="--i:5"><p class="num">04</p><h3 style="color:#FFFFFF">Jornada in-company</h3><p class="rotulo" style="letter-spacing:2px">Sob medida</p><p class="texto" style="font-size:24px">Palestra, workshop e diagnóstico comportamental do time com as ferramentas da Grou.</p></div>
+</div>
+<p class="sobe texto" style="--i:6;margin-top:64px;font-size:24px">Presencial ou online. Todos os temas podem ser adaptados ao formato e ao momento da empresa.</p>
+<div class="rodape"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">13 / 15</p></div>
+</section>
+<section id="como-contratar">
+<p class="sobe rotulo" style="--i:0">Como contratar</p>
+<h2 class="sobe" style="--i:1;margin-top:28px">Quatro passos <span class="destaque">até o palco.</span></h2>
+<svg class="surge" style="--i:2;position:absolute;left:128px;top:404px" width="1664" height="24" viewBox="0 0 1664 24" aria-label=""><line x1="6" y1="12" x2="1658" y2="12" stroke="#0C0A2E" stroke-opacity="0.14" stroke-width="2"/><line x1="6" y1="12" x2="1658" y2="12" stroke="#0F8778" stroke-width="2" stroke-dasharray="1652" stroke-dashoffset="0"><animate attributeName="stroke-dashoffset" from="1652" to="0" dur="2s" begin="0.3s" repeatCount="1"/></line><circle cx="6" cy="12" r="6" fill="#0F8778"/><circle cx="434" cy="12" r="6" fill="#0F8778"/><circle cx="862" cy="12" r="6" fill="#0F8778"/><circle cx="1290" cy="12" r="6" fill="#0F8778"/></svg>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:48px;margin-top:176px">
+<div class="sobe" style="--i:3;display:flex;flex-direction:column;gap:14px"><p class="num">01</p><h3>Briefing</h3><p class="texto" style="font-size:24px">Conversa com quem contrata: objetivo do evento, público e momento da empresa.</p></div><div class="sobe" style="--i:4;display:flex;flex-direction:column;gap:14px"><p class="num">02</p><h3>Proposta</h3><p class="texto" style="font-size:24px">Tema, formato, data e investimento, logo depois do briefing.</p></div><div class="sobe" style="--i:5;display:flex;flex-direction:column;gap:14px"><p class="num">03</p><h3>Conteúdo sob medida</h3><p class="texto" style="font-size:24px">Exemplos e dados do seu setor, com alinhamento final antes do evento.</p></div><div class="sobe" style="--i:6;display:flex;flex-direction:column;gap:14px"><p class="num">04</p><h3>Depois do palco</h3><p class="texto" style="font-size:24px">Material de apoio para os participantes e conversa de devolutiva com quem contratou.</p></div>
+</div>
+<div class="sobe" style="--i:8;margin-top:64px;border-top:1px solid #DCE1EE;padding-top:28px;display:flex;gap:28px;align-items:baseline"><p class="rotulo" style="width:240px;flex-shrink:0">Investimento</p><p class="texto">Sob consulta, conforme tema, formato, duração e local.</p></div>
+<div class="rodape"><p class="rod">Carolina Fuhrmeister · Palestras</p><p class="rod">14 / 15</p></div>
+</section>
+<section id="contato" class="escuro">
+<div class="sangra" style="left:1180px;width:740px"><img class="foto-s" style="width:740px;height:1080px" src="img/carol-sales-sprint-perfil.webp" alt="Carolina Fuhrmeister falando ao microfone"></div>
+<svg style="position:absolute;left:1180px;top:0px" width="300" height="1080" viewBox="0 0 300 1080" aria-label=""><defs><linearGradient id="v1180" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#07033A" stop-opacity="1"/><stop offset="1" stop-color="#07033A" stop-opacity="0"/></linearGradient></defs><rect width="300" height="1080" fill="url(#v1180)"/></svg>
+<div style="width:960px;display:flex;flex-direction:column;gap:32px;margin-top:40px">
+<p class="sobe rotulo" style="--i:0">Vamos conversar</p>
+<h2 class="sobe" style="--i:1;font-size:76px;color:#FFFFFF">Vamos colocar a Carolina <span class="destaque">no seu palco?</span></h2>
+<div style="display:flex;flex-direction:column;margin-top:24px;width:880px">
+<div class="linha-item sobe" style="--i:2;padding:18px 0px 18px;align-items:baseline"><p class="rotulo" style="width:220px;flex-shrink:0;letter-spacing:3px">LinkedIn</p><p style="font-size:28px;font-weight:300;color:#FFFFFF">br.linkedin.com/in/carolinafuhrmeister-grou</p></div><div class="linha-item sobe" style="--i:3;padding:18px 0px 18px;align-items:baseline"><p class="rotulo" style="width:220px;flex-shrink:0;letter-spacing:3px">Instagram</p><p style="font-size:28px;font-weight:300;color:#FFFFFF">@carolinafuhrmeister</p></div><div class="linha-item sobe" style="--i:4;padding:18px 0px 18px;align-items:baseline"><p class="rotulo" style="width:220px;flex-shrink:0;letter-spacing:3px">Site</p><p style="font-size:28px;font-weight:300;color:#FFFFFF">grougp.com</p></div>
+</div>
+</div>
+<img class="surge" style="position:absolute;left:128px;top:892px;width:140px;height:60px;--i:6" src="img/grou-logo-claro.svg" alt="Grou">
+</section>
+</div>
+</main>
+<nav id="controles" aria-label="Navegação dos slides">
+<button id="ant" aria-label="Slide anterior">&#8592;</button>
+<button id="prox" aria-label="Próximo slide">&#8594;</button>
+<button id="tela" aria-label="Tela cheia">&#x26F6;</button>
+</nav>
+<script>
+(function(){
+var trilho=document.getElementById('trilho'),secs=[].slice.call(trilho.children),n=secs.length,atual=0;
+var barra=document.getElementById('barra');
+function empilhado(){return window.innerWidth/window.innerHeight<1.0}
+function reinicia(s){s.querySelectorAll('svg').forEach(function(v){try{v.setCurrentTime(0)}catch(e){}});}
+function vai(i,semHash){
+  i=Math.max(0,Math.min(n-1,i));
+  secs[atual].classList.remove('ativo');atual=i;secs[i].classList.add('ativo');reinicia(secs[i]);
+  barra.style.width=((i+1)/n*100)+'%';
+  if(!semHash) history.replaceState(null,'','#'+(i+1));
+}
+function ajusta(){
+  var e=empilhado();document.body.classList.toggle('empilhado',e);
+  if(e){
+    var k=window.innerWidth/1920;trilho.style.transform='scale('+k+')';
+    secs.forEach(function(s,j){s.style.top=(j*1100)+'px'});
+    trilho.style.height=(n*1100)+'px';document.getElementById('palco').style.height=(n*1100*k)+'px';
+  }else{
+    var k2=Math.min(window.innerWidth/1920,window.innerHeight/1080);trilho.style.transform='scale('+k2+')';
+    secs.forEach(function(s){s.style.top='';s.classList.remove('pausado')});trilho.style.height='';document.getElementById('palco').style.height='';
+  }
+}
+var obs=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('pausado');reinicia(en.target)}})},{threshold:0.35}):null;
+function prepEmpilhado(){if(empilhado()&&obs){secs.forEach(function(s){s.classList.add('pausado');obs.observe(s)})}}
+var h=parseInt((location.hash||'').slice(1),10);vai(isNaN(h)?0:h-1,true);ajusta();prepEmpilhado();
+var eraEmp=empilhado();
+window.addEventListener('resize',function(){var e=empilhado();ajusta();if(e&&!eraEmp)prepEmpilhado();eraEmp=e;});
+document.getElementById('ant').onclick=function(){vai(atual-1)};
+document.getElementById('prox').onclick=function(){vai(atual+1)};
+document.getElementById('tela').onclick=function(){var d=document.documentElement;if(!document.fullscreenElement){(d.requestFullscreen||d.webkitRequestFullscreen||function(){}).call(d)}else{document.exitFullscreen&&document.exitFullscreen()}};
+document.addEventListener('keydown',function(e){if(empilhado())return;
+  if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();vai(atual+1)}
+  else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();vai(atual-1)}
+  else if(e.key==='Home')vai(0);else if(e.key==='End')vai(n-1);else if(e.key==='f'||e.key==='F')document.getElementById('tela').click();});
+var x0=null;document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',function(e){if(x0===null||empilhado())return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)vai(atual+(dx<0?1:-1));x0=null});
+var ctl=document.getElementById('controles'),t0=null;function mostra(){ctl.classList.remove('oculto');clearTimeout(t0);t0=setTimeout(function(){if(!ctl.contains(document.activeElement)&&!ctl.matches(':hover'))ctl.classList.add('oculto')},2600)}
+['mousemove','touchstart','keydown'].forEach(function(ev){document.addEventListener(ev,mostra,{passive:true})});mostra();
+trilho.addEventListener('click',function(e){if(empilhado()||e.target.closest('a'))return;vai(atual+(e.clientX>window.innerWidth/2?1:-1))});
+})();
+</script>
+</body>
+</html>

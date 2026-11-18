@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<base href="/mariana-uebel/aula-g4/">
+<meta name="grou-envio" content="/mariana-uebel/aula-g4/enviar/">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liderança sob pressão · Mariana Uebel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: coluna editorial em azul-noite, como os slides da aula; capítulos seguem a ordem da aula; dourado só para o que importa */
+:root{
+  --ink:#04060F;
+  --navy:#001F35;
+  --navy-2:#06294A;
+  --card-a:#0B3B66;
+  --card-b:#072B4C;
+  --gold:#B9915B;
+  --gold-soft:#D8B888;
+  --paper:#F2F0ED;
+  --muted:rgba(242,240,237,.66);
+  --faint:rgba(242,240,237,.38);
+  --line:rgba(185,145,91,.38);
+  --hair:rgba(242,240,237,.12);
+  --display:"Libre Baskerville",Georgia,"Times New Roman",serif;
+  --body:"Manrope","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+img,video{max-width:100%;display:block}
+a{color:var(--gold-soft)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.narrow{max-width:720px}
+
+/* barra de progresso */
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:3px;z-index:20;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft))}
+
+/* rótulos */
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--paper);font-weight:800}
+.chapter{display:flex;align-items:center;gap:14px;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.chapter::after{content:"";flex:1;height:1px;background:var(--line);max-width:160px}
+
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.8rem,4.2vw,2.7rem);line-height:1.18}
+h3{font-size:1.25rem;line-height:1.3}
+p{margin:0}
+.lead{font-size:1.12rem;color:var(--muted);max-width:60ch}
+em.g,.g{color:var(--gold-soft);font-style:italic;font-family:var(--display)}
+
+section{padding-block:clamp(64px,10vw,112px);position:relative}
+section + section{border-top:1px solid var(--hair)}
+.stack{display:flex;flex-direction:column;gap:22px}
+
+/* HERO */
+.hero{padding-block:0;border:0;overflow:hidden;background:var(--navy)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;min-height:560px}
+.hero-text{position:relative;z-index:2;padding-block:72px 56px;display:flex;flex-direction:column;justify-content:center;gap:26px}
+.hero h1{font-size:clamp(2.3rem,5.6vw,4rem);line-height:1.06;text-transform:uppercase;letter-spacing:.01em}
+.hero h1 span{display:block;font-size:.42em;line-height:1.35;letter-spacing:.04em;color:var(--gold-soft);margin-top:18px;text-transform:none;font-style:italic}
+.rule{height:1px;background:var(--line);width:100%}
+.byline{display:flex;align-items:center;gap:14px}
+.byline img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 22%;border:1px solid var(--line)}
+.byline strong{display:block;font-weight:700}
+.byline small{color:var(--muted);font-size:.86rem}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.82rem;color:var(--faint)}
+.hero-photo{position:relative;min-height:320px}
+.hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 30%}
+.hero-photo::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--navy) 0%,rgba(0,31,53,.4) 14%,rgba(0,31,53,0) 32%)}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5}
+
+/* resumo 30s */
+.tldr{background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:28px clamp(20px,4vw,40px);display:grid;grid-template-columns:auto 1fr;gap:20px 36px;align-items:start;margin-top:clamp(48px,7vw,80px)}
+.tldr .eyebrow{color:var(--gold)}
+.tldr ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tldr li{font-family:var(--display);font-size:1.12rem;line-height:1.35}
+.tldr li small{display:block;font-family:var(--body);font-size:.82rem;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* citações */
+.quote{font-family:var(--display);font-size:clamp(1.6rem,3.8vw,2.5rem);line-height:1.28;text-wrap:balance}
+.quote::before{content:"“";display:block;font-size:2.6em;line-height:1;color:var(--gold);height:.5em;margin-top:.1em}
+.quote cite{display:block;font-family:var(--body);font-style:normal;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+.pull{border-left:2px solid var(--gold);padding:4px 0 4px 20px;font-family:var(--display);font-style:italic;font-size:1.2rem;line-height:1.45;color:var(--gold-soft);max-width:46ch}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.two > *{min-width:0}
+
+/* card do caso */
+.case{background:linear-gradient(160deg,var(--card-a),var(--card-b));border:1px solid rgba(216,184,136,.25);border-radius:16px;padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:16px}
+.case .time{font-family:var(--display);font-size:2.6rem;color:var(--gold);line-height:1}
+.case p{font-size:1.05rem}
+.vote{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vote button{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;padding:14px 16px;border:1px solid var(--hair);border-radius:10px;background:rgba(4,6,15,.35);font-size:.95rem;line-height:1.35;transition:border-color .2s,background .2s}
+.vote button b{font-family:var(--display);color:var(--gold);font-size:1.15rem;font-weight:400}
+.vote button:hover{border-color:var(--line)}
+.vote button[aria-pressed="true"]{border-color:var(--gold);background:rgba(185,145,91,.14)}
+.case .hint{font-size:.68rem}
+.reveal{border-top:1px solid var(--line);padding-top:16px;color:var(--muted)}
+.reveal strong{color:var(--paper)}
+
+/* cadeia situação -> resposta */
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
+.toggle button{all:unset;cursor:pointer;padding:8px 16px;border-radius:999px;font-size:.88rem;font-weight:600;color:var(--muted)}
+.toggle button[aria-pressed="true"]{background:var(--gold);color:var(--ink)}
+.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:8px;counter-reset:c}
+.chain > div{position:relative;padding:22px 20px 22px 0;border-top:1px solid var(--line);min-width:0}
+.chain > div::before{counter-increment:c;content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(185,145,91,.18)}
+.chain span{display:block;font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.chain p{font-family:var(--display);font-size:1.08rem;line-height:1.4;transition:opacity .25s}
+.chain .hl p{color:var(--gold-soft)}
+.side-note{display:flex;gap:16px;align-items:flex-start;background:rgba(0,31,53,.6);border:1px solid var(--hair);border-radius:12px;padding:18px 20px;font-size:.95rem;color:var(--muted)}
+.side-note b{color:var(--paper)}
+.side-note .tag{flex:none;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);padding-top:3px}
+
+/* indicadores de interação */
+.hint{display:inline-flex;align-items:center;gap:9px;width:fit-content;font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-soft);background:rgba(185,145,91,.1);border:1px dashed rgba(216,184,136,.5);border-radius:999px;padding:6px 14px 6px 10px}
+.hint i,.legend i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.hint i{animation:ping 1.8s ease-out infinite}
+.hint.done{color:var(--faint);border-color:var(--hair);background:transparent}
+.hint.done i{animation:none;background:var(--faint)}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(216,184,136,.7)}80%,100%{box-shadow:0 0 0 10px rgba(216,184,136,0)}}
+.legend{display:inline-flex;align-items:center;gap:8px;color:var(--gold-soft)}
+.phone{position:relative}
+.play{all:unset;cursor:pointer;position:absolute;left:50%;top:74%;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;background:var(--gold);display:grid;place-items:center;box-shadow:0 0 0 0 rgba(216,184,136,.6),0 10px 30px rgba(0,0,0,.5);animation:ping 2.2s ease-out infinite;transition:transform .2s}
+.play::before{content:"";margin-left:5px;border-left:18px solid var(--ink);border-top:11px solid transparent;border-bottom:11px solid transparent}
+.play:hover{transform:translate(-50%,-50%) scale(1.08)}
+.play span{position:absolute;top:calc(100% + 10px);white-space:nowrap;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);text-shadow:0 1px 6px rgba(0,0,0,.8)}
+@media (prefers-reduced-motion:reduce){.hint i,.play{animation:none}}
+
+/* vídeo vertical */
+.clip{display:grid;grid-template-columns:270px minmax(0,500px);justify-content:center;gap:clamp(28px,5vw,64px);align-items:center;max-width:900px;margin-inline:auto}
+.clip > *{min-width:0}
+.clip h3.say{font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.32}
+.clip h3.say::before{content:"“";color:var(--gold)}
+.clip h3.say::after{content:"”";color:var(--gold)}
+.ctx{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--hair);padding-top:16px}
+.ctx span{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.ctx p{color:var(--muted);font-size:1rem}
+.ctx strong{color:var(--paper);font-weight:600}
+.asks{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px}
+.asks li{font-family:var(--display);font-size:1.05rem;padding-left:22px;position:relative}
+.asks li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:1px;background:var(--gold)}
+.phone{width:min(270px,100%);aspect-ratio:9/16;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--navy);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.phone video{width:100%;height:100%;object-fit:cover}
+.clip-label{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px}
+.clip-label::before{content:"";width:0;height:0;border-left:8px solid var(--gold);border-top:5px solid transparent;border-bottom:5px solid transparent}
+
+/* emoções */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:14px;overflow:hidden}
+.facts div{background:var(--ink);padding:24px 22px;display:flex;flex-direction:column;gap:8px}
+.facts b{font-family:var(--display);font-weight:400;font-size:1.15rem}
+.facts span{color:var(--muted);font-size:.93rem}
+
+/* duas frases */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.versus div{border-radius:14px;padding:22px;border:1px solid var(--hair);display:flex;flex-direction:column;gap:10px;min-width:0}
+.versus .bad{background:rgba(242,240,237,.03)}
+.versus .bad p{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(185,145,91,.6)}
+.versus .good{background:linear-gradient(160deg,var(--card-a),var(--card-b));border-color:rgba(216,184,136,.3)}
+.versus span{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.versus .good span{color:var(--gold)}
+.versus p{font-family:var(--display);font-size:1.15rem;line-height:1.4}
+
+/* números */
+.numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)}
+.num{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:18px}
+.num strong{font-family:var(--display);font-weight:400;font-size:clamp(3rem,7vw,4.6rem);line-height:1;color:var(--gold)}
+.num p{font-family:var(--display);font-size:1.05rem;line-height:1.35}
+.num small{color:var(--faint);font-size:.78rem;line-height:1.45}
+.band{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:21/8;max-width:100%}
+.band img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.band figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 22px 16px;font-size:.8rem;color:var(--muted);background:linear-gradient(0deg,rgba(4,6,15,.9),transparent)}
+
+/* PARE */
+.pare{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pare div{background:linear-gradient(170deg,#0D4677,var(--card-b));border:1px solid rgba(216,184,136,.22);border-radius:14px;padding:26px 16px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;transition:transform .25s,border-color .25s}
+.pare div:hover{transform:translateY(-4px);border-color:var(--gold)}
+.pare b{font-family:var(--display);font-weight:400;font-size:clamp(3rem,7vw,4.4rem);line-height:1;color:var(--gold)}
+.pare b::after{content:"";display:block;width:28px;height:1px;background:var(--line);margin:14px auto 0}
+.pare h3{font-size:1.15rem}
+.pare p{font-size:.88rem;color:var(--muted);line-height:1.4}
+
+/* virada */
+.virada{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(28px,5vw,64px);align-items:center}
+.virada > *{min-width:0}
+.virada figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;max-width:100%}
+.virada figure img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.answer{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+.answer b{font-family:var(--display);font-weight:400;font-size:1.6rem}
+.answer b.no{color:var(--gold)}
+.def{background:var(--navy);border:1px solid var(--hair);border-radius:14px;padding:clamp(22px,4vw,34px);display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.def > div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.def span{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.def .is span{color:var(--gold)}
+.def .isnt span{color:var(--faint)}
+.def p{font-family:var(--display);font-size:1.12rem;line-height:1.4}
+.def .isnt p{color:var(--muted)}
+
+/* mapa */
+.map{display:grid;gap:12px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;background:rgba(0,31,53,.55);border:1px solid var(--hair);border-radius:12px;padding:16px 18px}
+.step > div{min-width:0}
+.step i{font-style:normal;font-family:var(--display);font-size:1.5rem;color:var(--gold);line-height:1.2}
+.step label{display:block;font-weight:700;margin-bottom:4px}
+.step small{display:block;color:var(--faint);font-size:.82rem;margin-bottom:10px}
+.step textarea{width:100%;min-height:52px;resize:vertical;background:rgba(4,6,15,.5);border:1px solid var(--hair);border-radius:8px;color:var(--paper);font:inherit;font-size:.95rem;padding:10px 12px}
+.step textarea:focus{outline:none;border-color:var(--gold)}
+.step textarea::placeholder{color:var(--faint)}
+.saved{font-size:.8rem;color:var(--faint);min-height:1.2em}
+.send{display:flex;flex-direction:column;gap:14px;margin-top:8px;padding:20px;border:1px solid var(--line);border-radius:12px;background:rgba(185,145,91,.06)}
+.notice{font-size:.92rem;color:var(--muted);line-height:1.55}
+.notice b{color:var(--paper)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fields > div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fields label{font-size:.85rem;font-weight:700}
+.fields label span{font-weight:400;color:var(--faint)}
+.fields input{background:rgba(4,6,15,.5);border:1px solid var(--hair);border-radius:8px;color:var(--paper);font:inherit;font-size:.95rem;padding:10px 12px;width:100%}
+.fields input:focus{outline:none;border-color:var(--gold)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--muted);cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--gold);width:16px;height:16px;flex:none}
+.trap{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.send-row{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.send-row .btn{border:0;cursor:pointer;font-family:inherit}
+.send-row .btn[disabled]{opacity:.6;cursor:wait}
+.status{font-size:.9rem;color:var(--muted)}
+.status.ok{color:var(--gold-soft)}
+.status.err{color:#F2A08F}
+@media (max-width:620px){.fields{grid-template-columns:1fr}}
+
+/* mural de frases */
+.wall{columns:3 260px;column-gap:16px}
+.wall blockquote{break-inside:avoid;margin:0 0 16px;padding:22px;border:1px solid var(--hair);border-radius:14px;background:rgba(0,31,53,.5);font-family:var(--display);font-size:1.08rem;line-height:1.45}
+.wall blockquote:nth-child(3n+2){background:linear-gradient(160deg,var(--card-a),var(--card-b));border-color:rgba(216,184,136,.25)}
+.wall blockquote small{display:block;margin-top:12px;font-family:var(--body);font-size:.78rem;color:var(--faint);line-height:1.4}
+
+/* final */
+.final{background:var(--navy);border-top:0;overflow:hidden}
+.final .quote{font-size:clamp(1.8rem,4.6vw,3rem);max-width:22ch}
+.cta{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center;border-top:1px solid var(--line);padding-top:26px}
+.cta p{color:var(--muted);max-width:52ch;font-size:.98rem}
+.cta strong{color:var(--paper)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:var(--gold);color:var(--ink);font-weight:800;font-size:.95rem;letter-spacing:.02em;text-decoration:none;transition:background .2s,transform .2s}
+.btn::after{content:"→";font-size:1.1em}
+.btn:hover{background:var(--gold-soft);transform:translateY(-2px)}
+footer{padding-block:36px;color:var(--faint);font-size:.8rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+
+/* entrada suave (estado visível por padrão) */
+@media (prefers-reduced-motion:no-preference){
+  .js .fx{transition:opacity .7s ease,transform .7s ease}
+  .js .fx.pending{opacity:.001;transform:translateY(18px)}
+}
+
+/* responsivo */
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr;min-height:0}
+  .hero-photo{order:-1;min-height:0;aspect-ratio:4/3}
+  .hero-photo::before{background:linear-gradient(0deg,var(--navy) 0%,rgba(0,31,53,0) 45%)}
+  .hero-text{padding-block:8px 48px}
+  .tldr{grid-template-columns:1fr}
+  .tldr ol{grid-template-columns:1fr}
+  .two,.virada{grid-template-columns:1fr}
+  .virada figure{aspect-ratio:4/3}
+  .chain{grid-template-columns:1fr 1fr;row-gap:8px}
+  .numbers{grid-template-columns:1fr}
+  .pare{grid-template-columns:1fr 1fr}
+  .facts{grid-template-columns:1fr}
+  .band{aspect-ratio:16/9}
+}
+@media (min-width:861px){.gruda{position:sticky;top:40px}}
+@media (max-width:620px){
+  body{font-size:16px}
+  section{padding-block:52px}
+  h2{font-size:1.7rem}
+  .quote{font-size:1.5rem}
+  .lead{font-size:1.02rem}
+  .hero-text{gap:20px}
+  .tldr{margin-top:40px;padding:22px 20px}
+  .clip{grid-template-columns:1fr;justify-items:center;gap:22px}
+  .clip > div:last-child{justify-self:stretch}
+  .phone{width:min(230px,72vw)}
+  .vote,.versus,.def{grid-template-columns:1fr}
+  .vote button{padding:13px 14px}
+  /* cadeia vira linha do tempo vertical, mais compacta */
+  .chain{grid-template-columns:1fr;row-gap:0;border-left:1px solid var(--line);margin-left:4px}
+  .chain > div{border-top:0;padding:4px 0 16px 20px}
+  .chain > div::before{top:9px;left:-5px}
+  .chain span{margin-bottom:2px}
+  /* exemplos rolam na horizontal em vez de empilhar numa pílula */
+  .toggle{flex-wrap:nowrap;overflow-x:auto;max-width:100%;border-radius:999px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .toggle::-webkit-scrollbar{display:none}
+  .toggle button{white-space:nowrap;flex:none}
+  .side-note{flex-direction:column;gap:6px;padding:16px 18px}
+  .numbers{gap:28px}
+  .pare{gap:10px}
+  .pare div{padding:20px 12px 18px}
+  .wall blockquote{padding:18px}
+  .band{aspect-ratio:4/3}
+  .virada figure{aspect-ratio:4/5}
+  .step{grid-template-columns:30px 1fr;gap:10px;padding:14px}
+  .send{padding:16px}
+  .send-row .btn{width:100%;justify-content:center}
+  .final .quote{font-size:1.7rem}
+  .cta .btn{width:100%;justify-content:center}
+}
+</style>
+
+<div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+<!-- HERO -->
+<header class="hero">
+  <svg class="hero-bg" viewBox="0 0 1080 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#B9915B" stroke-opacity=".18">
+      <circle cx="300" cy="300" r="250"/><circle cx="300" cy="300" r="190" stroke-dasharray="2 6"/>
+      <circle cx="300" cy="300" r="120"/>
+    </g>
+  </svg>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="eyebrow">G4 Traction · Aula presencial · 9 de novembro de 2026</div>
+      <div class="rule"></div>
+      <h1>Liderança sob pressão<span>Como o comportamento do dono impacta os resultados</span></h1>
+      <div class="rule"></div>
+      <div class="eyebrow">A psicologia por trás <b>das decisões de quem lidera</b></div>
+      <div class="byline">
+        <img src="midia/retrato.jpg" alt="Mariana Uebel">
+        <div><strong>Mariana Uebel</strong><small>Psicóloga, empresária há mais de 20 anos e CEO da GROU</small></div>
+      </div>
+      <div class="meta"><span>Leitura de 7 min</span><span>4 trechos em vídeo</span><span>1 exercício para fazer depois</span><span class="legend"><i></i>marca o que é interativo</span></div>
+    </div>
+    <div class="hero-photo"><img src="midia/capa.jpg" alt="Mariana Uebel no G4 Traction"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="tldr fx" aria-label="Resumo">
+    <div class="eyebrow">Se você só tem<br>30 segundos</div>
+    <ol>
+      <li>Emoção é informação.<small>Ela sempre comunica algo. O trabalho é decodificar, não julgar.</small></li>
+      <li>Interpretação não é fato.<small>A mesma situação leva a decisões opostas, dependendo da leitura que você faz.</small></li>
+      <li>Resposta é competência.<small>Dá para treinar. E o seu time aprende com cada reação sua.</small></li>
+    </ol>
+  </aside>
+</div>
+
+<main>
+
+<!-- 1. ABERTURA -->
+<section>
+  <div class="wrap two">
+    <div class="stack fx">
+      <div class="chapter">Abertura</div>
+      <p class="quote">Quem é você como líder quando as coisas não acontecem como gostaria?</p>
+    </div>
+    <div class="stack fx">
+      <p class="lead">Na teoria, todo mundo sabe como reagiria. É fácil ser equilibrado quando está tudo certo. A aula começa onde a teoria para: quando o cliente cancela, alguém erra ou uma decisão sua é questionada.</p>
+      <p class="pull">A maturidade aparece quando o comportamento é colocado à prova.</p>
+      <div class="side-note"><span class="tag">Por que agora</span><p>A atualização da <b>NR-1</b> passa a exigir a gestão de riscos psicossociais. Precisou de lei, como precisou para o cinto de segurança. Mas a pauta é cultura, não multa: <b>saúde mental é preditora de performance.</b></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. O CASO -->
+<section id="caso">
+  <div class="wrap two">
+    <div class="stack fx">
+      <div class="chapter">O caso</div>
+      <h2>Um erro. Um prejuízo. <em class="g">Uma decisão.</em></h2>
+      <p class="lead">Antes de qualquer conceito, uma cena. Escolha sua primeira reação, sem pensar muito.</p>
+    </div>
+    <div class="case fx">
+      <div class="time">17h45</div>
+      <p>Sexta-feira, fim do mês, correndo para bater a meta. Um <strong>cliente estratégico cancela o contrato</strong>. O impacto no caixa é grande.</p>
+      <p>Aí você descobre que o gerente comercial <strong>sabia do risco havia duas semanas</strong> e não avisou.</p>
+      <p class="hint"><i></i>Interativo · escolha uma opção</p>
+      <div class="vote" role="group" aria-label="Sua primeira reação">
+        <button type="button" id="v-a" aria-pressed="false"><b>A</b>Cobrar explicação imediatamente</button>
+        <button type="button" id="v-b" aria-pressed="false"><b>B</b>Assumir pessoalmente a recuperação do cliente</button>
+        <button type="button" id="v-c" aria-pressed="false"><b>C</b>Pedir a sequência dos fatos</button>
+        <button type="button" id="v-d" aria-pressed="false"><b>D</b>Adiar a conversa</button>
+      </div>
+      <p class="reveal" id="reveal" hidden><strong>Não existe resposta certa sem todos os fatos.</strong> Repare só que a sua cabeça já formou uma hipótese sobre o gerente. Guarde essa primeira interpretação: o caso volta mais abaixo, com uma informação nova.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. INTERPRETAÇÃO -->
+<section>
+  <div class="wrap stack">
+    <div class="chapter fx">O gatilho não explica toda a reação</div>
+    <div class="two" style="align-items:end">
+      <h2 class="fx">“A gente não é tão racional quanto imagina.”</h2>
+      <p class="lead fx">Entre o que acontece e o que você faz existem duas etapas silenciosas. É nelas que a liderança se decide.</p>
+    </div>
+    <div class="fx" style="display:flex;flex-direction:column;gap:18px;margin-top:12px">
+      <p class="hint"><i></i>Interativo · toque nos 3 exemplos e veja a cadeia mudar</p>
+      <div class="toggle" role="group" aria-label="Escolha um exemplo">
+        <button type="button" data-ex="ladrao" aria-pressed="true">A janela bateu: ladrão</button>
+        <button type="button" data-ex="vento" aria-pressed="false">A janela bateu: vento</button>
+        <button type="button" data-ex="gerente" aria-pressed="false">O gerente não avisou</button>
+      </div>
+      <div class="chain" id="chain">
+        <div><span>Situação</span><p data-k="s">De noite, em casa, a janela bate.</p></div>
+        <div class="hl"><span>Interpretação</span><p data-k="i">“É um ladrão.”</p></div>
+        <div><span>Emoção</span><p data-k="e">Medo, palpitação.</p></div>
+        <div><span>Resposta</span><p data-k="r">Luta ou fuga.</p></div>
+      </div>
+    </div>
+    <div class="clip fx" style="margin-top:40px">
+      <div class="phone"><video controls playsinline preload="none" poster="midia/interpretacao-capa.jpg" src="midia/interpretacao.mp4" aria-label="Vídeo: a interpretação muda a decisão"></video></div>
+      <div class="stack">
+        <div class="clip-label">Assista · 41 s</div>
+        <h3 class="say">É a mesma situação. A forma como a gente interpreta é que leva a uma decisão diferente.</h3>
+        <div class="ctx"><span>Na liderança</span><p>“Ele não avisou” é fato. “Ele não se importa” é hipótese. Quando as duas coisas viram uma só, a cobrança vira ataque, e a pessoa aprende a esconder o próximo problema. <strong>Antes de reagir, pergunte: o que mais poderia explicar isso?</strong></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. EMOÇÕES -->
+<section>
+  <div class="wrap stack">
+    <div class="chapter fx">O que são emoções</div>
+    <h2 class="fx narrow">Ninguém é o que sente. <em class="g">A gente é a capacidade de sentir.</em></h2>
+    <div class="facts fx">
+      <div><b>São reações do corpo</b><span>Palpitação, mão suando, aperto no peito. A emoção aparece no físico antes de virar pensamento.</span></div>
+      <div><b>São incontroláveis</b><span>Como a fome e a sede. Não adianta brigar com elas, e sentir não é escolha.</span></div>
+      <div><b>Não têm hierarquia</b><span>Sentir medo não faz de você medroso. Sentir raiva não faz de você agressivo. Toda emoção é saudável no contexto certo.</span></div>
+    </div>
+    <div class="clip fx" style="margin-top:40px">
+      <div class="phone"><video controls playsinline preload="none" poster="midia/mensagem-capa.jpg" src="midia/mensagem.mp4" aria-label="Vídeo: tô puto, vou mandar uma mensagem"></video></div>
+      <div class="stack">
+        <div class="clip-label">Assista · 53 s</div>
+        <h3 class="say">Calma, não é a hora. Espera um pouquinho.</h3>
+        <div class="ctx"><span>Por que isso importa</span><p>A mensagem enviada no pico da raiva quase sempre cria um segundo problema: o atrito vira crise de relação, de reputação ou de caixa. A emoção sobe, chega ao pico e desce. <strong>Decidir depois do pico não é fraqueza. É usar a parte do cérebro que o estresse tenta desligar.</strong></p></div>
+      </div>
+    </div>
+    <div class="side-note fx" style="margin-top:20px"><span class="tag">Síndrome de Gabriela</span><p>“Eu nasci assim e vou ser sempre assim” é a coisa mais feia que existe. <b>Só tem duas certezas na vida: a morte e a mudança.</b> Emoção também se educa.</p></div>
+  </div>
+</section>
+
+<!-- 5. PRESSÃO E HUMOR DO DONO -->
+<section>
+  <div class="wrap stack">
+    <div class="chapter fx">O que a pressão faz com as decisões</div>
+    <div class="two">
+      <div class="stack fx">
+        <h2>Sob pressão, o dono centraliza ainda mais</h2>
+        <p class="lead">Estresse intenso reduz a capacidade de planejar, considerar alternativas e frear respostas automáticas. Justamente quando a empresa mais precisa de decisões claras.</p>
+        <p class="pull">Não é falta de competência. Pode ser dificuldade de acessá-la sob pressão.</p>
+      </div>
+      <div class="stack fx">
+        <p class="quote" style="font-size:clamp(1.4rem,3vw,1.9rem)">Deixa eu ver como tá a cara dele hoje pra ver se eu falo.<cite>A frase mais ouvida em diagnósticos de cultura</cite></p>
+        <p class="lead">Quando o humor do dono decide quem fala, a informação não chega. Ela vai <strong style="color:var(--paper)">para baixo do tapete</strong> ou vira <strong style="color:var(--paper)">rádio corredor</strong>. E junto vai a ideia nova que alguém queria trazer.</p>
+      </div>
+    </div>
+    <div class="fx" style="margin-top:28px;display:flex;flex-direction:column;gap:14px">
+      <div class="eyebrow">Mesma pressão, <b>outro aprendizado</b> para o time</div>
+      <div class="versus">
+        <div class="bad"><span>Afasta todo mundo</span><p>“Vocês nunca fazem nada direito.”</p></div>
+        <div class="good"><span>Traz o time junto</span><p>“Estamos numa situação difícil. Preciso que antecipem os riscos.”</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. NÚMEROS -->
+<section>
+  <div class="wrap stack">
+    <div class="chapter fx">Bem-estar também é resultado</div>
+    <h2 class="fx narrow">Saúde mental não é assunto subjetivo. <em class="g">Ela aparece nos números.</em></h2>
+    <div class="numbers fx">
+      <div class="num"><strong>+13%</strong><p>de produtividade em períodos de maior felicidade</p><small>Estudo da Universidade de Oxford com trabalhadores de televendas da British Telecom. Um contexto específico, não uma promessa.</small></div>
+      <div class="num"><strong>60%</strong><p>das pessoas se demitem do líder, não da empresa</p><small>“Ah, mas o cara atinge resultado.” Mas a que preço? Quantas pessoas boas estão saindo por causa dele?</small></div>
+      <div class="num"><strong>Nº 1</strong><p>saúde mental passou o câncer como maior preocupação de saúde no mundo</p><small>Uma pauta que precisa sair de baixo do tapete, porque é aí que entra a prevenção.</small></div>
+    </div>
+    <figure class="band fx" style="margin:24px 0 0"><img src="midia/treze.jpg" alt="Mariana apresenta o slide de +13% de produtividade para a turma do G4 Traction" loading="lazy"><figcaption>“Trabalhar é recurso de saúde mental.” O problema não é o trabalho, é o ambiente: a nova geração não aceita lideranças tóxicas.</figcaption></figure>
+  </div>
+</section>
+
+<!-- 7. REGULAR -->
+<section>
+  <div class="wrap stack">
+    <div class="chapter fx">Regulação emocional</div>
+    <div class="clip fx">
+      <div class="phone"><video controls playsinline preload="none" poster="midia/regular-capa.jpg" src="midia/regular.mp4" aria-label="Vídeo: regular não é reprimir"></video></div>
+      <div class="stack">
+        <div class="clip-label">Assista · 35 s</div>
+        <h2>Regular não é reprimir. <em class="g">E não é ser frouxo.</em></h2>
+        <h3 class="say">A cobrança fica. A qualidade da decisão muda.</h3>
+        <div class="ctx"><span>Na prática</span><p>Quem reage no automático acaba resolvendo sozinho e vira gargalo. A resposta regulada mantém a exigência e devolve o problema para quem precisa aprender a resolver. Três perguntas no lugar do “deixa que eu faço”:</p>
+          <ul class="asks"><li>O que aconteceu?</li><li>O que estava sob nosso controle?</li><li>Como vamos recuperar e prevenir?</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="two fx" style="margin-top:40px;align-items:start">
+      <p class="quote" style="font-size:clamp(1.3rem,2.8vw,1.75rem)">Eu sempre fiz tudo sozinho, sempre deu certo, então eu pego e faço, porque faço melhor do que os outros. Essa crença tem que ser quebrada.</p>
+      <p class="lead">O “deixa que eu faço” leva direto à centralização. Ninguém precisa sair do operacional nem parar de olhar os números. Mas a capacidade produtiva de uma pessoa é limitada, e a única forma de crescer é ter outras pessoas decidindo junto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. PARE -->
+<section id="pare">
+  <div class="wrap stack">
+    <div class="chapter fx">A ferramenta</div>
+    <div class="two" style="align-items:end">
+      <h2 class="fx">P.A.R.E. Um roteiro para o espaço entre sentir e agir</h2>
+      <p class="lead fx">Não é teste psicológico. É um lembrete de quatro passos para interromper a resposta automática.</p>
+    </div>
+    <div class="pare fx">
+      <div><b>P</b><h3>Perceba</h3><p>O que eu sinto?</p></div>
+      <div><b>A</b><h3>Analise</h3><p>O que eu sei? O que estou supondo?</p></div>
+      <div><b>R</b><h3>Reavalie</h3><p>Que outra hipótese existe?</p></div>
+      <div><b>E</b><h3>Escolha</h3><p>Como devo agir?</p></div>
+    </div>
+    <div class="side-note fx"><span class="tag">Dica prática</span><p>No “reavalie”, vale trocar com alguém. Mas escolha bem: <b>a amiga que sempre acha que todo cara é cafajeste não vai ajudar.</b> Procure quem traga outra leitura do fato.</p></div>
+  </div>
+</section>
+
+<!-- 9. A VIRADA -->
+<section id="virada">
+  <div class="wrap stack">
+    <div class="virada">
+      <figure class="fx"><img src="midia/virada.jpg" alt="Mariana diante do slide com a frase do gerente" loading="lazy"></figure>
+      <div class="stack fx">
+        <div class="chapter">A virada do caso</div>
+        <p class="lead">De volta às 17h45. O dono vai até o gerente perguntar por que não foi avisado. A resposta:</p>
+        <p class="quote">Na última vez que eu trouxe um problema, você ficou irritado e assumiu tudo.</p>
+        <div class="answer"><span class="eyebrow">O gerente está certo?</span><b class="no">Não.</b><b>Mas a pergunta muda.</b></div>
+        <p class="lead">A omissão continua grave. Só que agora entra outra pergunta, desconfortável: <strong style="color:var(--paper)">qual é a minha parte nessa história?</strong></p>
+      </div>
+    </div>
+    <div class="def fx" style="margin-top:36px">
+      <div class="is"><span>Segurança psicológica é</span><p>Poder perguntar, discordar e admitir erros sem humilhação. Trazer o problema cedo e agir sobre ele.</p></div>
+      <div class="isnt"><span>Segurança psicológica não é</span><p>Tolerar negligência. Nem ambiente sem pressão, frouxo.</p></div>
+    </div>
+    <div class="two fx" style="margin-top:28px;align-items:start">
+      <p class="pull" style="max-width:none">Filho é uma grande oportunidade de a gente se desenvolver. Eles são esponjas e repetem exatamente aquilo que a gente mais odeia.</p>
+      <p class="lead">O time funciona do mesmo jeito. Quando algo se repete, a pergunta útil é “por que meu time está agindo assim?”, e não “por que ninguém me conta nada?”.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. FORTALEZA -->
+<section>
+  <div class="wrap">
+    <div class="clip fx">
+      <div class="phone"><video controls playsinline preload="none" poster="midia/fortaleza-capa.jpg" src="midia/fortaleza.mp4" aria-label="Vídeo: toda fortaleza é uma limitação"></video></div>
+      <div class="stack">
+        <div class="chapter">Uma história</div>
+        <div class="clip-label">Assista · 48 s</div>
+        <h3 class="say">Toda fortaleza é uma limitação e toda limitação pode ser uma fortaleza. Depende de onde eu uso.</h3>
+        <div class="ctx"><span>No feedback</span><p>Pedir que alguém “deixe de ser” de um jeito raramente funciona. A conversa muda quando o foco passa a ser onde aquele traço ajuda e onde atrapalha. <strong>A agressividade que fecha a venda é a mesma que trava a reunião com o time.</strong></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. MAPA -->
+<section id="mapa">
+  <div class="wrap two" style="align-items:start">
+    <div class="stack fx gruda">
+      <div class="chapter">Tema de casa</div>
+      <h2>Mapa de destravamento do dono</h2>
+      <p class="lead">O exercício que fechou a aula. Quando a gente não muda, raramente é falta de informação. Quase sempre existe um ganho escondido: <em class="g">se todo mundo volta para mim, eu continuo sendo importante.</em></p>
+      <p class="pull">O que de pior pode acontecer? Aqui a gente não é médico. A gente não mata ninguém.</p>
+      <p class="hint"><i></i>Interativo · escreva e envie suas respostas</p>
+      <p class="saved" id="saved">Seu rascunho fica salvo neste navegador até você enviar.</p>
+    </div>
+    <form class="map fx" id="mapform" autocomplete="off">
+      <div class="step"><i>1</i><div><label for="m1">O que eu quero delegar, e para quem?</label><small>Exemplo da aula: deixar o gerente comercial negociar sem mim.</small><textarea id="m1" rows="2" placeholder="Escreva aqui"></textarea></div></div>
+      <div class="step"><i>2</i><div><label for="m2">O que eu faço que sabota isso?</label><small>Exemplo: reviso toda proposta e entro nas reuniões dele.</small><textarea id="m2" rows="2" placeholder="Escreva aqui"></textarea></div></div>
+      <div class="step"><i>3</i><div><label for="m3">Se eu parar, o que eu temeria?</label><small>Exemplo: perder um cliente grande e deixar de ser necessário.</small><textarea id="m3" rows="2" placeholder="Escreva aqui"></textarea></div></div>
+      <div class="step"><i>4</i><div><label for="m4">Em que eu acredito que mantém isso de pé?</label><small>Exemplo: se eu não estiver, a qualidade cai.</small><textarea id="m4" rows="2" placeholder="Escreva aqui"></textarea></div></div>
+      <div class="step"><i>5</i><div><label for="m5">Meu experimento de 30 dias</label><small>Uma ação pequena para testar a crença na prática.</small><textarea id="m5" rows="2" placeholder="Escreva aqui"></textarea></div></div>
+
+      <div class="send" id="envio" hidden>
+        <p class="notice"><b>Suas respostas serão lidas pela equipe da GROU.</b> Usamos o que você escrever para entender os desafios de quem lidera e criar conteúdos e encontros mais úteis. Nada é publicado com o seu nome.</p>
+        <div class="fields">
+          <div><label for="e-nome">Nome <span>(opcional)</span></label><input id="e-nome" type="text" maxlength="120" autocomplete="name"></div>
+          <div><label for="e-email">E-mail <span>(opcional)</span></label><input id="e-email" type="email" maxlength="200" autocomplete="email"></div>
+        </div>
+        <label class="check" for="e-contato"><input id="e-contato" type="checkbox"> Aceito que a equipe da GROU entre em contato comigo sobre minhas respostas.</label>
+        <label class="check" for="e-ciente"><input id="e-ciente" type="checkbox"> Estou ciente de que a equipe da GROU vai ler minhas respostas.</label>
+        <input class="trap" id="e-site" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="send-row"><button type="submit" class="btn" id="e-enviar">Enviar minhas respostas</button><p class="status" id="e-status" role="status"></p></div>
+      </div>
+      <div class="send" id="envio-fora">
+        <p class="notice">Quer compartilhar suas respostas com a equipe da GROU? <a href="https://www.grougp.com/mariana-uebel/aula-g4/" target="_blank" rel="noopener">Abra o material no site da GROU</a> para enviar.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- 12. FRASES -->
+<section>
+  <div class="wrap stack">
+    <div class="chapter fx">Para levar</div>
+    <h2 class="fx narrow">Frases da aula que valem um print</h2>
+    <figure class="band fx" style="margin:0 0 8px;aspect-ratio:21/7"><img src="midia/plateia.jpg" alt="Turma do G4 Traction assistindo à aula da Mariana Uebel" loading="lazy"></figure>
+    <div class="wall fx">
+      <blockquote>A escada se lava de cima para baixo.<small>Antes de qualquer líder, é o dono, o empreendedor, quem fundou.</small></blockquote>
+      <blockquote>Louco hoje é quem não se trata, quem não se cuida, quem não olha para dentro de si.<small>Há 23 anos, no interior do Rio Grande do Sul, pendurar uma placa de psicologia era ousadia.</small></blockquote>
+      <blockquote>O problema não é ter pressão. É a forma como a gente conduz.</blockquote>
+      <blockquote>A Mariana que está na empresa é a mesma que está dentro de casa. E se não for, deveria ser.</blockquote>
+      <blockquote>Quem faz tudo não faz nada.<small>Sobre sair dos dois dias de imersão querendo mudar a empresa inteira de uma vez.</small></blockquote>
+      <blockquote>Tudo que a gente permite, a gente concorda.</blockquote>
+      <blockquote>Às vezes deitar a cabeça no travesseiro é o que a gente precisa para, no outro dia, tomar decisões mais assertivas.</blockquote>
+      <blockquote>Conversas difíceis são libertadoras. Elas destravam muita coisa nos negócios.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="wrap stack">
+    <div class="chapter fx">Uma última pergunta</div>
+    <p class="quote fx">A sua reação ajuda a resolver o problema ou cria um segundo problema?</p>
+    <div class="cta fx">
+      <a class="btn" href="https://atlas.grougp.com.br/diagnostico/grou/maturidade-lideranca" target="_blank" rel="noopener">Fazer o diagnóstico</a>
+      <p><strong>Diagnóstico de maturidade de liderança.</strong> Descubra em que estágio está a sua liderança e por onde começar.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap"><span>Material da aula “Liderança sob pressão”, de Mariana Uebel · G4 Traction, 9/11/2026</span><span>GROU · Ecossistema de gestão de pessoas</span></div>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+
+  // progresso de leitura
+  var bar=document.getElementById('bar');
+  function prog(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;bar.style.width=(max>0?(h.scrollTop/max*100):0)+'%'}
+  addEventListener('scroll',prog,{passive:true});prog();
+
+  // entrada suave: só esconde o que ainda está abaixo da dobra
+  if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pending');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.fx').forEach(function(el){if(el.getBoundingClientRect().top>innerHeight){el.classList.add('pending');io.observe(el)}});
+  }
+
+  // votação do caso
+  var vb=document.querySelectorAll('.vote button');
+  vb.forEach(function(b){b.addEventListener('click',function(){vb.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});document.getElementById('reveal').hidden=false})});
+
+  // cadeia de interpretação
+  var ex={
+    ladrao:{s:'De noite, em casa, a janela bate.',i:'“É um ladrão.”',e:'Medo, palpitação.',r:'Luta ou fuga.'},
+    vento:{s:'De noite, em casa, a janela bate.',i:'“Ficou aberta, é o vento.”',e:'Tranquilidade.',r:'Fecha a janela e volta a dormir.'},
+    gerente:{s:'O contrato foi perdido e o risco não foi comunicado.',i:'“Ele não se importa.” Ou: “Ele teve medo de me contar.”',e:'Raiva, frustração, medo do caixa.',r:'Cobrar, assumir tudo, investigar ou adiar.'}
+  };
+  var tb=document.querySelectorAll('.toggle button');
+  tb.forEach(function(b){b.addEventListener('click',function(){
+    tb.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    var d=ex[b.dataset.ex];
+    document.querySelectorAll('#chain p').forEach(function(p){p.style.opacity=0;setTimeout(function(){p.textContent=d[p.dataset.k];p.style.opacity=1},180)});
+  })});
+
+  // indicadores: apagam depois da primeira interação
+  function done(el){var s=el.closest('section');if(s)s.querySelectorAll('.hint').forEach(function(h){h.classList.add('done')})}
+  document.querySelectorAll('.vote button,.toggle button').forEach(function(b){b.addEventListener('click',function(){done(b)})});
+  document.querySelectorAll('#mapform textarea').forEach(function(t){t.addEventListener('input',function(){done(t)},{once:true})});
+
+  // um vídeo por vez + botão de play sobre a capa
+  var vids=document.querySelectorAll('video');
+  vids.forEach(function(v){
+    var b=document.createElement('button');b.type='button';b.className='play';b.setAttribute('aria-label','Reproduzir vídeo');b.innerHTML='<span>Assistir</span>';
+    v.parentNode.appendChild(b);
+    b.addEventListener('click',function(){var p=v.play();if(p&&p.catch)p.catch(function(){})});
+    v.addEventListener('play',function(){b.hidden=true;vids.forEach(function(o){if(o!==v)o.pause()})});
+  });
+
+  // mapa salvo localmente
+  var KEY='mapa-destravamento-v1',saved=document.getElementById('saved'),data={};
+  try{data=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){data={}}
+  document.querySelectorAll('#mapform textarea').forEach(function(t){
+    if(data[t.id])t.value=data[t.id];
+    t.addEventListener('input',function(){data[t.id]=t.value;try{localStorage.setItem(KEY,JSON.stringify(data));saved.textContent='Salvo neste navegador.'}catch(e){saved.textContent='Não foi possível salvar neste navegador. Copie suas respostas antes de sair.'}});
+  });
+  // envio das respostas para a equipe (só na versão do site da GROU, que tem a rota de envio)
+  var form=document.getElementById('mapform');
+  var meta=document.querySelector('meta[name="grou-envio"]');
+  var endpoint=meta&&meta.content;
+  if(endpoint){document.getElementById('envio').hidden=false;document.getElementById('envio-fora').hidden=true}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!endpoint)return;
+    var st=document.getElementById('e-status'),btn=document.getElementById('e-enviar');
+    function msg(t,c){st.textContent=t;st.className='status'+(c?' '+c:'')}
+    var v=function(id){return document.getElementById(id).value.trim()};
+    var corpo={delegar:v('m1'),sabota:v('m2'),medo:v('m3'),crenca:v('m4'),experimento:v('m5'),
+      nome:v('e-nome'),email:v('e-email'),contato_ok:document.getElementById('e-contato').checked,
+      consentimento:document.getElementById('e-ciente').checked,site:v('e-site')};
+    if(!(corpo.delegar||corpo.sabota||corpo.medo||corpo.crenca||corpo.experimento)){msg('Responda pelo menos uma pergunta antes de enviar.','err');return}
+    if(!corpo.consentimento){msg('Marque que está ciente de que a equipe vai ler suas respostas.','err');return}
+    btn.disabled=true;msg('Enviando…');
+    fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)})
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,j:j}})})
+      .then(function(x){
+        if(x.ok){msg('Respostas enviadas. Obrigada por compartilhar!','ok');btn.textContent='Enviado';try{localStorage.removeItem(KEY)}catch(e){}}
+        else{btn.disabled=false;msg(x.j.error||'Não foi possível enviar agora. Tente de novo em instantes.','err')}
+      })
+      .catch(function(){btn.disabled=false;msg('Sem conexão. Suas respostas continuam aqui; tente de novo.','err')});
+  });
+})();
+</script>
+
+</html>

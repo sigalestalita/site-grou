@@ -55,6 +55,10 @@
     {
       "source": "/evento/nr1-estrategica/certificado/c/:codigo/",
       "destination": "/api/certificado?pagina=:codigo"
+    },
+    {
+      "source": "/mariana-uebel/aula-g4/enviar/",
+      "destination": "https://grou-social.vercel.app/api/publico/mapa"
     }
   ],
   "functions": {

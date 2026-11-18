@@ -120,9 +120,16 @@
     var n = el.querySelector('.nome'); if (!n) return;
     var caixa = n.parentElement, estilo = getComputedStyle(caixa);
     var max = caixa.clientWidth - parseFloat(estilo.paddingLeft) - parseFloat(estilo.paddingRight) - 4;
+    if (max <= 0) return; /* fora da tela (display:none): quem chama copia o tamanho de outra cópia */
+    /* mede a largura do texto (não a da caixa), descontando a escala da prévia */
+    var largura = function () {
+      var r = document.createRange(); r.selectNodeContents(n);
+      var k = n.offsetWidth ? n.getBoundingClientRect().width / n.offsetWidth : 1;
+      return r.getBoundingClientRect().width / (k || 1);
+    };
     n.style.fontSize = '';
     var tam = parseFloat(getComputedStyle(n).fontSize);
-    while (n.scrollWidth > max && tam > 18) { tam -= 1; n.style.fontSize = tam + 'px'; }
+    while (largura() > max && tam > 18) { tam -= 1; n.style.fontSize = tam + 'px'; }
   }
   function prepara(ctx) {
     var fo = (ctx.identidade || {}).fontes || {};

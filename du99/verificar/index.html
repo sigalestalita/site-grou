@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Verificar certificado · DU99</title>
+<meta name="description" content="Confira a autenticidade de um certificado emitido pela DU99 com o código de verificação.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#013e88">
+<link rel="icon" href="/du99/assets/logo-du99.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/du99/assets/site.css">
+<link rel="stylesheet" href="/du99/assets/cert.css">
+</head>
+<body>
+<header class="topo">
+  <div class="in">
+    <div class="barra"><a href="/du99/"><img data-logo src="/du99/assets/logo-du99-claro.png" alt="DU99"></a></div>
+    <div class="hero">
+      <div>
+        <p class="rot">Verificação</p>
+        <h1>Confira se um certificado é <em>autêntico</em></h1>
+        <p class="lead">Digite o código impresso no certificado, embaixo do QR code. Ele tem o formato <b style="color:#fff">DU99-XXXX-XXXX</b>.</p>
+      </div>
+      <form class="cartao" id="form" novalidate>
+        <h2>Código de verificação</h2>
+        <p class="d">Ou aponte a câmera do celular para o QR code do certificado.</p>
+        <label for="codigo">Código</label>
+        <input id="codigo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="DU99-XXXX-XXXX" maxlength="20">
+        <button class="btn btn-p" type="submit">Verificar</button>
+        <p class="erro" id="erro" role="alert" hidden></p>
+      </form>
+    </div>
+  </div>
+</header>
+<div class="verif" id="verif" hidden><div class="ic" id="verifIc">✓</div><div><p id="verifTxt"></p></div></div>
+<main class="res" id="res" hidden><div class="palco" id="palco"><div class="escala" id="escala"></div></div></main>
+<footer><span data-empresa>DU99</span> · <a href="/du99/">Certificados</a></footer>
+<script src="/du99/assets/qrcode.js"></script>
+<script src="/du99/assets/cert.js"></script>
+<script src="/du99/assets/comum.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); }, C = window.DU99Cert, esc = C.esc;
+  function escala(){
+    var palco = $('palco'), e = $('escala'), c = e.querySelector('.dc'); if (!c) return;
+    var pad = parseFloat(getComputedStyle(palco).paddingLeft) * 2, s = Math.min(1, (palco.clientWidth - pad) / c.offsetWidth);
+    e.style.transform = 'scale(' + s + ')'; e.style.height = (c.offsetHeight * s) + 'px'; e.style.width = (c.offsetWidth * s) + 'px';
+  }
+  window.addEventListener('resize', escala);
+  function verifica(cod){
+    cod = String(cod || '').trim().toUpperCase().replace(/\s+/g, '');
+    if (!/^[A-Z0-9]{1,8}-[0-9A-F]{4}-[0-9A-F]{4}$/.test(cod)) { $('erro').textContent = 'Confira o código: ele tem o formato DU99-XXXX-XXXX.'; $('erro').hidden = false; return; }
+    $('erro').hidden = true;
+    DU99.api('verificar', null, { codigo: cod }).then(function(j){
+      var v = $('verif'); v.hidden = false; v.classList.remove('nao'); $('verifIc').textContent = '✓';
+      if (j._ok && j.nome) {
+        DU99.identidade(j.identidade);
+        var d = j.evento.dados || {};
+        var info = [C.formataData(d.data_inicio, d.data_fim), C.carga(d.carga_horaria) ? 'carga horária de ' + C.carga(d.carga_horaria) : ''].filter(Boolean).join(', ');
+        $('verifTxt').innerHTML = '<b>Certificado válido.</b> ' + esc(j.certificado) + ' emitido por <b>' + esc((j.identidade || {}).nome_empresa || 'DU99') + '</b> para <b>' + esc(j.nome) + '</b> em <b>' + esc(j.evento.nome) + '</b>' + (info ? ' (' + esc(info) + ')' : '') + '. Código ' + esc(j.codigo) + '.';
+        if (j.tipo_certificado) {
+          $('res').hidden = false;
+          var ctx = { identidade: j.identidade, tipo: j.tipo_certificado.dados || {}, evento: j.evento, nome: j.nome, codigo: j.codigo, papel: j.papel, verificar: location.origin + '/du99/verificar/' };
+          var el = C.render($('escala'), ctx);
+          C.prepara(ctx).then(function(){ C.ajusta(el); escala(); }); escala();
+        }
+        history.replaceState(null, '', '?codigo=' + j.codigo);
+      } else {
+        $('res').hidden = true;
+        v.classList.add('nao'); $('verifIc').textContent = '!';
+        $('verifTxt').textContent = 'Não encontramos um certificado com o código ' + cod + '. Confira se ele foi digitado como aparece no certificado.';
+      }
+    });
+  }
+  $('form').addEventListener('submit', function(e){ e.preventDefault(); verifica($('codigo').value); });
+  var cod = new URLSearchParams(location.search).get('codigo');
+  if (cod) { $('codigo').value = cod; verifica(cod); }
+  else DU99.api('eventos').then(function(j){ if (j._ok) DU99.identidade(j.identidade); });
+})();
+</script>
+</body>
+</html>

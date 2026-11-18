@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Certificados · DU99</title>
+<meta name="description" content="Gere e verifique certificados dos eventos e ações da DU99.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Certificados · DU99">
+<meta property="og:description" content="Gere e verifique certificados dos eventos e ações da DU99.">
+<meta property="og:image" content="https://www.grougp.com/du99/assets/og-padrao.jpg">
+<meta name="theme-color" content="#013e88">
+<link rel="icon" href="/du99/assets/logo-du99.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/du99/assets/site.css">
+</head>
+<body>
+<header class="topo">
+  <div class="in">
+    <div class="barra"><img data-logo src="/du99/assets/logo-du99-claro.png" alt="DU99"><a class="link" href="/du99/verificar/">Verificar um certificado</a></div>
+    <div class="hero so">
+      <div>
+        <p class="rot" id="slogan">Certificados</p>
+        <h1>Certificados <em data-empresa>DU99</em></h1>
+        <p class="lead">Escolha o evento de que você participou e gere o seu certificado com o e-mail da inscrição. Para conferir a autenticidade de um certificado, use o código impresso nele.</p>
+      </div>
+    </div>
+  </div>
+</header>
+<section class="lista">
+  <h2>Eventos com certificado disponível</h2>
+  <div class="grade" id="grade"></div>
+  <p class="vazio" id="vazio" hidden>Nenhum evento com emissão aberta no momento.</p>
+</section>
+<footer><span data-empresa>DU99</span> · <a href="/du99/verificar/">Verificar um certificado</a></footer>
+<script src="/du99/assets/cert.js"></script>
+<script src="/du99/assets/comum.js"></script>
+<script>
+(function(){
+  var C = window.DU99Cert, esc = C.esc;
+  DU99.api('eventos').then(function(j){
+    if (!j._ok) { document.getElementById('vazio').hidden = false; return; }
+    DU99.identidade(j.identidade);
+    if ((j.identidade || {}).slogan) document.getElementById('slogan').textContent = j.identidade.slogan;
+    var g = document.getElementById('grade');
+    if (!j.eventos.length) { document.getElementById('vazio').hidden = false; return; }
+    g.innerHTML = j.eventos.map(function(e){
+      var d = e.dados || {};
+      var linha = [C.dataCurta(d.data_inicio, d.data_fim), d.modalidade === 'online' ? 'Online' : d.cidade].filter(Boolean).join(' · ');
+      return '<a class="ev" href="/du99/evento/' + esc(e.slug) + '/"><div class="img"' + (d.imagem_url ? ' style="background-image:url(\'' + esc(d.imagem_url) + '\')"' : '') + '></div><div class="in"><b>' + esc(e.nome) + '</b><span>' + esc(linha) + '</span></div></a>';
+    }).join('');
+  });
+})();
+</script>
+</body>
+</html>

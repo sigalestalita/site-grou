@@ -45,6 +45,19 @@
           "value": "no-store"
         }
       ]
+    },
+    {
+      "source": "/du99/admin/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ],
   "rewrites": [
@@ -59,6 +72,18 @@
     {
       "source": "/mariana-uebel/aula-g4/enviar/",
       "destination": "https://grou-social.vercel.app/api/publico/mapa"
+    },
+    {
+      "source": "/du99/api/:rota/",
+      "destination": "/api/certificado?du99=:rota"
+    },
+    {
+      "source": "/du99/c/:codigo/",
+      "destination": "/api/certificado?du99=pagina&codigo=:codigo"
+    },
+    {
+      "source": "/du99/evento/:slug/",
+      "destination": "/du99/evento/"
     }
   ],
   "functions": {

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Painel · Certificados DU99</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#013e88">
+<link rel="icon" href="/du99/assets/logo-du99.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Comfortaa:wght@400;700&display=swap">
+<link rel="stylesheet" href="/du99/assets/cert.css">
+<link rel="stylesheet" href="/du99/admin/admin.css">
+</head>
+<body>
+<!-- entrar -->
+<main class="porta" id="porta" hidden>
+  <form class="caixa" id="fLogin" novalidate>
+    <img src="/du99/assets/logo-du99.png" alt="DU99" class="porta-logo">
+    <h1>Painel de certificados</h1>
+    <p class="sub">Entre com o seu e-mail e a sua senha.</p>
+    <label>E-mail<input name="email" type="email" autocomplete="username" required></label>
+    <label>Senha<input name="senha" type="password" autocomplete="current-password" required></label>
+    <button class="btn btn-p" type="submit">Entrar</button>
+    <p class="erro" role="alert" hidden></p>
+    <p class="nota">Sem acesso ou esqueceu a senha? Peça um link a quem administra o painel.</p>
+  </form>
+  <form class="caixa" id="fConvite" novalidate hidden>
+    <img src="/du99/assets/logo-du99.png" alt="DU99" class="porta-logo">
+    <h1 id="cvTit">Criar seu acesso</h1>
+    <p class="sub" id="cvSub">Defina seus dados para entrar no painel de certificados.</p>
+    <label>Nome<input name="nome" type="text" autocomplete="name" maxlength="80"></label>
+    <label id="cvEmail">E-mail<input name="email" type="email" autocomplete="username"></label>
+    <label>Senha (mínimo de 10 caracteres)<input name="senha" type="password" autocomplete="new-password" minlength="10" required></label>
+    <button class="btn btn-p" type="submit">Salvar e entrar</button>
+    <p class="erro" role="alert" hidden></p>
+  </form>
+</main>
+
+<!-- painel -->
+<div class="app" id="app" hidden>
+  <header class="cab">
+    <a href="#eventos" class="marca"><img src="/du99/assets/logo-du99-claro.png" alt="" id="cabLogo"><span>Certificados</span></a>
+    <nav class="menu" id="menu">
+      <a href="#eventos" data-m="eventos">Eventos</a>
+      <a href="#certificados" data-m="certificados">Tipos de certificado</a>
+      <a href="#tipos-evento" data-m="tipos-evento">Tipos de evento</a>
+      <a href="#identidade" data-m="identidade">Identidade</a>
+      <a href="#acessos" data-m="acessos">Acessos</a>
+    </nav>
+    <div class="quem"><span id="quem"></span><button class="btn btn-leve" id="sair" type="button">Sair</button></div>
+  </header>
+  <main class="conteudo" id="conteudo"></main>
+</div>
+<div class="aviso" id="aviso" role="status" hidden></div>
+<dialog id="dlg"><form method="dialog" id="dlgForm"></form></dialog>
+
+<script src="/du99/assets/qrcode.js"></script>
+<script src="/du99/assets/cert.js"></script>
+<script src="/du99/admin/admin.js"></script>
+</body>
+</html>

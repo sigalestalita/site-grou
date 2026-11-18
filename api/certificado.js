@@ -90,6 +90,8 @@ async function pagina(req, res) {
 }
 
 module.exports = async (req, res) => {
+  /* gerador de certificados da DU99 (rotas /du99/api/*), que usa esta mesma função */
+  if (/[?&]du99=/.test(req.url || '')) return require('./_du99')(req, res);
   if (!db.ativo()) return c.responde(res, 503, { erro: 'Certificados indisponíveis agora. Tente de novo em instantes.' });
 
   try {

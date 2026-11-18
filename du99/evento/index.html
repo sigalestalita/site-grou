@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Certificado · DU99</title>
+<meta name="description" content="Gere o seu certificado com o e-mail da sua inscrição.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Gere o seu certificado · DU99">
+<meta property="og:description" content="Gere o seu certificado com o e-mail da sua inscrição.">
+<meta property="og:image" content="https://www.grougp.com/du99/assets/og-padrao.jpg">
+<meta name="theme-color" content="#013e88">
+<link rel="icon" href="/du99/assets/logo-du99.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/du99/assets/site.css">
+<link rel="stylesheet" href="/du99/assets/cert.css">
+</head>
+<body>
+<header class="topo">
+  <img class="capa" id="capa" alt="" hidden>
+  <div class="in">
+    <div class="barra"><a href="/du99/"><img data-logo src="/du99/assets/logo-du99-claro.png" alt="DU99"></a><a class="link" href="/du99/verificar/">Verificar um certificado</a></div>
+    <div class="hero" id="hero">
+      <div>
+        <p class="rot" id="rot">Certificado</p>
+        <h1 id="titulo">Carregando o evento…</h1>
+        <p class="lead" id="lead">Digite o e-mail que você usou na inscrição e gere o seu certificado em PDF, pronto para baixar, imprimir ou adicionar ao LinkedIn.</p>
+        <div class="chips" id="chips"></div>
+      </div>
+      <form class="cartao" id="form" novalidate hidden>
+        <h2>Gerar certificado</h2>
+        <p class="d" id="formD">Use o mesmo e-mail da sua inscrição.</p>
+        <fieldset class="nps" id="nps" hidden>
+          <legend id="npsPerg">De 0 a 10, o quanto você recomendaria este evento a um amigo ou colega?</legend>
+          <div class="notas" id="notas"></div>
+          <div class="escala-txt" aria-hidden="true"><span>Nada provável</span><span>Muito provável</span></div>
+        </fieldset>
+        <label for="email">E-mail da inscrição</label>
+        <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@email.com">
+        <button class="btn btn-p" id="gerar" type="submit">Gerar meu certificado</button>
+        <p class="erro" id="erro" role="alert" hidden></p>
+        <p class="ajuda" id="ajuda" hidden></p>
+      </form>
+      <div class="cartao" id="fechado" hidden><h2>Emissão encerrada</h2><p class="d" style="margin:0">A emissão de certificados deste evento foi encerrada. Quem já gerou o certificado pode verificar a autenticidade pelo código em <a href="/du99/verificar/">Verificar um certificado</a>.</p></div>
+    </div>
+  </div>
+</header>
+
+<main class="res" id="res" hidden>
+  <div class="res-cab">
+    <div><h2>Seu certificado está pronto</h2><p>Confira o nome e baixe em PDF. Ele também pode ser impresso em A4 na horizontal.</p></div>
+    <div class="acoes">
+      <button class="btn btn-p" id="baixar" type="button" style="width:auto;margin:0">Baixar PDF</button>
+      <button class="btn btn-s" id="imprimir" type="button">Imprimir</button>
+      <a class="btn btn-t" id="linkedin" href="#" target="_blank" rel="noopener">Adicionar ao perfil do LinkedIn</a>
+      <button class="btn btn-s" id="outro" type="button">Gerar outro</button>
+    </div>
+  </div>
+  <section class="post" aria-label="Compartilhar no LinkedIn">
+    <div><label for="postTxt">Texto do post · pode editar</label><textarea id="postTxt" rows="8"></textarea></div>
+    <div class="lado-b">
+      <button class="btn btn-li" id="compartilhar" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Compartilhar no LinkedIn</button>
+      <button class="btn btn-s" id="copiar" type="button">Copiar texto</button>
+      <p class="dica" id="dica">O post abre com este texto e a imagem do seu certificado. É só revisar e publicar.</p>
+    </div>
+  </section>
+  <div class="palco" id="palco"><div class="escala" id="escala"></div></div>
+</main>
+
+<div id="impressao"></div>
+<footer><span data-empresa>DU99</span> · <a href="/du99/verificar/">Verificar um certificado</a></footer>
+
+<script src="/du99/assets/qrcode.js"></script>
+<script src="/du99/assets/cert.js"></script>
+<script src="/du99/assets/comum.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var C = window.DU99Cert, esc = C.esc;
+  var slug = (location.pathname.match(/\/du99\/evento\/([a-z0-9-]+)\/?/) || [])[1] || new URLSearchParams(location.search).get('e') || '';
+  var VERIF = location.origin + '/du99/verificar/';
+  var info = null, atual = null;
+
+  function erroGeral(msg){ $('titulo').textContent = msg; $('lead').hidden = true; }
+  if (!slug) erroGeral('Evento não encontrado.');
+  else DU99.api('evento', null, { slug: slug }).then(function(j){
+    if (!j._ok) return erroGeral(j.erro || 'Evento não encontrado.');
+    info = j; DU99.identidade(j.identidade);
+    var ev = j.evento, d = ev.dados || {}, id = j.identidade || {};
+    document.title = 'Certificado · ' + ev.nome + ' · ' + (id.nome_empresa || 'DU99');
+    $('titulo').textContent = ev.nome;
+    $('rot').textContent = [ev.tipo_evento, C.dataCurta(d.data_inicio, d.data_fim), d.cidade].filter(Boolean).join(' · ') || 'Certificado';
+    if (d.subtitulo) $('lead').textContent = d.subtitulo + '. Digite o e-mail que você usou na inscrição e gere o seu certificado.';
+    var chips = [];
+    var ch = C.carga(d.carga_horaria); if (ch) chips.push('Carga horária: ' + ch);
+    if (d.data_inicio) chips.push(C.formataData(d.data_inicio, d.data_fim));
+    if (d.modalidade === 'online') chips.push('Online'); else if (d.local || d.cidade) chips.push([d.local, d.cidade].filter(Boolean).join(' · '));
+    $('chips').innerHTML = chips.map(function(c){ return '<span>' + esc(c) + '</span>'; }).join('');
+    if (d.imagem_url) { $('capa').src = d.imagem_url; $('capa').hidden = false; }
+    if (ev.status !== 'aberto') { $('fechado').hidden = false; return; }
+    $('form').hidden = false;
+    if (d.pede_nps) {
+      $('nps').hidden = false;
+      $('formD').textContent = 'Conte como foi o evento e use o mesmo e-mail da sua inscrição.';
+      if (d.pergunta_nps) $('npsPerg').textContent = d.pergunta_nps;
+      var h = ''; for (var i = 0; i <= 10; i++) h += '<input type="radio" name="nps" id="nps' + i + '" value="' + i + '"><label for="nps' + i + '">' + i + '</label>';
+      $('notas').innerHTML = h;
+      document.querySelectorAll('input[name=nps]').forEach(function(r){ r.addEventListener('change', function(){ $('nps').removeAttribute('aria-invalid'); if ($('nps').dataset.erro) { $('erro').hidden = true; delete $('nps').dataset.erro; } }); });
+    }
+    var ajuda = d.ajuda || (id.whatsapp ? 'Não encontrou? Fale com a gente pelo WhatsApp.' : (id.email_contato ? 'Não encontrou? Escreva para ' + id.email_contato + '.' : ''));
+    if (ajuda) {
+      $('ajuda').hidden = false;
+      $('ajuda').innerHTML = esc(ajuda) + (id.whatsapp ? ' <a href="https://wa.me/' + esc(id.whatsapp) + '?text=' + encodeURIComponent('Oi! Participei de ' + ev.nome + ' e não consegui gerar meu certificado.') + '" target="_blank" rel="noopener">Abrir WhatsApp</a>' : '');
+    }
+  });
+
+  function ctxDe(d){ return { identidade: info.identidade, tipo: (d.tipo_certificado || {}).dados || {}, evento: info.evento, nome: d.nome, codigo: d.codigo, papel: d.papel, verificar: VERIF }; }
+  function monta(alvo, d){ return C.render(alvo, ctxDe(d)); }
+  function escala(){
+    var palco = $('palco'), e = $('escala'), c = e.querySelector('.dc'); if (!c) return;
+    var pad = parseFloat(getComputedStyle(palco).paddingLeft) * 2;
+    var s = Math.min(1, (palco.clientWidth - pad) / c.offsetWidth);
+    e.style.transform = 'scale(' + s + ')'; e.style.height = (c.offsetHeight * s) + 'px'; e.style.width = (c.offsetWidth * s) + 'px';
+  }
+  window.addEventListener('resize', escala);
+
+  function textoPost(d){
+    var ev = info.evento, dd = ev.dados || {}, id = info.identidade || {};
+    var v = C.variaveis(ctxDe(d));
+    v.link = paginaDe(d);
+    var modelo = dd.texto_post || 'Participei de {evento}, realizado por {empresa}{em_local}.\n\nFoi uma experiência transformadora. Obrigado a toda a equipe da {empresa} e a quem fez parte!\n\nMeu certificado: {link}';
+    if (modelo.indexOf('{link}') < 0) modelo += '\n\nMeu certificado: {link}';
+    return modelo.replace(/\{([a-z_]+)\}/g, function(m, k){ return Object.prototype.hasOwnProperty.call(v, k) ? v[k] : m; });
+  }
+  function paginaDe(d){ return location.origin + '/du99/c/' + d.codigo + '/'; }
+
+  function mostra(d){
+    atual = d;
+    var c1 = monta($('escala'), d), c2 = monta($('impressao'), d);
+    $('res').hidden = false;
+    C.prepara(ctxDe(d)).then(function(){ C.ajusta(c1); var n2 = c2.querySelector('.nome'); n2.style.fontSize = c1.querySelector('.nome').style.fontSize; escala(); });
+    escala();
+    var ev = info.evento, dd = ev.dados || {}, id = info.identidade || {};
+    var m = /^(\d{4})-(\d{2})/.exec(dd.data_fim || dd.data_inicio || '') || [];
+    var li = 'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME'
+      + '&name=' + encodeURIComponent(dd.linkedin_nome || ev.nome)
+      + (id.linkedin_org_id ? '&organizationId=' + encodeURIComponent(id.linkedin_org_id) : '&organizationName=' + encodeURIComponent(id.nome_empresa || 'DU99'))
+      + (m[1] ? '&issueYear=' + m[1] + '&issueMonth=' + Number(m[2]) : '')
+      + '&certUrl=' + encodeURIComponent(VERIF + '?codigo=' + d.codigo)
+      + '&certId=' + encodeURIComponent(d.codigo);
+    $('linkedin').href = li;
+    $('postTxt').value = textoPost(d);
+    $('dica').className = 'dica'; $('dica').textContent = 'O post abre com este texto e a imagem do seu certificado. É só revisar e publicar.';
+    preparaImagem(d);
+    $('res').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function erro(msg, campo){
+    var e = $('erro'); e.textContent = msg; e.hidden = false;
+    if (campo === 'nps') { $('nps').setAttribute('aria-invalid','true'); var r = document.querySelector('input[name=nps]:checked') || $('nps0'); if (r) r.focus(); }
+    else { $('email').setAttribute('aria-invalid','true'); $('email').focus(); }
+  }
+  function nota(){ var r = document.querySelector('input[name=nps]:checked'); return r ? Number(r.value) : null; }
+  $('email').addEventListener('input', function(){ $('erro').hidden = true; $('email').removeAttribute('aria-invalid'); });
+  $('form').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var pede = info && info.evento.dados.pede_nps, n = nota();
+    if (pede && n === null) { $('nps').dataset.erro = '1'; return erro('Escolha uma nota de 0 a 10 para o evento.', 'nps'); }
+    var email = $('email').value.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return erro('Confira o e-mail digitado.');
+    var b = $('gerar'); b.disabled = true; b.textContent = 'Procurando sua inscrição…';
+    DU99.api('gerar', { slug: slug, email: email, nps: pede ? n : undefined }).then(function(j){
+      b.disabled = false; b.textContent = 'Gerar meu certificado';
+      if (!j._ok || !j.nome) return erro(j.erro || 'Não foi possível gerar agora. Tente de novo em instantes.', j.campo);
+      j.email = email; mostra(j);
+    });
+  });
+  $('imprimir').addEventListener('click', function(){ window.print(); });
+  $('outro').addEventListener('click', function(){ $('res').hidden = true; $('email').value = ''; document.querySelectorAll('input[name=nps]').forEach(function(r){ r.checked = false; }); window.scrollTo({ top: 0, behavior: 'smooth' }); $('email').focus(); });
+
+  function carrega(src){ return new Promise(function(ok, falha){ var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = falha; document.head.appendChild(s); }); }
+  function libsCanvas(){ return window.html2canvas ? Promise.resolve() : carrega('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'); }
+  function foraDaTela(d){ var p = document.createElement('div'); p.style.cssText = 'position:fixed;left:-4000px;top:0;'; document.body.appendChild(p); return { palco: p, cert: monta(p, d) }; }
+  function fundoDe(){ return ((info.identidade || {}).cores || {}).fundo || '#fbfaf7'; }
+
+  $('baixar').addEventListener('click', function(){
+    if (!atual) return;
+    var b = this, rot = b.textContent; b.disabled = true; b.textContent = 'Gerando PDF…';
+    var libs = Promise.all([libsCanvas(), window.jspdf ? null : carrega('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')]);
+    var f = foraDaTela(atual);
+    libs.then(function(){ return C.prepara(ctxDe(atual)); })
+      .then(function(){ C.ajusta(f.cert); return window.html2canvas(f.cert, { scale: 2.6, useCORS: true, backgroundColor: fundoDe() }); })
+      .then(function(canvas){
+        var pdf = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 297, 210);
+        pdf.save('Certificado - ' + info.evento.nome.replace(/[\\/:*?"<>|]/g, '') + ' - ' + atual.nome + '.pdf');
+      })
+      .catch(function(){ window.print(); })
+      .then(function(){ f.palco.remove(); b.disabled = false; b.textContent = rot; });
+  });
+
+  /* LinkedIn: no celular, folha de compartilhar com a imagem; no computador, a imagem vai para o servidor e o post
+     abre com o link da página do certificado, cuja prévia é a imagem do certificado da pessoa. */
+  var preparo = null;
+  function preparaImagem(d){
+    var f = foraDaTela(d), r = { arquivo: null, enviado: null };
+    preparo = r;
+    r.pronto = libsCanvas().then(function(){ return C.prepara(ctxDe(d)); })
+      .then(function(){ C.ajusta(f.cert); return window.html2canvas(f.cert, { scale: 2, useCORS: true, backgroundColor: fundoDe() }); })
+      .then(function(cv){
+        f.palco.remove();
+        var cor = (info.identidade || {}).cores || {};
+        var o = document.createElement('canvas'); o.width = 1200; o.height = 627;
+        var g = o.getContext('2d'), gr = g.createLinearGradient(0, 0, 1200, 627);
+        gr.addColorStop(0, cor.primaria || '#013e88'); gr.addColorStop(1, cor.secundaria || '#79484e');
+        g.fillStyle = gr; g.fillRect(0, 0, 1200, 627);
+        var h = 563, w = Math.round(h * cv.width / cv.height), x = Math.round((1200 - w) / 2);
+        g.shadowColor = 'rgba(0,0,0,.4)'; g.shadowBlur = 40; g.shadowOffsetY = 14;
+        g.drawImage(cv, x, 32, w, h);
+        r.enviado = DU99.api('imagem', { email: d.email, codigo: d.codigo, imagem: o.toDataURL('image/jpeg', 0.9) }).then(function(j){ return j._ok; });
+        return new Promise(function(ok){ cv.toBlob(function(b){ if (b) { try { r.arquivo = new File([b], 'Certificado.jpg', { type: 'image/jpeg' }); } catch(e) {} } ok(); }, 'image/jpeg', 0.92); });
+      })
+      .catch(function(){ f.palco.remove(); });
+  }
+  function copia(txt){ try { return navigator.clipboard.writeText(txt).then(function(){ return true; }, function(){ return false; }); } catch(e) { return Promise.resolve(false); } }
+  var celular = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  $('copiar').addEventListener('click', function(){
+    copia($('postTxt').value).then(function(ok){
+      if (!ok) { $('postTxt').focus(); $('postTxt').select(); }
+      $('dica').className = 'dica ok'; $('dica').textContent = ok ? 'Texto copiado.' : 'Texto selecionado: copie com Ctrl+C (ou segure e copie, no celular).';
+    });
+  });
+  $('compartilhar').addEventListener('click', function(){
+    if (!atual) return;
+    var t = $('postTxt').value, b = this;
+    copia(t);
+    if (celular && preparo && preparo.arquivo && navigator.canShare && navigator.canShare({ files: [preparo.arquivo] })) {
+      navigator.share({ files: [preparo.arquivo], text: t, title: 'Meu certificado' })
+        .then(function(){ $('dica').className = 'dica ok'; $('dica').textContent = 'Se o LinkedIn não trouxer o texto, ele já está copiado: é só colar no post.'; })
+        .catch(function(){});
+      return;
+    }
+    var url = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(t);
+    var jan = window.open('', '_blank');
+    if (jan) { try { jan.opener = null; jan.document.title = 'Abrindo o LinkedIn…'; jan.document.body.innerHTML = '<p style="font-family:system-ui,sans-serif;padding:40px">Preparando a imagem do seu certificado…</p>'; } catch(e) {} }
+    var rot = b.innerHTML; b.disabled = true;
+    var espera = preparo ? preparo.pronto.then(function(){ return preparo.enviado; }) : Promise.resolve(false);
+    var limite = new Promise(function(ok){ setTimeout(function(){ ok(false); }, 12000); });
+    Promise.race([espera, limite]).then(function(){
+      b.disabled = false; b.innerHTML = rot;
+      if (jan && !jan.closed) jan.location.href = url; else location.href = url;
+      $('dica').className = 'dica ok'; $('dica').textContent = 'O texto também foi copiado, caso precise colar.';
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* Certificado DU99: A4 paisagem (297 × 210 mm), três layouts. As cores e fontes vêm da identidade
+   cadastrada no painel, por variáveis CSS que cert.js aplica em cada certificado. */
+.dc{--c1:#013e88;--c2:#79484e;--c3:#f5a623;--tx:#2f2f37;--bg:#fbfaf7;--ft:'Comfortaa';--fx:'Nunito';
+  width:297mm;height:210mm;position:relative;overflow:hidden;background:var(--bg);color:var(--tx);
+  font-family:var(--fx),system-ui,Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box}
+.dc *{box-sizing:border-box;margin:0;padding:0}
+.dc b{font-weight:700;color:var(--c1)}
+.dc .fundo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dc .nome{font-family:var(--ft),var(--fx),Arial,sans-serif;font-weight:700;color:var(--c1);white-space:nowrap;line-height:1.15}
+.dc .tit{font-family:var(--fx),Arial,sans-serif;font-size:9.4pt;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--c2)}
+.dc .tit2{font-family:var(--ft),Arial,sans-serif;font-weight:700;color:var(--c1);line-height:1.1}
+.dc .abre{font-size:11pt;opacity:.75}
+.dc .txt{font-size:11.6pt;line-height:1.62}
+.dc .temas{font-size:8.2pt;line-height:1.55;opacity:.8}
+.dc .temas strong{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:6.8pt;margin-right:1.6mm;color:var(--c2)}
+.dc .ass{display:flex;gap:9mm;align-items:flex-end}
+.dc .ass>div{width:56mm}
+.dc .ass img{display:block;height:14mm;width:auto;max-width:54mm;object-fit:contain;margin:0 0 -2mm -1mm}
+.dc .ass .lin{border-top:.35mm solid var(--c1);margin-bottom:2mm}
+.dc .ass .an{display:block;font-size:9.6pt;font-weight:700;color:var(--tx)}
+.dc .ass .ac{display:block;font-size:7.8pt;opacity:.7;margin-top:.4mm}
+.dc .val{display:flex;align-items:center;gap:3.2mm}
+.dc .val .qr{width:19mm;height:19mm;background:#fff;padding:1.2mm;border:.3mm solid rgba(0,0,0,.12);border-radius:1.5mm;flex:none}
+.dc .val .qr svg{width:100%;height:100%;display:block}
+.dc .val small{display:block;font-size:6.2pt;letter-spacing:.2em;text-transform:uppercase;opacity:.65}
+.dc .val .cod{display:block;font-size:10.5pt;font-weight:700;letter-spacing:.06em;color:var(--c1);margin-top:.6mm}
+.dc .val .url{display:block;font-size:6.6pt;opacity:.65;margin-top:.8mm}
+.dc .logo{display:block;object-fit:contain;object-position:left center}
+
+/* ---- lateral: faixa de cor à esquerda com logo e fichas ---- */
+.dc.lateral{display:flex}
+.dc.lateral .lado{width:86mm;flex:none;background:var(--c1);color:#fff;position:relative;overflow:hidden;padding:15mm 11mm 12mm 12mm;display:flex;flex-direction:column}
+.dc.lateral .lado .deco{position:absolute;right:-30mm;bottom:-36mm;width:110mm;height:110mm;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--c3),transparent 70%);opacity:.32}
+.dc.lateral .lado .deco2{position:absolute;left:-26mm;top:-30mm;width:80mm;height:80mm;border-radius:50%;background:radial-gradient(circle,var(--c2),transparent 70%);opacity:.5}
+.dc.lateral .lado>*:not(.deco):not(.deco2){position:relative}
+.dc.lateral .lado .logo{width:46mm;height:30mm}
+.dc.lateral .slogan{font-size:8.6pt;line-height:1.45;margin-top:4mm;opacity:.85}
+.dc.lateral .fichas{margin-top:auto;display:flex;flex-direction:column;gap:3.6mm;padding-top:8mm}
+.dc.lateral .ficha{border-top:.3mm solid rgba(255,255,255,.28);padding-top:2.6mm}
+.dc.lateral .ficha small{display:block;font-size:6.4pt;letter-spacing:.2em;text-transform:uppercase;color:var(--c3);font-weight:700}
+.dc.lateral .ficha span{display:block;font-size:9.4pt;line-height:1.35;margin-top:.8mm;font-weight:600}
+.dc.lateral .emissor{margin-top:7mm;font-size:6.6pt;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
+.dc.lateral .corpo{flex:1;min-width:0;position:relative;padding:17mm 17mm 12mm 17mm;display:flex;flex-direction:column}
+.dc.lateral .faixa{position:absolute;left:0;right:0;top:0;height:2.2mm;background:linear-gradient(90deg,var(--c3),var(--c2),var(--c1))}
+.dc.lateral .tit2{font-size:25pt;margin-top:2mm}
+.dc.lateral .abre{margin-top:9mm}
+.dc.lateral .nome{font-size:30pt;margin-top:2mm}
+.dc.lateral .sub{width:46mm;height:1.1mm;border-radius:1mm;background:linear-gradient(90deg,var(--c3),var(--c2));margin-top:4mm}
+.dc.lateral .txt{margin-top:6mm;max-width:172mm}
+.dc.lateral .temas{margin-top:4.5mm;max-width:172mm}
+.dc.lateral .pe{margin-top:auto;display:flex;align-items:flex-end;gap:8mm}
+.dc.lateral .val{margin-left:auto;text-align:right}
+
+/* ---- clássico: centralizado, moldura dupla ---- */
+.dc.classico{padding:11mm}
+.dc.classico .moldura{position:absolute;inset:7mm;border:.9mm solid var(--c1);border-radius:2mm}
+.dc.classico .moldura::after{content:"";position:absolute;inset:2.2mm;border:.3mm solid var(--c2);border-radius:1mm}
+.dc.classico .canto{position:absolute;width:26mm;height:26mm;border-radius:50%;background:radial-gradient(circle,var(--c3),transparent 70%);opacity:.35}
+.dc.classico .corpo{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:9mm 22mm 7mm}
+.dc.classico .logo{height:22mm;width:60mm;object-position:center}
+.dc.classico .tit2{font-size:30pt;margin-top:4mm}
+.dc.classico .tit{margin-top:2mm}
+.dc.classico .abre{margin-top:7mm}
+.dc.classico .nome{font-size:32pt;margin-top:2.5mm}
+.dc.classico .sub{width:60mm;height:.6mm;background:linear-gradient(90deg,transparent,var(--c2),transparent);margin-top:3.5mm}
+.dc.classico .txt{margin-top:5.5mm;max-width:205mm}
+.dc.classico .temas{margin-top:3.5mm;max-width:205mm}
+.dc.classico .pe{margin-top:auto;width:100%;display:flex;justify-content:center;align-items:flex-end;position:relative;min-height:22mm}
+.dc.classico .ass{justify-content:center}
+.dc.classico .ass>div{text-align:center}
+.dc.classico .ass img{margin:0 auto -2mm}
+.dc.classico .val{position:absolute;right:-12mm;bottom:-2mm;text-align:right}
+.dc.classico .val .url{display:none}
+
+/* ---- moderno: faixa no topo, nome grande alinhado à esquerda ---- */
+.dc.moderno{display:flex;flex-direction:column}
+.dc.moderno .topo{height:38mm;flex:none;background:var(--c1);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 17mm;position:relative;overflow:hidden}
+.dc.moderno .topo .deco{position:absolute;right:58mm;top:-40mm;width:90mm;height:90mm;border-radius:50%;background:radial-gradient(circle,var(--c3),transparent 70%);opacity:.35}
+.dc.moderno .topo .logo{height:26mm;width:60mm;position:relative}
+.dc.moderno .topo .rotulo{position:relative;text-align:right}
+.dc.moderno .topo .tit{color:var(--c3)}
+.dc.moderno .topo .tit2{color:#fff;font-size:22pt;margin-top:1.5mm}
+.dc.moderno .corpo{flex:1;position:relative;padding:12mm 17mm 11mm;display:flex;flex-direction:column}
+.dc.moderno .barra{position:absolute;left:0;top:0;bottom:0;width:4mm;background:linear-gradient(180deg,var(--c3),var(--c2))}
+.dc.moderno .nome{font-size:34pt;margin-top:2mm}
+.dc.moderno .txt{margin-top:5mm;max-width:235mm}
+.dc.moderno .temas{margin-top:3.5mm;max-width:235mm}
+.dc.moderno .fichas{display:flex;gap:9mm;margin-top:5mm}
+.dc.moderno .ficha small{display:block;font-size:6.4pt;letter-spacing:.2em;text-transform:uppercase;color:var(--c2);font-weight:700}
+.dc.moderno .ficha span{display:block;font-size:9.4pt;font-weight:600;margin-top:.6mm}
+.dc.moderno .pe{margin-top:auto;display:flex;align-items:flex-end;gap:8mm}
+.dc.moderno .val{margin-left:auto;text-align:right}

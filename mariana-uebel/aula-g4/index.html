@@ -713,7 +713,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)})
       .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,j:j}})})
       .then(function(x){
-        if(x.ok){msg('Respostas enviadas. Obrigada por compartilhar!','ok');btn.textContent='Enviado';try{localStorage.removeItem(KEY)}catch(e){}}
+        if(x.ok){msg('Respostas enviadas. Obrigada por compartilhar!','ok');btn.textContent='Enviado';try{localStorage.removeItem(KEY)}catch(e){}try{if(window.grouConversao)window.grouConversao(corpo)}catch(e){}}
         else{btn.disabled=false;msg(x.j.error||'Não foi possível enviar agora. Tente de novo em instantes.','err')}
       })
       .catch(function(){btn.disabled=false;msg('Sem conexão. Suas respostas continuam aqui; tente de novo.','err')});
@@ -721,4 +721,28 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 })();
 </script>
 
+<script>
+/* Conversões da aula: depois que as respostas são gravadas, quem deixou e-mail vira conversão no RD Station
+   (token público de conversões) e no Compass (chave pública do ativo). Falha aqui não afeta o envio das respostas. */
+(function(){
+  var RD_TOKEN='4542025c5f799c34f0f05368b3d284d6', RD_CONVERSAO='aula-g4-mariana-lideranca-sob-pressao';
+  var COMPASS_URL='https://compass.grougp.com/api/public/mkt/conversao', COMPASS_CHAVE='gp_ZlzkL3yWNbVWyDxwZr8t2';
+  function utm(){var q=new URLSearchParams(location.search),o={};['utm_source','utm_medium','utm_campaign'].forEach(function(k){var v=q.get(k);if(v)o[k]=v.slice(0,120)});return o}
+  function cookie(n){var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):''}
+  function post(url,corpo){return fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo),keepalive:true}).catch(function(){})}
+  window.grouConversao=function(c){
+    var email=String(c.email||'').trim().toLowerCase();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)||c.site)return;
+    var u=utm(), respostas={delegar:c.delegar,sabota:c.sabota,medo:c.medo,crenca:c.crenca,experimento:c.experimento};
+    var resumo=['Quero delegar: '+(c.delegar||'-'),'O que sabota: '+(c.sabota||'-'),'Medo: '+(c.medo||'-'),'Crença: '+(c.crenca||'-'),'Experimento de 30 dias: '+(c.experimento||'-'),'Aceita contato: '+(c.contato_ok?'sim':'não')].join(' | ');
+    var rd={conversion_identifier:RD_CONVERSAO,email:email,tags:['aula-g4','mariana-uebel','lideranca-sob-pressao',c.contato_ok?'aceita-contato':'sem-aceite-contato'],
+      cf_pagina_de_origem:location.href.split('#')[0],cf_self_guru_como_podemos_te_ajudar:resumo.slice(0,1000)};
+    if(c.nome)rd.name=c.nome;
+    if(u.utm_source)rd.traffic_source=u.utm_source;if(u.utm_medium)rd.traffic_medium=u.utm_medium;if(u.utm_campaign)rd.traffic_campaign=u.utm_campaign;
+    try{var t=cookie('rdtrk');if(t)rd.client_tracking_id=JSON.parse(t).id}catch(e){}
+    post('https://api.rd.services/platform/conversions?api_key='+RD_TOKEN,{event_type:'CONVERSION',event_family:'CDP',payload:rd});
+    post(COMPASS_URL,Object.assign({chave:COMPASS_CHAVE,nome:(c.nome||email.split('@')[0]).slice(0,120),email:email,pagina_url:location.href.split('#')[0],aceita_contato:!!c.contato_ok,respostas:respostas,site:''},u));
+  };
+})();
+</script>
 </html>

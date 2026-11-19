@@ -84,6 +84,10 @@
     {
       "source": "/du99/evento/:slug/",
       "destination": "/du99/evento/"
+    },
+    {
+      "source": "/mariana-uebel/lideranca-sob-pressao/",
+      "destination": "/mariana-uebel/aula-g4/"
     }
   ],
   "functions": {

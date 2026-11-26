@@ -1,11 +1,13 @@
 # Rotina diária do blog (para o Claude)
 
-Uma vez por dia: **pesquisa → pauta → post → verificação → publicação**. Leia `estrategia.md` antes de começar. Trabalhe na raiz do repositório.
+Duas vezes por dia (rodada da **manhã** e rodada da **tarde**), cada rodada publica 1 post: **pesquisa → pauta → post → verificação → publicação**. Leia `estrategia.md` antes de começar. Trabalhe na raiz do repositório.
 
 ## 1. Contexto (2 min)
 - `ls conteudo-blog/posts` e leia o cabeçalho (titulo, palavra_chave, categoria) de todos os posts: **não repita palavra-chave nem ângulo**.
 - Leia `conteudo-blog/pauta.md` (ideias guardadas) e a pesquisa dos últimos 3 dias em `conteudo-blog/pesquisa/`.
-- Se já existir post com a data de hoje (`AAAA-MM-DD-*.md`), pare: o post do dia já saiu.
+- Descubra a rodada pela hora de Brasília: antes do meio-dia é a rodada **manhã**, depois é a rodada **tarde**.
+- Se o arquivo da pesquisa de hoje (`conteudo-blog/pesquisa/AAAA-MM-DD.md`) já tiver a seção `# Rodada <manhã|tarde>` desta rodada, pare: o post desta rodada já saiu.
+- Na rodada da tarde, leia o post da manhã: o segundo post do dia precisa ser de **outro pilar** e de outra palavra-chave.
 
 ## 2. Pesquisa do dia (obrigatória)
 Use busca na web. No mínimo 6 buscas, cobrindo:
@@ -14,11 +16,11 @@ Use busca na web. No mínimo 6 buscas, cobrindo:
 3. **Concorrência**: o que ranqueia hoje para a palavra-chave escolhida (títulos, profundidade, o que falta neles). O post precisa cobrir o que eles cobrem **e** trazer algo que eles não trazem (roteiro, exemplo, tabela, dado mais recente).
 4. **Fontes**: abra (leia de fato) as páginas que vai citar. Só cite número com link para a fonte original.
 
-Escolha a pauta pela soma: aderência ao que a empresa vende + intenção de busca clara + chance de ranquear (cauda média/longa) + atualidade. Alterne os pilares ao longo da semana.
+Escolha a pauta pela soma: aderência ao que a empresa vende + intenção de busca clara + chance de ranquear (cauda média/longa) + atualidade. Alterne os pilares ao longo da semana e nunca publique dois posts do mesmo pilar no mesmo dia.
 
-Grave `conteudo-blog/pesquisa/AAAA-MM-DD.md` com:
+Grave em `conteudo-blog/pesquisa/AAAA-MM-DD.md` (crie o arquivo na rodada da manhã; na rodada da tarde, **acrescente** ao final, sem apagar o que já existe) uma seção da rodada:
 ```
-# Pesquisa AAAA-MM-DD
+# Rodada manhã   (ou: # Rodada tarde)
 ## Buscas feitas
 - "termo" → o que apareceu (com links)
 ## Achados do dia

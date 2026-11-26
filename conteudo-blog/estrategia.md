@@ -26,7 +26,7 @@ Cada post mira **uma** palavra-chave principal de um destes clusters. Prefira ca
 | Desenvolvimento e avaliação | PDI; como montar um PDI; avaliação 360; feedback 360; assessment de liderança; resiliência no trabalho; dilemas de gestão | /consulting/pdi-com-pda/, /tecnologias/feedback-360/, /consulting/assessment-40/, /tecnologias/questionario-de-resiliencia/, /tecnologias/dilemas-de-gestao/ |
 | Times e vendas | team building; perfil comportamental em vendas; comunicação entre perfis | /consulting/team-building/, /consulting/vendas-comportamental/, /consulting/comunicacao-comportamento/ |
 
-**Divisão com o blog da Lumi (applumi.io/blog):** NR-1 pelo lado da **liderança e do treinamento** é da Grou. NR-1 pelo lado da **gestão de riscos, PGR, saúde emocional e plataforma** é da Lumi. Não escreva o mesmo tema nos dois.
+**Divisão com o blog do Lumi (applumi.io/blog):** NR-1 pelo lado da **liderança e do treinamento** é da Grou. NR-1 pelo lado da **gestão de riscos, PGR, saúde emocional e plataforma** é do Lumi. Não escreva o mesmo tema nos dois.
 
 ## Links internos (use pelo menos 3 por post, no meio do texto)
 - Início: /

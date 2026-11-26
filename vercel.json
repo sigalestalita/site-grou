@@ -135,6 +135,111 @@
       "source": "/salessprint/",
       "destination": "/demo-pda/?utm_source=salessprint&utm_medium=qrcode&utm_campaign=sales-sprint",
       "permanent": false
+    },
+    {
+      "source": "/conteudos/armadilhas-de-recrutamento-que-elevam-o-turnover-2026",
+      "destination": "/blog/armadilhas-de-recrutamento-turnover/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/como-medir-o-potencial-de-lideranca-de-um-profissional",
+      "destination": "/blog/como-medir-o-potencial-de-lideranca/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/como-e-por-que-mensurar-a-resiliencia-dos-colaboradores",
+      "destination": "/blog/como-mensurar-a-resiliencia-dos-colaboradores/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/como-motivar-colaboradores-pelos-perfis-comportamentais",
+      "destination": "/blog/como-motivar-colaboradores-pelos-perfis-comportamentais/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/redacao-como-preencher-teste-pda",
+      "destination": "/blog/como-preencher-teste-pda/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/competencias-tecnicas-e-comportamentais",
+      "destination": "/blog/competencias-tecnicas-e-comportamentais/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/blog-ferramenta-de-julgamento-gerencial-suas-liderancas-estao-tomando-as-melhores-decisoes",
+      "destination": "/blog/dilemas-de-gestao-julgamento-gerencial/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/gestao-comportamental-o-que-e",
+      "destination": "/blog/gestao-comportamental-o-que-e/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/implantacao-assessment-comportamental-6-etapas-2026",
+      "destination": "/blog/implantacao-assessment-comportamental/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/interpretacao-do-teste-pda",
+      "destination": "/blog/interpretacao-do-teste-pda/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/mapeamento-de-perfil-comportamental-contratacoes",
+      "destination": "/blog/mapeamento-de-perfil-comportamental-contratacoes/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/matriz-9box-mapeamento-talentos-decisoes-rh",
+      "destination": "/blog/matriz-9box/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/o-que-e-devolutiva-de-avaliacao",
+      "destination": "/blog/o-que-e-devolutiva-de-avaliacao/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/o-que-e-teoria-comportamental",
+      "destination": "/blog/o-que-e-teoria-comportamental/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/blog-o-que-faz-um-analista-comportamental",
+      "destination": "/blog/o-que-faz-um-analista-comportamental/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/people-analytics-saiba-quais-kpis-trabalhar-no-seu-negocio",
+      "destination": "/blog/people-analytics-kpis/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/people-analytics-no-rh-a-revolucao-na-gestao-de-pessoas",
+      "destination": "/blog/people-analytics-no-rh/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/rh-data-driven-dados-comportamentais",
+      "destination": "/blog/rh-data-driven-dados-comportamentais/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/sucessao-de-lideranca-como-essa-estrategia-pode-ajudar-sua-empresa-4tgfg",
+      "destination": "/blog/sucessao-de-lideranca/",
+      "permanent": true
+    },
+    {
+      "source": "/categoria/postagens-do-blog",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/conteudos/:slug",
+      "destination": "/blog/",
+      "permanent": false
     }
   ]
 }

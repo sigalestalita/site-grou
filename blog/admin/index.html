@@ -181,9 +181,9 @@ async function ponteLumi() {
   try { await chama('entrar', { token: m[1] }); } catch (e) { if (e.message !== 'sessao') telaEntrar('Não foi possível entrar: ' + e.message); throw e; }
 }
 async function ponteGrou() {
-  // este painel (Grou) também emite o passe para o painel da Lumi
+  // este painel (Grou) também emite o passe para o painel do Lumi
   if (new URLSearchParams(location.search).get('ponte') !== 'lumi' || !CFG.ponte_destino) return false;
-  app.innerHTML = '<div class="carregando">Entrando no painel da Lumi…</div>';
+  app.innerHTML = '<div class="carregando">Entrando no painel do Lumi…</div>';
   const r = await fetch('/api/acesso/?ponte=lumi', { credentials: 'same-origin', cache: 'no-store' });
   if (r.status === 401) { location.replace('/gestao/?volta=' + encodeURIComponent('/blog/admin/?ponte=lumi')); return true; }
   const j = await r.json().catch(() => ({}));

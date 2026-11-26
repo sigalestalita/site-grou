@@ -67,6 +67,12 @@ ${meta.extra || ''}`;
       .replace(/<meta property="og:image[^>]*>\n?/g, '').replace(/<meta name="twitter:(card|image)"[^>]*>\n?/g, '')
       .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g, '')
       .replace('</head>', headExtra + '\n</head>');
+    // menu: o item ativo nas páginas do blog é "Conteúdo"
+    const ini0 = m.indexOf('<ul class="menu">'), fim0 = m.indexOf('</ul>', m.indexOf('href="/blog/">Conteúdo'));
+    if (ini0 > -1 && fim0 > ini0) {
+      const menu = m.slice(ini0, fim0).replace(/ aria-current="page"/g, '').replace('<a class="menu-link" href="/blog/">Conteúdo', '<a class="menu-link" href="/blog/" aria-current="page">Conteúdo');
+      m = m.slice(0, ini0) + menu + m.slice(fim0);
+    }
     const ini = m.indexOf('<main id="conteudo-principal">'), fim = m.indexOf('</main>');
     return m.slice(0, ini) + `<main id="conteudo-principal" class="blog">\n${conteudo}\n` + m.slice(fim);
   }

@@ -69,11 +69,11 @@ Regras (o verificador cobra):
 ```
 node conteudo-blog/motor/publicar.mjs SLUG-DO-POST
 ```
-Isso gera a capa, as páginas (post, listas, categorias), o feed e o sitemap, e roda o verificador. **Corrija todos os ERROS** e reavalie os avisos até passar. Abra `blog/SLUG/index.html` (ou a saída configurada) e confira que o texto renderizou certo.
+Isso gera a capa, as páginas (post, listas, categorias), o feed e o sitemap, e roda o verificador. **Corrija todos os ERROS** e reavalie os avisos até passar. Abra `blog/SLUG/index.html` e confira que o texto renderizou certo.
 
 ## 5. Publicar
 ```
-git add -A conteudo-blog <pasta de saída> <sitemap>
+git add -A conteudo-blog blog sitemap.xml
 git commit -m "Blog: <título do post>"
 git push origin HEAD:main
 ```

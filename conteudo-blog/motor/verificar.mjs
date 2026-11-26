@@ -37,7 +37,8 @@ for (const p of posts) {
   if (!/^[a-z0-9-]{8,80}$/.test(p.slug)) e.push('slug inválido');
   if (todos.filter((o) => o.slug === p.slug).length > 1) e.push('slug repetido');
   if (todos.filter((o) => o.slug !== p.slug && kw && norm(o.palavra_chave) === kw).length) a.push('outra matéria já usa a mesma palavra-chave (risco de canibalização)');
-  for (const t of regras.proibidos) if (norm(p.corpo + ' ' + p.titulo).includes(norm(t))) e.push(`expressão proibida: "${t}"`);
+  const textoNorm = ' ' + norm(p.corpo + ' ' + p.titulo).replace(/[^a-z0-9]+/g, ' ') + ' ';
+  for (const t of regras.proibidos) if (textoNorm.includes(' ' + norm(t).replace(/[^a-z0-9]+/g, ' ').trim() + ' ')) e.push(`expressão proibida: "${t}"`);
   if (/como (um|uma) (ia|modelo de linguagem|assistente)/i.test(p.corpo)) e.push('texto com marca de IA');
   if (p.status === 'publicado' && !existsSync(join(RAIZ, site.saida, p.slug, 'capa.jpg'))) a.push('sem capa (rode motor/capa.cjs)');
   if (e.length || a.length) {

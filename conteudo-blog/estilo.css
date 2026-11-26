@@ -55,3 +55,5 @@
 .bp-vazio{padding:40px 0 80px;color:var(--tinta-suave)}
 @media (max-width:980px){.bp-grade{grid-template-columns:minmax(0,1fr);gap:0}.bp-sumario{position:static;margin-bottom:28px}.bp-lista{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.bp-lista{grid-template-columns:minmax(0,1fr)}.bp-corpo{font-size:17px}.bp-cta{padding:24px}}
+.blog .bp-grade{padding-bottom:80px}
+.bp-corpo a.bp-botao{text-decoration:none;color:var(--azul-noite)}

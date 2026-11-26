@@ -1,9 +1,10 @@
 ---
-titulo: Como montar um PDI que sai do papel (com exemplo de líder preenchido)
+titulo: Como montar um PDI que sai do papel (com exemplo)
 titulo_seo: Como montar um PDI que sai do papel (com exemplo)
 descricao: Aprenda como montar um PDI em 6 passos, com exemplo preenchido de um líder, critério de evidência e um ritual mensal de 20 minutos para ele não morrer na gaveta.
 slug: como-montar-um-pdi
 data: 2026-11-25
+atualizado: 2026-11-25
 categoria: Desenvolvimento
 palavra_chave: como montar um PDI
 tags: [PDI, desenvolvimento de lideranças, feedback, 70-20-10]

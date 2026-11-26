@@ -112,6 +112,11 @@
   },
   "redirects": [
     {
+      "source": "/conteudo",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
       "source": "/convite/:codigo/",
       "destination": "/evento/nr1-estrategica/?cupom=:codigo&utm_source=convite&utm_medium=card&utm_campaign=:codigo",
       "permanent": false

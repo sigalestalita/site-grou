@@ -1,7 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "node conteudo-blog/motor/gerar.mjs && rm -rf conteudo-blog",
+  "buildCommand": "node conteudo-blog/motor/vercel-build.mjs",
+  "outputDirectory": "public",
   "trailingSlash": true,
   "headers": [
     {

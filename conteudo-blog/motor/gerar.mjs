@@ -243,6 +243,26 @@ ${posts.slice(0, 20).map((p) => `<item><title>${esc(p.titulo)}</title><link>${ur
   sm = sm.replace('</urlset>', `  <!-- blog:inicio -->\n${bloco}\n  <!-- blog:fim -->\n</urlset>`);
   writeFileSync(smArq, sm);
 
+  // painel de gestão (/blog/admin/): página, leitor de Markdown, logo da capa e configuração
+  if (site.painel) {
+    const adm = join(SAIDA, 'admin');
+    mkdirSync(adm, { recursive: true });
+    copyFileSync(join(BASE, 'motor', 'painel.html'), join(adm, 'index.html'));
+    copyFileSync(join(BASE, 'motor', 'markdown.mjs'), join(adm, 'markdown.mjs'));
+    const logo = site.capa && site.capa.logo_arquivo;
+    if (logo) copyFileSync(join(BASE, logo), join(adm, 'logo-capa' + logo.slice(logo.lastIndexOf('.'))));
+    const todas = carregarPosts({ incluirRascunhos: true });
+    const cfg = {
+      nome: site.nome, dominio: site.dominio, url_base: URLB, saida: site.saida, posts_dir: 'conteudo-blog/posts',
+      autor_padrao: site.autor_padrao, dominios_internos: site.dominios_internos, regras: site.regras,
+      categorias: [...new Set([...(site.categorias || []), ...todas.map((p) => p.categoria)])],
+      capa: { ...site.capa, fonte_titulo_canvas: site.capa.fonte_titulo, fonte_texto_canvas: site.capa.fonte_texto },
+      capa_logo: logo ? 'logo-capa' + logo.slice(logo.lastIndexOf('.')) : null, fonte_google: site.capa.fonte_google,
+      ...site.painel,
+    };
+    writeFileSync(join(adm, 'config.json'), JSON.stringify(cfg, null, 1));
+  }
+
   return { posts: posts.length, categorias: categorias.length };
 }
 

@@ -1,6 +1,7 @@
 const c = require('./_comum');
 const db = require('./_db');
 const sessao = require('./_sessao');
+const ponte = require('./_ponte');
 
 const MAX_FALHAS = 5, BLOQUEIO_MIN = 15;
 
@@ -9,7 +10,11 @@ module.exports = async (req, res) => {
   if (!db.ativo()) return c.responde(res, 503, { erro: 'Acesso indisponível no momento.' });
 
   if (req.method === 'GET') {
+    const q = new URL(req.url, 'http://x').searchParams;
+    /* ponte de login para o painel do blog da Lumi */
+    if (q.get('chave') === 'ponte') return c.responde(res, 200, { publica: ponte.publica() });
     const u = await sessao.usuario(req);
+    if (q.get('ponte') === 'lumi') return u ? c.responde(res, 200, { token: ponte.assina({ e: u.email, n: u.nome || '', s: 'lumi' }) }) : c.responde(res, 401, { erro: 'Entre primeiro.' });
     return u ? c.responde(res, 200, { logado: true, email: u.email, nome: u.nome || '' }) : c.responde(res, 401, { logado: false });
   }
   if (req.method !== 'POST') return c.responde(res, 405, { erro: 'Método não permitido.' });

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /blog/admin/
+Disallow: /gestao/
 
 Sitemap: https://grougp.com.br/sitemap.xml

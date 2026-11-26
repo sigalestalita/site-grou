@@ -4,6 +4,7 @@ const sessao = require('./_sessao');
 const correio = require('./_email');
 const guia = require('./_email_guia');
 const entregas = require('./_entregas');
+const blog = require('./_blog_core').criaBlog({ repoPadrao: 'sigalestalita/site-grou', saida: 'blog' });
 
 const EMAIL_OK = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const confirmada = (i) => (i.tipo === 'convidado' && i.status === 'confirmado') || (i.tipo === 'pagante' && i.status === 'pago');
@@ -14,6 +15,12 @@ module.exports = async (req, res) => {
   const u = await sessao.usuario(req);
   if (!u) return c.responde(res, 401, { erro: 'Sessão expirada. Entre de novo.' });
   if (req.method === 'POST' && !c.origemPermitida(req)) return c.responde(res, 403, { erro: 'Origem não permitida.' });
+  /* painel do blog (/blog/admin/): mesmo login da gestão */
+  if (/[?&]recurso=blog(&|$)/.test(req.url || '')) {
+    const corpo = req.method === 'POST' ? c.corpoJson(req) : {};
+    if (corpo.acao === 'sair') { sessao.saiu(res); return c.responde(res, 200, { ok: true }); }
+    return blog.trata(req, res, u, c.responde, corpo);
+  }
   try {
     if (req.method === 'POST') {
       const b = c.corpoJson(req);

@@ -1,0 +1,65 @@
+{
+ "nome": "Grou",
+ "dominio": "https://grougp.com.br",
+ "url_base": "/blog/",
+ "saida": "blog",
+ "posts_dir": "conteudo-blog/posts",
+ "autor_padrao": "Equipe Grou",
+ "dominios_internos": [
+  "grougp.com.br",
+  "grougp.com"
+ ],
+ "regras": {
+  "palavras_min": 1100,
+  "links_internos_min": 3,
+  "fontes_min": 3,
+  "proibidos": [
+   "garantimos resultados",
+   "100% garantido",
+   "cura",
+   "diagnóstico de transtorno",
+   "como mencionado anteriormente",
+   "em resumo, podemos concluir",
+   "no mundo atual",
+   "nos dias de hoje",
+   "mergulhar",
+   "desvendar"
+  ]
+ },
+ "categorias": [
+  "Liderança",
+  "Análise comportamental",
+  "NR-1 e liderança",
+  "Recrutamento e seleção",
+  "Clima e engajamento",
+  "Desenvolvimento",
+  "Times e vendas"
+ ],
+ "capa": {
+  "fonte_google": "Poppins:wght@400;600&family=Montserrat:wght@600;700",
+  "fonte_titulo": "'Poppins',sans-serif",
+  "fonte_texto": "'Montserrat',sans-serif",
+  "peso_titulo": 600,
+  "fundo": "#07033a",
+  "fundo2": "#120573",
+  "brilho": "rgba(108,216,207,.32)",
+  "brilho2": "rgba(0,85,255,.35)",
+  "destaque": "#6cd8cf",
+  "texto": "#ffffff",
+  "logo_arquivo": "logo-capa.svg",
+  "logo_altura": 44,
+  "fonte_titulo_canvas": "'Poppins',sans-serif",
+  "fonte_texto_canvas": "'Montserrat',sans-serif"
+ },
+ "capa_logo": "logo-capa.svg",
+ "fonte_google": "Poppins:wght@400;600&family=Montserrat:wght@600;700",
+ "api": "/api/gestao/?recurso=blog",
+ "login": {
+  "tipo": "gestao",
+  "url": "/gestao/?volta=/blog/admin/"
+ },
+ "ponte_destino": "https://applumi.io/blog/admin/",
+ "cor": "#120573",
+ "cor_texto": "#ffffff",
+ "fonte_painel": "'Poppins',sans-serif"
+}

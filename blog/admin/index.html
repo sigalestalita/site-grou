@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel do blog</title>
+<link rel="icon" href="data:,">
+<style>
+:root{--fundo:#f5f6fa;--cartao:#fff;--tinta:#151a2d;--suave:#5b6478;--tenue:#8b93a7;--linha:#e3e6ee;--cor:#1f3a93;--cor-texto:#fff;--ok:#1d7a46;--ok-fundo:#e5f5ec;--aviso:#9a6200;--aviso-fundo:#fff4dc;--erro:#b42318;--erro-fundo:#fdecea;--agenda:#5b3cc4;--agenda-fundo:#efeafd;--raio:12px;--fonte:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--fonte-titulo:var(--fonte)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--fundo);color:var(--tinta);font:15px/1.5 var(--fonte);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--cor)}
+[hidden]{display:none!important}
+.topo{position:sticky;top:0;z-index:20;background:var(--cartao);border-bottom:1px solid var(--linha)}
+.topo-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px max(16px,env(safe-area-inset-left,0px));min-height:60px}
+.marca{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;color:var(--tinta)}
+.marca img{height:24px}
+.marca small{font-weight:500;color:var(--tenue);font-size:13px;border-left:1px solid var(--linha);padding-left:10px}
+.topo .esp{flex:1}
+.quem{font-size:13px;color:var(--suave)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--linha);background:var(--cartao);border-radius:10px;padding:8px 14px;cursor:pointer;text-decoration:none;color:var(--tinta);font-weight:500;white-space:nowrap}
+.btn:hover{border-color:var(--suave)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.pri{background:var(--cor);border-color:var(--cor);color:var(--cor-texto)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.perigo{color:var(--erro);border-color:#f1c2bd}
+.btn.mini{padding:5px 10px;font-size:13px;border-radius:8px}
+.pagina{max-width:1280px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-left,0px)) 80px}
+h1{font-family:var(--fonte-titulo);font-size:26px;line-height:1.2;margin:0}
+.cab{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px}
+.cab .esp{flex:1}
+.resumo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.num{background:var(--cartao);border:1px solid var(--linha);border-radius:var(--raio);padding:14px 16px}
+.num b{display:block;font-size:24px;line-height:1.1}
+.num span{font-size:13px;color:var(--suave)}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.abas{display:flex;gap:4px;max-width:100%;overflow-x:auto;background:var(--cartao);border:1px solid var(--linha);border-radius:10px;padding:3px}
+.abas button{border:0;background:none;padding:6px 12px;border-radius:8px;cursor:pointer;color:var(--suave);font-weight:500}
+.abas button[aria-pressed=true]{background:var(--cor);color:var(--cor-texto)}
+.busca{flex:1;min-width:180px;max-width:360px;border:1px solid var(--linha);border-radius:10px;padding:8px 12px;background:var(--cartao)}
+.tabela{background:var(--cartao);border:1px solid var(--linha);border-radius:var(--raio);overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--linha);vertical-align:middle}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);font-weight:600;background:#fafbfd}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:#fafbff}
+.t-tit{font-weight:600}
+.t-slug{font-size:12.5px;color:var(--tenue)}
+.selo{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.selo.publicado{background:var(--ok-fundo);color:var(--ok)}
+.selo.agendado{background:var(--agenda-fundo);color:var(--agenda)}
+.selo.rascunho{background:#eef0f4;color:var(--suave)}
+.vazio{padding:40px;text-align:center;color:var(--suave)}
+/* agenda */
+.agenda{background:var(--cartao);border:1px solid var(--linha);border-radius:var(--raio);padding:14px}
+.ag-cab{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ag-cab strong{flex:1;text-align:center;text-transform:capitalize}
+.ag-grade{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.ag-dsem{font-size:11px;text-transform:uppercase;color:var(--tenue);text-align:center;padding:4px 0}
+.ag-dia{min-height:92px;border:1px solid var(--linha);border-radius:8px;padding:6px;font-size:12px;background:#fff;display:flex;flex-direction:column;gap:4px;min-width:0}
+.ag-dia.fora{background:#fafbfc;color:var(--tenue)}
+.ag-dia.hoje{border-color:var(--cor);box-shadow:inset 0 0 0 1px var(--cor)}
+.ag-dia .n{font-weight:600}
+.ag-post{display:block;border-radius:6px;padding:3px 6px;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;border:0;text-align:left;font-size:12px}
+.ag-post.publicado{background:var(--ok-fundo);color:var(--ok)}
+.ag-post.agendado{background:var(--agenda-fundo);color:var(--agenda)}
+.ag-post.rascunho{background:#eef0f4;color:var(--suave)}
+/* editor */
+.ed{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.caixa{background:var(--cartao);border:1px solid var(--linha);border-radius:var(--raio);padding:18px}
+.caixa h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);margin:0 0 12px}
+.campo{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.campo>span{font-size:13px;font-weight:600;color:var(--suave);display:flex;justify-content:space-between;gap:8px}
+.campo>span em{font-style:normal;font-weight:500;color:var(--tenue)}
+.campo>span em.ruim{color:var(--aviso)}
+.campo input,.campo select,.campo textarea{border:1px solid var(--linha);border-radius:10px;padding:9px 11px;background:#fff;width:100%}
+.campo input:focus,.campo select:focus,.campo textarea:focus,.busca:focus{outline:2px solid color-mix(in srgb,var(--cor) 35%,transparent);border-color:var(--cor)}
+.campo textarea{resize:vertical}
+.titulo-grande{font-size:20px!important;font-weight:600}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.corpo-abas{display:flex;gap:4px;margin-bottom:8px}
+.corpo-abas button{border:1px solid var(--linha);background:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:13px}
+.corpo-abas button[aria-pressed=true]{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+#corpo{min-height:560px;font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2}
+.ajuda{font-size:12.5px;color:var(--tenue);margin:6px 0 0}
+.previa{border:1px solid var(--linha);border-radius:10px;padding:8px 26px 26px;min-height:560px;max-height:75vh;overflow:auto;font-size:16.5px;line-height:1.7}
+.previa h2{font-family:var(--fonte-titulo);font-size:24px;line-height:1.25;margin:32px 0 10px}
+.previa h3{font-size:19px;margin:24px 0 8px}
+.previa table{min-width:0;font-size:14px}
+.previa .tabela-rolagem{overflow:auto;border:1px solid var(--linha);border-radius:8px;margin:0 0 16px}
+.previa .destaque{background:#f0f6ff;border-radius:10px;padding:14px 16px;margin:18px 0}
+.previa .destaque strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--suave)}
+.previa .destaque p{margin:4px 0 0}
+.previa blockquote{border-left:4px solid var(--linha);margin:16px 0;padding:2px 0 2px 16px;color:var(--suave)}
+.lado{display:flex;flex-direction:column;gap:18px;position:sticky;top:78px}
+.acoes{display:flex;flex-direction:column;gap:8px}
+.acoes .linha{display:flex;gap:8px;flex-wrap:wrap}
+.acoes .btn{flex:1}
+.estado{font-size:13.5px;color:var(--suave);margin:0 0 10px}
+.estado b{color:var(--tinta)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:13.5px}
+.checks li{display:flex;gap:8px;align-items:flex-start}
+.checks li::before{content:"";flex:none;width:16px;height:16px;border-radius:50%;margin-top:2px;background:var(--ok-fundo);box-shadow:inset 0 0 0 4px var(--ok)}
+.checks li.aviso::before{background:var(--aviso-fundo);box-shadow:inset 0 0 0 4px var(--aviso)}
+.checks li.erro::before{background:var(--erro-fundo);box-shadow:inset 0 0 0 4px var(--erro)}
+.capa canvas,.capa img{width:100%;height:auto;border-radius:10px;display:block;background:#ddd}
+.capa label{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--suave);margin-top:8px}
+.aviso-caixa{background:var(--aviso-fundo);color:#6b4500;border-radius:10px;padding:10px 12px;font-size:13.5px}
+.erro-caixa{background:var(--erro-fundo);color:var(--erro);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.confirma{background:var(--erro-fundo);border-radius:10px;padding:12px;font-size:13.5px;display:flex;flex-direction:column;gap:8px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tinta);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);z-index:50;max-width:min(560px,calc(100vw - 32px));font-size:14px}
+.toast.erro{background:var(--erro)}
+.carregando{padding:60px;text-align:center;color:var(--suave)}
+.entrar{max-width:420px;margin:12vh auto;background:var(--cartao);border:1px solid var(--linha);border-radius:16px;padding:28px;text-align:center}
+.entrar p{color:var(--suave)}
+@media (max-width:1000px){.ed{grid-template-columns:minmax(0,1fr)}.lado{position:static}.resumo{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.duas{grid-template-columns:1fr}.ag-dia{min-height:64px}.ag-post{font-size:10.5px;padding:2px 4px}.topo .quem{display:none}}
+</style>
+</head>
+<body>
+<header class="topo"><div class="topo-in">
+  <a class="marca" href="./" id="marca"><img id="logo-topo" alt="" hidden><span id="nome-site">Blog</span><small>Painel do blog</small></a>
+  <span class="esp"></span>
+  <span class="quem" id="quem"></span>
+  <a class="btn mini" id="ver-blog" href="../" target="_blank" rel="noopener">Ver blog</a>
+  <button class="btn mini" id="sair" type="button" hidden>Sair</button>
+</div></header>
+
+<main class="pagina" id="app"><div class="carregando">Carregando…</div></main>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script type="module">
+import { markdown, lerPost, slugify, esc } from './markdown.mjs';
+
+const $ = (s, el = document) => el.querySelector(s);
+const app = $('#app');
+const CFG = await fetch('./config.json', { cache: 'no-store' }).then((r) => r.json());
+const API = (acao) => CFG.api + (CFG.api.includes('?') ? '&' : '?') + 'acao=' + acao;
+const hoje = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10);
+const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const dataBR = (d) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(d || '')) return '—'; const [a, m, dia] = d.split('-').map(Number); return `${String(dia).padStart(2, '0')}/${String(m).padStart(2, '0')}/${a}`; };
+const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+document.documentElement.style.setProperty('--cor', CFG.cor || '#1f3a93');
+document.documentElement.style.setProperty('--cor-texto', CFG.cor_texto || '#fff');
+if (CFG.fonte_google) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=' + CFG.fonte_google + '&display=swap'; document.head.appendChild(l); }
+if (CFG.fonte_painel) document.documentElement.style.setProperty('--fonte-titulo', CFG.fonte_painel);
+$('#nome-site').textContent = CFG.nome;
+document.title = 'Painel do blog · ' + CFG.nome;
+$('#ver-blog').href = CFG.url_base;
+$('#marca').href = CFG.url_base + 'admin/';
+
+// ---------- toast ----------
+let tToast;
+function toast(msg, erro) { const t = $('#toast'); t.textContent = msg; t.className = 'toast' + (erro ? ' erro' : ''); t.hidden = false; clearTimeout(tToast); tToast = setTimeout(() => (t.hidden = true), erro ? 9000 : 6000); }
+
+// ---------- API ----------
+async function chama(acao, corpo) {
+  const r = await fetch(API(acao), corpo ? { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ acao, ...corpo }) } : { credentials: 'same-origin', cache: 'no-store' });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401) { telaEntrar(); throw new Error('sessao'); }
+  if (!r.ok) { const e = new Error(j.erro || 'Erro ' + r.status); e.status = r.status; throw e; }
+  return j;
+}
+
+// ---------- login ----------
+function telaEntrar(msg) {
+  const url = CFG.login.url;
+  if (CFG.login.tipo === 'gestao') { location.replace(url); return; }
+  app.innerHTML = `<div class="entrar"><h1>Painel do blog</h1><p>${esc(msg || 'Entre com a sua conta do painel da Grou (o mesmo e-mail e senha da área /gestao).')}</p><a class="btn pri" href="${esc(url)}">Entrar</a></div>`;
+}
+async function ponteLumi() {
+  // chegada da Grou com o passe assinado
+  const m = location.hash.match(/ponte=([\w.-]+)/);
+  if (!m) return;
+  history.replaceState(null, '', location.pathname);
+  try { await chama('entrar', { token: m[1] }); } catch (e) { if (e.message !== 'sessao') telaEntrar('Não foi possível entrar: ' + e.message); throw e; }
+}
+async function ponteGrou() {
+  // este painel (Grou) também emite o passe para o painel da Lumi
+  if (new URLSearchParams(location.search).get('ponte') !== 'lumi' || !CFG.ponte_destino) return false;
+  app.innerHTML = '<div class="carregando">Entrando no painel da Lumi…</div>';
+  const r = await fetch('/api/acesso/?ponte=lumi', { credentials: 'same-origin', cache: 'no-store' });
+  if (r.status === 401) { location.replace('/gestao/?volta=' + encodeURIComponent('/blog/admin/?ponte=lumi')); return true; }
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || !j.token) { app.innerHTML = `<div class="entrar"><h1>Não foi possível</h1><p>${esc(j.erro || 'Tente de novo.')}</p></div>`; return true; }
+  location.replace(CFG.ponte_destino + '#ponte=' + j.token);
+  return true;
+}
+
+// ---------- estado ----------
+let POSTS = [];   // {caminho, sha, texto, dados, corpo, slug, data, status, estado}
+let CAPAS = new Set();
+let filtro = 'todos', busca = '', mesAgenda = hoje().slice(0, 7), visao = 'lista';
+const CACHE = 'blog-painel:' + CFG.nome;
+const cacheLe = () => { try { return JSON.parse(localStorage.getItem(CACHE) || '{}'); } catch { return {}; } };
+const cacheGrava = (c) => { try { localStorage.setItem(CACHE, JSON.stringify(c)); } catch { /* sem cache */ } };
+
+function estadoDe(d) {
+  if ((d.status || 'publicado') !== 'publicado') return 'rascunho';
+  return (d.data || '') > hoje() ? 'agendado' : 'publicado';
+}
+function montaPost(caminho, sha, texto) {
+  let dados = {}, corpo = '';
+  try { ({ dados, corpo } = lerPost(texto)); } catch { corpo = texto; }
+  const nome = caminho.split('/').pop();
+  const slug = dados.slug || slugify(dados.titulo || nome.replace(/^\d{4}-\d{2}-\d{2}-|\.md$/g, ''));
+  const data = dados.data || nome.slice(0, 10);
+  return { caminho, sha, texto, dados, corpo, slug, data, estado: estadoDe({ ...dados, data }) };
+}
+async function carrega() {
+  const j = await chama('lista');
+  CAPAS = new Set(j.capas || []);
+  const cache = cacheLe(), novo = {};
+  const faltam = j.arquivos.filter((a) => !cache[a.sha]).map((a) => a.caminho);
+  for (let i = 0; i < faltam.length; i += 40) {
+    const r = await chama('ler', { caminhos: faltam.slice(i, i + 40) });
+    for (const [c, v] of Object.entries(r.arquivos)) cache[v.sha] = v.texto;
+  }
+  POSTS = j.arquivos.map((a) => { novo[a.sha] = cache[a.sha]; return montaPost(a.caminho, a.sha, cache[a.sha] || ''); })
+    .sort((a, b) => (b.data + b.slug).localeCompare(a.data + a.slug));
+  cacheGrava(novo);
+}
+
+// ---------- lista ----------
+function telaLista() {
+  history.replaceState(null, '', location.pathname);
+  const n = { publicado: 0, agendado: 0, rascunho: 0 };
+  POSTS.forEach((p) => n[p.estado]++);
+  const proximo = POSTS.filter((p) => p.estado === 'agendado').map((p) => p.data).sort()[0];
+  app.innerHTML = `
+  <div class="cab"><h1>Posts do blog</h1><span class="esp"></span>
+    <div class="abas" role="group" aria-label="Visão"><button type="button" data-visao="lista" aria-pressed="${visao === 'lista'}">Lista</button><button type="button" data-visao="agenda" aria-pressed="${visao === 'agenda'}">Agenda</button></div>
+    <button class="btn pri" id="novo" type="button">+ Novo post</button></div>
+  <div class="resumo">
+    <div class="num"><b>${POSTS.length}</b><span>posts no total</span></div>
+    <div class="num"><b>${n.publicado}</b><span>publicados</span></div>
+    <div class="num"><b>${n.agendado}</b><span>agendados${proximo ? ' · próximo ' + dataBR(proximo) : ''}</span></div>
+    <div class="num"><b>${n.rascunho}</b><span>rascunhos (fora do ar)</span></div>
+  </div>
+  <div id="corpo-lista"></div>`;
+  app.querySelectorAll('[data-visao]').forEach((b) => b.onclick = () => { visao = b.dataset.visao; telaLista(); });
+  $('#novo').onclick = () => abreEditor(null);
+  visao === 'agenda' ? desenhaAgenda() : desenhaTabela();
+}
+function desenhaTabela() {
+  const alvo = $('#corpo-lista');
+  alvo.innerHTML = `<div class="barra">
+    <div class="abas" role="group" aria-label="Filtro">${[['todos', 'Todos'], ['publicado', 'Publicados'], ['agendado', 'Agendados'], ['rascunho', 'Rascunhos']].map(([k, t]) => `<button type="button" data-f="${k}" aria-pressed="${filtro === k}">${t}</button>`).join('')}</div>
+    <input class="busca" id="busca" type="search" placeholder="Buscar por título, palavra-chave ou categoria" value="${esc(busca)}"></div>
+  <div class="tabela"><table><thead><tr><th>Data</th><th>Título</th><th>Categoria</th><th>Status</th><th></th></tr></thead><tbody id="linhas"></tbody></table></div>`;
+  alvo.querySelectorAll('[data-f]').forEach((b) => b.onclick = () => { filtro = b.dataset.f; desenhaTabela(); });
+  const inp = $('#busca'); inp.oninput = () => { busca = inp.value; linhas(); };
+  linhas();
+}
+function linhas() {
+  const q = norm(busca);
+  const lista = POSTS.filter((p) => (filtro === 'todos' || p.estado === filtro) && (!q || norm([p.dados.titulo, p.dados.palavra_chave, p.dados.categoria, p.slug].join(' ')).includes(q)));
+  const tb = $('#linhas');
+  if (!lista.length) { tb.innerHTML = `<tr><td colspan="5" class="vazio">Nenhum post aqui.</td></tr>`; return; }
+  tb.innerHTML = lista.map((p) => `<tr data-c="${esc(p.caminho)}">
+    <td>${dataBR(p.data)}</td>
+    <td><div class="t-tit">${esc(p.dados.titulo || '(sem título)')}</div><div class="t-slug">/${esc(p.slug)}/ · ${esc(p.dados.palavra_chave || 'sem palavra-chave')}</div></td>
+    <td>${esc(p.dados.categoria || '—')}</td>
+    <td><span class="selo ${p.estado}">${{ publicado: 'Publicado', agendado: 'Agendado', rascunho: 'Rascunho' }[p.estado]}</span></td>
+    <td>${p.estado === 'publicado' ? `<a class="btn mini" href="${CFG.url_base}${esc(p.slug)}/" target="_blank" rel="noopener" data-ver>Ver</a>` : ''}</td></tr>`).join('');
+  tb.querySelectorAll('tr[data-c]').forEach((tr) => tr.onclick = (e) => { if (e.target.closest('[data-ver]')) return; abreEditor(POSTS.find((p) => p.caminho === tr.dataset.c)); });
+}
+function desenhaAgenda() {
+  const [a, m] = mesAgenda.split('-').map(Number);
+  const primeiro = new Date(Date.UTC(a, m - 1, 1));
+  const ini = new Date(primeiro); ini.setUTCDate(1 - primeiro.getUTCDay());
+  const dias = [];
+  for (let i = 0; i < 42; i++) { const d = new Date(ini); d.setUTCDate(ini.getUTCDate() + i); dias.push(d.toISOString().slice(0, 10)); }
+  const porDia = {}; POSTS.forEach((p) => (porDia[p.data] ||= []).push(p));
+  const h = hoje();
+  $('#corpo-lista').innerHTML = `<div class="agenda"><div class="ag-cab"><button class="btn mini" id="ant" type="button" aria-label="Mês anterior">‹</button><strong>${MESES[m - 1]} de ${a}</strong><button class="btn mini" id="prox" type="button" aria-label="Próximo mês">›</button></div>
+  <div class="ag-grade">${['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'].map((d) => `<div class="ag-dsem">${d}</div>`).join('')}
+  ${dias.map((d) => `<div class="ag-dia${d.slice(0, 7) !== mesAgenda ? ' fora' : ''}${d === h ? ' hoje' : ''}"><span class="n">${Number(d.slice(8))}</span>${(porDia[d] || []).map((p) => `<button type="button" class="ag-post ${p.estado}" data-c="${esc(p.caminho)}" title="${esc(p.dados.titulo || '')}">${esc(p.dados.titulo || p.slug)}</button>`).join('')}</div>`).join('')}</div>
+  <p class="ajuda">Para agendar, crie ou abra um post e escolha uma data futura. Posts agendados entram no ar na manhã do dia marcado, junto com a publicação diária.</p></div>`;
+  $('#ant').onclick = () => { const d = new Date(Date.UTC(a, m - 2, 1)); mesAgenda = d.toISOString().slice(0, 7); desenhaAgenda(); };
+  $('#prox').onclick = () => { const d = new Date(Date.UTC(a, m, 1)); mesAgenda = d.toISOString().slice(0, 7); desenhaAgenda(); };
+  $('#corpo-lista').querySelectorAll('[data-c]').forEach((b) => b.onclick = () => abreEditor(POSTS.find((p) => p.caminho === b.dataset.c)));
+}
+
+// ---------- editor ----------
+const MODELO = `Primeiro parágrafo: responda a dúvida principal em 2 ou 3 frases, já com a palavra-chave.
+
+## Primeira seção
+
+Texto.
+
+## Segunda seção
+
+Texto com um [link interno](/).
+
+## Terceira seção
+
+## Quarta seção
+
+## Perguntas frequentes
+
+### Primeira pergunta?
+
+Resposta.
+
+### Segunda pergunta?
+
+Resposta.
+
+### Terceira pergunta?
+
+Resposta.`;
+
+function serializa(d, corpo) {
+  const limpa = (v) => String(v ?? '').replace(/[\r\n]+/g, ' ').trim();
+  const ordem = ['titulo', 'titulo_seo', 'descricao', 'slug', 'data', 'atualizado', 'categoria', 'palavra_chave', 'tags', 'autor', 'status', 'fontes'];
+  const chaves = [...ordem.filter((k) => d[k] !== undefined && d[k] !== ''), ...Object.keys(d).filter((k) => !ordem.includes(k) && /^[a-z_]+$/.test(k))];
+  const linhas = [];
+  for (const k of chaves) {
+    const v = d[k];
+    if (k === 'tags') { if (v.length) linhas.push(`tags: [${v.map(limpa).join(', ')}]`); continue; }
+    if (Array.isArray(v)) { if (!v.length) continue; linhas.push(`${k}:`); v.forEach((x) => linhas.push(`  - ${limpa(x)}`)); continue; }
+    linhas.push(`${k}: ${limpa(v)}`);
+  }
+  return `---\n${linhas.join('\n')}\n---\n${corpo.replace(/\r/g, '').trim()}\n`;
+}
+
+function checagens(d, corpo) {
+  const r = CFG.regras || {}, out = [];
+  const kw = norm(d.palavra_chave);
+  const conv = markdown(corpo, { dominios: CFG.dominios_internos || [] });
+  const palavras = corpo.replace(/[#>*|`\-\[\]()]/g, ' ').split(/\s+/).filter(Boolean).length;
+  const primeiro = norm(corpo.split(/\n\s*\n/).find((b) => b.trim() && !b.startsWith('#')) || '');
+  const internos = conv.internos.filter((u) => u.startsWith('/') || (CFG.dominios_internos || []).some((x) => u.includes(x)));
+  const fontes = (d.fontes || []).filter(Boolean);
+  const add = (nivel, txt) => out.push({ nivel, txt });
+  add(d.titulo ? 'ok' : 'erro', d.titulo ? 'Título preenchido' : 'Falta o título');
+  const ts = (d.titulo_seo || d.titulo || '').length;
+  add(ts && ts <= 60 ? 'ok' : 'aviso', `Título para o Google com ${ts} caracteres (ideal até 60)`);
+  const dl = (d.descricao || '').length;
+  add(dl >= 120 && dl <= 160 ? 'ok' : 'aviso', `Descrição com ${dl} caracteres (ideal 120 a 160)`);
+  add(kw ? 'ok' : 'erro', kw ? 'Palavra-chave definida' : 'Falta a palavra-chave');
+  if (kw) {
+    add(norm(d.titulo).includes(kw) || norm(d.titulo_seo).includes(kw) ? 'ok' : 'aviso', 'Palavra-chave no título');
+    add(primeiro.includes(kw) ? 'ok' : 'aviso', 'Palavra-chave no primeiro parágrafo');
+    const dup = POSTS.find((p) => p.caminho !== EDIT.caminho && norm(p.dados.palavra_chave) === kw);
+    if (dup) add('aviso', `Outro post já usa essa palavra-chave: "${dup.dados.titulo}"`);
+  }
+  add(palavras >= (r.palavras_min || 0) ? 'ok' : 'aviso', `${palavras} palavras (mínimo recomendado ${r.palavras_min || 0})`);
+  add(conv.sumario.length >= 4 ? 'ok' : 'aviso', `${conv.sumario.length} seções com ## (mínimo 4)`);
+  add(internos.length >= (r.links_internos_min || 0) ? 'ok' : 'aviso', `${internos.length} link(s) para páginas do site (mínimo ${r.links_internos_min || 0})`);
+  add(fontes.length >= (r.fontes_min || 0) ? 'ok' : 'aviso', `${fontes.length} fonte(s) (mínimo ${r.fontes_min || 0})`);
+  if (fontes.some((f) => !/\|\s*https?:\/\//.test(f))) add('erro', 'Toda fonte precisa estar no formato "Nome | https://..."');
+  add(conv.faq.length >= 3 ? 'ok' : 'aviso', `${conv.faq.length} pergunta(s) no FAQ (mínimo 3, em "## Perguntas frequentes")`);
+  const texto = ' ' + norm(corpo + ' ' + d.titulo).replace(/[^a-z0-9]+/g, ' ') + ' ';
+  for (const t of r.proibidos || []) if (texto.includes(' ' + norm(t).replace(/[^a-z0-9]+/g, ' ').trim() + ' ')) add('erro', `Expressão a evitar: "${t}"`);
+  if (!/^[a-z0-9-]{3,80}$/.test(d.slug || '') || ['admin', 'categoria', 'pagina', 'feed.xml', 'blog.css'].includes(d.slug)) add('erro', 'Endereço (slug) inválido: use letras minúsculas, números e hífens');
+  else if (POSTS.some((p) => p.caminho !== EDIT.caminho && p.slug === d.slug)) add('erro', 'Já existe outro post com esse endereço');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d.data || '')) add('erro', 'Data inválida');
+  return out;
+}
+
+let EDIT = null; // post em edição (ou novo)
+let capaSuja = false, slugManual = false;
+function abreEditor(p) {
+  EDIT = p || { caminho: null, sha: null, dados: { autor: CFG.autor_padrao, status: 'rascunho', data: hoje(), tags: [], fontes: [] }, corpo: MODELO, slug: '', data: hoje(), estado: 'rascunho' };
+  const d = EDIT.dados;
+  slugManual = !!p; capaSuja = !p || !CAPAS.has(EDIT.slug);
+  history.replaceState(null, '', location.pathname + (p ? '#editar=' + encodeURIComponent(p.caminho.split('/').pop()) : '#novo'));
+  const cats = [...new Set([...(CFG.categorias || []), ...POSTS.map((x) => x.dados.categoria).filter(Boolean)])];
+  app.innerHTML = `
+  <div class="cab"><button class="btn" id="voltar" type="button">‹ Posts</button><h1>${p ? 'Editar post' : 'Novo post'}</h1><span class="esp"></span>
+    ${p && p.estado === 'publicado' ? `<a class="btn" href="${CFG.url_base}${esc(p.slug)}/" target="_blank" rel="noopener">Ver no site</a>` : ''}</div>
+  <div class="ed">
+    <div class="caixa">
+      <label class="campo"><span>Título</span><input id="f-titulo" class="titulo-grande" value="${esc(d.titulo || '')}" placeholder="Título do post"></label>
+      <div class="duas">
+        <label class="campo"><span>Título para o Google <em id="c-seo"></em></span><input id="f-titulo_seo" value="${esc(d.titulo_seo || '')}" placeholder="Se vazio, usa o título"></label>
+        <label class="campo"><span>Palavra-chave principal</span><input id="f-palavra_chave" value="${esc(d.palavra_chave || '')}"></label>
+      </div>
+      <label class="campo"><span>Descrição (aparece no Google) <em id="c-desc"></em></span><textarea id="f-descricao" rows="2">${esc(d.descricao || '')}</textarea></label>
+      <div class="duas">
+        <label class="campo"><span>Endereço</span><input id="f-slug" value="${esc(EDIT.slug)}" placeholder="gerado-a-partir-do-titulo"><small class="ajuda">${esc(location.host + CFG.url_base)}<b id="slug-ver">${esc(EDIT.slug)}</b>/</small></label>
+        <label class="campo"><span>Categoria</span><input id="f-categoria" list="cats" value="${esc(d.categoria || '')}"><datalist id="cats">${cats.map((c) => `<option value="${esc(c)}">`).join('')}</datalist></label>
+      </div>
+      <div class="duas">
+        <label class="campo"><span>Tags (separadas por vírgula)</span><input id="f-tags" value="${esc((d.tags || []).join(', '))}"></label>
+        <label class="campo"><span>Autor</span><input id="f-autor" value="${esc(d.autor || CFG.autor_padrao || '')}"></label>
+      </div>
+      <div class="campo"><span>Texto <em>Markdown: ## seção, ### subseção, **negrito**, [link](/pagina/), - lista, | tabela |</em></span>
+        <div class="corpo-abas"><button type="button" id="ab-esc" aria-pressed="true">Escrever</button><button type="button" id="ab-pre" aria-pressed="false">Pré-visualizar</button></div>
+        <textarea id="corpo" spellcheck="true">${esc(EDIT.corpo)}</textarea>
+        <div class="previa" id="previa" hidden></div>
+      </div>
+      <label class="campo"><span>Fontes e referências (uma por linha: Nome | https://...)</span><textarea id="f-fontes" rows="4">${esc((d.fontes || []).join('\n'))}</textarea></label>
+    </div>
+    <aside class="lado">
+      <div class="caixa"><h2>Publicação</h2>
+        <p class="estado" id="estado"></p>
+        <label class="campo"><span>Data de publicação</span><input id="f-data" type="date" value="${esc(EDIT.data)}"></label>
+        <div class="acoes" id="acoes"></div>
+        <p class="ajuda">O site atualiza cerca de 1 minuto depois de salvar. Posts com data futura entram no ar na manhã do dia marcado.</p>
+      </div>
+      <div class="caixa capa"><h2>Capa</h2><canvas id="capa" width="1200" height="630"></canvas>
+        <label><input type="checkbox" id="nova-capa" ${capaSuja ? 'checked' : ''}> Gerar capa nova ao salvar</label></div>
+      <div class="caixa"><h2>Qualidade e SEO</h2><ul class="checks" id="checks"></ul></div>
+    </aside>
+  </div>`;
+  $('#voltar').onclick = () => telaLista();
+  const campos = ['titulo', 'titulo_seo', 'palavra_chave', 'descricao', 'slug', 'categoria', 'tags', 'autor', 'fontes', 'data'];
+  const atualiza = () => {
+    if (!slugManual) $('#f-slug').value = slugify($('#f-titulo').value).slice(0, 70).replace(/-+$/, '');
+    $('#slug-ver').textContent = $('#f-slug').value;
+    const ls = ($('#f-titulo_seo').value || $('#f-titulo').value).length, ld = $('#f-descricao').value.length;
+    $('#c-seo').textContent = ls + '/60'; $('#c-seo').className = ls > 60 ? 'ruim' : '';
+    $('#c-desc').textContent = ld + ' (120 a 160)'; $('#c-desc').className = ld && (ld < 120 || ld > 160) ? 'ruim' : '';
+    const d = leCampos();
+    $('#checks').innerHTML = checagens(d, $('#corpo').value).map((c) => `<li class="${c.nivel}">${esc(c.txt)}</li>`).join('');
+    desenhaAcoes();
+    if (!$('#previa').hidden) previa();
+  };
+  campos.forEach((k) => { const el = $('#f-' + k); el.addEventListener('input', () => { if (k === 'slug') slugManual = true; if (k === 'titulo' || k === 'categoria') { capaSuja = true; $('#nova-capa').checked = true; desenhaCapa(); } atualiza(); }); });
+  $('#corpo').addEventListener('input', () => { clearTimeout(EDIT._t); EDIT._t = setTimeout(atualiza, 250); });
+  $('#nova-capa').onchange = () => { capaSuja = $('#nova-capa').checked; desenhaCapa(); };
+  $('#ab-esc').onclick = () => { $('#ab-esc').setAttribute('aria-pressed', 'true'); $('#ab-pre').setAttribute('aria-pressed', 'false'); $('#corpo').hidden = false; $('#previa').hidden = true; };
+  $('#ab-pre').onclick = () => { $('#ab-pre').setAttribute('aria-pressed', 'true'); $('#ab-esc').setAttribute('aria-pressed', 'false'); $('#corpo').hidden = true; $('#previa').hidden = false; previa(); };
+  atualiza();
+  desenhaCapa();
+  window.scrollTo(0, 0);
+}
+function leCampos() {
+  const v = (k) => $('#f-' + k).value.trim();
+  const d = { ...EDIT.dados };
+  d.titulo = v('titulo'); d.titulo_seo = v('titulo_seo'); d.descricao = v('descricao'); d.slug = v('slug');
+  d.data = v('data'); d.categoria = v('categoria'); d.palavra_chave = v('palavra_chave'); d.autor = v('autor');
+  d.tags = v('tags').split(',').map((x) => x.trim()).filter(Boolean);
+  d.fontes = $('#f-fontes').value.split('\n').map((x) => x.trim()).filter(Boolean);
+  if (!d.titulo_seo) delete d.titulo_seo;
+  return d;
+}
+function previa() {
+  const d = leCampos();
+  const conv = markdown($('#corpo').value, { dominios: CFG.dominios_internos || [] });
+  $('#previa').innerHTML = `<h1 style="font-family:var(--fonte-titulo);font-size:30px;margin:18px 0 8px">${esc(d.titulo || '')}</h1><p style="color:var(--suave);margin-top:0">${esc(d.descricao || '')}</p>${conv.html}`;
+}
+function desenhaAcoes() {
+  const d = leCampos(), h = hoje();
+  const futuro = (d.data || '') > h;
+  const salvo = EDIT.caminho ? EDIT.estado : null;
+  const txt = { publicado: 'No ar', agendado: `Agendado para ${dataBR(EDIT.data)}`, rascunho: 'Rascunho (fora do ar)' };
+  $('#estado').innerHTML = salvo ? `Situação atual: <b>${txt[salvo]}</b>` : 'Ainda não salvo.';
+  const bts = [];
+  bts.push(`<div class="linha"><button class="btn pri" type="button" data-acao="publicar">${futuro ? 'Agendar para ' + dataBR(d.data) : (salvo === 'publicado' ? 'Salvar e atualizar no site' : 'Publicar agora')}</button></div>`);
+  bts.push(`<div class="linha"><button class="btn" type="button" data-acao="rascunho">${salvo === 'publicado' || salvo === 'agendado' ? 'Despublicar (vira rascunho)' : 'Salvar rascunho'}</button></div>`);
+  if (EDIT.caminho && salvo === 'rascunho') bts.push(`<div class="linha"><button class="btn perigo" type="button" data-acao="excluir">Excluir rascunho</button></div>`);
+  bts.push('<div id="confirma"></div>');
+  $('#acoes').innerHTML = bts.join('');
+  $('#acoes').querySelectorAll('[data-acao]').forEach((b) => b.onclick = () => acao(b.dataset.acao));
+}
+
+// ---------- capa (mesmo desenho do gerador) ----------
+let logoImg = null;
+async function carregaLogo() {
+  if (logoImg !== null || !CFG.capa_logo) return logoImg;
+  logoImg = await new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(false); i.src = CFG.capa_logo; });
+  return logoImg;
+}
+function quebra(ctx, texto, largura) {
+  const pal = texto.split(/\s+/); const linhas = []; let l = '';
+  for (const p of pal) { const t = l ? l + ' ' + p : p; if (ctx.measureText(t).width > largura && l) { linhas.push(l); l = p; } else l = t; }
+  if (l) linhas.push(l);
+  return linhas;
+}
+let vezCapa = 0;
+async function desenhaCapa(forcar) {
+  const cv = $('#capa'); if (!cv) return;
+  const minha = ++vezCapa;
+  const ctx = cv.getContext('2d'), c = CFG.capa || {}, W = 1200, H = 630;
+  if (!forcar && !capaSuja && EDIT.caminho && CAPAS.has(EDIT.slug)) {
+    const img = new Image(); img.onload = () => { if (minha === vezCapa) { ctx.clearRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); } }; img.onerror = () => { if (minha === vezCapa) desenhaCapa(true); }; img.src = `${CFG.url_base}${EDIT.slug}/capa.jpg?v=${EDIT.sha || ''}`; return;
+  }
+  const fT = c.fonte_titulo_canvas || 'sans-serif', fX = c.fonte_texto_canvas || 'sans-serif', peso = c.peso_titulo || 600;
+  try { await Promise.all([document.fonts.load(`${peso} 64px ${fT}`), document.fonts.load(`700 20px ${fX}`), document.fonts.load(`400 22px ${fX}`)]); } catch { /* segue com a fonte padrão */ }
+  const logo = await carregaLogo();
+  if (minha !== vezCapa) return; // outro desenho mais novo já começou
+  const d = leCampos();
+  const g = ctx.createLinearGradient(0, 0, W * 0.75, H * 1.3); g.addColorStop(0, c.fundo2 || '#222'); g.addColorStop(0.7, c.fundo || '#000'); g.addColorStop(1, c.fundo || '#000');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const brilho = (x, y, rx, cor) => { const r = ctx.createRadialGradient(x, y, 0, x, y, rx); r.addColorStop(0, cor); r.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = r; ctx.fillRect(0, 0, W, H); };
+  if (c.brilho) brilho(W * 0.92, H * 0.08, 520, c.brilho);
+  if (c.brilho2) brilho(0, H, 560, c.brilho2);
+  ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,.045)'; ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.globalAlpha = Math.min(1, x / W * 1.6); ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += 60) { ctx.beginPath(); ctx.moveTo(W * 0.35, y + .5); ctx.lineTo(W, y + .5); ctx.stroke(); }
+  ctx.restore();
+  const lh = c.logo_altura || 40;
+  if (logo) ctx.drawImage(logo, 72, 64, logo.naturalWidth * (lh / logo.naturalHeight), lh);
+  else { ctx.fillStyle = c.texto || '#fff'; ctx.font = `700 30px ${fX}`; ctx.textBaseline = 'top'; ctx.fillText(CFG.nome, 72, 66); }
+  const cat = (d.categoria || 'Blog').toUpperCase();
+  ctx.font = `700 20px ${fX}`; ctx.letterSpacing = '2.4px';
+  const cw = ctx.measureText(cat).width + 32, ch = 40, cx = W - 72 - cw, cy = 64 + lh / 2 - ch / 2;
+  ctx.strokeStyle = c.destaque || '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(cx, cy, cw, ch, 20); ctx.stroke();
+  ctx.fillStyle = c.destaque || '#fff'; ctx.textBaseline = 'middle'; ctx.fillText(cat, cx + 16, cy + ch / 2 + 1);
+  ctx.letterSpacing = '0px';
+  let titulo = d.titulo || 'Título do post'; if (titulo.length > 90) titulo = titulo.slice(0, 87) + '…';
+  const tam = titulo.length > 60 ? 56 : 64;
+  ctx.font = `${peso} ${tam}px ${fT}`; ctx.fillStyle = c.texto || '#fff'; ctx.textBaseline = 'alphabetic';
+  const linhas = quebra(ctx, titulo, W - 72 - 110);
+  const alt = tam * 1.08, base = H - 118;
+  linhas.forEach((l, i) => ctx.fillText(l, 72, base - (linhas.length - 1 - i) * alt - tam * 0.22));
+  ctx.fillStyle = c.destaque || '#fff'; ctx.beginPath(); ctx.roundRect(72, H - 96 - 6, 120, 6, 3); ctx.fill();
+  ctx.globalAlpha = .75; ctx.fillStyle = c.texto || '#fff'; ctx.font = `400 22px ${fX}`; ctx.textBaseline = 'alphabetic'; ctx.fillText(CFG.dominio.replace(/^https?:\/\//, '') + '/blog', 72, H - 58 + 6); ctx.globalAlpha = 1;
+}
+
+// ---------- salvar ----------
+async function acao(tipo) {
+  const d = leCampos(), corpo = $('#corpo').value;
+  const conf = $('#confirma');
+  if (tipo === 'excluir' && !conf.dataset.ok) {
+    conf.innerHTML = `<div class="confirma">Excluir este rascunho de vez? Não dá para desfazer pelo painel.<div class="linha" style="display:flex;gap:8px"><button class="btn perigo" type="button" id="sim">Excluir</button><button class="btn" type="button" id="nao">Cancelar</button></div></div>`;
+    $('#sim').onclick = () => { conf.dataset.ok = '1'; acao('excluir'); }; $('#nao').onclick = () => { conf.innerHTML = ''; };
+    return;
+  }
+  const erros = checagens(d, corpo).filter((c) => c.nivel === 'erro' && !(tipo === 'rascunho' && !/slug|endereço|data/i.test(c.txt)));
+  if (tipo !== 'excluir' && erros.length) { toast('Corrija antes de salvar: ' + erros.map((e) => e.txt).join(' · '), true); return; }
+  if (tipo === 'publicar') d.status = 'publicado'; else if (tipo === 'rascunho') d.status = 'rascunho';
+  if (EDIT.estado === 'publicado' && tipo === 'publicar' && d.data <= hoje()) d.atualizado = hoje();
+  const novoCaminho = `${CFG.posts_dir}/${d.data}-${d.slug}.md`;
+  const alt = [];
+  if (tipo === 'excluir') {
+    alt.push({ caminho: EDIT.caminho, apagar: true });
+    if (CAPAS.has(EDIT.slug)) alt.push({ caminho: `${CFG.saida}/${EDIT.slug}/capa.jpg`, apagar: true });
+  } else {
+    alt.push({ caminho: novoCaminho, texto: serializa(d, corpo) });
+    if (EDIT.caminho && EDIT.caminho !== novoCaminho) alt.push({ caminho: EDIT.caminho, apagar: true });
+    if (EDIT.caminho && EDIT.slug !== d.slug && CAPAS.has(EDIT.slug)) alt.push({ caminho: `${CFG.saida}/${EDIT.slug}/capa.jpg`, apagar: true });
+    const gerarCapa = $('#nova-capa').checked || (EDIT.caminho && EDIT.slug !== d.slug) || !CAPAS.has(d.slug);
+    if (gerarCapa) {
+      capaSuja = true; await desenhaCapa();
+      const b64 = $('#capa').toDataURL('image/jpeg', 0.86).split(',')[1];
+      alt.push({ caminho: `${CFG.saida}/${d.slug}/capa.jpg`, base64: b64 });
+    }
+  }
+  const msg = { publicar: (d.data > hoje() ? 'Blog (painel): agenda ' : 'Blog (painel): publica ') + d.titulo, rascunho: 'Blog (painel): rascunho ' + d.titulo, excluir: 'Blog (painel): exclui ' + (EDIT.dados.titulo || EDIT.slug) }[tipo];
+  $('#acoes').querySelectorAll('button').forEach((b) => (b.disabled = true));
+  try {
+    await chama('salvar', { mensagem: msg, alteracoes: alt, esperado: EDIT.caminho ? { caminho: EDIT.caminho, sha: EDIT.sha } : null });
+    toast({ publicar: d.data > hoje() ? `Agendado para ${dataBR(d.data)}.` : 'Publicado. O site atualiza em cerca de 1 minuto.', rascunho: EDIT.estado === 'rascunho' || !EDIT.caminho ? 'Rascunho salvo.' : 'Despublicado. Sai do ar em cerca de 1 minuto.', excluir: 'Rascunho excluído.' }[tipo]);
+    await carrega();
+    if (tipo === 'excluir') telaLista();
+    else abreEditor(POSTS.find((p) => p.caminho === novoCaminho) || null);
+  } catch (e) {
+    if (e.message === 'sessao') return;
+    toast(e.status === 409 ? 'Este post foi alterado por outra pessoa (ou pela publicação diária) desde que você abriu. Copie seu texto, recarregue a página e tente de novo.' : 'Não foi possível salvar: ' + e.message, true);
+    desenhaAcoes();
+  }
+}
+
+// ---------- início ----------
+$('#sair').onclick = async () => { try { await chama('sair', {}); } catch { /* segue */ } location.href = CFG.url_base; };
+try {
+  if (await ponteGrou()) throw new Error('redirecionando');
+  if (CFG.login.tipo === 'ponte') await ponteLumi();
+  const quem = await chama('sessao');
+  $('#quem').textContent = quem.nome || quem.email || ''; $('#sair').hidden = false;
+  await carrega();
+  const h = decodeURIComponent(location.hash);
+  const alvo = h.startsWith('#editar=') ? POSTS.find((p) => p.caminho.endsWith('/' + h.slice(8))) : null;
+  if (alvo) abreEditor(alvo); else if (h === '#novo') abreEditor(null); else telaLista();
+} catch (e) {
+  if (!['sessao', 'redirecionando'].includes(e.message)) app.innerHTML = `<div class="entrar"><h1>Não foi possível abrir o painel</h1><p>${esc(e.message)}</p></div>`;
+}
+</script>
+</body>
+</html>

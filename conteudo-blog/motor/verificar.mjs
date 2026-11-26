@@ -34,7 +34,7 @@ for (const p of posts) {
   if (p.fontes.length < regras.fontes_min) e.push(`só ${p.fontes.length} fonte(s) (mínimo ${regras.fontes_min})`);
   if (p.fontes.some((f) => !/^https?:\/\//.test(f.url))) e.push('fonte sem URL (use "Título | https://...")');
   if (p.faq.length < 3) e.push(`FAQ com ${p.faq.length} pergunta(s) (mínimo 3, em "## Perguntas frequentes" com ### por pergunta)`);
-  if (!/^[a-z0-9-]{8,80}$/.test(p.slug)) e.push('slug inválido');
+  if (!/^[a-z0-9-]{3,80}$/.test(p.slug) || ['admin', 'categoria', 'pagina'].includes(p.slug)) e.push('slug inválido');
   if (todos.filter((o) => o.slug === p.slug).length > 1) e.push('slug repetido');
   if (todos.filter((o) => o.slug !== p.slug && kw && norm(o.palavra_chave) === kw).length) a.push('outra matéria já usa a mesma palavra-chave (risco de canibalização)');
   const textoNorm = ' ' + norm(p.corpo + ' ' + p.titulo).replace(/[^a-z0-9]+/g, ' ') + ' ';

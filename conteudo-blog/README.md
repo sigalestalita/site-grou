@@ -20,3 +20,7 @@ Todo dia, de manhã, um agente do Claude faz uma pesquisa (novidades, perguntas 
 
 ## O que o gerador produz
 Página de cada post (com sumário, fontes, FAQ, posts relacionados, dados estruturados BlogPosting/FAQ/Breadcrumb e capa 1200×630), lista do blog com paginação, páginas de categoria, `feed.xml` e o trecho do blog dentro de `sitemap.xml`.
+
+## Painel de gestão
+https://www.grougp.com/blog/admin/ (mesmo login da área /gestao). Lista, agenda, editor com pré-visualização e checagem de SEO, publicar, agendar, despublicar e excluir rascunhos. Cada ação vira um commit no GitHub; a Vercel publica em cerca de 1 minuto e o build gera as páginas.
+Configuração necessária na Vercel: variável `BLOG_GITHUB_TOKEN` (token do GitHub com escrita em "Contents" no repositório).

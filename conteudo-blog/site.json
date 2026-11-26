@@ -1,11 +1,17 @@
 {
   "nome": "Grou",
   "dominio": "https://grougp.com.br",
-  "dominios_internos": ["grougp.com.br", "grougp.com"],
+  "dominios_internos": [
+    "grougp.com.br",
+    "grougp.com"
+  ],
   "saida": "blog",
   "url_base": "/blog/",
   "sitemap": "sitemap.xml",
-  "layout": { "tipo": "modelo", "arquivo": "consulting/index.html" },
+  "layout": {
+    "tipo": "modelo",
+    "arquivo": "consulting/index.html"
+  },
   "versao_css": 2,
   "autor_padrao": "Equipe Grou",
   "logo_url": "https://grougp.com.br/assets/img/icone-180.png",
@@ -39,6 +45,37 @@
     "palavras_min": 1100,
     "links_internos_min": 3,
     "fontes_min": 3,
-    "proibidos": ["garantimos resultados", "100% garantido", "cura", "diagnóstico de transtorno", "como mencionado anteriormente", "em resumo, podemos concluir", "no mundo atual", "nos dias de hoje", "mergulhar", "desvendar"]
+    "proibidos": [
+      "garantimos resultados",
+      "100% garantido",
+      "cura",
+      "diagnóstico de transtorno",
+      "como mencionado anteriormente",
+      "em resumo, podemos concluir",
+      "no mundo atual",
+      "nos dias de hoje",
+      "mergulhar",
+      "desvendar"
+    ]
+  },
+  "categorias": [
+    "Liderança",
+    "Análise comportamental",
+    "NR-1 e liderança",
+    "Recrutamento e seleção",
+    "Clima e engajamento",
+    "Desenvolvimento",
+    "Times e vendas"
+  ],
+  "painel": {
+    "api": "/api/gestao/?recurso=blog",
+    "login": {
+      "tipo": "gestao",
+      "url": "/gestao/?volta=/blog/admin/"
+    },
+    "ponte_destino": "https://applumi.io/blog/admin/",
+    "cor": "#120573",
+    "cor_texto": "#ffffff",
+    "fonte_painel": "'Poppins',sans-serif"
   }
 }

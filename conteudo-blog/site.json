@@ -1,0 +1,44 @@
+{
+  "nome": "Grou",
+  "dominio": "https://grougp.com.br",
+  "dominios_internos": ["grougp.com.br", "grougp.com"],
+  "saida": "blog",
+  "url_base": "/blog/",
+  "sitemap": "sitemap.xml",
+  "layout": { "tipo": "modelo", "arquivo": "consulting/index.html" },
+  "versao_css": 1,
+  "autor_padrao": "Equipe Grou",
+  "logo_url": "https://grougp.com.br/assets/img/icone-180.png",
+  "imagem_padrao": "https://grougp.com.br/assets/img/hero-time-rh.webp",
+  "blog": {
+    "titulo": "Blog da Grou",
+    "h1": "Liderança, comportamento e gestão de pessoas, <b>com dado e sem jargão</b>.",
+    "descricao": "Artigos práticos para RH e líderes sobre liderança, análise comportamental, NR-1, seleção por competências, clima e desenvolvimento de pessoas."
+  },
+  "cta": {
+    "titulo": "Quer aplicar isso no seu time?",
+    "texto": "A Grou combina análise comportamental, programas de liderança e diagnóstico de clima para transformar dado em decisão sobre pessoas.",
+    "botao": "Falar com um especialista",
+    "url": "/contato/"
+  },
+  "capa": {
+    "fonte_google": "Poppins:wght@400;600&family=Montserrat:wght@600;700",
+    "fonte_titulo": "'Poppins',sans-serif",
+    "fonte_texto": "'Montserrat',sans-serif",
+    "peso_titulo": 600,
+    "fundo": "#07033a",
+    "fundo2": "#120573",
+    "brilho": "rgba(108,216,207,.32)",
+    "brilho2": "rgba(0,85,255,.35)",
+    "destaque": "#6cd8cf",
+    "texto": "#ffffff",
+    "logo_arquivo": "logo-capa.svg",
+    "logo_altura": 44
+  },
+  "regras": {
+    "palavras_min": 1100,
+    "links_internos_min": 3,
+    "fontes_min": 3,
+    "proibidos": ["garantimos resultados", "100% garantido", "cura", "diagnóstico de transtorno", "como mencionado anteriormente", "em resumo, podemos concluir", "no mundo atual", "nos dias de hoje", "mergulhar", "desvendar"]
+  }
+}

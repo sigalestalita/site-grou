@@ -31,4 +31,9 @@
   <url><loc>https://grougp.com.br/consulting/devolutiva-individual/</loc><priority>0.7</priority></url>
   <url><loc>https://grougp.com.br/consulting/pdi-individual/</loc><priority>0.7</priority></url>
   <url><loc>https://grougp.com.br/tecnologias/pesquisa-de-clima/</loc><priority>0.7</priority></url>
+  <!-- blog:inicio -->
+  <url><loc>https://grougp.com.br/blog/</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://grougp.com.br/blog/categoria/desenvolvimento/</loc><priority>0.5</priority></url>
+  <url><loc>https://grougp.com.br/blog/como-montar-um-pdi/</loc><lastmod>2026-11-25</lastmod><priority>0.7</priority></url>
+  <!-- blog:fim -->
 </urlset>

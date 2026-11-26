@@ -514,7 +514,7 @@ async function desenhaCapa(forcar) {
   const alt = tam * 1.08, base = H - 118;
   linhas.forEach((l, i) => ctx.fillText(l, 72, base - (linhas.length - 1 - i) * alt - tam * 0.22));
   ctx.fillStyle = c.destaque || '#fff'; ctx.beginPath(); ctx.roundRect(72, H - 96 - 6, 120, 6, 3); ctx.fill();
-  ctx.globalAlpha = .75; ctx.fillStyle = c.texto || '#fff'; ctx.font = `400 22px ${fX}`; ctx.textBaseline = 'alphabetic'; ctx.fillText(CFG.dominio.replace(/^https?:\/\//, '') + '/blog', 72, H - 58 + 6); ctx.globalAlpha = 1;
+  ctx.globalAlpha = .75; ctx.fillStyle = c.texto || '#fff'; ctx.font = `400 22px ${fX}`; ctx.textBaseline = 'alphabetic'; ctx.fillText(c.endereco || CFG.dominio.replace(/^https?:\/\//, '') + '/blog', 72, H - 58 + 6); ctx.globalAlpha = 1;
 }
 
 // ---------- salvar ----------

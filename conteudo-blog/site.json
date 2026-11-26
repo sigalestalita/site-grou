@@ -39,7 +39,8 @@
     "destaque": "#6cd8cf",
     "texto": "#ffffff",
     "logo_arquivo": "logo-capa.svg",
-    "logo_altura": 44
+    "logo_altura": 44,
+    "endereco": "grougp.com/blog"
   },
   "regras": {
     "palavras_min": 1100,

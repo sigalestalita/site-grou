@@ -48,6 +48,7 @@
   "texto": "#ffffff",
   "logo_arquivo": "logo-capa.svg",
   "logo_altura": 44,
+  "endereco": "grougp.com/blog",
   "fonte_titulo_canvas": "'Poppins',sans-serif",
   "fonte_texto_canvas": "'Montserrat',sans-serif"
  },

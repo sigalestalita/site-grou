@@ -37,7 +37,7 @@ h1{position:absolute;left:72px;right:110px;bottom:118px;margin:0;font-family:${c
 .barra{position:absolute;left:72px;bottom:96px;width:120px;height:6px;border-radius:6px;background:${c.destaque}}
 </style></head><body><div class="grade"></div>
 <div class="topo">${logo ? `<img src="${logo}" alt="">` : `<strong>${esc(site.nome)}</strong>`}<span class="cat">${esc(p.categoria || 'Blog')}</span></div>
-<h1>${esc(titulo)}</h1><div class="barra"></div><div class="rodape">${esc(site.dominio.replace(/^https?:\/\//, ''))}/blog</div>
+<h1>${esc(titulo)}</h1><div class="barra"></div><div class="rodape">${esc(c.endereco || site.dominio.replace(/^https?:\/\//, '') + '/blog')}</div>
 </body></html>`;
     await pg.setContent(html, { waitUntil: 'networkidle' }).catch(() => {});
     await pg.waitForTimeout(300);

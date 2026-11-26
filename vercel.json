@@ -245,6 +245,141 @@
       "source": "/conteudos/:slug/",
       "destination": "/blog/",
       "permanent": false
+    },
+    {
+      "source": "/avaliacoes/",
+      "destination": "/tecnologias/",
+      "permanent": true
+    },
+    {
+      "source": "/avaliacoes/dilemas-de-gestao/",
+      "destination": "/tecnologias/dilemas-de-gestao/",
+      "permanent": true
+    },
+    {
+      "source": "/avaliacoes/feedback-360/",
+      "destination": "/tecnologias/feedback-360/",
+      "permanent": true
+    },
+    {
+      "source": "/avaliacoes/pda-assessment/",
+      "destination": "/tecnologias/pda-assessment/",
+      "permanent": true
+    },
+    {
+      "source": "/avaliacoes/questionario-de-resiliencia/",
+      "destination": "/tecnologias/questionario-de-resiliencia/",
+      "permanent": true
+    },
+    {
+      "source": "/categoria/podcast/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/categoria/video/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/demonstracao-pda/",
+      "destination": "/demo-pda/",
+      "permanent": true
+    },
+    {
+      "source": "/diagnostico-de-gestao-comportamental-grou-goo/",
+      "destination": "/contato/",
+      "permanent": true
+    },
+    {
+      "source": "/diagnostico-de-gestao-comportamental-grou-meta/",
+      "destination": "/contato/",
+      "permanent": true
+    },
+    {
+      "source": "/eventos/formacao-pda/",
+      "destination": "/consulting/capacitacao-pda/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/certificacoes-e-capacitacoes/certificacao-pda/",
+      "destination": "/consulting/capacitacao-pda/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/certificacoes-e-capacitacoes/dilemas-de-gestao/",
+      "destination": "/tecnologias/dilemas-de-gestao/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/certificacoes-e-capacitacoes/questionario-de-resiliencia/",
+      "destination": "/tecnologias/questionario-de-resiliencia/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/mentorias-e-assessment/assessment-4-0/",
+      "destination": "/consulting/assessment-40/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/mentorias-e-assessment/devolutivas/",
+      "destination": "/consulting/devolutiva-individual/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/mentorias-e-assessment/mentoria-comportamental/",
+      "destination": "/consulting/mentoria-comportamental/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/programas-de-desenvolvimento-gestao-e-lideranca-na-pratica/",
+      "destination": "/consulting/master-lider/",
+      "permanent": true
+    },
+    {
+      "source": "/grou-skills/teste-eventos/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/hub-de-solucoes/",
+      "destination": "/consulting/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/plataformas/",
+      "destination": "/tecnologias/",
+      "permanent": true
+    },
+    {
+      "source": "/plataformas/pda/",
+      "destination": "/tecnologias/pda-assessment/",
+      "permanent": true
+    },
+    {
+      "source": "/plataformas/talogy/",
+      "destination": "/tecnologias/",
+      "permanent": true
+    },
+    {
+      "source": "/seja-um-partner-pda/",
+      "destination": "/contato/",
+      "permanent": true
+    },
+    {
+      "source": "/backup/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/search/",
+      "destination": "/blog/",
+      "permanent": true
     }
   ]
 }

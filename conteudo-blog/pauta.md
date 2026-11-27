@@ -7,7 +7,6 @@ Ideias para os próximos posts. O agente diário escolhe daqui ou da pesquisa do
 - Entrevista por competências: perguntas por competência e como avaliar as respostas · pilar Recrutamento
 - Líder de primeira viagem: os 90 primeiros dias · pilar Liderança
 - O papel do líder na NR-1: o que muda na rotina do gestor · pilar NR-1 e liderança
-- Pesquisa de clima: como transformar resultado em plano de ação · pilar Clima
 
 ## Banco de ideias
 - Reunião one on one: roteiro e perguntas que funcionam
@@ -21,7 +20,8 @@ Ideias para os próximos posts. O agente diário escolhe daqui ou da pesquisa do
 - Perfil comportamental em vendas: o que realmente prevê desempenho
 - Liderança situacional na prática
 - Resiliência no trabalho: como medir e desenvolver
-- eNPS: como calcular e o que fazer com o número
+- eNPS: o que fazer depois do número (concorrentes só explicam a conta)
+- Queda de confiança e de feedback na liderança (Pluxee 2026): o que o RH pode fazer pelo gestor
 - Assessment de liderança: quando vale a pena
 - Team building que gera mudança de comportamento
 - Como dar feedback negativo sem destruir a relação

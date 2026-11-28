@@ -197,6 +197,47 @@ function paginaLista({ titulo, h1, descricao, url, posts, pagina, total, base, c
 function escrever(caminho, html) { mkdirSync(dirname(caminho), { recursive: true }); writeFileSync(caminho, html); }
 
 // ---------- execução ----------
+// ---------- llms.txt ----------
+// Título e descrição de uma página do próprio site, lidos do HTML local (quando ele existe no repositório).
+function metaLocal(url) {
+  const caminho = url.replace(/^https?:\/\/[^/]+/, '').replace(/^\//, '');
+  const arq = join(RAIZ, caminho, 'index.html');
+  if (!existsSync(arq)) return null;
+  const h = readFileSync(arq, 'utf8');
+  const titulo = (/<title>([^<]+)<\/title>/i.exec(h) || [])[1];
+  const desc = (/<meta\s+name="description"\s+content="([^"]*)"/i.exec(h) || [])[1];
+  return titulo ? { titulo: titulo.trim(), descricao: (desc || '').trim() } : null;
+}
+
+function llmsTxt(posts, categorias, sitemap) {
+  const L = site.llms;
+  const linha = (t, u, d) => `- [${t.replace(/[[\]]/g, '')}](${u})${d ? `: ${d}` : ''}`;
+  const paginas = [...(L.paginas || []).map((p) => linha(p.titulo, p.url.startsWith('http') ? p.url : urlAbs(p.url), p.descricao))];
+  if (L.paginas_do_sitemap) {
+    const vistas = new Set((L.paginas || []).map((p) => p.url));
+    for (const [, u] of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      if (u.includes(URLB) || vistas.has(u) || !u.startsWith(DOM)) continue;
+      const m = metaLocal(u);
+      if (m) paginas.push(linha(m.titulo.replace(/\s*[|·–-]\s*[^|·–-]*$/, '') || m.titulo, u, m.descricao));
+    }
+  }
+  const blocos = categorias.map((c) => `### ${c}\n\n${posts.filter((p) => p.categoria === c).map((p) => linha(p.titulo, urlAbs(p.url), p.descricao)).join('\n')}`);
+  return `# ${L.titulo || site.nome}
+
+> ${L.resumo}
+
+${(L.detalhes || []).join('\n\n')}${(L.detalhes || []).length ? '\n\n' : ''}## Páginas principais
+
+${paginas.join('\n')}
+
+## ${site.blog.titulo}
+
+${site.blog.descricao} Feed: ${urlAbs(URLB + 'feed.xml')}
+
+${blocos.join('\n\n')}
+`;
+}
+
 export function gerar() {
   const posts = carregarPosts();
   const categorias = [...new Set(posts.map((p) => p.categoria))].sort((a, b) => a.localeCompare(b, 'pt'));
@@ -248,6 +289,11 @@ ${posts.slice(0, 20).map((p) => `<item><title>${esc(p.titulo)}</title><link>${ur
     ...posts.map((p) => `  <url><loc>${urlAbs(p.url)}</loc><lastmod>${p.atualizado}</lastmod><priority>0.7</priority></url>`)].join('\n');
   sm = sm.replace('</urlset>', `  <!-- blog:inicio -->\n${bloco}\n  <!-- blog:fim -->\n</urlset>`);
   writeFileSync(smArq, sm);
+
+  // llms.txt (resumo do site e índice dos posts, para buscadores com IA) e chave do IndexNow, ao lado do sitemap
+  const pastaRaiz = dirname(smArq);
+  if (site.llms) writeFileSync(join(pastaRaiz, 'llms.txt'), llmsTxt(posts, categorias, sm));
+  if (site.indexnow_chave) writeFileSync(join(pastaRaiz, `${site.indexnow_chave}.txt`), site.indexnow_chave);
 
   // painel de gestão (/blog/admin/): página, leitor de Markdown, logo da capa e configuração
   if (site.painel) {

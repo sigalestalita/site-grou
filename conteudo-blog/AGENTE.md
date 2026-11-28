@@ -75,11 +75,17 @@ Isso gera a capa, as páginas (post, listas, categorias), o feed e o sitemap, e 
 
 ## 5. Publicar
 ```
-git add -A conteudo-blog blog sitemap.xml
+git add -A conteudo-blog blog sitemap.xml llms.txt
 git commit -m "Blog: <título do post>"
 git push origin HEAD:main
 ```
 Depois siga o passo de publicação específico do site em `PUBLICACAO.md` e confirme a URL no ar (HTTP 200).
+
+Com a URL no ar, avise os buscadores (Bing e os que usam IndexNow; o Google lê o sitemap):
+```
+node conteudo-blog/motor/avisar.mjs SLUG-DO-POST
+```
+Se responder 403, a chave ainda não está no ar no domínio: siga em frente, o sitemap cobre.
 
 ## 6. Se algo der errado
 - Verificador não passa depois de 3 tentativas: salve o post com `status: rascunho`, faça commit, publique o resto e registre o motivo na pesquisa do dia.

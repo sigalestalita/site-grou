@@ -8,6 +8,12 @@
   "saida": "blog",
   "url_base": "/blog/",
   "sitemap": "sitemap.xml",
+  "indexnow_chave": "87ed6d1cb39346de296d3a0402086a1f",
+  "llms": {
+    "titulo": "Grou",
+    "resumo": "A Grou é um ecossistema de soluções para gestão de pessoas: consultoria, tecnologias de assessment (como o PDA), coaching e recrutamento e seleção, integrados para atrair, desenvolver e reter talentos com dados.",
+    "paginas_do_sitemap": true
+  },
   "layout": {
     "tipo": "modelo",
     "arquivo": "consulting/index.html"

@@ -4,11 +4,12 @@ Ideias para os próximos posts. O agente diário escolhe daqui ou da pesquisa do
 
 ## Prioridade
 - Como montar um PDI que sai do papel (modelo + exemplo preenchido) · pilar Desenvolvimento
-- Entrevista por competências: perguntas por competência e régua de avaliação das respostas por nível · pilar Recrutamento
 - Primeiros 90 dias como gestor (evitar "líder de primeira viagem": a busca mistura com viagem) · pilar Liderança
 - Treinamento NR-1 para líderes: o que um bom programa cobre e como medir se funcionou · pilar NR-1 e liderança
 
 ## Banco de ideias
+- Painel de entrevista: como calibrar notas entre entrevistadores (sequência do post sobre avaliar entrevista por competências)
+- Perguntas situacionais x comportamentais: quando usar cada uma
 - Reunião one on one: roteiro e perguntas que funcionam
 - Feedback 360: como aplicar sem virar caça às bruxas
 - PDA ou DISC: diferenças práticas para o RH

@@ -68,6 +68,10 @@ Artigos práticos para RH e líderes sobre liderança, análise comportamental, 
 - [Como motivar colaboradores pelo perfil comportamental (guia por estilo)](https://www.grougp.com/blog/como-motivar-colaboradores-pelos-perfis-comportamentais/): Saiba como motivar colaboradores pelo perfil comportamental, com o que estimula e o que desgasta cada estilo, exemplos de fala e um roteiro de conversa para o líder.
 - [Como medir o potencial de liderança de um profissional](https://www.grougp.com/blog/como-medir-o-potencial-de-lideranca/): Saiba como medir o potencial de liderança com 5 sinais observáveis, instrumentos de avaliação e um roteiro de 6 passos para promover sem depender de impressão.
 
+### NR-1 e liderança
+
+- [O papel do líder na NR-1: o que muda na rotina do gestor](https://www.grougp.com/blog/papel-do-lider-na-nr-1/): Entenda o papel do líder na NR-1: como reconhecer fatores de risco psicossocial na equipe, o que fazer toda semana e o que registrar, com tabela prática.
+
 ### People analytics
 
 - [RH data-driven: como usar dados comportamentais com critério](https://www.grougp.com/blog/rh-data-driven-dados-comportamentais/): Um RH data-driven cruza dados comportamentais com resultados para decidir melhor. Veja quais dados usar, um modelo de análise, limites éticos e a LGPD.

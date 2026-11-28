@@ -4,9 +4,9 @@ Ideias para os próximos posts. O agente diário escolhe daqui ou da pesquisa do
 
 ## Prioridade
 - Como montar um PDI que sai do papel (modelo + exemplo preenchido) · pilar Desenvolvimento
-- Entrevista por competências: perguntas por competência e como avaliar as respostas · pilar Recrutamento
-- Líder de primeira viagem: os 90 primeiros dias · pilar Liderança
-- O papel do líder na NR-1: o que muda na rotina do gestor · pilar NR-1 e liderança
+- Entrevista por competências: perguntas por competência e régua de avaliação das respostas por nível · pilar Recrutamento
+- Primeiros 90 dias como gestor (evitar "líder de primeira viagem": a busca mistura com viagem) · pilar Liderança
+- Treinamento NR-1 para líderes: o que um bom programa cobre e como medir se funcionou · pilar NR-1 e liderança
 
 ## Banco de ideias
 - Reunião one on one: roteiro e perguntas que funcionam

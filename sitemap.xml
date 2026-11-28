@@ -32,13 +32,15 @@
   <url><loc>https://www.grougp.com/consulting/pdi-individual/</loc><priority>0.7</priority></url>
   <url><loc>https://www.grougp.com/tecnologias/pesquisa-de-clima/</loc><priority>0.7</priority></url>
   <!-- blog:inicio -->
-  <url><loc>https://www.grougp.com/blog/</loc><lastmod>2026-11-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.grougp.com/blog/</loc><lastmod>2026-11-28</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.grougp.com/blog/categoria/analise-comportamental/</loc><priority>0.5</priority></url>
   <url><loc>https://www.grougp.com/blog/categoria/clima-e-engajamento/</loc><priority>0.5</priority></url>
   <url><loc>https://www.grougp.com/blog/categoria/desenvolvimento/</loc><priority>0.5</priority></url>
   <url><loc>https://www.grougp.com/blog/categoria/lideranca/</loc><priority>0.5</priority></url>
+  <url><loc>https://www.grougp.com/blog/categoria/nr-1-e-lideranca/</loc><priority>0.5</priority></url>
   <url><loc>https://www.grougp.com/blog/categoria/people-analytics/</loc><priority>0.5</priority></url>
   <url><loc>https://www.grougp.com/blog/categoria/recrutamento-e-selecao/</loc><priority>0.5</priority></url>
+  <url><loc>https://www.grougp.com/blog/papel-do-lider-na-nr-1/</loc><lastmod>2026-11-28</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.grougp.com/blog/plano-de-acao-pesquisa-de-clima/</loc><lastmod>2026-11-26</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.grougp.com/blog/sucessao-de-lideranca/</loc><lastmod>2026-11-25</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.grougp.com/blog/rh-data-driven-dados-comportamentais/</loc><lastmod>2026-11-25</lastmod><priority>0.7</priority></url>

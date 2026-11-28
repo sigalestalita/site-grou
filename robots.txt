@@ -3,4 +3,4 @@ Allow: /
 Disallow: /blog/admin/
 Disallow: /gestao/
 
-Sitemap: https://grougp.com.br/sitemap.xml
+Sitemap: https://www.grougp.com/sitemap.xml

@@ -1,6 +1,6 @@
 {
   "nome": "Grou",
-  "dominio": "https://grougp.com.br",
+  "dominio": "https://www.grougp.com",
   "dominios_internos": [
     "grougp.com.br",
     "grougp.com"
@@ -20,8 +20,8 @@
   },
   "versao_css": 2,
   "autor_padrao": "Equipe Grou",
-  "logo_url": "https://grougp.com.br/assets/img/icone-180.png",
-  "imagem_padrao": "https://grougp.com.br/assets/img/hero-time-rh.webp",
+  "logo_url": "https://www.grougp.com/assets/img/icone-180.png",
+  "imagem_padrao": "https://www.grougp.com/assets/img/hero-time-rh.webp",
   "blog": {
     "titulo": "Blog da Grou",
     "h1": "Liderança, comportamento e gestão de pessoas, <b>com dado e sem jargão</b>.",
